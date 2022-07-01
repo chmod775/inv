@@ -13,6 +13,7 @@ for (let l of lines) {
 	if (!l.startsWith('+')) { outLines.push(outLine); outLine = ''; }
 
 	if (l.startsWith('+')) l = l.substring(1);
+	if (l.includes(';')) l = l.substring(0, l.indexOf(';'));
 	l = l.replace('\n', '');
 	l = l.replace('\r', '');
 	outLine += l;
@@ -78,19 +79,21 @@ class Tokenizer {
   constructor(str) {
     this.str = str;
     this.ptr = 0;
+		this.lastPtr = 0;
   }
 
 
   getToken() {
+		this.lastPtr = this.ptr;
     while (this.ptr < this.str.length) {
       let ch = this.str[this.ptr];
       this.ptr++;
 
-      if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch == '_')) {
+      if ((ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch == '_')) {
         let out = ch;
 
         ch = this.str[this.ptr];
-        while ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9') || (ch == '_') || (ch == ':')) {
+        while ((ch != '\t') && (ch != '\n') && (ch != ' ') && (ch != '(')) {
           out += ch;
           this.ptr++;
           ch = this.str[this.ptr];
@@ -111,12 +114,14 @@ class Tokenizer {
         }
         out += ch;
 
-        this.ptr--;
         return { type: 'args', start: this.ptr - out.length, length: out.length, content: out };
       }
     }
   }
 
+	undoToken() {
+		this.ptr = this.lastPtr;
+	}
 }
 
 
@@ -128,9 +133,13 @@ class Part {
     this.func = tokenizer.getToken().content.toLowerCase();
     this.args = [];
 
+		this.pins = {};
+
     let tokenArgs = tokenizer.getToken();
     if (tokenArgs.type == 'args')
       this.args = tokenArgs.content.substring(1, tokenArgs.content.length - 1).split(',');
+		else
+			tokenizer.undoToken();
 
     let mapper = this[`map_${this.func}`];
     if (!mapper) throw `Mapper map_${this.func} not found!`;
@@ -138,26 +147,35 @@ class Part {
   }
 
   map_nand(t, a) {
-    this.inputs = [];
-    this.output = null;
-
-    t.getToken();
-    t.getToken();
-
+    let vcc = t.getToken().content;
+    let gnd = t.getToken().content;
     for (var i = 0; i < a[0]; i++)
-      this.inputs.push(t.getToken().content);
-
-    this.output = t.getToken().content;
+			this.pins[`IN${i}`] = t.getToken().content;
+		this.pins['OUT'] = t.getToken().content;
   }
   map_nor(t, a) { }
-  map_inv(t, a) { }
+  map_inv(t, a) {
+    let vcc = t.getToken().content;
+    let gnd = t.getToken().content;
+		this.pins[`IN`] = t.getToken().content;
+		this.pins['OUT'] = t.getToken().content;
+	}
   map_and(t, a) { }
   map_or(t, a) { }
   map_buf(t, a) { }
-  map_logicexp(t, a) { }
   map_aoi(t, a) { }
   map_jkff(t, a) { }
-  map_dff(t, a) { }
+  map_dff(t, a) {
+    let vcc = t.getToken().content;
+    let gnd = t.getToken().content;
+		this.pins[`PRESET`] = t.getToken().content;
+		this.pins[`CLEAR`] = t.getToken().content;
+		this.pins[`CLOCK`] = t.getToken().content;
+    for (var i = 0; i < a[0]; i++)
+			this.pins[`D${i}`] = t.getToken().content;
+    for (var i = 0; i < a[0]; i++)
+			this.pins[`Q${i}`] = t.getToken().content;
+	}
   map_bufa(t, a) { }
   map_dltch(t, a) { }
   map_xor(t, a) { }
@@ -165,7 +183,15 @@ class Part {
   map_buf3(t, a) { }
   map_srff(t, a) { }
   map_inv3a(t, a) { }
-  map_buf3a(t, a) { }
+  map_buf3a(t, a) {
+		let vcc = t.getToken().content;
+    let gnd = t.getToken().content;
+    for (var i = 0; i < a[0]; i++)
+			this.pins[`D${i}`] = t.getToken().content;
+		this.pins[`EN`] = t.getToken().content;
+    for (var i = 0; i < a[0]; i++)
+			this.pins[`Q${i}`] = t.getToken().content;
+	}
   map_nora(t, a) { }
   map_nanda(t, a) { }
   map_ora(t, a) { }
@@ -174,6 +200,70 @@ class Part {
   map_ao(t, a) { }
   map_anda(t, a) { }
   map_suhdck(t, a) { }
+
+  map_logicexp(t, a) {
+		let vcc = t.getToken().content;
+    let gnd = t.getToken().content;
+		
+		this.context = {
+			inputs: [],
+			outputs: []
+		};
+
+		let nInputs = a[0];
+		let nOutputs = a[1];
+
+		for (var i = 0; i < nInputs; i++) {
+			let tc = sanitizeName(t.getToken().content);
+			this.pins[tc] = tc;
+			this.context.inputs.push(tc);
+		}
+
+		for (var i = 0; i < nOutputs; i++) {
+			let tc = sanitizeName(t.getToken().content);
+			this.pins[tc] = tc;
+			this.context.outputs.push(tc);
+		}
+
+		// Find logic
+		let tok = null;
+		while (1) {
+			tok = t.getToken();
+			if (tok.content.toUpperCase() == 'LOGIC:') break;
+		}
+
+		let logicCode = t.str.substring(tok.start + tok.length);
+
+		let logicLines = logicCode.replace(/\{/g, '').split('}').filter(l => l.length > 0);
+
+		let vars = [];
+		for (let l of logicLines) {
+			let varItem = l.substring(0, l.indexOf('=')).trim();
+			vars.push(varItem);
+		}
+
+		let sanitizedCode = logicLines.join('\n');
+		for (let v of vars) {
+			sanitizedCode = sanitizedCode.replace(new RegExp(v, 'g'), sanitizeName(v));
+		}
+
+		console.log(sanitizedCode);
+
+		let sanitizedCodeLines = sanitizedCode.split('\n');
+		let jsCodeLines = [];
+		for (let l of sanitizedCodeLines) {
+			let varItem = l.substring(0, l.indexOf('=')).trim();
+			
+			if (this.pins[varItem]) {
+				jsCodeLines.push(`${l};`);
+			} else {
+				jsCodeLines.push(`let ${l};`);
+			}
+		}
+
+
+		this.logic = jsCodeLines.join('');
+	}
 }
 
 class Circuit {
@@ -203,22 +293,50 @@ class Circuit {
   compile() {
     let out = [];
 
+		let temporary = [];
+
     let comment = comments[this.name];
     if (comment) {
       out.push('/**');
       out.push(` * ${comment}`);
       out.push(' */');
     }
-    out.push(`class SN${this.name} {`);
+    out.push(`class SN${this.name} extends Component {`);
 
     out.push(`\tconstructor() {`);
+    out.push(`\t\tsuper();`);
     out.push(`\t\tthis.pins = {`);
     for (let p of this.pins) {
-      out.push(`\t\t\t${p}: false,`);
+      out.push(`\t\t\t${p}: new Pin(),`);
     }
     out.push(`\t\t}`);
     for (let p of this.parts) {
-      out.push(`\t\tthis.${p.name} = new ${p.func}(${p.args.join(',')});`);
+			if (p.logic) {
+				out.push(`\t\tthis.${p.name} = new ${p.func}([${p.context.inputs.map(t => `'${t}'`).join(',')}], [${p.context.outputs.map(t => `'${t}'`).join(',')}]).Logic('${p.logic}');`);
+				//out.push(`\t\tthis.${p.name} = new ${p.func}(${p.args.join(',')}).Context([${p.context.inputs.map(t => `'${t}'`).join(',')}], [${p.context.outputs.map(t => `'${t}'`).join(',')}]).Logic('${p.logic}');`);
+			} else {
+				out.push(`\t\tthis.${p.name} = new ${p.func}(${p.args.join(',')});`);
+			}
+
+			for (let ppk in p.pins) {
+				let pp = sanitizeName(p.pins[ppk]);
+				
+				let isTemporary = !this.pins.includes(pp);
+				var destPin = `this.pins.${pp}`;
+
+				if (isTemporary) {
+					if ((pp != '_D_HI') && (pp != '_D_LOW'))
+						if (!temporary.includes(pp)) {
+							temporary.push(pp);
+							out.push(`\t\tlet ${pp} = new Pin();`);
+						}
+
+					destPin = pp;
+				}
+
+				out.push(`\t\tConnect(this.${p.name}.pins.${sanitizeName(ppk)}, ${destPin});`);
+			}
+
     }
     out.push(`\t}`);
 
@@ -235,11 +353,16 @@ for (let c of circuits) {
 }
 
 const codeLines = [];
+/*
 for (var c of circuitsObjects) {
   codeLines.push(c.compile());
 }
+*/
+console.log(circuitsObjects[61].compile());
+//console.log(circuitsObjects[0].pins);
 
-console.log(comments);
+//console.log(circuitsObjects.map(t => t.name).indexOf('74HC181'));
+
 
 fs.writeFileSync('74hc_code.js', codeLines.join('\n\n'));
 
