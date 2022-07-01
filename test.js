@@ -59,6 +59,7 @@ class Logger {
 class Wire {
 	constructor() {
 		this.pins = [];
+		this.value = false;
 	}
 
 	mergeWithWire(wire) {
@@ -86,7 +87,16 @@ class Wire {
 class Pin {
 	constructor() {
 		this.wire = null;
-		this.value = false;
+	}
+
+	setValue(value) {
+		if (!this.wire) return;
+		this.wire.value = value;
+	}
+
+	getValue() {
+		if (!this.wire) return false;
+		return this.wire.value;
 	}
 }
 
@@ -190,7 +200,23 @@ class Circuit extends Footprint {
 
 	init() {}
 
-	$execute() {}
+	getCircuits() {
+		let ret = {};
+		for (let k in this) {
+			let item = this[k];
+			if (item instanceof Circuit) {
+				ret[k] = item;
+			}
+		}
+		return ret;
+	}
+
+	$execute() {
+		let circuits = this.getCircuits();
+
+		for (let k in circuits)
+			circuits[k].$execute();
+	}
 }
 
 class Component extends Circuit {
@@ -209,7 +235,7 @@ class Bus extends Circuit {
 			for (var i = 0; i < n.length; i++) {
 				let nItem = n[i];
 				if (nItem instanceof Pin) {
-					this.pins[`${this.prefix}${i}`] = n;
+					this.pins[`${this.prefix}${i}`] = nItem;
 				} else if (nItem instanceof Bus) {
 					for (let sk in nItem.pins) {
 						this.pins[sk] = nItem.pins[sk];
@@ -233,43 +259,43 @@ function Connect(srcPin, destPin) {
 		const srcIsArray = Array.isArray(srcPin);
 		if (!srcIsArray) Logger.Panic(`Connection not allowed with a single pin`);
 
+
 	} else {
-		let srcPinList = Footprint.GetPinList(srcPin);
-		let destPinList = Footprint.GetPinList(destPin);
+		let srcPinMap = Footprint.GetPinList(srcPin);
+		let destPinMap = Footprint.GetPinList(destPin);
 
-		if (srcPinList.length == 0) Logger.Panic(`Connection not allowed: srcPin is empty!`);
-		if (destPinList.length == 0) Logger.Panic(`Connection not allowed: destPin is empty!`);
+		if (Object.keys(srcPinMap).length == 0) Logger.Panic(`Connection not allowed: srcPin is empty!`);
+		if (Object.keys(destPinMap).length == 0) Logger.Panic(`Connection not allowed: destPin is empty!`);
 
-		if ((srcPinList.length > 1) && (destPinList.length <= 1)) Logger.Panic(`Connection not allowed: cannot connect to a single destination!`);
+		if ((Object.keys(srcPinMap).length > 1) && (Object.keys(destPinMap).length <= 1)) Logger.Panic(`Connection not allowed: cannot connect to a single destination!`);
 
-
-		if (srcPinList.length == 1) {
+		if (Object.keys(srcPinMap).length == 1) {
 			let newWire = new Wire();
 
-			let srcPinItem = srcPinList[0];
+			let srcPinItem = srcPinMap[0];
 
 			// Merge existing wires
 			newWire.mergeWithWire(srcPinItem.wire);
 
-			let destWires = Footprint.GetConnectedWires(destPinList);
+			let destWires = Footprint.GetConnectedWires(destPinMap);
 			for (let w of destWires)
 				newWire.mergeWithWire(w);
 
 			// Connect pins to wire
 			newWire.connectPin(srcPinItem);
-			for (let p of destPinList)
+			for (let p of destPinMap)
 				newWire.connectPin(p);
 
 			return newWire;
 		} else {
-			if (srcPinList.length != destPinList.length) Logger.Panic(`Connection not allowed: mismatching pins sizes!`);
+//			if (srcPinMap.length != destPinMap.length) Logger.Panic(`Connection not allowed: mismatching pins sizes!`);
 
 			let newWires = [];
-			for (let i = 0; i < srcPinList.length; i++) {
+			for (let k in srcPinMap) {
 				let newWire = new Wire();
 
-				let srcPinItem = srcPinList[i];
-				let destPinItem = destPinList[i];
+				let srcPinItem = srcPinMap[k];
+				let destPinItem = destPinMap[k];
 
 				// Merge existing wires
 				//if (srcPinItem.wire) throw srcPinItem;
@@ -285,9 +311,7 @@ function Connect(srcPin, destPin) {
 
 			return newWires;
 		}
-
 	}
-
 }
 
 class inv extends Circuit {
@@ -296,6 +320,28 @@ class inv extends Circuit {
 			IN: new Pin(),
 			OUT: new Pin()
 		}
+	}
+
+	$execute() {
+		this.pins.OUT.setValue(!this.pins.IN.getValue());
+	}
+}
+
+class and extends Circuit {
+	init(n) {
+		this.n = n;
+		for (var i = 0; i < n; i++) {
+			this.pins[`IN${i}`] = new Pin();
+		}
+		this.pins.OUT = new Pin();
+	}
+
+	$execute() {
+		let out = true;
+		for (var i = 0; i < this.n; i++) {
+			out = out && this.pins[`IN${i}`].getValue();
+		}
+		this.pins.OUT.setValue(out);
 	}
 }
 
@@ -461,6 +507,38 @@ SN74HC245.prototype.OutputBus = function() {
 	]);
 }
 
+/**
+ * Quadruple 2-input Positive-And Gates
+ */
+class SN74HC08 extends Component {
+	init() {
+		this.pins = {
+			A: new Pin(),
+			B: new Pin(),
+			Y: new Pin()
+		}
+		this.U1 = new and(2);
+
+		Connect(this.pins.A, this.U1.pins.IN0);
+		Connect(this.pins.B, this.U1.pins.IN1);
+		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+}
+
+/**
+ * Hex Inverters with Open-Collector Outputs
+ */
+ class SN74HC05 extends Component {
+	init() {
+		this.pins = {
+			A: new Pin(),
+			Y: new Pin(),
+		}
+		this.U1 = new inv();
+		Connect(this.pins.A, this.U1.pins.IN);
+		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+}
 
 class Register_8Bit extends Circuit {
 	init() {
@@ -477,10 +555,10 @@ class Register_8Bit extends Circuit {
 		Connect(this.pins.bus, this.b1);
 
 		Connect(this.b1, this.c1.InputBus());
-		//Connect(this.c1.OutputBus(), this.c2.InputBus());
-		//Connect(this.c2.OutputBus(), this.b1);
+		Connect(this.c1.OutputBus(), this.c2.InputBus());
+		Connect(this.c2.OutputBus(), this.b1);
 
-		//Connect(this.pins.cs, this.c1.pins.OCBAR);
+		Connect(this.pins.cs, this.c1.pins.OCBAR);
 	}
 }
 
@@ -490,9 +568,37 @@ class MainBoard extends Board {
 		this.reg_A = new Register_8Bit();
 		this.reg_B = new Register_8Bit();
 		this.reg_C = new Register_8Bit();
+
+		Connect(this.reg_A.pins.bus, this.backplane);
 	}
 }
 
-let m = new MainBoard();
-let pp = m.reg_A.pins.bus.pinList();
-console.log(pp);
+
+class TestBoard extends Board {
+	init() {
+		this.pins = {
+			a: new Pin(),
+			q: new Pin(),
+			z: new Pin(),
+		}
+
+		this.u1 = new SN74HC08();
+		this.u2 = new SN74HC05();
+
+		Connect(this.pins.a, this.u1.pins.A);
+		Connect(this.pins.a, this.u1.pins.B);
+		Connect(this.pins.q, this.u1.pins.Y);
+
+		Connect(this.u1.pins.Y, this.u2.pins.A);
+		Connect(this.pins.z, this.u2.pins.Y);
+	}
+}
+
+var p = new TestBoard();
+
+p.pins.a.setValue(false);
+
+p.$execute();
+
+console.log(p.pins.q.getValue());
+console.log(p.pins.z.getValue());
