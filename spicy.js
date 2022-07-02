@@ -1,6 +1,5 @@
 const { publicDecrypt } = require('crypto');
 const fs = require('fs');
-const data = fs.readFileSync('74hc.lib', 'utf8');
 
 /* Define function for escaping user input to be treated as 
 	a literal string within a regular expression */
@@ -11,74 +10,6 @@ function escapeRegExp(string){
 /* Define functin to find and replace specified term with replacement string */
 String.prototype.replaceAll = function(term, replacement) {
 	return this.replace(new RegExp(escapeRegExp(term), 'g'), replacement);
-}
-
-const lines = data.split('\n');
-
-const outLines = [];
-var outLine = '';
-for (let l of lines) {
-	if (l.startsWith('*'))
-    if (!l.startsWith('* 74'))
-      continue;
-	if (!l.startsWith('+')) { outLines.push(outLine); outLine = ''; }
-
-	if (l.startsWith('+')) l = l.substring(1);
-	if (l.includes(';')) l = l.substring(0, l.indexOf(';'));
-	l = l.replace('\n', '');
-	l = l.replace('\r', '');
-	outLine += l;
-}
-
-
-const cleanLines = [];
-const functions = {};
-const circuits = [];
-let circuitLines = [];
-const comments = {};
-for (let l of outLines) {
-  l = l.replace(/[$\/]+/g, '_');
-
-	if (l.startsWith('.')) {
-		if (l.toUpperCase().startsWith('.SUBCKT')) {
-      cleanLines.push(l);
-      circuitLines = [ l ];
-    }
-		if (l.toUpperCase().startsWith('.ENDS')) {
-      cleanLines.push(l);
-      circuits.push(circuitLines);
-      circuitLines = [];
-    }
-	}
-
-  if (l.startsWith('*')) {
-    let cleanText = l.substring(2);
-    let firstSpace = cleanText.indexOf(' ');
-    let name = cleanText.substring(0, firstSpace);
-
-    if (!(name in comments))
-      comments[name] = cleanText.substring(firstSpace).trim();
-  }
-
-	if (l.startsWith('U')) {
-		let tokens = l.split(/[ \t]+/);
-		let C_name = tokens[0];
-		let C_func = tokens[1];
-
-		//if (C_func.toUpperCase() != 'PINDLY') {
-      cleanLines.push(l);
-      circuitLines.push(l);
-
-      let C_func_clear = C_func.split('(')[0].toLowerCase();
-      functions[C_func_clear] |= 0; 
-      functions[C_func_clear]++; 
-    //}
-	}
-
-	if (l.startsWith('X')) {
-		cleanLines.push(l);
-    circuitLines.push(l);
-	}
 }
 
 function sanitizeName(name) {
@@ -423,35 +354,97 @@ class Circuit {
   }
 }
 
-//fs.writeFileSync('74hc_clean.lib', cleanLines.join('\n'));
+function ConvertFile(filename) {
+	const data = fs.readFileSync(filename + '.lib', 'utf8');
+	const lines = data.split('\n');
 
-let circuitsObjects = [];
-for (let c of circuits) {
-  let newC = new Circuit(c);
-  circuitsObjects.push(newC);
+	const outLines = [];
+	var outLine = '';
+	for (let l of lines) {
+		if (l.startsWith('*'))
+			if (!l.startsWith('* 74'))
+				continue;
+		if (!l.startsWith('+')) { outLines.push(outLine); outLine = ''; }
+
+		if (l.startsWith('+')) l = l.substring(1);
+		if (l.includes(';')) l = l.substring(0, l.indexOf(';'));
+		l = l.replace('\n', '');
+		l = l.replace('\r', '');
+		outLine += l;
+	}
+
+
+	const cleanLines = [];
+	const functions = {};
+	const circuits = [];
+	let circuitLines = [];
+	const comments = {};
+	for (let l of outLines) {
+		l = l.replace(/[$\/]+/g, '_');
+
+		if (l.startsWith('.')) {
+			if (l.toUpperCase().startsWith('.SUBCKT')) {
+				cleanLines.push(l);
+				circuitLines = [ l ];
+			}
+			if (l.toUpperCase().startsWith('.ENDS')) {
+				cleanLines.push(l);
+				circuits.push(circuitLines);
+				circuitLines = [];
+			}
+		}
+
+		if (l.startsWith('*')) {
+			let cleanText = l.substring(2);
+			let firstSpace = cleanText.indexOf(' ');
+			let name = cleanText.substring(0, firstSpace);
+
+			if (!(name in comments))
+				comments[name] = cleanText.substring(firstSpace).trim();
+		}
+
+		if (l.startsWith('U')) {
+			let tokens = l.split(/[ \t]+/);
+			let C_name = tokens[0];
+			let C_func = tokens[1];
+
+			//if (C_func.toUpperCase() != 'PINDLY') {
+				cleanLines.push(l);
+				circuitLines.push(l);
+
+				let C_func_clear = C_func.split('(')[0].toLowerCase();
+				functions[C_func_clear] |= 0; 
+				functions[C_func_clear]++; 
+			//}
+		}
+
+		if (l.startsWith('X')) {
+			cleanLines.push(l);
+			circuitLines.push(l);
+		}
+	}
+
+
+	let circuitsObjects = [];
+	for (let c of circuits) {
+		let newC = new Circuit(c);
+		circuitsObjects.push(newC);
+	}
+	
+	const codeLines = [];
+	codeLines.push(`const core = require('./core.js');`)
+	for (var c of circuitsObjects) {
+		codeLines.push(c.compile());
+	}
+	
+	let exp = [];
+	for (var c of circuitsObjects) {
+		exp.push(`global.${c.name} = ${c.name};`);
+	}
+	codeLines.push(exp.join('\n'));
+	
+	fs.writeFileSync(filename + '_code.js', codeLines.join('\n\n'));
 }
 
-const codeLines = [];
-codeLines.push(`const core = require('./core.js');`)
-for (var c of circuitsObjects) {
-  codeLines.push(c.compile());
-}
-
-let exp = [];
-for (var c of circuitsObjects) {
-	exp.push(`global.${c.name} = ${c.name};`);
-}
-codeLines.push(exp.join('\n'));
-
-//console.log(circuitsObjects[61].compile());
-//console.log(circuitsObjects[0].pins);
-
-//console.log(circuitsObjects.map(t => t.name).indexOf('74HC181'));
-
-
-fs.writeFileSync('74hc_code.js', codeLines.join('\n\n'));
-
-//fs.writeFileSync('74hc_functions.txt', JSON.stringify(functions, null, 2));
-//fs.writeFileSync('74hc_oneline.lib', outLines.join('\n'));
-//fs.writeFileSync('74hc_circuits_list.lib', JSON.stringify(circuits, null, 2));
-//fs.writeFileSync('74hc_circuits.lib', JSON.stringify(circuitsObjects, null, 2));
+ConvertFile('74hc');
+ConvertFile('74ls');
