@@ -271,8 +271,8 @@ class Part {
 			if (this.pins[varItem]) {
 				jsCodeLines.push(`${l};`);
 			} else {
-				this.context.temps.push(varItem);
-				//jsCodeLines.push(`let ${l};`);
+				//this.context.temps.push(varItem);
+				jsCodeLines.push(`let ${l};`);
 				jsCodeLines.push(`${l};`);
 			}
 		}
@@ -327,7 +327,7 @@ class Circuit {
     let commandLine = lines[0];
     let commandTokens = commandLine.split(/[ \t]+/);
 
-    this.name = commandTokens[1];
+    this.name = 'SN' + commandTokens[1];
     
     // Pins
     this.pins = [];
@@ -357,7 +357,7 @@ class Circuit {
       out.push(` * ${comment}`);
       out.push(' */');
     }
-    out.push(`class SN${this.name} extends Component {`);
+    out.push(`class ${this.name} extends Component {`);
 
     out.push(`\tconstructor() {`);
     out.push(`\t\tsuper();`);
@@ -385,6 +385,7 @@ class Circuit {
 			} else {
 				if (p.logic) {
 					out.push(`\t\tthis.${p.name} = new ${p.func}([${p.context.inputs.map(t => `'${t}'`).join(',')}], [${p.context.outputs.map(t => `'${t}'`).join(',')}], [${p.context.temps.map(t => `'${t}'`).join(',')}]).Logic('${p.logic}');`);
+					//out.push(`\t\tthis.${p.name} = new ${p.func}([${p.context.inputs.map(t => `'${t}'`).join(',')}], [${p.context.outputs.map(t => `'${t}'`).join(',')}], [${p.context.temps.map(t => `'${t}'`).join(',')}]).Logic('${p.logic}');`);
 					//out.push(`\t\tthis.${p.name} = new ${p.func}(${p.args.join(',')}).Context([${p.context.inputs.map(t => `'${t}'`).join(',')}], [${p.context.outputs.map(t => `'${t}'`).join(',')}]).Logic('${p.logic}');`);
 				} else {
 					out.push(`\t\tthis.${p.name} = new ${p.func}(${p.args.join(',')});`);
@@ -431,11 +432,16 @@ for (let c of circuits) {
 }
 
 const codeLines = [];
-
+codeLines.push(`const core = require('./core.js');`)
 for (var c of circuitsObjects) {
   codeLines.push(c.compile());
 }
 
+let exp = [];
+for (var c of circuitsObjects) {
+	exp.push(`global.${c.name} = ${c.name};`);
+}
+codeLines.push(exp.join('\n'));
 
 //console.log(circuitsObjects[61].compile());
 //console.log(circuitsObjects[0].pins);
