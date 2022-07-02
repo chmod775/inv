@@ -423,7 +423,7 @@ class Circuit {
   }
 }
 
-fs.writeFileSync('74hc_clean.lib', cleanLines.join('\n'));
+//fs.writeFileSync('74hc_clean.lib', cleanLines.join('\n'));
 
 let circuitsObjects = [];
 for (let c of circuits) {
@@ -451,7 +451,7 @@ codeLines.push(exp.join('\n'));
 
 fs.writeFileSync('74hc_code.js', codeLines.join('\n\n'));
 
-fs.writeFileSync('74hc_functions.txt', JSON.stringify(functions, null, 2));
-fs.writeFileSync('74hc_oneline.lib', outLines.join('\n'));
-fs.writeFileSync('74hc_circuits_list.lib', JSON.stringify(circuits, null, 2));
-fs.writeFileSync('74hc_circuits.lib', JSON.stringify(circuitsObjects, null, 2));
+//fs.writeFileSync('74hc_functions.txt', JSON.stringify(functions, null, 2));
+//fs.writeFileSync('74hc_oneline.lib', outLines.join('\n'));
+//fs.writeFileSync('74hc_circuits_list.lib', JSON.stringify(circuits, null, 2));
+//fs.writeFileSync('74hc_circuits.lib', JSON.stringify(circuitsObjects, null, 2));
