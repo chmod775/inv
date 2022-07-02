@@ -2,6 +2,17 @@ const { publicDecrypt } = require('crypto');
 const fs = require('fs');
 const data = fs.readFileSync('74hc.lib', 'utf8');
 
+/* Define function for escaping user input to be treated as 
+	a literal string within a regular expression */
+function escapeRegExp(string){
+	return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+		
+/* Define functin to find and replace specified term with replacement string */
+String.prototype.replaceAll = function(term, replacement) {
+	return this.replace(new RegExp(escapeRegExp(term), 'g'), replacement);
+}
+
 const lines = data.split('\n');
 
 const outLines = [];
@@ -54,14 +65,14 @@ for (let l of outLines) {
 		let C_name = tokens[0];
 		let C_func = tokens[1];
 
-		if (C_func.toUpperCase() != 'PINDLY') {
+		//if (C_func.toUpperCase() != 'PINDLY') {
       cleanLines.push(l);
       circuitLines.push(l);
 
       let C_func_clear = C_func.split('(')[0].toLowerCase();
       functions[C_func_clear] |= 0; 
       functions[C_func_clear]++; 
-    }
+    //}
 	}
 
 	if (l.startsWith('X')) {
@@ -207,7 +218,8 @@ class Part {
 		
 		this.context = {
 			inputs: [],
-			outputs: []
+			outputs: [],
+			temps: []
 		};
 
 		let nInputs = a[0];
@@ -244,10 +256,12 @@ class Part {
 
 		let sanitizedCode = logicLines.join('\n');
 		for (let v of vars) {
-			sanitizedCode = sanitizedCode.replace(new RegExp(v, 'g'), sanitizeName(v));
+			sanitizedCode = sanitizedCode.replaceAll(v, sanitizeName(v));
 		}
 
-		console.log(sanitizedCode);
+		sanitizedCode = sanitizedCode.replaceAll('~', '!');
+		//sanitizedCode = sanitizedCode.replaceAll('&', '&&');
+		//sanitizedCode = sanitizedCode.replaceAll('|', '||');
 
 		let sanitizedCodeLines = sanitizedCode.split('\n');
 		let jsCodeLines = [];
@@ -257,12 +271,54 @@ class Part {
 			if (this.pins[varItem]) {
 				jsCodeLines.push(`${l};`);
 			} else {
-				jsCodeLines.push(`let ${l};`);
+				this.context.temps.push(varItem);
+				//jsCodeLines.push(`let ${l};`);
+				jsCodeLines.push(`${l};`);
 			}
 		}
 
-
 		this.logic = jsCodeLines.join('');
+	}
+
+	map_pindly(t, a) {
+		let vcc = t.getToken().content;
+    let gnd = t.getToken().content;
+		
+		let nPaths = a[0];
+		let nEnables = a[1];
+		let nRefs = a[2];
+
+		this.paths = {
+			inputs: [],
+			outputs: []
+		};
+
+		this.enables = [];
+		this.references = [];
+
+		for (var i = 0; i < nPaths; i++) {
+			let tc = sanitizeName(t.getToken().content);
+			this.pins[tc] = tc;
+			this.paths.inputs.push(tc);
+		}
+
+		for (var i = 0; i < nEnables; i++) {
+			let tc = sanitizeName(t.getToken().content);
+			this.pins[tc] = tc;
+			this.enables.push(tc);
+		}
+
+		for (var i = 0; i < nRefs; i++) {
+			let tc = sanitizeName(t.getToken().content);
+			this.pins[tc] = tc;
+			this.references.push(tc);
+		}
+
+		for (var i = 0; i < nPaths; i++) {
+			let tc = sanitizeName(t.getToken().content);
+			this.pins[tc] = tc;
+			this.paths.outputs.push(tc);
+		}
 	}
 }
 
@@ -311,31 +367,51 @@ class Circuit {
     }
     out.push(`\t\t}`);
     for (let p of this.parts) {
-			if (p.logic) {
-				out.push(`\t\tthis.${p.name} = new ${p.func}([${p.context.inputs.map(t => `'${t}'`).join(',')}], [${p.context.outputs.map(t => `'${t}'`).join(',')}]).Logic('${p.logic}');`);
-				//out.push(`\t\tthis.${p.name} = new ${p.func}(${p.args.join(',')}).Context([${p.context.inputs.map(t => `'${t}'`).join(',')}], [${p.context.outputs.map(t => `'${t}'`).join(',')}]).Logic('${p.logic}');`);
-			} else {
-				out.push(`\t\tthis.${p.name} = new ${p.func}(${p.args.join(',')});`);
-			}
+			if (p.paths) {
+				for (let i = 0; i < p.paths.inputs.length; i++) {
+					let pi = p.paths.inputs[i];
+					let po = p.paths.outputs[i];
 
-			for (let ppk in p.pins) {
-				let pp = sanitizeName(p.pins[ppk]);
-				
-				let isTemporary = !this.pins.includes(pp);
-				var destPin = `this.pins.${pp}`;
+					let srcPin = `this.pins.${pi}`;
+					if (temporary.includes(pi))
+						srcPin = pi;
 
-				if (isTemporary) {
-					if ((pp != '_D_HI') && (pp != '_D_LOW'))
-						if (!temporary.includes(pp)) {
-							temporary.push(pp);
-							out.push(`\t\tlet ${pp} = new Pin();`);
-						}
-
-					destPin = pp;
+					let destPin = `this.pins.${po}`;
+					if (temporary.includes(po))
+						destPin = po;
+					
+					out.push(`\t\tConnect(${srcPin}, ${destPin});`);
 				}
-
-				out.push(`\t\tConnect(this.${p.name}.pins.${sanitizeName(ppk)}, ${destPin});`);
+			} else {
+				if (p.logic) {
+					out.push(`\t\tthis.${p.name} = new ${p.func}([${p.context.inputs.map(t => `'${t}'`).join(',')}], [${p.context.outputs.map(t => `'${t}'`).join(',')}], [${p.context.temps.map(t => `'${t}'`).join(',')}]).Logic('${p.logic}');`);
+					//out.push(`\t\tthis.${p.name} = new ${p.func}(${p.args.join(',')}).Context([${p.context.inputs.map(t => `'${t}'`).join(',')}], [${p.context.outputs.map(t => `'${t}'`).join(',')}]).Logic('${p.logic}');`);
+				} else {
+					out.push(`\t\tthis.${p.name} = new ${p.func}(${p.args.join(',')});`);
+				}
+	
+				for (let ppk in p.pins) {
+					let pp = sanitizeName(p.pins[ppk]);
+					
+					let isTemporary = !this.pins.includes(pp);
+					var destPin = `this.pins.${pp}`;
+	
+					if (isTemporary) {
+						if ((pp != '_D_HI') && (pp != '_D_LOW'))
+							if (!temporary.includes(pp)) {
+								temporary.push(pp);
+								out.push(`\t\tlet ${pp} = new Pin();`);
+							}
+	
+						destPin = pp;
+					}
+	
+					out.push(`\t\tConnect(this.${p.name}.pins.${sanitizeName(ppk)}, ${destPin});`);
+				}
 			}
+
+
+
 
     }
     out.push(`\t}`);
@@ -346,6 +422,8 @@ class Circuit {
   }
 }
 
+fs.writeFileSync('74hc_clean.lib', cleanLines.join('\n'));
+
 let circuitsObjects = [];
 for (let c of circuits) {
   let newC = new Circuit(c);
@@ -353,12 +431,13 @@ for (let c of circuits) {
 }
 
 const codeLines = [];
-/*
+
 for (var c of circuitsObjects) {
   codeLines.push(c.compile());
 }
-*/
-console.log(circuitsObjects[61].compile());
+
+
+//console.log(circuitsObjects[61].compile());
 //console.log(circuitsObjects[0].pins);
 
 //console.log(circuitsObjects.map(t => t.name).indexOf('74HC181'));
@@ -368,6 +447,5 @@ fs.writeFileSync('74hc_code.js', codeLines.join('\n\n'));
 
 fs.writeFileSync('74hc_functions.txt', JSON.stringify(functions, null, 2));
 fs.writeFileSync('74hc_oneline.lib', outLines.join('\n'));
-fs.writeFileSync('74hc_clean.lib', cleanLines.join('\n'));
 fs.writeFileSync('74hc_circuits_list.lib', JSON.stringify(circuits, null, 2));
 fs.writeFileSync('74hc_circuits.lib', JSON.stringify(circuitsObjects, null, 2));

@@ -447,11 +447,12 @@ class buf3a extends Circuit {
 }
 
 class logicexp extends Circuit {
-	constructor(inputs, outputs) {
+	constructor(inputs, outputs, temps) {
 		super();
 
 		this.inputs = inputs;
 		this.outputs = outputs;
+		this.temps = temps;
 
 		for (var i of inputs)
 			this.pins[i] = new Pin();
@@ -470,12 +471,16 @@ class logicexp extends Circuit {
 		let context = {};
 
 		for (var i of this.inputs)
-			context[i] = this.pins[i].getValue();
+			context[i] = this.pins[i].getValue() ? 255 : 0;
 		for (var i of this.outputs)
-			context[i] = null;
-		
+			context[i] = this.pins[i].getValue() ? 255 : 0;
+		for (var i of this.temps)
+			context[i] = false;
+
 		vm.createContext(context); 
 		vm.runInContext(this.code, context);
+
+		console.log(context);
 
 		for (var i of this.outputs)
 			this.pins[i].setValue(context[i]);
@@ -682,7 +687,6 @@ class SN74HC08 extends Component {
 	}
 }
 
-
 /**
  * ALU _ FUNCTION GENERATOR
  */
@@ -713,7 +717,7 @@ class SN74HC08 extends Component {
 			GBAR_O: new Pin(),
 			CN_4_O: new Pin(),
 		}
-		this.UHC181LOG = new logicexp(['A0BAR_I','A1BAR_I','A2BAR_I','A3BAR_I','B0BAR_I','B1BAR_I','B2BAR_I','B3BAR_I','S0_I','S1_I','S2_I','S3_I','M_I','CN_I'], ['A0BAR','A1BAR','A2BAR','A3BAR','B0BAR','B1BAR','B2BAR','B3BAR','S0','S1','S2','S3','M','CN','F0BAR','F1BAR','F2BAR','F3BAR','AEQUALB','PBAR','GBAR','CN_4']).Logic('   A0BAR   =  A0BAR_I ;   A1BAR   =  A1BAR_I ;   A2BAR   =  A2BAR_I ;   A3BAR   =  A3BAR_I ;   B0BAR   =  B0BAR_I ;   B1BAR   =  B1BAR_I ;   B2BAR   =  B2BAR_I ;   B3BAR   =  B3BAR_I ;   S0      =  S0_I ;   S1      =  S1_I ;   S2      =  S2_I ;   S3      =  S3_I ;   M       =  M_I ;   CN      =  CN_I ;let    TOP3    =  ~( (A3BAR & B3BAR & S3) | (A3BAR & ~B3BAR & S2) ) ;let    BOT3    =  ~(        (~B3BAR & S1) |  A3BAR | (B3BAR & S0) ) ;let    TOP2    =  ~( (A2BAR & B2BAR & S3) | (A2BAR & ~B2BAR & S2) ) ;let    BOT2    =  ~(        (~B2BAR & S1) |  A2BAR | (B2BAR & S0) ) ;let    TOP1    =  ~( (A1BAR & B1BAR & S3) | (A1BAR & ~B1BAR & S2) ) ;let    BOT1    =  ~(        (~B1BAR & S1) |  A1BAR | (B1BAR & S0) ) ;let    TOP0    =  ~( (A0BAR & B0BAR & S3) | (A0BAR & ~B0BAR & S2) ) ;let    BOT0    =  ~(        (~B0BAR & S1) |  A0BAR | (B0BAR & S0) ) ;let    MBAR    =  ~M ;   F3BAR   =  (TOP3 ^ BOT3) ^ ~( (  CN & MBAR & TOP2 & TOP1 & TOP0) |                                  (BOT0 & MBAR & TOP2 & TOP1) |                                  (BOT1 & MBAR & TOP2) |                                  (BOT2 & MBAR) ) ;   F2BAR   =  (TOP2 ^ BOT2) ^ ~( (  CN & MBAR & TOP1 & TOP0) |                                  (BOT0 & MBAR & TOP1) |                                  (BOT1 & MBAR) ) ;   F1BAR   =  (TOP1 ^ BOT1) ^ ~( (  CN & MBAR & TOP0) |                                  (BOT0 & MBAR) ) ;   F0BAR   =  (TOP0 ^ BOT0) ^ ~(    CN & MBAR) ;   AEQUALB =  F3BAR & F2BAR & F1BAR & F0BAR ;   PBAR    =  ~(         TOP3 & TOP2 & TOP1 & TOP0) ;   GBAR    =  ~( (BOT0 & TOP3 & TOP2 & TOP1) |                  (BOT1 & TOP3 & TOP2) |                  (BOT2 & TOP3) |                    BOT3 ) ;let    CN_4    =  ~GBAR | (~PBAR & CN) ;');
+		this.UHC181LOG = new logicexp(['A0BAR_I','A1BAR_I','A2BAR_I','A3BAR_I','B0BAR_I','B1BAR_I','B2BAR_I','B3BAR_I','S0_I','S1_I','S2_I','S3_I','M_I','CN_I'], ['A0BAR','A1BAR','A2BAR','A3BAR','B0BAR','B1BAR','B2BAR','B3BAR','S0','S1','S2','S3','M','CN','F0BAR','F1BAR','F2BAR','F3BAR','AEQUALB','PBAR','GBAR','CN_4'], ['TOP3','BOT3','TOP2','BOT2','TOP1','BOT1','TOP0','BOT0','MBAR']).Logic('   A0BAR   =  A0BAR_I ;   A1BAR   =  A1BAR_I ;   A2BAR   =  A2BAR_I ;   A3BAR   =  A3BAR_I ;   B0BAR   =  B0BAR_I ;   B1BAR   =  B1BAR_I ;   B2BAR   =  B2BAR_I ;   B3BAR   =  B3BAR_I ;   S0      =  S0_I ;   S1      =  S1_I ;   S2      =  S2_I ;   S3      =  S3_I ;   M       =  M_I ;   CN      =  CN_I ;   TOP3    =  !( (A3BAR & B3BAR & S3) | (A3BAR & !B3BAR & S2) ) ;   BOT3    =  !(        (!B3BAR & S1) |  A3BAR | (B3BAR & S0) ) ;   TOP2    =  !( (A2BAR & B2BAR & S3) | (A2BAR & !B2BAR & S2) ) ;   BOT2    =  !(        (!B2BAR & S1) |  A2BAR | (B2BAR & S0) ) ;   TOP1    =  !( (A1BAR & B1BAR & S3) | (A1BAR & !B1BAR & S2) ) ;   BOT1    =  !(        (!B1BAR & S1) |  A1BAR | (B1BAR & S0) ) ;   TOP0    =  !( (A0BAR & B0BAR & S3) | (A0BAR & !B0BAR & S2) ) ;   BOT0    =  !(        (!B0BAR & S1) |  A0BAR | (B0BAR & S0) ) ;   MBAR    =  !M ;   F3BAR   =  (TOP3 ^ BOT3) ^ !( (  CN & MBAR & TOP2 & TOP1 & TOP0) |                                  (BOT0 & MBAR & TOP2 & TOP1) |                                  (BOT1 & MBAR & TOP2) |                                  (BOT2 & MBAR) ) ;   F2BAR   =  (TOP2 ^ BOT2) ^ !( (  CN & MBAR & TOP1 & TOP0) |                                  (BOT0 & MBAR & TOP1) |                                  (BOT1 & MBAR) ) ;   F1BAR   =  (TOP1 ^ BOT1) ^ !( (  CN & MBAR & TOP0) |                                  (BOT0 & MBAR) ) ;   F0BAR   =  (TOP0 ^ BOT0) ^ !(    CN & MBAR) ;   AEQUALB =  F3BAR & F2BAR & F1BAR & F0BAR ;   PBAR    =  !(         TOP3 & TOP2 & TOP1 & TOP0) ;   GBAR    =  !( (BOT0 & TOP3 & TOP2 & TOP1) |                  (BOT1 & TOP3 & TOP2) |                  (BOT2 & TOP3) |                    BOT3 ) ;   CN_4    =  !GBAR | (!PBAR & CN) ;');
 		Connect(this.UHC181LOG.pins.A0BAR_I, this.pins.A0BAR_I);
 		Connect(this.UHC181LOG.pins.A1BAR_I, this.pins.A1BAR_I);
 		Connect(this.UHC181LOG.pins.A2BAR_I, this.pins.A2BAR_I);
@@ -770,6 +774,16 @@ class SN74HC08 extends Component {
 		Connect(this.UHC181LOG.pins.PBAR, PBAR);
 		let GBAR = new Pin();
 		Connect(this.UHC181LOG.pins.GBAR, GBAR);
+		let CN_4 = new Pin();
+		Connect(this.UHC181LOG.pins.CN_4, CN_4);
+		Connect(F0BAR, this.pins.F0BAR_O);
+		Connect(F1BAR, this.pins.F1BAR_O);
+		Connect(F2BAR, this.pins.F2BAR_O);
+		Connect(F3BAR, this.pins.F3BAR_O);
+		Connect(PBAR, this.pins.PBAR_O);
+		Connect(GBAR, this.pins.GBAR_O);
+		Connect(CN_4, this.pins.CN_4_O);
+		Connect(AEQUALB, this.pins.AEQUALB_O);
 	}
 }
 
@@ -842,7 +856,7 @@ class TestBoard extends Board {
 }
 
 let t = new TestBoard();
-
+/*
 t.u3.pins._1D.setValue(true);
 t.$execute();
 console.log(t.u3.pins._1Q.getValue());
@@ -862,9 +876,31 @@ console.log(t.u3.pins._1Q.getValue());
 t.u3.pins.CLK.setValue(true);
 t.$execute();
 console.log(t.u3.pins._1Q.getValue());
+*/
 
+t.u100.pins.M_I.setValue(false);
+t.u100.pins.CN_I.setValue(true);
+t.u100.pins.S0_I.setValue(true);
+t.u100.pins.S1_I.setValue(false);
+t.u100.pins.S2_I.setValue(false);
+t.u100.pins.S3_I.setValue(true);
 
+t.u100.pins.A0BAR_I.setValue(true);
+t.u100.pins.A1BAR_I.setValue(true);
+t.u100.pins.A2BAR_I.setValue(false);
+t.u100.pins.A3BAR_I.setValue(false);
 
+t.u100.pins.B0BAR_I.setValue(true);
+t.u100.pins.B1BAR_I.setValue(true);
+t.u100.pins.B2BAR_I.setValue(false);
+t.u100.pins.B3BAR_I.setValue(false);
+
+t.$execute();
+
+console.log(t.u100.pins.F0BAR_O.getValue());
+console.log(t.u100.pins.F1BAR_O.getValue());
+console.log(t.u100.pins.F2BAR_O.getValue());
+console.log(t.u100.pins.F3BAR_O.getValue());
 
 
 global.TestBoard = TestBoard;

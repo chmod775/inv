@@ -6,6 +6,7 @@
   "or": 8,
   "buf": 9,
   "logicexp": 63,
+  "pindly": 71,
   "aoi": 2,
   "jkff": 72,
   "dff": 63,
