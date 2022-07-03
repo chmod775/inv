@@ -1,5 +1,7 @@
 const core = require('./core.js');
-
+/**
+ * Quadruple 2-input Positive-Nand Gates
+ */
 class SN74HC00 extends Component {
 	constructor() {
 		super();
@@ -14,7 +16,9 @@ class SN74HC00 extends Component {
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
-
+/**
+ * Quadruple 2-input Positive-Nand Gates with Open-Collector Outputs
+ */
 class SN74HC01 extends Component {
 	constructor() {
 		super();
@@ -29,7 +33,9 @@ class SN74HC01 extends Component {
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
-
+/**
+ * Quadruple 2-input Positive-Nor Gates
+ */
 class SN74HC02 extends Component {
 	constructor() {
 		super();
@@ -41,7 +47,9 @@ class SN74HC02 extends Component {
 		this.U1 = new nor(2);
 	}
 }
-
+/**
+ * Quadruple 2-input Positive-Nand Gates with Open-Collector Outputs
+ */
 class SN74HC03 extends Component {
 	constructor() {
 		super();
@@ -56,7 +64,9 @@ class SN74HC03 extends Component {
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
-
+/**
+ * Hex Inverters
+ */
 class SN74HC04 extends Component {
 	constructor() {
 		super();
@@ -69,7 +79,9 @@ class SN74HC04 extends Component {
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
-
+/**
+ * Hex Inverters with Open-Collector Outputs
+ */
 class SN74HC05 extends Component {
 	constructor() {
 		super();
@@ -82,7 +94,9 @@ class SN74HC05 extends Component {
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
-
+/**
+ * Quadruple 2-input Positive-And Gates
+ */
 class SN74HC08 extends Component {
 	constructor() {
 		super();
@@ -94,7 +108,9 @@ class SN74HC08 extends Component {
 		this.U1 = new and(2);
 	}
 }
-
+/**
+ * Quadruple 2-input Positive-And Gates with Open-Collector Outputs
+ */
 class SN74HC09 extends Component {
 	constructor() {
 		super();
@@ -106,7 +122,9 @@ class SN74HC09 extends Component {
 		this.U1 = new and(2);
 	}
 }
-
+/**
+ * Triple 3-input Positive-Nand Gates
+ */
 class SN74HC10 extends Component {
 	constructor() {
 		super();
@@ -123,7 +141,9 @@ class SN74HC10 extends Component {
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
-
+/**
+ * Triple 3-input Positive-And Gates
+ */
 class SN74HC11 extends Component {
 	constructor() {
 		super();
@@ -136,7 +156,9 @@ class SN74HC11 extends Component {
 		this.U1 = new and(3);
 	}
 }
-
+/**
+ * Hex Schmitt-Trigger Inverters
+ */
 class SN74HC14 extends Component {
 	constructor() {
 		super();
@@ -149,7 +171,9 @@ class SN74HC14 extends Component {
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
-
+/**
+ * Dual 4-input Positive-Nand Gates
+ */
 class SN74HC20 extends Component {
 	constructor() {
 		super();
@@ -168,7 +192,9 @@ class SN74HC20 extends Component {
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
-
+/**
+ * Dual 4-input Positive-And Gates
+ */
 class SN74HC21 extends Component {
 	constructor() {
 		super();
@@ -182,7 +208,9 @@ class SN74HC21 extends Component {
 		this.U1 = new and(4);
 	}
 }
-
+/**
+ * Triple 3-input Positive-Nor Gates
+ */
 class SN74HC27 extends Component {
 	constructor() {
 		super();
@@ -195,7 +223,9 @@ class SN74HC27 extends Component {
 		this.U1 = new nor(3);
 	}
 }
-
+/**
+ * 8-input Positive-Nand Gates
+ */
 class SN74HC30 extends Component {
 	constructor() {
 		super();
@@ -222,7 +252,9 @@ class SN74HC30 extends Component {
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
-
+/**
+ * Quadruple 2-input Positive-Or Gates
+ */
 class SN74HC32 extends Component {
 	constructor() {
 		super();
@@ -234,7 +266,9 @@ class SN74HC32 extends Component {
 		this.U1 = new or(2);
 	}
 }
-
+/**
+ * Hex Noninverters with Open-Collector Outputs
+ */
 class SN74HC35 extends Component {
 	constructor() {
 		super();
@@ -245,7 +279,9 @@ class SN74HC35 extends Component {
 		this.U1 = new buf();
 	}
 }
-
+/**
+ * Quadruple 2-input Positive-Nor Gate
+ */
 class SN74HC36 extends Component {
 	constructor() {
 		super();
@@ -257,7 +293,9 @@ class SN74HC36 extends Component {
 		this.U1 = new nor(2);
 	}
 }
-
+/**
+ * DECODER BCD-DECIMAL 4-10 LINE
+ */
 class SN74HC42 extends Component {
 	constructor() {
 		super();
@@ -322,7 +360,6 @@ class SN74HC42 extends Component {
 		Connect(Y9, this.pins.Y9_O);
 	}
 }
-
 class SN74HC51 extends Component {
 	constructor() {
 		super();
@@ -344,7 +381,9 @@ class SN74HC51 extends Component {
 		this.U2 = new aoi(2,2);
 	}
 }
-
+/**
+ * Dual J-K Flip-Flops with Clear
+ */
 class SN74HC73 extends Component {
 	constructor() {
 		super();
@@ -359,7 +398,9 @@ class SN74HC73 extends Component {
 		this.U1 = new jkff(1);
 	}
 }
-
+/**
+ * Dual D-Type Positive-Edge-Triggered Flip-Flops w_ Preset & Clear
+ */
 class SN74HC74 extends Component {
 	constructor() {
 		super();
@@ -379,7 +420,9 @@ class SN74HC74 extends Component {
 		Connect(this.UFF1.pins.Q0, this.pins._1Q);
 	}
 }
-
+/**
+ * 4-bit bistable latches (dual 2-bit common clock)
+ */
 class SN74HC75 extends Component {
 	constructor() {
 		super();
@@ -396,7 +439,9 @@ class SN74HC75 extends Component {
 		this.U12 = new dltch(2);
 	}
 }
-
+/**
+ * Dual J-K Flip-Flops with Preset and Clear
+ */
 class SN74HC76 extends Component {
 	constructor() {
 		super();
@@ -412,7 +457,9 @@ class SN74HC76 extends Component {
 		this.U1 = new jkff(1);
 	}
 }
-
+/**
+ * Dual J-K Flip-Flops with Preset, Common Clear, and Common Clock
+ */
 class SN74HC78 extends Component {
 	constructor() {
 		super();
@@ -435,7 +482,9 @@ class SN74HC78 extends Component {
 		this.U2 = new jkff(1);
 	}
 }
-
+/**
+ * 4-BIT MAGNITUDE COMPARATOR
+ */
 class SN74HC85A extends Component {
 	constructor() {
 		super();
@@ -500,7 +549,9 @@ class SN74HC85A extends Component {
 		Connect(YPLQ, this.pins.YPLQ_O);
 	}
 }
-
+/**
+ * Quadruple 2-input Exclusive-Or Gates
+ */
 class SN74HC86 extends Component {
 	constructor() {
 		super();
@@ -512,7 +563,9 @@ class SN74HC86 extends Component {
 		this.U1 = new xor();
 	}
 }
-
+/**
+ * COUNTER BINARY 4-BIT, ASYNCHRONOUS
+ */
 class SN74HC93 extends Component {
 	constructor() {
 		super();
@@ -544,7 +597,9 @@ class SN74HC93 extends Component {
 		Connect(this.pins.QD, this.pins.QD_O);
 	}
 }
-
+/**
+ * 4-BIT PARALLEL SHIFT REGISTERS
+ */
 class SN74HC95 extends Component {
 	constructor() {
 		super();
@@ -622,7 +677,9 @@ class SN74HC95 extends Component {
 		Connect(QD, this.pins.QD_O);
 	}
 }
-
+/**
+ * Dual J-K Flip-Flops with Clear
+ */
 class SN74HC107 extends Component {
 	constructor() {
 		super();
@@ -637,7 +694,9 @@ class SN74HC107 extends Component {
 		this.U1 = new jkff(1);
 	}
 }
-
+/**
+ * Dual J-Kbar Positive-Edge-Triggered Flip-Flops w_ Preset & Clear
+ */
 class SN74HC109 extends Component {
 	constructor() {
 		super();
@@ -654,7 +713,9 @@ class SN74HC109 extends Component {
 		this.U2 = new inva(2);
 	}
 }
-
+/**
+ * Dual J-K Negative-Edge-Triggered Flip-Flops with Preset & Clear
+ */
 class SN74HC112 extends Component {
 	constructor() {
 		super();
@@ -670,7 +731,9 @@ class SN74HC112 extends Component {
 		this.U1 = new jkff(1);
 	}
 }
-
+/**
+ * Dual J-K Negative-Edge-Triggered Flip-Flops with Preset
+ */
 class SN74HC113 extends Component {
 	constructor() {
 		super();
@@ -685,7 +748,9 @@ class SN74HC113 extends Component {
 		this.U1 = new jkff(1);
 	}
 }
-
+/**
+ * Dual J-K Negative-Edge-Triggered Flip-Flops with Preset & Common Clear, & Common Clock
+ */
 class SN74HC114 extends Component {
 	constructor() {
 		super();
@@ -708,7 +773,9 @@ class SN74HC114 extends Component {
 		this.U2 = new jkff(1);
 	}
 }
-
+/**
+ * Quadruple Bus Buffer with 3-state Outputs
+ */
 class SN74HC125 extends Component {
 	constructor() {
 		super();
@@ -724,7 +791,9 @@ class SN74HC125 extends Component {
 		Connect(this.U2.pins.OUT, G);
 	}
 }
-
+/**
+ * Quadruple Bus Buffer with 3-state Outputs
+ */
 class SN74HC126 extends Component {
 	constructor() {
 		super();
@@ -736,7 +805,9 @@ class SN74HC126 extends Component {
 		this.U1 = new buf3();
 	}
 }
-
+/**
+ * Quadruple 2-input Positive-Nand Schmitt Triggers
+ */
 class SN74HC132 extends Component {
 	constructor() {
 		super();
@@ -751,7 +822,9 @@ class SN74HC132 extends Component {
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
-
+/**
+ * 13-input Positive-Nand Gates
+ */
 class SN74HC133 extends Component {
 	constructor() {
 		super();
@@ -788,7 +861,9 @@ class SN74HC133 extends Component {
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
-
+/**
+ * DECODER_DEMULTIPLEXER 3-8 LINE WITH ADDRESS LATCHES
+ */
 class SN74HC137 extends Component {
 	constructor() {
 		super();
@@ -866,7 +941,9 @@ class SN74HC137 extends Component {
 		Connect(Y7, this.pins.Y7_O);
 	}
 }
-
+/**
+ * DECODER_DEMULTIPLEXER 3-8 LINE
+ */
 class SN74HC138 extends Component {
 	constructor() {
 		super();
@@ -921,7 +998,9 @@ class SN74HC138 extends Component {
 		Connect(Y7, this.pins.Y7_O);
 	}
 }
-
+/**
+ * DECODER_DEMULTIPLEXER 2-4 LINE
+ */
 class SN74HC139 extends Component {
 	constructor() {
 		super();
@@ -958,7 +1037,9 @@ class SN74HC139 extends Component {
 		Connect(Y3, this.pins.Y3_O);
 	}
 }
-
+/**
+ * PRIORITY ENCODER 10-4 LINE
+ */
 class SN74HC147 extends Component {
 	constructor() {
 		super();
@@ -1019,7 +1100,9 @@ class SN74HC147 extends Component {
 		Connect(D, this.pins.D_O);
 	}
 }
-
+/**
+ * PRIORITY ENCODER 8-3 LINE
+ */
 class SN74HC148 extends Component {
 	constructor() {
 		super();
@@ -1084,7 +1167,9 @@ class SN74HC148 extends Component {
 		Connect(EO, this.pins.EO_O);
 	}
 }
-
+/**
+ * MULTIPLEXER_DATA SELECTOR 8-1 LINE
+ */
 class SN74HC151 extends Component {
 	constructor() {
 		super();
@@ -1149,7 +1234,9 @@ class SN74HC151 extends Component {
 		Connect(Y, this.pins.Y_O);
 	}
 }
-
+/**
+ * MULTIPLEXER_DATA SELECTOR 8-1 LINE
+ */
 class SN74HC152 extends Component {
 	constructor() {
 		super();
@@ -1206,7 +1293,9 @@ class SN74HC152 extends Component {
 		Connect(W, this.pins.W_O);
 	}
 }
-
+/**
+ * DUAL 4-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS
+ */
 class SN74HC153 extends Component {
 	constructor() {
 		super();
@@ -1271,7 +1360,9 @@ class SN74HC153 extends Component {
 		Connect(Y2, this.pins.Y2_O);
 	}
 }
-
+/**
+ * DECODER_DEMULTIPLEXER 4-16 LINE
+ */
 class SN74HC154 extends Component {
 	constructor() {
 		super();
@@ -1366,7 +1457,9 @@ class SN74HC154 extends Component {
 		Connect(Y15, this.pins.Y15_O);
 	}
 }
-
+/**
+ * DECODER_DEMULTIPLEXER 2-4 LINE
+ */
 class SN74HC155 extends Component {
 	constructor() {
 		super();
@@ -1431,7 +1524,9 @@ class SN74HC155 extends Component {
 		Connect(_2Y3, this.pins._2Y3_O);
 	}
 }
-
+/**
+ * QUADRUPLE 2-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS
+ */
 class SN74HC157 extends Component {
 	constructor() {
 		super();
@@ -1496,7 +1591,9 @@ class SN74HC157 extends Component {
 		Connect(Y4, this.pins.Y4_O);
 	}
 }
-
+/**
+ * DUAL 4-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS
+ */
 class SN74HC158 extends Component {
 	constructor() {
 		super();
@@ -1561,7 +1658,9 @@ class SN74HC158 extends Component {
 		Connect(Y4, this.pins.Y4_O);
 	}
 }
-
+/**
+ * Synchronous 4-bit Decade Counters with asynchronous clear
+ */
 class SN74HC160 extends Component {
 	constructor() {
 		super();
@@ -1654,7 +1753,9 @@ class SN74HC160 extends Component {
 		Connect(QD, this.pins.QD_O);
 	}
 }
-
+/**
+ * Synchronous 4-bit Binary Counter with Direct Clear
+ */
 class SN74HC161 extends Component {
 	constructor() {
 		super();
@@ -1749,7 +1850,9 @@ class SN74HC161 extends Component {
 		Connect(QD, this.pins.QD_O);
 	}
 }
-
+/**
+ * Synchronous 4-bit Decade Counters with asynchronous clear
+ */
 class SN74HC162 extends Component {
 	constructor() {
 		super();
@@ -1842,7 +1945,9 @@ class SN74HC162 extends Component {
 		Connect(QD, this.pins.QD_O);
 	}
 }
-
+/**
+ * Synchronous 4-bit Binary Counter with Direct Clear
+ */
 class SN74HC163 extends Component {
 	constructor() {
 		super();
@@ -1937,7 +2042,6 @@ class SN74HC163 extends Component {
 		Connect(QD, this.pins.QD_O);
 	}
 }
-
 class SN74HC164 extends Component {
 	constructor() {
 		super();
@@ -1998,7 +2102,9 @@ class SN74HC164 extends Component {
 		Connect(QH, this.pins.QH_O);
 	}
 }
-
+/**
+ * PARALLEL-LOAD 8-BIT SHIFT REGISTERS
+ */
 class SN74HC165 extends Component {
 	constructor() {
 		super();
@@ -2149,7 +2255,9 @@ class SN74HC165 extends Component {
 		Connect(this.pins.QHBAR, this.pins.QHBAR_O);
 	}
 }
-
+/**
+ * PARALLEL LOAD 8-BIT SHIFT REGISTERS
+ */
 class SN74HC166 extends Component {
 	constructor() {
 		super();
@@ -2261,7 +2369,9 @@ class SN74HC166 extends Component {
 		Connect(this.pins.QH, this.pins.QH_O);
 	}
 }
-
+/**
+ * REGISTERS D-TYPE 4-BIT WITH 3-STATE OUTPUTS
+ */
 class SN74HC173 extends Component {
 	constructor() {
 		super();
@@ -2344,7 +2454,9 @@ class SN74HC173 extends Component {
 		Connect(_4Q, this.pins._4Q_O);
 	}
 }
-
+/**
+ * HEX D-TYPE FLIP-FLOPS WITH CLEAR
+ */
 class SN74HC174 extends Component {
 	constructor() {
 		super();
@@ -2382,7 +2494,9 @@ class SN74HC174 extends Component {
 		Connect(this.UD.pins.Q5, this.pins.Q6);
 	}
 }
-
+/**
+ * QUADRUPLE D-TYPE FLIP-FLOPS WITH CLEAR
+ */
 class SN74HC175 extends Component {
 	constructor() {
 		super();
@@ -2416,7 +2530,9 @@ class SN74HC175 extends Component {
 		Connect(this.UD.pins.Q3, this.pins.Q4);
 	}
 }
-
+/**
+ * PARITY GENERATOR_CHECKER ODD_EVEN 9-BIT
+ */
 class SN74HC180 extends Component {
 	constructor() {
 		super();
@@ -2457,7 +2573,9 @@ class SN74HC180 extends Component {
 		Connect(OOUT, this.pins.OOUT_O);
 	}
 }
-
+/**
+ * ALU _ FUNCTION GENERATOR
+ */
 class SN74HC181 extends Component {
 	constructor() {
 		super();
@@ -2554,7 +2672,9 @@ class SN74HC181 extends Component {
 		Connect(AEQUALB, this.pins.AEQUALB_O);
 	}
 }
-
+/**
+ * LOOK-AHEAD CARRY GENERATOR
+ */
 class SN74HC182 extends Component {
 	constructor() {
 		super();
@@ -2619,7 +2739,9 @@ class SN74HC182 extends Component {
 		Connect(CN_Z, this.pins.CN_Z_O);
 	}
 }
-
+/**
+ * Synchronous 4-bit Up_Down Decade Counters
+ */
 class SN74HC190 extends Component {
 	constructor() {
 		super();
@@ -2736,7 +2858,6 @@ class SN74HC190 extends Component {
 		Connect(MXMNOUT, this.pins.MXMNOUT_O);
 	}
 }
-
 class SN74HC191 extends Component {
 	constructor() {
 		super();
@@ -2853,7 +2974,6 @@ class SN74HC191 extends Component {
 		Connect(MXMNOUT, this.pins.MXMNOUT_O);
 	}
 }
-
 class SN74HC192 extends Component {
 	constructor() {
 		super();
@@ -2975,7 +3095,6 @@ class SN74HC192 extends Component {
 		Connect(COBAR, this.pins.COBAR_O);
 	}
 }
-
 class SN74HC193 extends Component {
 	constructor() {
 		super();
@@ -3097,7 +3216,9 @@ class SN74HC193 extends Component {
 		Connect(COBAR, this.pins.COBAR_O);
 	}
 }
-
+/**
+ * WAS REMODELED USING THE LOGIC DIAGRAM OF 74AS194
+ */
 class SN74HC194 extends Component {
 	constructor() {
 		super();
@@ -3181,7 +3302,9 @@ class SN74HC194 extends Component {
 		Connect(QD, this.pins.QD_O);
 	}
 }
-
+/**
+ * WAS REMODELED USING THE LOGIC DIAGRAM OF 74LS915A
+ */
 class SN74HC195 extends Component {
 	constructor() {
 		super();
@@ -3263,7 +3386,9 @@ class SN74HC195 extends Component {
 		Connect(this.pins.QDBAR, this.pins.QDBAR_O);
 	}
 }
-
+/**
+ * DECODER_DEMULTIPLEXER 3-8 LINE WITH ADDRESS LATCHES
+ */
 class SN74HC237 extends Component {
 	constructor() {
 		super();
@@ -3341,7 +3466,9 @@ class SN74HC237 extends Component {
 		Connect(Y7, this.pins.Y7_O);
 	}
 }
-
+/**
+ * DECODER_DEMULTIPLEXER 3-8 LINE
+ */
 class SN74HC238 extends Component {
 	constructor() {
 		super();
@@ -3402,7 +3529,9 @@ class SN74HC238 extends Component {
 		Connect(Y7, this.pins.Y7_O);
 	}
 }
-
+/**
+ * DECODER_DEMULTIPLEXER 2-4 LINE
+ */
 class SN74HC239 extends Component {
 	constructor() {
 		super();
@@ -3439,7 +3568,9 @@ class SN74HC239 extends Component {
 		Connect(Y3, this.pins.Y3_O);
 	}
 }
-
+/**
+ * OCTAL BUFFERS AND LINE DRIVERS WITH 3-STATE OUTPUTS
+ */
 class SN74HC240 extends Component {
 	constructor() {
 		super();
@@ -3468,7 +3599,9 @@ class SN74HC240 extends Component {
 		this.U2 = new inv3a(4);
 	}
 }
-
+/**
+ * OCTAL BUFFERS AND LINE DRIVERS WITH 3-STATE OUTPUTS
+ */
 class SN74HC241 extends Component {
 	constructor() {
 		super();
@@ -3518,7 +3651,9 @@ class SN74HC241 extends Component {
 		Connect(this.U2.pins.Q3, this.pins._2Y4);
 	}
 }
-
+/**
+ * OCTAL BUS TRANSCEIVERS WITH 3-STATE OUTPUTS
+ */
 class SN74HC242 extends Component {
 	constructor() {
 		super();
@@ -3548,7 +3683,9 @@ class SN74HC242 extends Component {
 		this.U2 = new inv3a(4);
 	}
 }
-
+/**
+ * OCTAL BUS TRANSCEIVERS WITH 3-STATE OUTPUTS
+ */
 class SN74HC243 extends Component {
 	constructor() {
 		super();
@@ -3598,7 +3735,9 @@ class SN74HC243 extends Component {
 		Connect(this.U2.pins.Q3, this.pins.A4);
 	}
 }
-
+/**
+ * OCTAL BUFFERS AND LINE DRIVERS WITH 3-STATE OUTPUTS
+ */
 class SN74HC244 extends Component {
 	constructor() {
 		super();
@@ -3647,7 +3786,9 @@ class SN74HC244 extends Component {
 		Connect(this.U2.pins.Q3, this.pins._2Y4);
 	}
 }
-
+/**
+ * OCTAL BUS TRANSCEIVERS WITH 3-STATE OUTPUTS
+ */
 class SN74HC245 extends Component {
 	constructor() {
 		super();
@@ -3718,7 +3859,9 @@ class SN74HC245 extends Component {
 		Connect(this.U5.pins.Q7, this.pins.A8_B);
 	}
 }
-
+/**
+ * MULTIPLEXER_DATA SELECTOR 8-1 LINE WITH 3-STATE OUTPUTS
+ */
 class SN74HC251 extends Component {
 	constructor() {
 		super();
@@ -3783,7 +3926,9 @@ class SN74HC251 extends Component {
 		Connect(Y, this.pins.Y_O);
 	}
 }
-
+/**
+ * DUAL 1-OF-4 DATA SELECTORS_MULTIPLEXERS WITH 3-STATE OUTPUTS
+ */
 class SN74HC253 extends Component {
 	constructor() {
 		super();
@@ -3848,7 +3993,9 @@ class SN74HC253 extends Component {
 		Connect(Y2, this.pins.Y2_O);
 	}
 }
-
+/**
+ * QUADRUPLE 2-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS
+ */
 class SN74HC257 extends Component {
 	constructor() {
 		super();
@@ -3913,7 +4060,9 @@ class SN74HC257 extends Component {
 		Connect(Y4, this.pins.Y4_O);
 	}
 }
-
+/**
+ * QUADRUPLE 2-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS
+ */
 class SN74HC258 extends Component {
 	constructor() {
 		super();
@@ -3978,7 +4127,9 @@ class SN74HC258 extends Component {
 		Connect(Y4, this.pins.Y4_O);
 	}
 }
-
+/**
+ * 8-BIT ADDRESSABLE LATCHES
+ */
 class SN74HC259 extends Component {
 	constructor() {
 		super();
@@ -4014,7 +4165,9 @@ class SN74HC259 extends Component {
 		this.U14 = new dltch(1);
 	}
 }
-
+/**
+ * QUADRUPLE 2-INPUT EXCLUSIVE-NOR GATES WITH OPEN-COLLECTOR OUTPUTS.
+ */
 class SN74HC266 extends Component {
 	constructor() {
 		super();
@@ -4026,7 +4179,9 @@ class SN74HC266 extends Component {
 		this.U1 = new nxor();
 	}
 }
-
+/**
+ * OCTAL D-TYPE EDGE-TRIGGERED FLIP-FLOPS WITH CLEAR
+ */
 class SN74HC273 extends Component {
 	constructor() {
 		super();
@@ -4072,7 +4227,9 @@ class SN74HC273 extends Component {
 		Connect(this.UD.pins.Q7, this.pins.Q8);
 	}
 }
-
+/**
+ * QUADRUPLE SBAR-RBAR LATCHES
+ */
 class SN74HC279 extends Component {
 	constructor() {
 		super();
@@ -4097,7 +4254,9 @@ class SN74HC279 extends Component {
 		this.U10 = new buf3();
 	}
 }
-
+/**
+ * PARITY GENERATOR_CHECKER ODD_EVEN 9-BIT
+ */
 class SN74HC280 extends Component {
 	constructor() {
 		super();
@@ -4132,7 +4291,9 @@ class SN74HC280 extends Component {
 		Connect(OOUT, this.pins.OOUT_O);
 	}
 }
-
+/**
+ * 4-BIT BINARY FULL ADDERS WITH FAST CARRY
+ */
 class SN74HC283 extends Component {
 	constructor() {
 		super();
@@ -4197,7 +4358,9 @@ class SN74HC283 extends Component {
 		Connect(C4, this.pins.C4_O);
 	}
 }
-
+/**
+ * MULTIPLEXERS QUAD 2-INPUT WITH STORAGE
+ */
 class SN74HC298 extends Component {
 	constructor() {
 		super();
@@ -4271,7 +4434,9 @@ class SN74HC298 extends Component {
 		Connect(this.pins.QD, this.pins.QD_O);
 	}
 }
-
+/**
+ * 8-BIT UNIVERSAL SHIFT_STORAGE REGISTERS
+ */
 class SN74HC299 extends Component {
 	constructor() {
 		super();
@@ -4410,7 +4575,9 @@ class SN74HC299 extends Component {
 		Connect(LH_QH, this.pins.QHP_O);
 	}
 }
-
+/**
+ * DUAL 4-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS
+ */
 class SN74HC352 extends Component {
 	constructor() {
 		super();
@@ -4475,7 +4642,9 @@ class SN74HC352 extends Component {
 		Connect(Y2, this.pins.Y2_O);
 	}
 }
-
+/**
+ * DUAL 1-OF-4 DATA SELECTORS_MULTIPLEXERS WITH 3-STATE OUTPUTS
+ */
 class SN74HC353 extends Component {
 	constructor() {
 		super();
@@ -4540,7 +4709,9 @@ class SN74HC353 extends Component {
 		Connect(Y2, this.pins.Y2_O);
 	}
 }
-
+/**
+ * 4-LINE TO 1-LINE LINE DATA SELECTORS_MULTIPLEXERS_REGISTERS
+ */
 class SN74HC354 extends Component {
 	constructor() {
 		super();
@@ -4657,7 +4828,9 @@ class SN74HC354 extends Component {
 		Connect(W, this.pins.W_O);
 	}
 }
-
+/**
+ * 4-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS_REGISTERS
+ */
 class SN74HC356 extends Component {
 	constructor() {
 		super();
@@ -4791,7 +4964,9 @@ class SN74HC356 extends Component {
 		Connect(W, this.pins.W_O);
 	}
 }
-
+/**
+ * Hex Bus Drivers with 3-STATE Outputs
+ */
 class SN74HC365 extends Component {
 	constructor() {
 		super();
@@ -4829,7 +5004,9 @@ class SN74HC365 extends Component {
 		Connect(this.U1.pins.Q5, this.pins.Y6);
 	}
 }
-
+/**
+ * Hex Bus Drivers with 3-STATE Outputs
+ */
 class SN74HC366 extends Component {
 	constructor() {
 		super();
@@ -4853,7 +5030,9 @@ class SN74HC366 extends Component {
 		this.U1 = new inv3a(6);
 	}
 }
-
+/**
+ * Hex Bus Drivers with 3-STATE Outputs
+ */
 class SN74HC367 extends Component {
 	constructor() {
 		super();
@@ -4894,7 +5073,9 @@ class SN74HC367 extends Component {
 		Connect(this.U2.pins.Q1, this.pins._2Y2);
 	}
 }
-
+/**
+ * Hex Bus Drivers with 3-STATE Outputs
+ */
 class SN74HC368 extends Component {
 	constructor() {
 		super();
@@ -4927,7 +5108,9 @@ class SN74HC368 extends Component {
 		this.U2 = new inv3a(2);
 	}
 }
-
+/**
+ * Octal D-Type Transparent Latches with 3-STATE Outputs
+ */
 class SN74HC373 extends Component {
 	constructor() {
 		super();
@@ -4984,7 +5167,9 @@ class SN74HC373 extends Component {
 		Connect(this.U2.pins.Q7, this.pins._8Q);
 	}
 }
-
+/**
+ * Octal D-Type Edge-Triggered Flip-Flops with 3-STATE Outputs
+ */
 class SN74HC374 extends Component {
 	constructor() {
 		super();
@@ -5060,7 +5245,9 @@ class SN74HC374 extends Component {
 		Connect(this.UQS.pins.Q7, this.pins.Q8);
 	}
 }
-
+/**
+ * 4-bit Bistable Latches
+ */
 class SN74HC375 extends Component {
 	constructor() {
 		super();
@@ -5075,7 +5262,9 @@ class SN74HC375 extends Component {
 		}
 	}
 }
-
+/**
+ * Octal D-TYPE Flip-Flops with Clock Enable
+ */
 class SN74HC377 extends Component {
 	constructor() {
 		super();
@@ -5102,7 +5291,6 @@ class SN74HC377 extends Component {
 		this.UBUF = new bufa(2);
 	}
 }
-
 class SNHC377DAT extends Component {
 	constructor() {
 		super();
@@ -5130,7 +5318,9 @@ class SNHC377DAT extends Component {
 		this.UQOUT = new buf();
 	}
 }
-
+/**
+ * Octal D-TYPE Flip-Flops with Clock Enable
+ */
 class SN74HC378 extends Component {
 	constructor() {
 		super();
@@ -5153,7 +5343,6 @@ class SN74HC378 extends Component {
 		this.UBUF = new bufa(2);
 	}
 }
-
 class SNHC378DAT extends Component {
 	constructor() {
 		super();
@@ -5181,7 +5370,9 @@ class SNHC378DAT extends Component {
 		this.UQOUT = new buf();
 	}
 }
-
+/**
+ * Octal D-TYPE Flip-Flops with Clock Enable
+ */
 class SN74HC379 extends Component {
 	constructor() {
 		super();
@@ -5204,7 +5395,6 @@ class SN74HC379 extends Component {
 		this.UBUF = new bufa(2);
 	}
 }
-
 class SNHC379DAT extends Component {
 	constructor() {
 		super();
@@ -5233,7 +5423,9 @@ class SNHC379DAT extends Component {
 		this.UQOUT = new bufa(2);
 	}
 }
-
+/**
+ * Quadruple 2-Input Exclusive-OR-Gates
+ */
 class SN74HC386 extends Component {
 	constructor() {
 		super();
@@ -5245,7 +5437,9 @@ class SN74HC386 extends Component {
 		this.UY = new xor();
 	}
 }
-
+/**
+ * COUNTER DECADE 4-BIT, ASYNCHRONOUS
+ */
 class SN74HC390 extends Component {
 	constructor() {
 		super();
@@ -5290,7 +5484,9 @@ class SN74HC390 extends Component {
 		Connect(this.pins.QD, this.pins.QD_O);
 	}
 }
-
+/**
+ * COUNTER BINARY 4-BIT, ASYNCHRONOUS
+ */
 class SN74HC393 extends Component {
 	constructor() {
 		super();
@@ -5318,7 +5514,9 @@ class SN74HC393 extends Component {
 		Connect(this.pins.QD, this.pins.QD_O);
 	}
 }
-
+/**
+ * COUNTER DECADE 4-BIT, ASYNCHRONOUS
+ */
 class SN74HC490 extends Component {
 	constructor() {
 		super();
@@ -5369,7 +5567,9 @@ class SN74HC490 extends Component {
 		Connect(this.pins.QD, this.pins.QD_O);
 	}
 }
-
+/**
+ * Octal D-TYPE Transparent Latches with 3-STATE Outputs
+ */
 class SN74HC533 extends Component {
 	constructor() {
 		super();
@@ -5426,7 +5626,9 @@ class SN74HC533 extends Component {
 		Connect(this.UQBAR.pins.Q7, this.pins._8QBAR);
 	}
 }
-
+/**
+ * Octal D-TYPE Edge-Triggered Flip-Flops with 3-STATE Outputs
+ */
 class SN74HC534 extends Component {
 	constructor() {
 		super();
@@ -5485,7 +5687,9 @@ class SN74HC534 extends Component {
 		this.UOCQ = new inv3a(8);
 	}
 }
-
+/**
+ * Octal Buffers and Line Drivers with 3-STATE Outputs
+ */
 class SN74HC540 extends Component {
 	constructor() {
 		super();
@@ -5513,7 +5717,9 @@ class SN74HC540 extends Component {
 		this.U1 = new inv3a(8);
 	}
 }
-
+/**
+ * Octal Buffers and Line Driver with 3-STATE Outputs
+ */
 class SN74HC541 extends Component {
 	constructor() {
 		super();
@@ -5559,7 +5765,9 @@ class SN74HC541 extends Component {
 		Connect(this.U1.pins.Q7, this.pins.Y8);
 	}
 }
-
+/**
+ * Octal D-TYPE Transparent Latches with 3-STATE Outputs
+ */
 class SN74HC563 extends Component {
 	constructor() {
 		super();
@@ -5616,7 +5824,9 @@ class SN74HC563 extends Component {
 		Connect(this.UQOUT.pins.Q7, this.pins._8QBAR);
 	}
 }
-
+/**
+ * Octal D-TYPE Edge-Triggered Flip-Flops with 3-STATE Outputs
+ */
 class SN74HC564 extends Component {
 	constructor() {
 		super();
@@ -5675,7 +5885,9 @@ class SN74HC564 extends Component {
 		this.UOCQ = new inv3a(8);
 	}
 }
-
+/**
+ * Octal D-TYPE Transparent Latches with 3-STATE Outputs
+ */
 class SN74HC573 extends Component {
 	constructor() {
 		super();
@@ -5732,7 +5944,9 @@ class SN74HC573 extends Component {
 		Connect(this.U2.pins.Q7, this.pins._8Q);
 	}
 }
-
+/**
+ * Octal D-TYPE Edge-Triggered Flip-Flops with 3-STATE Outputs
+ */
 class SN74HC574 extends Component {
 	constructor() {
 		super();
@@ -5808,7 +6022,6 @@ class SN74HC574 extends Component {
 		Connect(this.UQS.pins.Q7, this.pins._8Q);
 	}
 }
-
 class SN74HC590A extends Component {
 	constructor() {
 		super();
@@ -5900,7 +6113,9 @@ class SN74HC590A extends Component {
 		Connect(RCOBAR, this.pins.RCOBAR_O);
 	}
 }
-
+/**
+ * 8-BIT SHIFT REGISTERS WITH INPUT LATCHES
+ */
 class SN74HC594 extends Component {
 	constructor() {
 		super();
@@ -5993,7 +6208,9 @@ class SN74HC594 extends Component {
 		Connect(QHP, this.pins.QHP_O);
 	}
 }
-
+/**
+ * 8-BIT SHIFT REGISTERS WITH 3-STATE OUTPUT REGISTERS
+ */
 class SN74HC595 extends Component {
 	constructor() {
 		super();
@@ -6085,7 +6302,9 @@ class SN74HC595 extends Component {
 		Connect(QHP, this.pins.QHP_O);
 	}
 }
-
+/**
+ * Octal 2-Input Multiplexed Latches with 3-STATE Outputs
+ */
 class SN74HC604 extends Component {
 	constructor() {
 		super();
@@ -6125,7 +6344,6 @@ class SN74HC604 extends Component {
 		Connect(this.UAB_B.pins.OUT, AB_B);
 	}
 }
-
 class SNHC604DAT extends Component {
 	constructor() {
 		super();
@@ -6153,7 +6371,9 @@ class SNHC604DAT extends Component {
 		this.UY = new buf3();
 	}
 }
-
+/**
+ * OCTAL BUS TRANSCEIVERS WITH 3-STATE OUTPUTS
+ */
 class SN74HC620 extends Component {
 	constructor() {
 		super();
@@ -6186,7 +6406,9 @@ class SN74HC620 extends Component {
 		this.U4 = new inv3a(8);
 	}
 }
-
+/**
+ * OCTAL BUS TRANSCEIVERS WITH 3-STATE OUTPUTS
+ */
 class SN74HC623 extends Component {
 	constructor() {
 		super();
@@ -6254,7 +6476,9 @@ class SN74HC623 extends Component {
 		Connect(this.U4.pins.Q7, this.pins.A8_B);
 	}
 }
-
+/**
+ * OCTAL BUS TRANSCEIVERS WITH 3-STATE OUTPUTS
+ */
 class SN74HC640 extends Component {
 	constructor() {
 		super();
@@ -6289,7 +6513,9 @@ class SN74HC640 extends Component {
 		this.U5 = new inv3a(8);
 	}
 }
-
+/**
+ * OCTAL BUS TRANSCEIVERS WITH 3-STATE OUTPUTS
+ */
 class SN74HC643 extends Component {
 	constructor() {
 		super();
@@ -6338,7 +6564,9 @@ class SN74HC643 extends Component {
 		this.UB = new inv3a(8);
 	}
 }
-
+/**
+ * OCTAL BUS TRANSCEIVERS
+ */
 class SN74HC645 extends Component {
 	constructor() {
 		super();
@@ -6410,7 +6638,9 @@ class SN74HC645 extends Component {
 		Connect(this.U2.pins.Q7, this.pins.A8);
 	}
 }
-
+/**
+ * OCTAL BUS TRANSCEIVER_REGISTER WITH 3-STATE OUTPUTS
+ */
 class SN74HC646 extends Component {
 	constructor() {
 		super();
@@ -6632,7 +6862,9 @@ class SN74HC646 extends Component {
 		Connect(B8_OUT, this.pins.B8_B);
 	}
 }
-
+/**
+ * OCTAL BUS TRANSCEIVER_REGISTER WITH 3-STATE OUTPUTS
+ */
 class SN74HC648 extends Component {
 	constructor() {
 		super();
@@ -6853,7 +7085,9 @@ class SN74HC648 extends Component {
 		Connect(B8_OUT, this.pins.B8_B);
 	}
 }
-
+/**
+ * OCTAL BUS TRANSCEIVERS AND REGISTERS WITH INVERTED 3-STATE OUTPUTS
+ */
 class SN74HC651 extends Component {
 	constructor() {
 		super();
@@ -7162,7 +7396,9 @@ class SN74HC651 extends Component {
 		Connect(B8_IO, this.pins.B8_B);
 	}
 }
-
+/**
+ * BUS TRANSCEIVERS AND REGISTERS OCTAL WITH 3-STATE OUTPUTS
+ */
 class SN74HC652 extends Component {
 	constructor() {
 		super();
@@ -7472,7 +7708,9 @@ class SN74HC652 extends Component {
 		Connect(B8_IO, this.pins.B8_B);
 	}
 }
-
+/**
+ * REGISTER FILES 4X4 WITH 3-STATE OUTPUTS
+ */
 class SN74HC670 extends Component {
 	constructor() {
 		super();
@@ -7581,7 +7819,9 @@ class SN74HC670 extends Component {
 		Connect(Q3, this.pins.Q3_O);
 	}
 }
-
+/**
+ * 12-BIT ADDRESS COMPARATORS
+ */
 class SN74HC677 extends Component {
 	constructor() {
 		super();
@@ -7678,7 +7918,9 @@ class SN74HC677 extends Component {
 		Connect(Y, this.pins.Y_O);
 	}
 }
-
+/**
+ * 12-BIT ADDRESS COMPARATORS
+ */
 class SN74HC678 extends Component {
 	constructor() {
 		super();
@@ -7776,7 +8018,9 @@ class SN74HC678 extends Component {
 		Connect(this.pins.Y, this.pins.Y_O);
 	}
 }
-
+/**
+ * 12-BIT ADDRESS COMPARATORS
+ */
 class SN74HC679 extends Component {
 	constructor() {
 		super();
@@ -7857,7 +8101,9 @@ class SN74HC679 extends Component {
 		Connect(Y, this.pins.Y_O);
 	}
 }
-
+/**
+ * 12-BIT ADDRESS COMPARATORS
+ */
 class SN74HC680 extends Component {
 	constructor() {
 		super();
@@ -7939,7 +8185,9 @@ class SN74HC680 extends Component {
 		Connect(this.pins.Y, this.pins.Y_O);
 	}
 }
-
+/**
+ * 8-BIT MAGNITUDE COMPARATORS
+ */
 class SN74HC684 extends Component {
 	constructor() {
 		super();
@@ -8020,7 +8268,9 @@ class SN74HC684 extends Component {
 		Connect(PGQBAR, this.pins.PGQBAR_O);
 	}
 }
-
+/**
+ * 8-BIT IDENTITY COMPARATORS
+ */
 class SN74HC688 extends Component {
 	constructor() {
 		super();
@@ -8101,7 +8351,9 @@ class SN74HC688 extends Component {
 		Connect(PEQBAR, this.pins.PEQBAR_O);
 	}
 }
-
+/**
+ * Hex 2-Input NAND Drivers
+ */
 class SN74HC804 extends Component {
 	constructor() {
 		super();
@@ -8116,7 +8368,9 @@ class SN74HC804 extends Component {
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
-
+/**
+ * Hex 2-Input NOR Drivers
+ */
 class SN74HC805 extends Component {
 	constructor() {
 		super();
@@ -8128,7 +8382,9 @@ class SN74HC805 extends Component {
 		this.U1 = new nor(2);
 	}
 }
-
+/**
+ * Hex 2-Input AND Drivers
+ */
 class SN74HC808 extends Component {
 	constructor() {
 		super();
@@ -8140,7 +8396,9 @@ class SN74HC808 extends Component {
 		this.U1 = new and(2);
 	}
 }
-
+/**
+ * Hex 2-Input OR Drivers
+ */
 class SN74HC832 extends Component {
 	constructor() {
 		super();
@@ -8152,7 +8410,9 @@ class SN74HC832 extends Component {
 		this.U1 = new or(2);
 	}
 }
-
+/**
+ * Dual 4-Input Positive-Nor Gate
+ */
 class SN74HC4002 extends Component {
 	constructor() {
 		super();
@@ -8166,7 +8426,9 @@ class SN74HC4002 extends Component {
 		this.U1 = new nor(4);
 	}
 }
-
+/**
+ * COUNTER BINARY 14-BIT, ASYNCHRONOUS
+ */
 class SN74HC4020 extends Component {
 	constructor() {
 		super();
@@ -8220,7 +8482,6 @@ class SN74HC4020 extends Component {
 		Connect(this.pins.QN, this.pins.QN_O);
 	}
 }
-
 class SN74HC4024 extends Component {
 	constructor() {
 		super();
@@ -8262,7 +8523,9 @@ class SN74HC4024 extends Component {
 		Connect(this.pins.QG, this.pins.QG_O);
 	}
 }
-
+/**
+ * COUNTER BINARY 12-BIT, ASYNCHRONOUS
+ */
 class SN74HC4040 extends Component {
 	constructor() {
 		super();
@@ -8314,7 +8577,9 @@ class SN74HC4040 extends Component {
 		Connect(this.pins.QL, this.pins.QL_O);
 	}
 }
-
+/**
+ * Triple 3-input Or Gate
+ */
 class SN74HC4075 extends Component {
 	constructor() {
 		super();
@@ -8327,7 +8592,9 @@ class SN74HC4075 extends Component {
 		this.U1 = new or(3);
 	}
 }
-
+/**
+ * 8-input Or_Nor Gate
+ */
 class SN74HC4078A extends Component {
 	constructor() {
 		super();
@@ -8351,7 +8618,9 @@ class SN74HC4078A extends Component {
 		Connect(this.U3.pins.OUT, this.pins.W);
 	}
 }
-
+/**
+ * DECODER_DEMULTIPLEXER 4-16 LINE WITH ADDRESS LATCHES
+ */
 class SN74HC4514 extends Component {
 	constructor() {
 		super();
@@ -8465,7 +8734,9 @@ class SN74HC4514 extends Component {
 		Connect(Y15, this.pins.Y15_O);
 	}
 }
-
+/**
+ * DECODER_DEMULTIPLEXER 4-16 LINE WITH ADDRESS LATCHES
+ */
 class SN74HC4515 extends Component {
 	constructor() {
 		super();
@@ -8579,7 +8850,9 @@ class SN74HC4515 extends Component {
 		Connect(Y15, this.pins.Y15_O);
 	}
 }
-
+/**
+ * 8-bit  Addressable Latches
+ */
 class SN74HC4724 extends Component {
 	constructor() {
 		super();
@@ -8655,7 +8928,9 @@ class SN74HC4724 extends Component {
 		Connect(this.UL15.pins.Q8, CLR7);
 	}
 }
-
+/**
+ * 6-Section Multifunction (Nand, Invert, Nor, Flip-Flop) Circuits
+ */
 class SN74HC7074 extends Component {
 	constructor() {
 		super();
@@ -8708,7 +8983,9 @@ class SN74HC7074 extends Component {
 		Connect(this.U5.pins.Q0, this.pins._5Q);
 	}
 }
-
+/**
+ * 6-Section Multifunction (Nand, Invert, Flip-Flop) Circuits
+ */
 class SN74HC7075 extends Component {
 	constructor() {
 		super();
@@ -8757,7 +9034,9 @@ class SN74HC7075 extends Component {
 		Connect(this.U5.pins.Q0, this.pins._5Q);
 	}
 }
-
+/**
+ * 6-Section Multifunction (Invert, Nor, Flip-Flop) Circuits
+ */
 class SN74HC7076 extends Component {
 	constructor() {
 		super();
@@ -8806,7 +9085,9 @@ class SN74HC7076 extends Component {
 		Connect(this.U5.pins.Q0, this.pins._5Q);
 	}
 }
-
+/**
+ * Quadruple 2-Input Exclusive-Nor Gates w_ Totem-Pole Outputs
+ */
 class SN74HC7266 extends Component {
 	constructor() {
 		super();
@@ -8818,7 +9099,6 @@ class SN74HC7266 extends Component {
 		this.U1 = new nxor();
 	}
 }
-
 global.SN74HC00 = SN74HC00;
 global.SN74HC01 = SN74HC01;
 global.SN74HC02 = SN74HC02;

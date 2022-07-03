@@ -357,6 +357,27 @@ class and extends Circuit {
 	}
 }
 
+class or extends Circuit {
+	constructor(n) {
+		super();
+
+		this.n = n;
+		for (var i = 0; i < n; i++) {
+			this.pins[`IN${i}`] = new Pin();
+		}
+		this.pins.OUT = new Pin();
+	}
+
+	$execute() {
+		let out = false;
+		for (var i = 0; i < this.n; i++) {
+			out = out || this.pins[`IN${i}`].getValue();
+		}
+		this.pins.OUT.setValue(out);
+	}
+}
+
+
 class bufa extends Circuit {
 	constructor(n) {
 		super();
@@ -479,8 +500,6 @@ class logicexp extends Circuit {
 		vm.createContext(context); 
 		vm.runInContext(this.code, context);
 
-		console.log(context);
-
 		for (var i of this.outputs)
 			this.pins[i].setValue(context[i]);
 	}
@@ -499,8 +518,10 @@ global.Circuit = Circuit;
 global.Component = Component;
 global.Board = Board;
 global.Bus = Bus;
+
 global.inv = inv;
 global.and = and;
+global.or = or;
 global.bufa = bufa;
 global.nora = nora;
 global.dff = dff;

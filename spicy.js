@@ -143,6 +143,10 @@ class Part {
   map_anda(t, a) { }
   map_suhdck(t, a) { }
 
+	map_constraint(t, a) { }
+
+	map_stim(t, a) { }
+
   map_logicexp(t, a) {
 		let vcc = t.getToken().content;
     let gnd = t.getToken().content;
@@ -282,12 +286,6 @@ class Circuit {
 
 		let temporary = [];
 
-    let comment = comments[this.name];
-    if (comment) {
-      out.push('/**');
-      out.push(` * ${comment}`);
-      out.push(' */');
-    }
     out.push(`class ${this.name} extends Component {`);
 
     out.push(`\tconstructor() {`);
@@ -400,7 +398,7 @@ function ConvertFile(filename) {
 			let name = cleanText.substring(0, firstSpace);
 
 			if (!(name in comments))
-				comments[name] = cleanText.substring(firstSpace).trim();
+				comments['SN' + name] = cleanText.substring(firstSpace).trim();
 		}
 
 		if (l.startsWith('U')) {
@@ -424,6 +422,7 @@ function ConvertFile(filename) {
 		}
 	}
 
+	console.log(comments);
 
 	let circuitsObjects = [];
 	for (let c of circuits) {
@@ -434,6 +433,11 @@ function ConvertFile(filename) {
 	const codeLines = [];
 	codeLines.push(`const core = require('./core.js');`)
 	for (var c of circuitsObjects) {
+    let comment = comments[c.name];
+    if (comment) {
+      codeLines.push(`/**\n * ${comment}\n */`);
+    }
+
 		codeLines.push(c.compile());
 	}
 	
@@ -443,7 +447,7 @@ function ConvertFile(filename) {
 	}
 	codeLines.push(exp.join('\n'));
 	
-	fs.writeFileSync(filename + '_code.js', codeLines.join('\n\n'));
+	fs.writeFileSync(filename + '_code.js', codeLines.join('\n'));
 }
 
 ConvertFile('74hc');

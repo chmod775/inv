@@ -1,7 +1,8 @@
 const repl = require('repl');
 
 const core = require('./core.js');
-const hs = require('./74hc_code.js');
+const hc = require('./74hc_code.js');
+const ls = require('./74ls_code.js');
 
 SN74HC574.prototype.InputBus = function() {
 	return new Bus([
@@ -109,6 +110,8 @@ class TestBoard extends Board {
 		this.u3 = new SN74HC574();
 		this.u100 = new SN74HC181();
 
+		this.u101 = new SN74LS47();
+
 		let p = new Pin();
 
 		Connect(this.pins.a, this.u1.pins.A);
@@ -120,9 +123,28 @@ class TestBoard extends Board {
 		Connect(this.u2.pins.Y, p);
 		Connect(p, this.u20.pins.A);
 		Connect(this.u20.pins.Y, this.pins.z);
+
+		Connect(this.u101.pins.LTBAR_I, _D_HI);
+		Connect(this.u101.pins.BIBAR_RBOBAR_B, _D_HI);
+
+		Connect(this.u101.pins.INA_I, this.u100.pins.F0BAR_O);
+		Connect(this.u101.pins.INB_I, this.u100.pins.F1BAR_O);
+		Connect(this.u101.pins.INC_I, this.u100.pins.F2BAR_O);
+		Connect(this.u101.pins.IND_I, this.u100.pins.F3BAR_O);
 	}
 
+	printSegments() {
+		let SEG_A = !this.u101.pins.OUTA_O.getValue() ? '_' : ' ';
+		let SEG_B = !this.u101.pins.OUTB_O.getValue() ? '|' : ' ';
+		let SEG_C = !this.u101.pins.OUTC_O.getValue() ? '|' : ' ';
+		let SEG_D = !this.u101.pins.OUTD_O.getValue() ? '_' : ' ';
+		let SEG_E = !this.u101.pins.OUTE_O.getValue() ? '|' : ' ';
+		let SEG_F = !this.u101.pins.OUTF_O.getValue() ? '|' : ' ';
+		let SEG_G = !this.u101.pins.OUTG_O.getValue() ? '_' : ' ';
 
+		let out = ` ${SEG_A} \n${SEG_F}${SEG_G}${SEG_B}\n${SEG_E}${SEG_D}${SEG_C}\n`;
+		console.log(out);
+	}
 }
 
 let t = new TestBoard();
@@ -155,13 +177,13 @@ t.u100.pins.S1_I.setValue(false);
 t.u100.pins.S2_I.setValue(false);
 t.u100.pins.S3_I.setValue(true);
 
-t.u100.pins.A0BAR_I.setValue(true);
+t.u100.pins.A0BAR_I.setValue(false);
 t.u100.pins.A1BAR_I.setValue(true);
-t.u100.pins.A2BAR_I.setValue(false);
+t.u100.pins.A2BAR_I.setValue(true);
 t.u100.pins.A3BAR_I.setValue(false);
 
-t.u100.pins.B0BAR_I.setValue(true);
-t.u100.pins.B1BAR_I.setValue(true);
+t.u100.pins.B0BAR_I.setValue(false);
+t.u100.pins.B1BAR_I.setValue(false);
 t.u100.pins.B2BAR_I.setValue(false);
 t.u100.pins.B3BAR_I.setValue(false);
 
@@ -172,6 +194,9 @@ console.log(t.u100.pins.F1BAR_O.getValue());
 console.log(t.u100.pins.F2BAR_O.getValue());
 console.log(t.u100.pins.F3BAR_O.getValue());
 
+console.log('');
+
+t.printSegments();
 
 global.TestBoard = TestBoard;
 //const local = repl.start('inv> ');
