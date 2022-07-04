@@ -1,10 +1,11 @@
 const repl = require('repl');
 
+const { Connect, _D_HI, _D_LO, Logger, Wire, Pin, Footprint, Plug, Circuit, Component, Board, Bus, inv, inva, and, or, bufa, nora, dff, dltch, buf3a, logicexp } = require('./core.js');
 const core = require('./core.js');
 const hc = require('./74hc_code.js');
 const ls = require('./74ls_code.js');
 
-SN74HC573.prototype.InputBus = function() {
+hc.SN74HC573.prototype.InputBus = function() {
 	return new Bus([
 		this.pins._1D,
 		this.pins._2D,
@@ -16,7 +17,7 @@ SN74HC573.prototype.InputBus = function() {
 		this.pins._8D
 	]);
 }
-SN74HC573.prototype.OutputBus = function() {
+hc.SN74HC573.prototype.OutputBus = function() {
 	return new Bus([
 		this.pins._1Q,
 		this.pins._2Q,
@@ -29,7 +30,7 @@ SN74HC573.prototype.OutputBus = function() {
 	]);
 }
 
-SN74HC574.prototype.InputBus = function() {
+hc.SN74HC574.prototype.InputBus = function() {
 	return new Bus([
 		this.pins._1D,
 		this.pins._2D,
@@ -41,7 +42,7 @@ SN74HC574.prototype.InputBus = function() {
 		this.pins._8D
 	]);
 }
-SN74HC574.prototype.OutputBus = function() {
+hc.SN74HC574.prototype.OutputBus = function() {
 	return new Bus([
 		this.pins._1Q,
 		this.pins._2Q,
@@ -54,32 +55,32 @@ SN74HC574.prototype.OutputBus = function() {
 	]);
 }
 
-SN74HC244.prototype.InputBus = function() {
+hc.SN74HC244.prototype.InputBus = function() {
 	return new Bus([
-		this.pins.A1_B,
-		this.pins.A2_B,
-		this.pins.A3_B,
-		this.pins.A4_B,
-		this.pins.A5_B,
-		this.pins.A6_B,
-		this.pins.A7_B,
-		this.pins.A8_B
+		this.pins._1A1,
+		this.pins._1A2,
+		this.pins._1A3,
+		this.pins._1A4,
+		this.pins._2A1,
+		this.pins._2A2,
+		this.pins._2A3,
+		this.pins._2A4
 	]);
 }
-SN74HC244.prototype.OutputBus = function() {
+hc.SN74HC244.prototype.OutputBus = function() {
 	return new Bus([
-		this.pins.B1_B,
-		this.pins.B2_B,
-		this.pins.B3_B,
-		this.pins.B4_B,
-		this.pins.B5_B,
-		this.pins.B6_B,
-		this.pins.B7_B,
-		this.pins.B8_B
+		this.pins._1Y1,
+		this.pins._1Y2,
+		this.pins._1Y3,
+		this.pins._1Y4,
+		this.pins._2Y1,
+		this.pins._2Y2,
+		this.pins._2Y3,
+		this.pins._2Y4
 	]);
 }
 
-SN74HC154.prototype.SelBus = function() {
+hc.SN74HC154.prototype.SelBus = function() {
 	return new Bus([
 		this.pins.A_I,
 		this.pins.B_I,
@@ -88,8 +89,15 @@ SN74HC154.prototype.SelBus = function() {
 	]);
 }
 
-
-SN74HC181.prototype.ABus = function() {
+hc.SN74HC181.prototype.SelBus = function() {
+	return new Bus([
+		this.pins.S0_I,
+		this.pins.S1_I,
+		this.pins.S2_I,
+		this.pins.S3_I
+	]);
+}
+hc.SN74HC181.prototype.ABus = function() {
 	return new Bus([
 		this.pins.A0BAR_I,
 		this.pins.A1BAR_I,
@@ -97,7 +105,7 @@ SN74HC181.prototype.ABus = function() {
 		this.pins.A3BAR_I
 	]);
 }
-SN74HC181.prototype.BBus = function() {
+hc.SN74HC181.prototype.BBus = function() {
 	return new Bus([
 		this.pins.B0BAR_I,
 		this.pins.B1BAR_I,
@@ -105,12 +113,12 @@ SN74HC181.prototype.BBus = function() {
 		this.pins.B3BAR_I
 	]);
 }
-SN74HC181.prototype.OutBus = function() {
+hc.SN74HC181.prototype.OutBus = function() {
 	return new Bus([
-		this.pins.F0BAR_I,
-		this.pins.F1BAR_I,
-		this.pins.F2BAR_I,
-		this.pins.F3BAR_I
+		this.pins.F0BAR_O,
+		this.pins.F1BAR_O,
+		this.pins.F2BAR_O,
+		this.pins.F3BAR_O
 	]);
 }
 
@@ -125,8 +133,8 @@ class Register_8Bit extends Circuit {
 		}
 
 		this.b1 = new Bus(8);
-		this.c1 = new SN74HC573();
-		//this.c2 = new SN74HC244();
+		this.c1 = new hc.SN74HC573();
+		//this.c2 = new hc.SN74HC244();
 
 		Connect(this.pins.bus, this.b1);
 
@@ -156,7 +164,7 @@ class RegistersBoard extends Board {
 		}
 		
 		// OE Demultiplexer
-		this.oe_demult = new SN74HC154();
+		this.oe_demult = new hc.SN74HC154();
 		Connect(this.pins.oe, this.oe_demult.pins.G1BAR_I);
 		Connect(this.pins.oe, this.oe_demult.pins.G2BAR_I);
 		Connect(this.pins.sel, this.oe_demult.SelBus());
@@ -164,12 +172,12 @@ class RegistersBoard extends Board {
 			Connect(this.oe_demult.pins[`Y${i}_O`], this[`reg_${i}`].pins.oe);
 		
 		// LE Demultiplexer
-		this.le_demult = new SN74HC154();
+		this.le_demult = new hc.SN74HC154();
 		Connect(this.pins.le, this.le_demult.pins.G1BAR_I);
 		Connect(this.pins.le, this.le_demult.pins.G2BAR_I);
 		Connect(this.pins.sel, this.le_demult.SelBus());
 		for (var i = 0; i < n_regs; i++) {
-			let newInv = new SN74HC04();
+			let newInv = new hc.SN74HC04();
 			this[`le_inv_${i}`] = newInv;
 
 			Connect(this.le_demult.pins[`Y${i}_O`], newInv.pins.A);
@@ -206,13 +214,27 @@ class ALUBoard extends Board {
 		this.pins = {
 			data: new Plug(8, 'D'),
 			op: new Plug(4, 'OP'),
-			exe: new Pin()
+			exe: new Pin(),
+			acc_oe: new Pin()
 		};
 
-		this.alu = new SN74HC181();
-		this.pre_acc = new SN74HC574();
-		this.post_acc = new SN74HC574();
-		this.buf = new SN74HC244();
+		this.lsb_alu = new hc.SN74HC181();
+		this.pre_acc = new hc.SN74HC574();
+		this.post_acc = new hc.SN74HC574();
+		this.buf = new hc.SN74HC244();
+
+		Connect(_D_LO, this.lsb_alu.pins.M_I);
+		Connect(_D_HI, this.lsb_alu.pins.CN_I);
+		Connect(this.pins.op, this.lsb_alu.SelBus());
+
+		this.not_exe = new hc.SN74HC05();
+		Connect(this.pins.exe, this.not_exe.pins.A);
+
+		Connect(_D_LO, this.pre_acc.pins.OCBAR);
+		Connect(this.pins.exe, this.pre_acc.pins.CLK);
+
+		Connect(_D_LO, this.post_acc.pins.OCBAR);
+		Connect(this.not_exe.pins.Y, this.post_acc.pins.CLK);
 
 		let lsb_dataBus = this.pins.data.Split(0, 3);
 		let msb_dataBus = this.pins.data.Split(4, 7);
@@ -220,15 +242,39 @@ class ALUBoard extends Board {
 		let lsb_accBus = this.post_acc.OutputBus().Split(0, 3);
 		let msb_accBus = this.post_acc.OutputBus().Split(4, 7);
 
-		Connect(lsb_dataBus, this.alu.ABus());
-		Connect(lsb_accBus, this.alu.BBus());
+		Connect(lsb_dataBus, this.lsb_alu.ABus());
+		Connect(lsb_accBus, this.lsb_alu.BBus());
 
+		Connect(this.lsb_alu.OutBus(), this.pre_acc.InputBus().Split(0, 3));
 
+		Connect(this.pre_acc.InputBus(), this.post_acc.InputBus());
 
+		Connect(this.post_acc.OutputBus(), this.buf.InputBus());
+		Connect(this.pins.acc_oe, [ this.buf.pins.G1BAR, this.buf.pins.G2BAR ]);
+		Connect(this.buf.OutputBus(), this.pins.data);
+	}
+
+	$debug() {
+		this.lsb_alu.PrintPinValues('lsb_alu');
+		this.pre_acc.PrintPinValues('pre_acc');
+		this.post_acc.PrintPinValues('post_acc');
+		this.buf.PrintPinValues('buf');
+	}
+
+	LoadAcc(value) {
+		this.pins.data.WriteData(value);
+		this.pins.op.WriteData(0);
+		this.Execute();
 	}
 
 	Execute() {
-
+		this.pins.exe.SetValue(true);
+		this.pins.acc_oe.SetValue(true);
+		this.$execute();this.$execute();
+		
+		this.pins.exe.SetValue(false);
+		this.pins.acc_oe.SetValue(true);
+		this.$execute();this.$execute();
 	}
 }
 
@@ -242,13 +288,13 @@ class TestBoard extends Board {
 			z: new Pin(),
 		}
 
-		this.u1 = new SN74HC08();
-		this.u2 = new SN74HC05();
-		this.u20 = new SN74HC05();
-		this.u3 = new SN74HC574();
-		this.u100 = new SN74HC181();
+		this.u1 = new hc.SN74HC08();
+		this.u2 = new hc.SN74HC05();
+		this.u20 = new hc.SN74HC05();
+		this.u3 = new hc.SN74HC574();
+		this.u100 = new hc.SN74HC181();
 
-		this.u101 = new SN74LS47();
+		this.u101 = new ls.SN74LS47();
 
 		this.reg = new Register_8Bit();
 
@@ -359,6 +405,20 @@ t.printSegments();
 
 let b = new RegistersBoard(8);
 let a = new ALUBoard();
+
+a.LoadAcc(3);
+a.pins.data.WriteData(5);
+a.pins.op.WriteData(9);
+a.Execute();
+
+a.pins.exe.SetValue(false);
+a.pins.acc_oe.SetValue(false);
+a.$execute();a.$execute();
+
+a.PrintPinValues();
+console.log('alu', a.pins.data.ReadData());
+
+
 /*
 b.pins.data.WriteData(111);
 b.pins.sel.WriteData(0);
@@ -389,4 +449,3 @@ console.log(b.ReadValue(1));
 console.log(b.ReadValue(2));
 console.log(b.ReadValue(3));
 console.log(b.ReadValue(4));
-

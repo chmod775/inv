@@ -548,7 +548,7 @@ function ConvertFile(filename) {
 	}
 	
 	const codeLines = [];
-	codeLines.push(`const core = require('./core.js');`)
+	codeLines.push(`const { Connect, _D_HI, _D_LO, Logger, Wire, Pin, Footprint, Plug, Circuit, Component, Board, Bus, inv, inva, and, or, bufa, nora, dff, dltch, buf3a, logicexp } = require('./core.js');`)
 	for (var c of circuitsObjects) {
     let comment = comments[c.name];
     if (comment) {
@@ -560,7 +560,7 @@ function ConvertFile(filename) {
 	
 	let exp = [];
 	for (var c of circuitsObjects) {
-		exp.push(`global.${c.name} = ${c.name};`);
+		exp.push(`module.exports.${c.name} = ${c.name};`);
 	}
 	codeLines.push(exp.join('\n'));
 	

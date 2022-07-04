@@ -52,6 +52,7 @@ class Logger {
   }
   static Panic(message, extra, payload) {
     if (Logger.verbosityLevel < 1) return;
+		console.trace();
     Logger._Log(Logger.BASH_Color_Red, 'PANIC: ' + message, extra, payload);
 		throw 'PANIC: ' + message;
   }
@@ -61,7 +62,7 @@ class Logger {
 class Wire {
 	constructor() {
 		this.pins = [];
-		this.value = false;
+		this.value = null;
 	}
 
 	MergeWithWire(wire) {
@@ -176,6 +177,15 @@ class Footprint {
 
 		return ret;
 	}
+
+	CheckMissingConnections() {
+		// Check if all pins are connected
+		for (let pk in this.pins) {
+			let pinItem = this.pins[pk];
+
+			if (!pinItem.wire) Logger.Warning(`Pin ${pk} not connected for circuit ${this.constructor.name}.`);
+		}
+	}
 }
 
 class Plug extends Footprint {
@@ -251,6 +261,31 @@ class Circuit extends Footprint {
 		for (let k in reverseCircuits)
 			circuits[k].$execute();
 	}
+
+	PrintPinValues(prefix) {
+		if (this.$debug)
+			this.$debug();
+		for (let p in this.pins) {
+			let pin = this.pins[p];
+			if (pin instanceof Pin) {
+				console.log(`[${prefix}] ${p}: ${pin.GetValue()}`);
+			} else if (pin instanceof Plug) {
+				for (let pp in pin.pins)
+					console.log(`[${prefix}] ${p}.${pp}: ${pin.pins[pp].GetValue()}`);
+			} else {
+				Logger.Panic(`Instance ${pin.constructor.name} of Pin ${p} not supported!`);
+			}
+		}
+	}
+
+	SanityCheck() {
+		// Check if all pins are connected
+		this.CheckMissingConnections();
+
+		let circuits = this.GetCircuits();
+		for (let k in circuits)
+			circuits[k].SanityCheck();
+	}
 }
 
 class Component extends Circuit {
@@ -270,6 +305,7 @@ class Bus extends Circuit {
 		if (Array.isArray(n)) {
 			for (var i = 0; i < n.length; i++) {
 				let nItem = n[i];
+				if (!nItem) Logger.Panic(`Pin not found!`);
 				if (nItem instanceof Pin) {
 					this.pins[`${this.prefix}${i}`] = nItem;
 				} else if (nItem instanceof Bus) {
@@ -388,6 +424,26 @@ class inv extends Circuit {
 		this.pins.OUT.SetValue(!this.pins.IN0.GetValue());
 	}
 }
+
+class inva extends Circuit {
+	constructor(n) {
+		super();
+
+		this.n = n;
+
+		this.n = n;
+		for (var i = 0; i < n; i++) {
+			this.pins[`IN${i}_0`] = new Pin();
+			this.pins[`OUT${i}`] = new Pin();
+		}
+	}
+
+	$execute() {
+		for (var i = 0; i < this.n; i++)
+			this.pins[`OUT${i}`].SetValue(!this.pins[`IN${i}_0`].GetValue());
+	}
+}
+
 
 class and extends Circuit {
 	constructor(n) {
@@ -608,26 +664,27 @@ class logicexp extends Circuit {
 	}
 }
 
-global.Connect = Connect;
-global._D_HI = _D_HI;
-global._D_LO = _D_LO;
+module.exports.Connect = Connect;
+module.exports._D_HI = _D_HI;
+module.exports._D_LO = _D_LO;
 
-global.Logger = Logger;
-global.Wire = Wire;
-global.Pin = Pin;
-global.Footprint = Footprint;
-global.Plug = Plug;
-global.Circuit = Circuit;
-global.Component = Component;
-global.Board = Board;
-global.Bus = Bus;
+module.exports.Logger = Logger;
+module.exports.Wire = Wire;
+module.exports.Pin = Pin;
+module.exports.Footprint = Footprint;
+module.exports.Plug = Plug;
+module.exports.Circuit = Circuit;
+module.exports.Component = Component;
+module.exports.Board = Board;
+module.exports.Bus = Bus;
 
-global.inv = inv;
-global.and = and;
-global.or = or;
-global.bufa = bufa;
-global.nora = nora;
-global.dff = dff;
-global.dltch = dltch;
-global.buf3a = buf3a;
-global.logicexp = logicexp;
+module.exports.inv = inv;
+module.exports.inva = inva;
+module.exports.and = and;
+module.exports.or = or;
+module.exports.bufa = bufa;
+module.exports.nora = nora;
+module.exports.dff = dff;
+module.exports.dltch = dltch;
+module.exports.buf3a = buf3a;
+module.exports.logicexp = logicexp;
