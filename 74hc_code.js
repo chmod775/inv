@@ -45,6 +45,9 @@ class SN74HC02 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new nor(2);
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.IN1, this.pins.B);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -75,7 +78,7 @@ class SN74HC04 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new inv();
-		Connect(this.U1.pins.IN, this.pins.A);
+		Connect(this.U1.pins.IN0, this.pins.A);
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
@@ -90,7 +93,7 @@ class SN74HC05 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new inv();
-		Connect(this.U1.pins.IN, this.pins.A);
+		Connect(this.U1.pins.IN0, this.pins.A);
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
@@ -106,6 +109,9 @@ class SN74HC08 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new and(2);
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.IN1, this.pins.B);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -120,6 +126,9 @@ class SN74HC09 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new and(2);
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.IN1, this.pins.B);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -154,6 +163,10 @@ class SN74HC11 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new and(3);
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.IN1, this.pins.B);
+		Connect(this.U1.pins.IN2, this.pins.C);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -167,7 +180,7 @@ class SN74HC14 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new inv();
-		Connect(this.U1.pins.IN, this.pins.A);
+		Connect(this.U1.pins.IN0, this.pins.A);
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
@@ -206,6 +219,11 @@ class SN74HC21 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new and(4);
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.IN1, this.pins.B);
+		Connect(this.U1.pins.IN2, this.pins.C);
+		Connect(this.U1.pins.IN3, this.pins.D);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -221,6 +239,10 @@ class SN74HC27 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new nor(3);
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.IN1, this.pins.B);
+		Connect(this.U1.pins.IN2, this.pins.C);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -264,6 +286,9 @@ class SN74HC32 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new or(2);
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.IN1, this.pins.B);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -277,6 +302,8 @@ class SN74HC35 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new buf();
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -291,6 +318,9 @@ class SN74HC36 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new nor(2);
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.IN1, this.pins.B);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -378,7 +408,19 @@ class SN74HC51 extends Component {
 			Y2: new Pin(),
 		}
 		this.U1 = new aoi(3,2);
+		Connect(this.U1.pins.IN0_0, this.pins.A1);
+		Connect(this.U1.pins.IN0_1, this.pins.B1);
+		Connect(this.U1.pins.IN0_2, this.pins.C1);
+		Connect(this.U1.pins.IN1_0, this.pins.D1);
+		Connect(this.U1.pins.IN1_1, this.pins.E1);
+		Connect(this.U1.pins.IN1_2, this.pins.F1);
+		Connect(this.U1.pins.OUT, this.pins.Y1);
 		this.U2 = new aoi(2,2);
+		Connect(this.U2.pins.IN0_0, this.pins.A2);
+		Connect(this.U2.pins.IN0_1, this.pins.B2);
+		Connect(this.U2.pins.IN1_0, this.pins.C2);
+		Connect(this.U2.pins.IN1_1, this.pins.D2);
+		Connect(this.U2.pins.OUT, this.pins.Y2);
 	}
 }
 /**
@@ -396,6 +438,13 @@ class SN74HC73 extends Component {
 			QBAR: new Pin(),
 		}
 		this.U1 = new jkff(1);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		Connect(this.U1.pins.CLEAR, this.pins.CLRBAR);
+		Connect(this.U1.pins.CLOCK, this.pins.CLK);
+		Connect(this.U1.pins.J0, this.pins.J);
+		Connect(this.U1.pins.K0, this.pins.K);
+		Connect(this.U1.pins.Q0, this.pins.Q);
+		Connect(this.U1.pins.QBAR0, this.pins.QBAR);
 	}
 }
 /**
@@ -418,6 +467,7 @@ class SN74HC74 extends Component {
 		Connect(this.UFF1.pins.CLOCK, this.pins._1CLK);
 		Connect(this.UFF1.pins.D0, this.pins._1D);
 		Connect(this.UFF1.pins.Q0, this.pins._1Q);
+		Connect(this.UFF1.pins.QBAR0, this.pins._1QBAR);
 	}
 }
 /**
@@ -436,7 +486,25 @@ class SN74HC75 extends Component {
 			_2QBAR: new Pin(),
 		}
 		this.UIBUF = new bufa(3);
+		Connect(this.UIBUF.pins.IN0_0, this.pins._1D);
+		Connect(this.UIBUF.pins.IN1_0, this.pins._2D);
+		Connect(this.UIBUF.pins.IN2_0, this.pins.C);
+		let _1D_BUF = new Pin();
+		Connect(this.UIBUF.pins.OUT0, _1D_BUF);
+		let _2D_BUF = new Pin();
+		Connect(this.UIBUF.pins.OUT1, _2D_BUF);
+		let C_BUF = new Pin();
+		Connect(this.UIBUF.pins.OUT2, C_BUF);
 		this.U12 = new dltch(2);
+		Connect(this.U12.pins.PRESET, _D_HI);
+		Connect(this.U12.pins.CLEAR, _D_HI);
+		Connect(this.U12.pins.GATE, C_BUF);
+		Connect(this.U12.pins.D0, _1D_BUF);
+		Connect(this.U12.pins.D1, _2D_BUF);
+		Connect(this.U12.pins.Q0, this.pins._1Q);
+		Connect(this.U12.pins.Q1, this.pins._2Q);
+		Connect(this.U12.pins.QBAR0, this.pins._1QBAR);
+		Connect(this.U12.pins.QBAR1, this.pins._2QBAR);
 	}
 }
 /**
@@ -455,6 +523,13 @@ class SN74HC76 extends Component {
 			QBAR: new Pin(),
 		}
 		this.U1 = new jkff(1);
+		Connect(this.U1.pins.PRESET, this.pins.PREBAR);
+		Connect(this.U1.pins.CLEAR, this.pins.CLRBAR);
+		Connect(this.U1.pins.CLOCK, this.pins.CLK);
+		Connect(this.U1.pins.J0, this.pins.J);
+		Connect(this.U1.pins.K0, this.pins.K);
+		Connect(this.U1.pins.Q0, this.pins.Q);
+		Connect(this.U1.pins.QBAR0, this.pins.QBAR);
 	}
 }
 /**
@@ -478,8 +553,34 @@ class SN74HC78 extends Component {
 			_2QBAR: new Pin(),
 		}
 		this.UIBUF = new bufa(4);
+		Connect(this.UIBUF.pins.IN0_0, this.pins.CLK);
+		Connect(this.UIBUF.pins.IN1_0, this.pins.CLRBAR);
+		Connect(this.UIBUF.pins.IN2_0, this.pins._1PREBAR);
+		Connect(this.UIBUF.pins.IN3_0, this.pins._2PREBAR);
+		let CLK_BUF = new Pin();
+		Connect(this.UIBUF.pins.OUT0, CLK_BUF);
+		let CLRBAR_BUF = new Pin();
+		Connect(this.UIBUF.pins.OUT1, CLRBAR_BUF);
+		let _1PREB = new Pin();
+		Connect(this.UIBUF.pins.OUT2, _1PREB);
+		let _2PREB = new Pin();
+		Connect(this.UIBUF.pins.OUT3, _2PREB);
 		this.U1 = new jkff(1);
+		Connect(this.U1.pins.PRESET, _1PREB);
+		Connect(this.U1.pins.CLEAR, CLRBAR_BUF);
+		Connect(this.U1.pins.CLOCK, CLK_BUF);
+		Connect(this.U1.pins.J0, this.pins._1J);
+		Connect(this.U1.pins.K0, this.pins._1K);
+		Connect(this.U1.pins.Q0, this.pins._1Q);
+		Connect(this.U1.pins.QBAR0, this.pins._1QBAR);
 		this.U2 = new jkff(1);
+		Connect(this.U2.pins.PRESET, _2PREB);
+		Connect(this.U2.pins.CLEAR, CLRBAR_BUF);
+		Connect(this.U2.pins.CLOCK, CLK_BUF);
+		Connect(this.U2.pins.J0, this.pins._2J);
+		Connect(this.U2.pins.K0, this.pins._2K);
+		Connect(this.U2.pins.Q0, this.pins._2Q);
+		Connect(this.U2.pins.QBAR0, this.pins._2QBAR);
 	}
 }
 /**
@@ -561,6 +662,9 @@ class SN74HC86 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new xor();
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.IN1, this.pins.B);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -580,21 +684,64 @@ class SN74HC93 extends Component {
 			QD_O: new Pin(),
 		}
 		this.U1 = new jkff(1);
-		this.U2 = new jkff(1);
-		this.U3 = new jkff(1);
-		this.U4 = new jkff(1);
-		this.U5 = new bufa(4);
-		this.U6 = new nand(2);
-		let R01 = new Pin();
-		Connect(this.U6.pins.IN0, R01);
-		let R02 = new Pin();
-		Connect(this.U6.pins.IN1, R02);
+		Connect(this.U1.pins.PRESET, _D_HI);
 		let CLRBAR = new Pin();
+		Connect(this.U1.pins.CLEAR, CLRBAR);
+		let CKA = new Pin();
+		Connect(this.U1.pins.CLOCK, CKA);
+		Connect(this.U1.pins.J0, _D_HI);
+		Connect(this.U1.pins.K0, _D_HI);
+		let QA = new Pin();
+		Connect(this.U1.pins.Q0, QA);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
+		this.U2 = new jkff(1);
+		Connect(this.U2.pins.PRESET, _D_HI);
+		Connect(this.U2.pins.CLEAR, CLRBAR);
+		let CKB = new Pin();
+		Connect(this.U2.pins.CLOCK, CKB);
+		Connect(this.U2.pins.J0, _D_HI);
+		Connect(this.U2.pins.K0, _D_HI);
+		let QB = new Pin();
+		Connect(this.U2.pins.Q0, QB);
+		Connect(this.U2.pins.QBAR0, _D_NC);
+		this.U3 = new jkff(1);
+		Connect(this.U3.pins.PRESET, _D_HI);
+		Connect(this.U3.pins.CLEAR, CLRBAR);
+		Connect(this.U3.pins.CLOCK, QB);
+		Connect(this.U3.pins.J0, _D_HI);
+		Connect(this.U3.pins.K0, _D_HI);
+		let QC = new Pin();
+		Connect(this.U3.pins.Q0, QC);
+		Connect(this.U3.pins.QBAR0, _D_NC);
+		this.U4 = new jkff(1);
+		Connect(this.U4.pins.PRESET, _D_HI);
+		Connect(this.U4.pins.CLEAR, CLRBAR);
+		Connect(this.U4.pins.CLOCK, QC);
+		Connect(this.U4.pins.J0, _D_HI);
+		Connect(this.U4.pins.K0, _D_HI);
+		let QD = new Pin();
+		Connect(this.U4.pins.Q0, QD);
+		Connect(this.U4.pins.QBAR0, _D_NC);
+		this.U5 = new bufa(4);
+		Connect(this.U5.pins.IN0_0, this.pins.CKA_I);
+		Connect(this.U5.pins.IN1_0, this.pins.CKB_I);
+		Connect(this.U5.pins.IN2_0, this.pins.R01_I);
+		Connect(this.U5.pins.IN3_0, this.pins.R02_I);
+		Connect(this.U5.pins.OUT0, CKA);
+		Connect(this.U5.pins.OUT1, CKB);
+		let R01 = new Pin();
+		Connect(this.U5.pins.OUT2, R01);
+		let R02 = new Pin();
+		Connect(this.U5.pins.OUT3, R02);
+		this.U6 = new nand(2);
+		Connect(this.U6.pins.IN0, R01);
+		Connect(this.U6.pins.IN1, R02);
 		Connect(this.U6.pins.OUT, CLRBAR);
-		Connect(this.pins.QA, this.pins.QA_O);
-		Connect(this.pins.QB, this.pins.QB_O);
-		Connect(this.pins.QC, this.pins.QC_O);
-		Connect(this.pins.QD, this.pins.QD_O);
+		Connect(QA, this.pins.QA_O);
+		Connect(QB, this.pins.QB_O);
+		Connect(QC, this.pins.QC_O);
+		Connect(QD, this.pins.QD_O);
 	}
 }
 /**
@@ -671,6 +818,11 @@ class SN74HC95 extends Component {
 		Connect(this.U1.pins.Q2, QC);
 		let QD = new Pin();
 		Connect(this.U1.pins.Q3, QD);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
+		Connect(this.U1.pins.QBAR1, _D_NC);
+		Connect(this.U1.pins.QBAR2, _D_NC);
+		Connect(this.U1.pins.QBAR3, _D_NC);
 		Connect(QA, this.pins.QA_O);
 		Connect(QB, this.pins.QB_O);
 		Connect(QC, this.pins.QC_O);
@@ -692,6 +844,13 @@ class SN74HC107 extends Component {
 			QBAR: new Pin(),
 		}
 		this.U1 = new jkff(1);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		Connect(this.U1.pins.CLEAR, this.pins.CLRBAR);
+		Connect(this.U1.pins.CLOCK, this.pins.CLK);
+		Connect(this.U1.pins.J0, this.pins.J);
+		Connect(this.U1.pins.K0, this.pins.K);
+		Connect(this.U1.pins.Q0, this.pins.Q);
+		Connect(this.U1.pins.QBAR0, this.pins.QBAR);
 	}
 }
 /**
@@ -710,7 +869,20 @@ class SN74HC109 extends Component {
 			QBAR: new Pin(),
 		}
 		this.U1 = new jkff(1);
+		Connect(this.U1.pins.PRESET, this.pins.PREBAR);
+		Connect(this.U1.pins.CLEAR, this.pins.CLRBAR);
+		let CLKBAR = new Pin();
+		Connect(this.U1.pins.CLOCK, CLKBAR);
+		Connect(this.U1.pins.J0, this.pins.J);
+		let K = new Pin();
+		Connect(this.U1.pins.K0, K);
+		Connect(this.U1.pins.Q0, this.pins.Q);
+		Connect(this.U1.pins.QBAR0, this.pins.QBAR);
 		this.U2 = new inva(2);
+		Connect(this.U2.pins.IN0_0, this.pins.KBAR);
+		Connect(this.U2.pins.IN1_0, this.pins.CLK);
+		Connect(this.U2.pins.OUT0, K);
+		Connect(this.U2.pins.OUT1, CLKBAR);
 	}
 }
 /**
@@ -729,6 +901,13 @@ class SN74HC112 extends Component {
 			QBAR: new Pin(),
 		}
 		this.U1 = new jkff(1);
+		Connect(this.U1.pins.PRESET, this.pins.PREBAR);
+		Connect(this.U1.pins.CLEAR, this.pins.CLRBAR);
+		Connect(this.U1.pins.CLOCK, this.pins.CLK);
+		Connect(this.U1.pins.J0, this.pins.J);
+		Connect(this.U1.pins.K0, this.pins.K);
+		Connect(this.U1.pins.Q0, this.pins.Q);
+		Connect(this.U1.pins.QBAR0, this.pins.QBAR);
 	}
 }
 /**
@@ -746,6 +925,13 @@ class SN74HC113 extends Component {
 			QBAR: new Pin(),
 		}
 		this.U1 = new jkff(1);
+		Connect(this.U1.pins.PRESET, this.pins.PREBAR);
+		Connect(this.U1.pins.CLEAR, _D_HI);
+		Connect(this.U1.pins.CLOCK, this.pins.CLK);
+		Connect(this.U1.pins.J0, this.pins.J);
+		Connect(this.U1.pins.K0, this.pins.K);
+		Connect(this.U1.pins.Q0, this.pins.Q);
+		Connect(this.U1.pins.QBAR0, this.pins.QBAR);
 	}
 }
 /**
@@ -769,8 +955,34 @@ class SN74HC114 extends Component {
 			_2QBAR: new Pin(),
 		}
 		this.UIBUF = new bufa(4);
+		Connect(this.UIBUF.pins.IN0_0, this.pins.CLK);
+		Connect(this.UIBUF.pins.IN1_0, this.pins.CLRBAR);
+		Connect(this.UIBUF.pins.IN2_0, this.pins._1PREBAR);
+		Connect(this.UIBUF.pins.IN3_0, this.pins._2PREBAR);
+		let CLK_BUF = new Pin();
+		Connect(this.UIBUF.pins.OUT0, CLK_BUF);
+		let CLRBAR_BUF = new Pin();
+		Connect(this.UIBUF.pins.OUT1, CLRBAR_BUF);
+		let _1PREB = new Pin();
+		Connect(this.UIBUF.pins.OUT2, _1PREB);
+		let _2PREB = new Pin();
+		Connect(this.UIBUF.pins.OUT3, _2PREB);
 		this.U1 = new jkff(1);
+		Connect(this.U1.pins.PRESET, _1PREB);
+		Connect(this.U1.pins.CLEAR, CLRBAR_BUF);
+		Connect(this.U1.pins.CLOCK, CLK_BUF);
+		Connect(this.U1.pins.J0, this.pins._1J);
+		Connect(this.U1.pins.K0, this.pins._1K);
+		Connect(this.U1.pins.Q0, this.pins._1Q);
+		Connect(this.U1.pins.QBAR0, this.pins._1QBAR);
 		this.U2 = new jkff(1);
+		Connect(this.U2.pins.PRESET, _2PREB);
+		Connect(this.U2.pins.CLEAR, CLRBAR_BUF);
+		Connect(this.U2.pins.CLOCK, CLK_BUF);
+		Connect(this.U2.pins.J0, this.pins._2J);
+		Connect(this.U2.pins.K0, this.pins._2K);
+		Connect(this.U2.pins.Q0, this.pins._2Q);
+		Connect(this.U2.pins.QBAR0, this.pins._2QBAR);
 	}
 }
 /**
@@ -785,9 +997,12 @@ class SN74HC125 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new buf3();
-		this.U2 = new inv();
-		Connect(this.U2.pins.IN, this.pins.GBAR);
+		Connect(this.U1.pins.IN0, this.pins.A);
 		let G = new Pin();
+		Connect(this.U1.pins.EN, G);
+		Connect(this.U1.pins.OUT, this.pins.Y);
+		this.U2 = new inv();
+		Connect(this.U2.pins.IN0, this.pins.GBAR);
 		Connect(this.U2.pins.OUT, G);
 	}
 }
@@ -803,6 +1018,9 @@ class SN74HC126 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new buf3();
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.EN, this.pins.G);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -884,6 +1102,28 @@ class SN74HC137 extends Component {
 			Y7_O: new Pin(),
 		}
 		this.U1 = new dltch(3);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		Connect(this.U1.pins.CLEAR, _D_HI);
+		let LATCHEN = new Pin();
+		Connect(this.U1.pins.GATE, LATCHEN);
+		let A = new Pin();
+		Connect(this.U1.pins.D0, A);
+		let B = new Pin();
+		Connect(this.U1.pins.D1, B);
+		let C = new Pin();
+		Connect(this.U1.pins.D2, C);
+		let QA = new Pin();
+		Connect(this.U1.pins.Q0, QA);
+		let QB = new Pin();
+		Connect(this.U1.pins.Q1, QB);
+		let QC = new Pin();
+		Connect(this.U1.pins.Q2, QC);
+		let QABAR = new Pin();
+		Connect(this.U1.pins.QBAR0, QABAR);
+		let QBBAR = new Pin();
+		Connect(this.U1.pins.QBAR1, QBBAR);
+		let QCBAR = new Pin();
+		Connect(this.U1.pins.QBAR2, QCBAR);
 		this.UHC137LOG = new logicexp(['G1_I','G2BAR_I','GLBAR_I','A_I','B_I','C_I','QA','QB','QC','QABAR','QBBAR','QCBAR'], ['GLBAR','A','B','C','LATCHEN','ENABLE','Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7'], []).Logic('let    G1      =  G1_I ;   G1      =  G1_I ;let    G2BAR   =  G2BAR_I ;   G2BAR   =  G2BAR_I ;   GLBAR   =  GLBAR_I ;   A       =  A_I ;   B       =  B_I ;   C       =  C_I ;   LATCHEN =  !GLBAR ;   ENABLE  =  G1 & !G2BAR ;   Y0      =  !(ENABLE & QCBAR & QBBAR & QABAR) ;   Y1      =  !(ENABLE & QCBAR & QBBAR & QA   ) ;   Y2      =  !(ENABLE & QCBAR & QB    & QABAR) ;   Y3      =  !(ENABLE & QCBAR & QB    & QA   ) ;   Y4      =  !(ENABLE & QC    & QBBAR & QABAR) ;   Y5      =  !(ENABLE & QC    & QBBAR & QA   ) ;   Y6      =  !(ENABLE & QC    & QB    & QABAR) ;   Y7      =  !(ENABLE & QC    & QB    & QA   ) ;');
 		Connect(this.UHC137LOG.pins.G1_I, this.pins.G1_I);
 		Connect(this.UHC137LOG.pins.G2BAR_I, this.pins.G2BAR_I);
@@ -891,27 +1131,17 @@ class SN74HC137 extends Component {
 		Connect(this.UHC137LOG.pins.A_I, this.pins.A_I);
 		Connect(this.UHC137LOG.pins.B_I, this.pins.B_I);
 		Connect(this.UHC137LOG.pins.C_I, this.pins.C_I);
-		let QA = new Pin();
 		Connect(this.UHC137LOG.pins.QA, QA);
-		let QB = new Pin();
 		Connect(this.UHC137LOG.pins.QB, QB);
-		let QC = new Pin();
 		Connect(this.UHC137LOG.pins.QC, QC);
-		let QABAR = new Pin();
 		Connect(this.UHC137LOG.pins.QABAR, QABAR);
-		let QBBAR = new Pin();
 		Connect(this.UHC137LOG.pins.QBBAR, QBBAR);
-		let QCBAR = new Pin();
 		Connect(this.UHC137LOG.pins.QCBAR, QCBAR);
 		let GLBAR = new Pin();
 		Connect(this.UHC137LOG.pins.GLBAR, GLBAR);
-		let A = new Pin();
 		Connect(this.UHC137LOG.pins.A, A);
-		let B = new Pin();
 		Connect(this.UHC137LOG.pins.B, B);
-		let C = new Pin();
 		Connect(this.UHC137LOG.pins.C, C);
-		let LATCHEN = new Pin();
 		Connect(this.UHC137LOG.pins.LATCHEN, LATCHEN);
 		let ENABLE = new Pin();
 		Connect(this.UHC137LOG.pins.ENABLE, ENABLE);
@@ -1746,6 +1976,10 @@ class SN74HC160 extends Component {
 		let QC = new Pin();
 		Connect(this.UDFF.pins.Q2, QC);
 		Connect(this.UDFF.pins.Q3, QD);
+		Connect(this.UDFF.pins.QBAR0, QABAR);
+		Connect(this.UDFF.pins.QBAR1, QBBAR);
+		Connect(this.UDFF.pins.QBAR2, QCBAR);
+		Connect(this.UDFF.pins.QBAR3, QDBAR);
 		Connect(RCO, this.pins.RCO_O);
 		Connect(QA, this.pins.QA_O);
 		Connect(QB, this.pins.QB_O);
@@ -1797,6 +2031,14 @@ class SN74HC161 extends Component {
 		Connect(this.U1.pins.Q2, QC);
 		let QD = new Pin();
 		Connect(this.U1.pins.Q3, QD);
+		let QABAR = new Pin();
+		Connect(this.U1.pins.QBAR0, QABAR);
+		let QBBAR = new Pin();
+		Connect(this.U1.pins.QBAR1, QBBAR);
+		let QCBAR = new Pin();
+		Connect(this.U1.pins.QBAR2, QCBAR);
+		let QDBAR = new Pin();
+		Connect(this.U1.pins.QBAR3, QDBAR);
 		this.UHC161LOG = new logicexp(['CLK_I','ENP_I','ENT_I','CLRBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['CLK','ENP','ENT','CLRBAR','LOADBAR','A','B','C','D','RCO','DA','DB','DC','DD','IEN'], []).Logic('   CLK =  CLK_I ;   ENP =  ENP_I ;   ENT =  ENT_I ;   CLRBAR =  CLRBAR_I ;   LOADBAR =  LOADBAR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   IEN =  !(ENT & ENP) ;let    ILD =  !LOADBAR ;   ILD =  !LOADBAR ;let    IA1 =  A & ILD ;   IA1 =  A & ILD ;let    IA2 =  !(!IEN ^ QABAR) & LOADBAR ;   IA2 =  !(!IEN ^ QABAR) & LOADBAR ;let    IB1 =  B & ILD ;   IB1 =  B & ILD ;let    IB2 =  !(!(IEN | QABAR) ^ QBBAR) & LOADBAR ;   IB2 =  !(!(IEN | QABAR) ^ QBBAR) & LOADBAR ;let    IC1 =  C & ILD ;   IC1 =  C & ILD ;let    IC2 =  (!((!(IEN | QBBAR | QABAR)) ^ QCBAR)) & LOADBAR ;   IC2 =  (!((!(IEN | QBBAR | QABAR)) ^ QCBAR)) & LOADBAR ;let    ID1 =  D & ILD ;   ID1 =  D & ILD ;let    ID2 =  !(IEN | QCBAR | QBBAR | QABAR) ;   ID2 =  !(IEN | QCBAR | QBBAR | QABAR) ;let    ID3 =  LOADBAR & ((ID2 & QDBAR) | !(ID2 | QDBAR)) ;   ID3 =  LOADBAR & ((ID2 & QDBAR) | !(ID2 | QDBAR)) ;   RCO =  QD & QC & QB & QA & ENT ;   DA =  IA1 | IA2 ;   DB =  IB1 | IB2 ;   DC =  IC1 | IC2 ;   DD =  ID1 | ID3 ;');
 		Connect(this.UHC161LOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.UHC161LOG.pins.ENP_I, this.pins.ENP_I);
@@ -1811,13 +2053,9 @@ class SN74HC161 extends Component {
 		Connect(this.UHC161LOG.pins.QB, QB);
 		Connect(this.UHC161LOG.pins.QC, QC);
 		Connect(this.UHC161LOG.pins.QD, QD);
-		let QABAR = new Pin();
 		Connect(this.UHC161LOG.pins.QABAR, QABAR);
-		let QBBAR = new Pin();
 		Connect(this.UHC161LOG.pins.QBBAR, QBBAR);
-		let QCBAR = new Pin();
 		Connect(this.UHC161LOG.pins.QCBAR, QCBAR);
-		let QDBAR = new Pin();
 		Connect(this.UHC161LOG.pins.QDBAR, QDBAR);
 		Connect(this.UHC161LOG.pins.CLK, CLK);
 		let ENP = new Pin();
@@ -1938,6 +2176,10 @@ class SN74HC162 extends Component {
 		let QC = new Pin();
 		Connect(this.UDFF.pins.Q2, QC);
 		Connect(this.UDFF.pins.Q3, QD);
+		Connect(this.UDFF.pins.QBAR0, QABAR);
+		Connect(this.UDFF.pins.QBAR1, QBBAR);
+		Connect(this.UDFF.pins.QBAR2, QCBAR);
+		Connect(this.UDFF.pins.QBAR3, QDBAR);
 		Connect(RCO, this.pins.RCO_O);
 		Connect(QA, this.pins.QA_O);
 		Connect(QB, this.pins.QB_O);
@@ -1988,6 +2230,14 @@ class SN74HC163 extends Component {
 		Connect(this.U1.pins.Q2, QC);
 		let QD = new Pin();
 		Connect(this.U1.pins.Q3, QD);
+		let QABAR = new Pin();
+		Connect(this.U1.pins.QBAR0, QABAR);
+		let QBBAR = new Pin();
+		Connect(this.U1.pins.QBAR1, QBBAR);
+		let QCBAR = new Pin();
+		Connect(this.U1.pins.QBAR2, QCBAR);
+		let QDBAR = new Pin();
+		Connect(this.U1.pins.QBAR3, QDBAR);
 		this.UHC163LOG = new logicexp(['CLK_I','ENP_I','ENT_I','CLRBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['CLK','ENP','ENT','CLRBAR','LOADBAR','A','B','C','D','RCO','DA','DB','DC','DD','IEN'], []).Logic('   CLK =  CLK_I ;   ENP =  ENP_I ;   ENT =  ENT_I ;   CLRBAR =  CLRBAR_I ;   LOADBAR =  LOADBAR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   IEN =  !(ENT & ENP) ;let    ILD =  !(LOADBAR | !CLRBAR) ;   ILD =  !(LOADBAR | !CLRBAR) ;let    ILC =  !(ILD | !CLRBAR) ;   ILC =  !(ILD | !CLRBAR) ;let    IA1 =  A & ILD ;   IA1 =  A & ILD ;let    IA2 =  !(!IEN ^ QABAR) & ILC ;   IA2 =  !(!IEN ^ QABAR) & ILC ;let    IB1 =  B & ILD ;   IB1 =  B & ILD ;let    IB2 =  !(!(IEN | QABAR) ^ QBBAR) & ILC ;   IB2 =  !(!(IEN | QABAR) ^ QBBAR) & ILC ;let    IC1 =  C & ILD ;   IC1 =  C & ILD ;let    IC2 =  (!((!(IEN | QBBAR | QABAR)) ^ QCBAR)) & ILC ;   IC2 =  (!((!(IEN | QBBAR | QABAR)) ^ QCBAR)) & ILC ;let    IDB =  D & ILD ;   IDB =  D & ILD ;let    IDC =  !(IEN | QCBAR | QBBAR | QABAR) ;   IDC =  !(IEN | QCBAR | QBBAR | QABAR) ;let    IDD =  ILC & ((IDC & QDBAR) | !(IDC | QDBAR)) ;   IDD =  ILC & ((IDC & QDBAR) | !(IDC | QDBAR)) ;   RCO =  QD & QC & QB & QA & ENT ;   DA =  IA1 | IA2 ;   DB =  IB1 | IB2 ;   DC =  IC1 | IC2 ;   DD =  IDB | IDD ;');
 		Connect(this.UHC163LOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.UHC163LOG.pins.ENP_I, this.pins.ENP_I);
@@ -2002,13 +2252,9 @@ class SN74HC163 extends Component {
 		Connect(this.UHC163LOG.pins.QB, QB);
 		Connect(this.UHC163LOG.pins.QC, QC);
 		Connect(this.UHC163LOG.pins.QD, QD);
-		let QABAR = new Pin();
 		Connect(this.UHC163LOG.pins.QABAR, QABAR);
-		let QBBAR = new Pin();
 		Connect(this.UHC163LOG.pins.QBBAR, QBBAR);
-		let QCBAR = new Pin();
 		Connect(this.UHC163LOG.pins.QCBAR, QCBAR);
-		let QDBAR = new Pin();
 		Connect(this.UHC163LOG.pins.QDBAR, QDBAR);
 		Connect(this.UHC163LOG.pins.CLK, CLK);
 		let ENP = new Pin();
@@ -2060,14 +2306,27 @@ class SN74HC164 extends Component {
 			QH_O: new Pin(),
 		}
 		this.U1 = new bufa(4);
+		Connect(this.U1.pins.IN0_0, this.pins.CLRBAR_I);
+		Connect(this.U1.pins.IN1_0, this.pins.CLK_I);
+		Connect(this.U1.pins.IN2_0, this.pins.A_I);
+		Connect(this.U1.pins.IN3_0, this.pins.B_I);
+		let CLRBAR = new Pin();
+		Connect(this.U1.pins.OUT0, CLRBAR);
+		let CLK = new Pin();
+		Connect(this.U1.pins.OUT1, CLK);
+		let A = new Pin();
+		Connect(this.U1.pins.OUT2, A);
+		let B = new Pin();
+		Connect(this.U1.pins.OUT3, B);
 		this.U2 = new and(2);
+		Connect(this.U2.pins.IN0, A);
+		Connect(this.U2.pins.IN1, B);
+		let IN = new Pin();
+		Connect(this.U2.pins.OUT, IN);
 		this.U3 = new dff(8);
 		Connect(this.U3.pins.PRESET, _D_HI);
-		let CLRBAR = new Pin();
 		Connect(this.U3.pins.CLEAR, CLRBAR);
-		let CLK = new Pin();
 		Connect(this.U3.pins.CLOCK, CLK);
-		let IN = new Pin();
 		Connect(this.U3.pins.D0, IN);
 		let QA = new Pin();
 		Connect(this.U3.pins.D1, QA);
@@ -2092,6 +2351,15 @@ class SN74HC164 extends Component {
 		Connect(this.U3.pins.Q6, QG);
 		let QH = new Pin();
 		Connect(this.U3.pins.Q7, QH);
+		let _D_NC = new Pin();
+		Connect(this.U3.pins.QBAR0, _D_NC);
+		Connect(this.U3.pins.QBAR1, _D_NC);
+		Connect(this.U3.pins.QBAR2, _D_NC);
+		Connect(this.U3.pins.QBAR3, _D_NC);
+		Connect(this.U3.pins.QBAR4, _D_NC);
+		Connect(this.U3.pins.QBAR5, _D_NC);
+		Connect(this.U3.pins.QBAR6, _D_NC);
+		Connect(this.U3.pins.QBAR7, _D_NC);
 		Connect(QA, this.pins.QA_O);
 		Connect(QB, this.pins.QB_O);
 		Connect(QC, this.pins.QC_O);
@@ -2202,6 +2470,8 @@ class SN74HC165 extends Component {
 		Connect(this.U1.pins.D0, SER);
 		let QA = new Pin();
 		Connect(this.U1.pins.Q0, QA);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
 		this.U2 = new dff(1);
 		Connect(this.U2.pins.PRESET, SB);
 		Connect(this.U2.pins.CLEAR, RB);
@@ -2209,6 +2479,7 @@ class SN74HC165 extends Component {
 		Connect(this.U2.pins.D0, QA);
 		let QB = new Pin();
 		Connect(this.U2.pins.Q0, QB);
+		Connect(this.U2.pins.QBAR0, _D_NC);
 		this.U3 = new dff(1);
 		Connect(this.U3.pins.PRESET, SC);
 		Connect(this.U3.pins.CLEAR, RC);
@@ -2216,6 +2487,7 @@ class SN74HC165 extends Component {
 		Connect(this.U3.pins.D0, QB);
 		let QC = new Pin();
 		Connect(this.U3.pins.Q0, QC);
+		Connect(this.U3.pins.QBAR0, _D_NC);
 		this.U4 = new dff(1);
 		Connect(this.U4.pins.PRESET, SD);
 		Connect(this.U4.pins.CLEAR, RD);
@@ -2223,6 +2495,7 @@ class SN74HC165 extends Component {
 		Connect(this.U4.pins.D0, QC);
 		let QD = new Pin();
 		Connect(this.U4.pins.Q0, QD);
+		Connect(this.U4.pins.QBAR0, _D_NC);
 		this.U5 = new dff(1);
 		Connect(this.U5.pins.PRESET, SE);
 		Connect(this.U5.pins.CLEAR, RE);
@@ -2230,6 +2503,7 @@ class SN74HC165 extends Component {
 		Connect(this.U5.pins.D0, QD);
 		let QE = new Pin();
 		Connect(this.U5.pins.Q0, QE);
+		Connect(this.U5.pins.QBAR0, _D_NC);
 		this.U6 = new dff(1);
 		Connect(this.U6.pins.PRESET, SF);
 		Connect(this.U6.pins.CLEAR, RF);
@@ -2237,6 +2511,7 @@ class SN74HC165 extends Component {
 		Connect(this.U6.pins.D0, QE);
 		let QF = new Pin();
 		Connect(this.U6.pins.Q0, QF);
+		Connect(this.U6.pins.QBAR0, _D_NC);
 		this.U7 = new dff(1);
 		Connect(this.U7.pins.PRESET, SG);
 		Connect(this.U7.pins.CLEAR, RG);
@@ -2244,6 +2519,7 @@ class SN74HC165 extends Component {
 		Connect(this.U7.pins.D0, QF);
 		let QG = new Pin();
 		Connect(this.U7.pins.Q0, QG);
+		Connect(this.U7.pins.QBAR0, _D_NC);
 		this.U8 = new dff(1);
 		Connect(this.U8.pins.PRESET, SH);
 		Connect(this.U8.pins.CLEAR, RH);
@@ -2251,8 +2527,10 @@ class SN74HC165 extends Component {
 		Connect(this.U8.pins.D0, QG);
 		let QH = new Pin();
 		Connect(this.U8.pins.Q0, QH);
+		let QHBAR = new Pin();
+		Connect(this.U8.pins.QBAR0, QHBAR);
 		Connect(QH, this.pins.QH_O);
-		Connect(this.pins.QHBAR, this.pins.QHBAR_O);
+		Connect(QHBAR, this.pins.QHBAR_O);
 	}
 }
 /**
@@ -2366,7 +2644,44 @@ class SN74HC166 extends Component {
 		let CK = new Pin();
 		Connect(this.UHC166LOG.pins.CK, CK);
 		this.U1 = new jkff(8);
-		Connect(this.pins.QH, this.pins.QH_O);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		Connect(this.U1.pins.CLEAR, CLRBAR);
+		Connect(this.U1.pins.CLOCK, CK);
+		Connect(this.U1.pins.J0, JA);
+		Connect(this.U1.pins.J1, JB);
+		Connect(this.U1.pins.J2, JC);
+		Connect(this.U1.pins.J3, JD);
+		Connect(this.U1.pins.J4, JE);
+		Connect(this.U1.pins.J5, JF);
+		Connect(this.U1.pins.J6, JG);
+		Connect(this.U1.pins.J7, JH);
+		Connect(this.U1.pins.K0, KA);
+		Connect(this.U1.pins.K1, KB);
+		Connect(this.U1.pins.K2, KC);
+		Connect(this.U1.pins.K3, KD);
+		Connect(this.U1.pins.K4, KE);
+		Connect(this.U1.pins.K5, KF);
+		Connect(this.U1.pins.K6, KG);
+		Connect(this.U1.pins.K7, KH);
+		Connect(this.U1.pins.Q0, QA);
+		Connect(this.U1.pins.Q1, QB);
+		Connect(this.U1.pins.Q2, QC);
+		Connect(this.U1.pins.Q3, QD);
+		Connect(this.U1.pins.Q4, QE);
+		Connect(this.U1.pins.Q5, QF);
+		Connect(this.U1.pins.Q6, QG);
+		let QH = new Pin();
+		Connect(this.U1.pins.Q7, QH);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
+		Connect(this.U1.pins.QBAR1, _D_NC);
+		Connect(this.U1.pins.QBAR2, _D_NC);
+		Connect(this.U1.pins.QBAR3, _D_NC);
+		Connect(this.U1.pins.QBAR4, _D_NC);
+		Connect(this.U1.pins.QBAR5, _D_NC);
+		Connect(this.U1.pins.QBAR6, _D_NC);
+		Connect(this.U1.pins.QBAR7, _D_NC);
+		Connect(QH, this.pins.QH_O);
 	}
 }
 /**
@@ -2413,6 +2728,11 @@ class SN74HC173 extends Component {
 		Connect(this.U1.pins.Q2, _3Q);
 		let _4Q = new Pin();
 		Connect(this.U1.pins.Q3, _4Q);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
+		Connect(this.U1.pins.QBAR1, _D_NC);
+		Connect(this.U1.pins.QBAR2, _D_NC);
+		Connect(this.U1.pins.QBAR3, _D_NC);
 		this.UHC173LOG = new logicexp(['CLR_I','CLK_I','E0BAR_I','E1BAR_I','M_I','N_I','_1D_I','_2D_I','_3D_I','_4D_I','_1Q','_2Q','_3Q','_4Q'], ['CLR','CLRBAR','CLK','DATEN','OE','_1D','_2D','_3D','_4D','DFF1','DFF2','DFF3','DFF4'], []).Logic('   CLR      =  CLR_I ;   CLRBAR   =  !CLR ;   CLK      =  CLK_I ;let    E0BAR    =  E0BAR_I ;   E0BAR    =  E0BAR_I ;let    E1BAR    =  E1BAR_I ;   E1BAR    =  E1BAR_I ;let    M        =  M_I ;   M        =  M_I ;let    N        =  N_I ;   N        =  N_I ;   _1D       =  _1D_I ;   _2D       =  _2D_I ;   _3D       =  _3D_I ;   _4D       =  _4D_I ;let    DATENBAR =  E0BAR | E1BAR ;   DATENBAR =  E0BAR | E1BAR ;   DATEN    =  !DATENBAR ;   OE       =  !(M | N) ;   DFF1     =  (_1D & DATEN) | (1Q & DATENBAR) ;   DFF2     =  (_2D & DATEN) | (2Q & DATENBAR) ;   DFF3     =  (_3D & DATEN) | (3Q & DATENBAR) ;   DFF4     =  (_4D & DATEN) | (4Q & DATENBAR) ;');
 		Connect(this.UHC173LOG.pins.CLR_I, this.pins.CLR_I);
 		Connect(this.UHC173LOG.pins.CLK_I, this.pins.CLK_I);
@@ -2492,6 +2812,13 @@ class SN74HC174 extends Component {
 		Connect(this.UD.pins.Q3, this.pins.Q4);
 		Connect(this.UD.pins.Q4, this.pins.Q5);
 		Connect(this.UD.pins.Q5, this.pins.Q6);
+		let _D_NC = new Pin();
+		Connect(this.UD.pins.QBAR0, _D_NC);
+		Connect(this.UD.pins.QBAR1, _D_NC);
+		Connect(this.UD.pins.QBAR2, _D_NC);
+		Connect(this.UD.pins.QBAR3, _D_NC);
+		Connect(this.UD.pins.QBAR4, _D_NC);
+		Connect(this.UD.pins.QBAR5, _D_NC);
 	}
 }
 /**
@@ -2528,6 +2855,10 @@ class SN74HC175 extends Component {
 		Connect(this.UD.pins.Q1, this.pins.Q2);
 		Connect(this.UD.pins.Q2, this.pins.Q3);
 		Connect(this.UD.pins.Q3, this.pins.Q4);
+		Connect(this.UD.pins.QBAR0, this.pins.Q1BAR);
+		Connect(this.UD.pins.QBAR1, this.pins.Q2BAR);
+		Connect(this.UD.pins.QBAR2, this.pins.Q3BAR);
+		Connect(this.UD.pins.QBAR3, this.pins.Q4BAR);
 	}
 }
 /**
@@ -2829,6 +3160,7 @@ class SN74HC190 extends Component {
 		Connect(this.UDA.pins.D0, DA);
 		let QA = new Pin();
 		Connect(this.UDA.pins.Q0, QA);
+		Connect(this.UDA.pins.QBAR0, QABAR);
 		this.UDB = new dff(1);
 		Connect(this.UDB.pins.PRESET, SB);
 		Connect(this.UDB.pins.CLEAR, RB);
@@ -2836,6 +3168,7 @@ class SN74HC190 extends Component {
 		Connect(this.UDB.pins.D0, DB);
 		let QB = new Pin();
 		Connect(this.UDB.pins.Q0, QB);
+		Connect(this.UDB.pins.QBAR0, QBBAR);
 		this.UDC = new dff(1);
 		Connect(this.UDC.pins.PRESET, SC);
 		Connect(this.UDC.pins.CLEAR, RC);
@@ -2843,6 +3176,7 @@ class SN74HC190 extends Component {
 		Connect(this.UDC.pins.D0, DC);
 		let QC = new Pin();
 		Connect(this.UDC.pins.Q0, QC);
+		Connect(this.UDC.pins.QBAR0, QCBAR);
 		this.UDD = new dff(1);
 		Connect(this.UDD.pins.PRESET, SD);
 		Connect(this.UDD.pins.CLEAR, RD);
@@ -2850,6 +3184,7 @@ class SN74HC190 extends Component {
 		Connect(this.UDD.pins.D0, DD);
 		let QD = new Pin();
 		Connect(this.UDD.pins.Q0, QD);
+		Connect(this.UDD.pins.QBAR0, QDBAR);
 		Connect(QA, this.pins.QA_O);
 		Connect(QB, this.pins.QB_O);
 		Connect(QC, this.pins.QC_O);
@@ -2888,6 +3223,8 @@ class SN74HC191 extends Component {
 		Connect(this.U1.pins.D0, DA);
 		let QA = new Pin();
 		Connect(this.U1.pins.Q0, QA);
+		let QABAR = new Pin();
+		Connect(this.U1.pins.QBAR0, QABAR);
 		this.U2 = new dff(1);
 		let SB = new Pin();
 		Connect(this.U2.pins.PRESET, SB);
@@ -2898,6 +3235,8 @@ class SN74HC191 extends Component {
 		Connect(this.U2.pins.D0, DB);
 		let QB = new Pin();
 		Connect(this.U2.pins.Q0, QB);
+		let QBBAR = new Pin();
+		Connect(this.U2.pins.QBAR0, QBBAR);
 		this.U3 = new dff(1);
 		let SC = new Pin();
 		Connect(this.U3.pins.PRESET, SC);
@@ -2908,6 +3247,8 @@ class SN74HC191 extends Component {
 		Connect(this.U3.pins.D0, DC);
 		let QC = new Pin();
 		Connect(this.U3.pins.Q0, QC);
+		let QCBAR = new Pin();
+		Connect(this.U3.pins.QBAR0, QCBAR);
 		this.U4 = new dff(1);
 		let SD = new Pin();
 		Connect(this.U4.pins.PRESET, SD);
@@ -2918,6 +3259,8 @@ class SN74HC191 extends Component {
 		Connect(this.U4.pins.D0, DD);
 		let QD = new Pin();
 		Connect(this.U4.pins.Q0, QD);
+		let QDBAR = new Pin();
+		Connect(this.U4.pins.QBAR0, QDBAR);
 		this.UHC191LOG = new logicexp(['CLK_I','DUBAR_I','CTENBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QABAR','QBBAR','QCBAR','QDBAR'], ['CLK','DUBAR','CTENBAR','LOADBAR','A','B','C','D','MXMNOUT','RCOBAR','SA','RA','DA','SB','RB','DB','SC','RC','DC','SD','RD','DD'], []).Logic('   CLK =  CLK_I ;   DUBAR =  DUBAR_I ;   CTENBAR =  CTENBAR_I ;   LOADBAR =  LOADBAR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;let    IEN1 =  !(!DUBAR | CTENBAR) ;   IEN1 =  !(!DUBAR | CTENBAR) ;let    IEN2 =  !(DUBAR | CTENBAR) ;   IEN2 =  !(DUBAR | CTENBAR) ;let    ILD =  !LOADBAR ;   ILD =  !LOADBAR ;let    IQA =  !QABAR ;   IQA =  !QABAR ;let    IQB =  !QBBAR ;   IQB =  !QBBAR ;let    IQC =  !QCBAR ;   IQC =  !QCBAR ;let    IQD =  !QDBAR ;   IQD =  !QDBAR ;let    IM1 =  !(IQA & IQB & IQC & IQD & !DUBAR) ;   IM1 =  !(IQA & IQB & IQC & IQD & !DUBAR) ;let    IM2 =  !(QABAR & QBBAR & QCBAR & QDBAR & DUBAR) ;   IM2 =  !(QABAR & QBBAR & QCBAR & QDBAR & DUBAR) ;let    IB1 =  !(IEN2 & (IQA ^ IQB)) ;   IB1 =  !(IEN2 & (IQA ^ IQB)) ;let    IB2 =  !((IQB ^ QABAR) & IEN1) ;   IB2 =  !((IQB ^ QABAR) & IEN1) ;let    IC1 =  !(IEN2 & ((IQA & IQB) ^ IQC)) ;   IC1 =  !(IEN2 & ((IQA & IQB) ^ IQC)) ;let    IC2 =  !((IQC ^ (QABAR & QBBAR)) & IEN1) ;   IC2 =  !((IQC ^ (QABAR & QBBAR)) & IEN1) ;let    ID1 =  !(IEN2 & ((IQA & IQB & IQC) ^ IQD)) ;   ID1 =  !(IEN2 & ((IQA & IQB & IQC) ^ IQD)) ;let    ID2 =  !((IQD ^ (QABAR & QBBAR & QCBAR)) & IEN1) ;   ID2 =  !((IQD ^ (QABAR & QBBAR & QCBAR)) & IEN1) ;   SA =  !(A & ILD) ;   RA =  !(!A & ILD) ;   SB =  !(B & ILD) ;   RB =  !(!B & ILD) ;   SC =  !(C & ILD) ;   RC =  !(!C & ILD) ;   SD =  !(D & ILD) ;   RD =  !(!D & ILD) ;   DA =  !CTENBAR ^ IQA ;   DB =  !(IB1 & IB2 & !(CTENBAR & IQB)) ;   DC =  !(IC1 & IC2 & !(CTENBAR & IQC)) ;   DD =  !(ID1 & ID2 & !(CTENBAR & IQD)) ;   MXMNOUT =  !(IM1 & IM2) ;   RCOBAR =  !(MXMNOUT & !CTENBAR & !CLK) ;');
 		Connect(this.UHC191LOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.UHC191LOG.pins.DUBAR_I, this.pins.DUBAR_I);
@@ -2927,13 +3270,9 @@ class SN74HC191 extends Component {
 		Connect(this.UHC191LOG.pins.B_I, this.pins.B_I);
 		Connect(this.UHC191LOG.pins.C_I, this.pins.C_I);
 		Connect(this.UHC191LOG.pins.D_I, this.pins.D_I);
-		let QABAR = new Pin();
 		Connect(this.UHC191LOG.pins.QABAR, QABAR);
-		let QBBAR = new Pin();
 		Connect(this.UHC191LOG.pins.QBBAR, QBBAR);
-		let QCBAR = new Pin();
 		Connect(this.UHC191LOG.pins.QCBAR, QCBAR);
-		let QDBAR = new Pin();
 		Connect(this.UHC191LOG.pins.QDBAR, QDBAR);
 		Connect(this.UHC191LOG.pins.CLK, CLK);
 		let DUBAR = new Pin();
@@ -3004,6 +3343,7 @@ class SN74HC192 extends Component {
 		Connect(this.U1.pins.D0, QABAR);
 		let QA = new Pin();
 		Connect(this.U1.pins.Q0, QA);
+		Connect(this.U1.pins.QBAR0, QABAR);
 		this.U2 = new dff(1);
 		let SB = new Pin();
 		Connect(this.U2.pins.PRESET, SB);
@@ -3014,6 +3354,8 @@ class SN74HC192 extends Component {
 		Connect(this.U2.pins.D0, DB);
 		let QB = new Pin();
 		Connect(this.U2.pins.Q0, QB);
+		let QBBAR = new Pin();
+		Connect(this.U2.pins.QBAR0, QBBAR);
 		this.U3 = new dff(1);
 		let SC = new Pin();
 		Connect(this.U3.pins.PRESET, SC);
@@ -3024,6 +3366,8 @@ class SN74HC192 extends Component {
 		Connect(this.U3.pins.D0, DC);
 		let QC = new Pin();
 		Connect(this.U3.pins.Q0, QC);
+		let QCBAR = new Pin();
+		Connect(this.U3.pins.QBAR0, QCBAR);
 		this.U4 = new dff(1);
 		let SD = new Pin();
 		Connect(this.U4.pins.PRESET, SD);
@@ -3034,7 +3378,21 @@ class SN74HC192 extends Component {
 		Connect(this.U4.pins.D0, DD);
 		let QD = new Pin();
 		Connect(this.U4.pins.Q0, QD);
+		let QDBAR = new Pin();
+		Connect(this.U4.pins.QBAR0, QDBAR);
 		this.U5 = new srff(1);
+		let UP = new Pin();
+		Connect(this.U5.pins.PRESET, UP);
+		let DOWN = new Pin();
+		Connect(this.U5.pins.CLEAR, DOWN);
+		Connect(this.U5.pins.GATE, _D_HI);
+		let _D_LO = new Pin();
+		Connect(this.U5.pins.S0, _D_LO);
+		Connect(this.U5.pins.R0, _D_LO);
+		let IU = new Pin();
+		Connect(this.U5.pins.Q0, IU);
+		let ID = new Pin();
+		Connect(this.U5.pins.QBAR0, ID);
 		this.UHC192LOG = new logicexp(['UP_I','DOWN_I','CLR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QABAR','QBBAR','QCBAR','QDBAR','IU','ID'], ['UP','DOWN','CLR','LOADBAR','A','B','C','D','BOBAR','COBAR','MCLK','SA','RA','SB','RB','SC','RC','SD','RD','DB','DC','DD'], []).Logic('   UP =  UP_I ;   DOWN =  DOWN_I ;   CLR =  CLR_I ;   LOADBAR =  LOADBAR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;let    ICL =  !CLR ;   ICL =  !CLR ;let    ILD =  !LOADBAR ;   ILD =  !LOADBAR ;   MCLK =  UP & DOWN ;let    IN1 =  !(QBBAR & QCBAR & QDBAR) ;   IN1 =  !(QBBAR & QCBAR & QDBAR) ;let    IQA =  !QABAR ;   IQA =  !QABAR ;let    IQB =  !QBBAR ;   IQB =  !QBBAR ;let    IQC =  !QCBAR ;   IQC =  !QCBAR ;let    IQD =  !QDBAR ;   IQD =  !QDBAR ;let    IB1 =  IU & ((IQA & QDBAR) ^ IQB) ;   IB1 =  IU & ((IQA & QDBAR) ^ IQB) ;let    IB2 =  (IQB ^ (QABAR & IN1)) & ID ;   IB2 =  (IQB ^ (QABAR & IN1)) & ID ;let    IC1 =  IU & ((IQA & IQB) ^ IQC) ;   IC1 =  IU & ((IQA & IQB) ^ IQC) ;let    IC2 =  (IQC ^ (QABAR & QBBAR & IN1)) & ID ;   IC2 =  (IQC ^ (QABAR & QBBAR & IN1)) & ID ;let    ID1 =  IU & ((QDBAR & IQC & IQB & IQA) | (QABAR & IQD)) ;   ID1 =  IU & ((QDBAR & IQC & IQB & IQA) | (QABAR & IQD)) ;let    ID2 =  (IQD ^ (QABAR & QBBAR & QCBAR)) & ID ;   ID2 =  (IQD ^ (QABAR & QBBAR & QCBAR)) & ID ;   DB =  IB1 | IB2 ;   DC =  IC1 | IC2 ;   DD =  ID1 | ID2 ;   SA =  !(A & ICL & ILD) ;   RA =  !(!A & ILD) & ICL ;   SB =  !(B & ICL & ILD) ;   RB =  !(!B & ILD) & ICL ;   SC =  !(C & ICL & ILD) ;   RC =  !(!C & ILD) & ICL ;   SD =  !(D & ICL & ILD) ;   RD =  !(!D & ILD) & ICL ;   COBAR =  !(IQA & IQD & !UP) ;   BOBAR =  !(QABAR & QBBAR & QCBAR & QDBAR & !DOWN) ;');
 		Connect(this.UHC192LOG.pins.UP_I, this.pins.UP_I);
 		Connect(this.UHC192LOG.pins.DOWN_I, this.pins.DOWN_I);
@@ -3045,19 +3403,12 @@ class SN74HC192 extends Component {
 		Connect(this.UHC192LOG.pins.C_I, this.pins.C_I);
 		Connect(this.UHC192LOG.pins.D_I, this.pins.D_I);
 		Connect(this.UHC192LOG.pins.QABAR, QABAR);
-		let QBBAR = new Pin();
 		Connect(this.UHC192LOG.pins.QBBAR, QBBAR);
-		let QCBAR = new Pin();
 		Connect(this.UHC192LOG.pins.QCBAR, QCBAR);
-		let QDBAR = new Pin();
 		Connect(this.UHC192LOG.pins.QDBAR, QDBAR);
-		let IU = new Pin();
 		Connect(this.UHC192LOG.pins.IU, IU);
-		let ID = new Pin();
 		Connect(this.UHC192LOG.pins.ID, ID);
-		let UP = new Pin();
 		Connect(this.UHC192LOG.pins.UP, UP);
-		let DOWN = new Pin();
 		Connect(this.UHC192LOG.pins.DOWN, DOWN);
 		let CLR = new Pin();
 		Connect(this.UHC192LOG.pins.CLR, CLR);
@@ -3125,6 +3476,7 @@ class SN74HC193 extends Component {
 		Connect(this.U1.pins.D0, QABAR);
 		let QA = new Pin();
 		Connect(this.U1.pins.Q0, QA);
+		Connect(this.U1.pins.QBAR0, QABAR);
 		this.U2 = new dff(1);
 		let SB = new Pin();
 		Connect(this.U2.pins.PRESET, SB);
@@ -3135,6 +3487,8 @@ class SN74HC193 extends Component {
 		Connect(this.U2.pins.D0, DB);
 		let QB = new Pin();
 		Connect(this.U2.pins.Q0, QB);
+		let QBBAR = new Pin();
+		Connect(this.U2.pins.QBAR0, QBBAR);
 		this.U3 = new dff(1);
 		let SC = new Pin();
 		Connect(this.U3.pins.PRESET, SC);
@@ -3145,6 +3499,8 @@ class SN74HC193 extends Component {
 		Connect(this.U3.pins.D0, DC);
 		let QC = new Pin();
 		Connect(this.U3.pins.Q0, QC);
+		let QCBAR = new Pin();
+		Connect(this.U3.pins.QBAR0, QCBAR);
 		this.U4 = new dff(1);
 		let SD = new Pin();
 		Connect(this.U4.pins.PRESET, SD);
@@ -3155,7 +3511,21 @@ class SN74HC193 extends Component {
 		Connect(this.U4.pins.D0, DD);
 		let QD = new Pin();
 		Connect(this.U4.pins.Q0, QD);
+		let QDBAR = new Pin();
+		Connect(this.U4.pins.QBAR0, QDBAR);
 		this.U5 = new srff(1);
+		let UP = new Pin();
+		Connect(this.U5.pins.PRESET, UP);
+		let DOWN = new Pin();
+		Connect(this.U5.pins.CLEAR, DOWN);
+		Connect(this.U5.pins.GATE, _D_HI);
+		let _D_LO = new Pin();
+		Connect(this.U5.pins.S0, _D_LO);
+		Connect(this.U5.pins.R0, _D_LO);
+		let IU = new Pin();
+		Connect(this.U5.pins.Q0, IU);
+		let ID = new Pin();
+		Connect(this.U5.pins.QBAR0, ID);
 		this.UHC193LOG = new logicexp(['UP_I','DOWN_I','CLR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QABAR','QBBAR','QCBAR','QDBAR','IU','ID'], ['UP','DOWN','CLR','LOADBAR','A','B','C','D','BOBAR','COBAR','MCLK','SA','RA','SB','RB','SC','RC','SD','RD','DB','DC','DD'], []).Logic('   UP =  UP_I ;   DOWN =  DOWN_I ;   CLR =  CLR_I ;   LOADBAR =  LOADBAR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;let    ICL =  !CLR ;   ICL =  !CLR ;let    ILD =  !LOADBAR ;   ILD =  !LOADBAR ;   MCLK =  UP & DOWN ;let    IQA =  !QABAR ;   IQA =  !QABAR ;let    IQB =  !QBBAR ;   IQB =  !QBBAR ;let    IQC =  !QCBAR ;   IQC =  !QCBAR ;let    IQD =  !QDBAR ;   IQD =  !QDBAR ;let    IB1 =  IU & (IQA ^ IQB) ;   IB1 =  IU & (IQA ^ IQB) ;let    IB2 =  (IQB ^ QABAR) & ID ;   IB2 =  (IQB ^ QABAR) & ID ;let    IC1 =  IU & ((IQA & IQB) ^ IQC) ;   IC1 =  IU & ((IQA & IQB) ^ IQC) ;let    IC2 =  (IQC ^ (QABAR & QBBAR)) & ID ;   IC2 =  (IQC ^ (QABAR & QBBAR)) & ID ;let    ID1 =  IU & ((IQA & IQB & IQC) ^ IQD) ;   ID1 =  IU & ((IQA & IQB & IQC) ^ IQD) ;let    ID2 =  (IQD ^ (QABAR & QBBAR & QCBAR)) & ID ;   ID2 =  (IQD ^ (QABAR & QBBAR & QCBAR)) & ID ;   DB =  IB1 | IB2 ;   DC =  IC1 | IC2 ;   DD =  ID1 | ID2 ;   SA =  !(A & ICL & ILD) ;   RA =  !(!A & ILD) & ICL ;   SB =  !(B & ICL & ILD) ;   RB =  !(!B & ILD) & ICL ;   SC =  !(C & ICL & ILD) ;   RC =  !(!C & ILD) & ICL ;   SD =  !(D & ICL & ILD) ;   RD =  !(!D & ILD) & ICL ;   COBAR =  !(IQA & IQB & IQC & IQD & !UP) ;   BOBAR =  !(QABAR & QBBAR & QCBAR & QDBAR & !DOWN) ;');
 		Connect(this.UHC193LOG.pins.UP_I, this.pins.UP_I);
 		Connect(this.UHC193LOG.pins.DOWN_I, this.pins.DOWN_I);
@@ -3166,19 +3536,12 @@ class SN74HC193 extends Component {
 		Connect(this.UHC193LOG.pins.C_I, this.pins.C_I);
 		Connect(this.UHC193LOG.pins.D_I, this.pins.D_I);
 		Connect(this.UHC193LOG.pins.QABAR, QABAR);
-		let QBBAR = new Pin();
 		Connect(this.UHC193LOG.pins.QBBAR, QBBAR);
-		let QCBAR = new Pin();
 		Connect(this.UHC193LOG.pins.QCBAR, QCBAR);
-		let QDBAR = new Pin();
 		Connect(this.UHC193LOG.pins.QDBAR, QDBAR);
-		let IU = new Pin();
 		Connect(this.UHC193LOG.pins.IU, IU);
-		let ID = new Pin();
 		Connect(this.UHC193LOG.pins.ID, ID);
-		let UP = new Pin();
 		Connect(this.UHC193LOG.pins.UP, UP);
-		let DOWN = new Pin();
 		Connect(this.UHC193LOG.pins.DOWN, DOWN);
 		let CLR = new Pin();
 		Connect(this.UHC193LOG.pins.CLR, CLR);
@@ -3296,6 +3659,26 @@ class SN74HC194 extends Component {
 		let CLOCK = new Pin();
 		Connect(this.UHC194LOG.pins.CLOCK, CLOCK);
 		this.U1 = new jkff(4);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		Connect(this.U1.pins.CLEAR, CLRBAR);
+		Connect(this.U1.pins.CLOCK, CLOCK);
+		Connect(this.U1.pins.J0, JA);
+		Connect(this.U1.pins.J1, JB);
+		Connect(this.U1.pins.J2, JC);
+		Connect(this.U1.pins.J3, JD);
+		Connect(this.U1.pins.K0, KA);
+		Connect(this.U1.pins.K1, KB);
+		Connect(this.U1.pins.K2, KC);
+		Connect(this.U1.pins.K3, KD);
+		Connect(this.U1.pins.Q0, QA);
+		Connect(this.U1.pins.Q1, QB);
+		Connect(this.U1.pins.Q2, QC);
+		Connect(this.U1.pins.Q3, QD);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
+		Connect(this.U1.pins.QBAR1, _D_NC);
+		Connect(this.U1.pins.QBAR2, _D_NC);
+		Connect(this.U1.pins.QBAR3, _D_NC);
 		Connect(QA, this.pins.QA_O);
 		Connect(QB, this.pins.QB_O);
 		Connect(QC, this.pins.QC_O);
@@ -3379,11 +3762,33 @@ class SN74HC195 extends Component {
 		let CLKBAR = new Pin();
 		Connect(this.UHC195LOG.pins.CLKBAR, CLKBAR);
 		this.U1 = new jkff(4);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		Connect(this.U1.pins.CLEAR, CLRBAR);
+		Connect(this.U1.pins.CLOCK, CLKBAR);
+		Connect(this.U1.pins.J0, JA);
+		Connect(this.U1.pins.J1, JB);
+		Connect(this.U1.pins.J2, JC);
+		Connect(this.U1.pins.J3, JD);
+		Connect(this.U1.pins.K0, KA);
+		Connect(this.U1.pins.K1, KB);
+		Connect(this.U1.pins.K2, KC);
+		Connect(this.U1.pins.K3, KD);
+		Connect(this.U1.pins.Q0, QA);
+		Connect(this.U1.pins.Q1, QB);
+		Connect(this.U1.pins.Q2, QC);
+		let QD = new Pin();
+		Connect(this.U1.pins.Q3, QD);
+		Connect(this.U1.pins.QBAR0, QABAR);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR1, _D_NC);
+		Connect(this.U1.pins.QBAR2, _D_NC);
+		let QDBAR = new Pin();
+		Connect(this.U1.pins.QBAR3, QDBAR);
 		Connect(QA, this.pins.QA_O);
 		Connect(QB, this.pins.QB_O);
 		Connect(QC, this.pins.QC_O);
-		Connect(this.pins.QD, this.pins.QD_O);
-		Connect(this.pins.QDBAR, this.pins.QDBAR_O);
+		Connect(QD, this.pins.QD_O);
+		Connect(QDBAR, this.pins.QDBAR_O);
 	}
 }
 /**
@@ -3409,6 +3814,28 @@ class SN74HC237 extends Component {
 			Y7_O: new Pin(),
 		}
 		this.U1 = new dltch(3);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		Connect(this.U1.pins.CLEAR, _D_HI);
+		let LATCHEN = new Pin();
+		Connect(this.U1.pins.GATE, LATCHEN);
+		let A = new Pin();
+		Connect(this.U1.pins.D0, A);
+		let B = new Pin();
+		Connect(this.U1.pins.D1, B);
+		let C = new Pin();
+		Connect(this.U1.pins.D2, C);
+		let QA = new Pin();
+		Connect(this.U1.pins.Q0, QA);
+		let QB = new Pin();
+		Connect(this.U1.pins.Q1, QB);
+		let QC = new Pin();
+		Connect(this.U1.pins.Q2, QC);
+		let QABAR = new Pin();
+		Connect(this.U1.pins.QBAR0, QABAR);
+		let QBBAR = new Pin();
+		Connect(this.U1.pins.QBAR1, QBBAR);
+		let QCBAR = new Pin();
+		Connect(this.U1.pins.QBAR2, QCBAR);
 		this.UHC237LOG = new logicexp(['GLBAR_I','G1_I','G2BAR_I','A_I','B_I','C_I','QA','QB','QC','QABAR','QBBAR','QCBAR'], ['GLBAR','A','B','C','LATCHEN','ENABLE','Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7'], []).Logic('   GLBAR   =  GLBAR_I ;let    G1      =  G1_I ;   G1      =  G1_I ;let    G2BAR   =  G2BAR_I ;   G2BAR   =  G2BAR_I ;   A       =  A_I ;   B       =  B_I ;   C       =  C_I ;   LATCHEN =  !GLBAR ;   ENABLE  =  G1 & !G2BAR ;   Y0      =  ENABLE & QCBAR & QBBAR & QABAR ;   Y1      =  ENABLE & QCBAR & QBBAR & QA    ;   Y2      =  ENABLE & QCBAR & QB    & QABAR ;   Y3      =  ENABLE & QCBAR & QB    & QA    ;   Y4      =  ENABLE & QC    & QBBAR & QABAR ;   Y5      =  ENABLE & QC    & QBBAR & QA    ;   Y6      =  ENABLE & QC    & QB    & QABAR ;   Y7      =  ENABLE & QC    & QB    & QA    ;');
 		Connect(this.UHC237LOG.pins.GLBAR_I, this.pins.GLBAR_I);
 		Connect(this.UHC237LOG.pins.G1_I, this.pins.G1_I);
@@ -3416,27 +3843,17 @@ class SN74HC237 extends Component {
 		Connect(this.UHC237LOG.pins.A_I, this.pins.A_I);
 		Connect(this.UHC237LOG.pins.B_I, this.pins.B_I);
 		Connect(this.UHC237LOG.pins.C_I, this.pins.C_I);
-		let QA = new Pin();
 		Connect(this.UHC237LOG.pins.QA, QA);
-		let QB = new Pin();
 		Connect(this.UHC237LOG.pins.QB, QB);
-		let QC = new Pin();
 		Connect(this.UHC237LOG.pins.QC, QC);
-		let QABAR = new Pin();
 		Connect(this.UHC237LOG.pins.QABAR, QABAR);
-		let QBBAR = new Pin();
 		Connect(this.UHC237LOG.pins.QBBAR, QBBAR);
-		let QCBAR = new Pin();
 		Connect(this.UHC237LOG.pins.QCBAR, QCBAR);
 		let GLBAR = new Pin();
 		Connect(this.UHC237LOG.pins.GLBAR, GLBAR);
-		let A = new Pin();
 		Connect(this.UHC237LOG.pins.A, A);
-		let B = new Pin();
 		Connect(this.UHC237LOG.pins.B, B);
-		let C = new Pin();
 		Connect(this.UHC237LOG.pins.C, C);
-		let LATCHEN = new Pin();
 		Connect(this.UHC237LOG.pins.LATCHEN, LATCHEN);
 		let ENABLE = new Pin();
 		Connect(this.UHC237LOG.pins.ENABLE, ENABLE);
@@ -3595,8 +4012,32 @@ class SN74HC240 extends Component {
 			_2Y4: new Pin(),
 		}
 		this.UAB = new inva(2);
+		Connect(this.UAB.pins.IN0_0, this.pins.G1BAR);
+		Connect(this.UAB.pins.IN1_0, this.pins.G2BAR);
+		let G1 = new Pin();
+		Connect(this.UAB.pins.OUT0, G1);
+		let G2 = new Pin();
+		Connect(this.UAB.pins.OUT1, G2);
 		this.U1 = new inv3a(4);
+		Connect(this.U1.pins.IN0_0, this.pins._1A1);
+		Connect(this.U1.pins.IN1_0, this.pins._1A2);
+		Connect(this.U1.pins.IN2_0, this.pins._1A3);
+		Connect(this.U1.pins.IN3_0, this.pins._1A4);
+		Connect(this.U1.pins.EN, G1);
+		Connect(this.U1.pins.OUT0, this.pins._1Y1);
+		Connect(this.U1.pins.OUT1, this.pins._1Y2);
+		Connect(this.U1.pins.OUT2, this.pins._1Y3);
+		Connect(this.U1.pins.OUT3, this.pins._1Y4);
 		this.U2 = new inv3a(4);
+		Connect(this.U2.pins.IN0_0, this.pins._2A1);
+		Connect(this.U2.pins.IN1_0, this.pins._2A2);
+		Connect(this.U2.pins.IN2_0, this.pins._2A3);
+		Connect(this.U2.pins.IN3_0, this.pins._2A4);
+		Connect(this.U2.pins.EN, G2);
+		Connect(this.U2.pins.OUT0, this.pins._2Y1);
+		Connect(this.U2.pins.OUT1, this.pins._2Y2);
+		Connect(this.U2.pins.OUT2, this.pins._2Y3);
+		Connect(this.U2.pins.OUT3, this.pins._2Y4);
 	}
 }
 /**
@@ -3626,29 +4067,29 @@ class SN74HC241 extends Component {
 			_2Y4: new Pin(),
 		}
 		this.UA = new inv();
-		Connect(this.UA.pins.IN, this.pins.G1BAR);
+		Connect(this.UA.pins.IN0, this.pins.G1BAR);
 		let G1 = new Pin();
 		Connect(this.UA.pins.OUT, G1);
 		this.U1 = new buf3a(4);
-		Connect(this.U1.pins.D0, this.pins._1A1);
-		Connect(this.U1.pins.D1, this.pins._1A2);
-		Connect(this.U1.pins.D2, this.pins._1A3);
-		Connect(this.U1.pins.D3, this.pins._1A4);
+		Connect(this.U1.pins.IN0_0, this.pins._1A1);
+		Connect(this.U1.pins.IN1_0, this.pins._1A2);
+		Connect(this.U1.pins.IN2_0, this.pins._1A3);
+		Connect(this.U1.pins.IN3_0, this.pins._1A4);
 		Connect(this.U1.pins.EN, G1);
-		Connect(this.U1.pins.Q0, this.pins._1Y1);
-		Connect(this.U1.pins.Q1, this.pins._1Y2);
-		Connect(this.U1.pins.Q2, this.pins._1Y3);
-		Connect(this.U1.pins.Q3, this.pins._1Y4);
+		Connect(this.U1.pins.OUT0, this.pins._1Y1);
+		Connect(this.U1.pins.OUT1, this.pins._1Y2);
+		Connect(this.U1.pins.OUT2, this.pins._1Y3);
+		Connect(this.U1.pins.OUT3, this.pins._1Y4);
 		this.U2 = new buf3a(4);
-		Connect(this.U2.pins.D0, this.pins._2A1);
-		Connect(this.U2.pins.D1, this.pins._2A2);
-		Connect(this.U2.pins.D2, this.pins._2A3);
-		Connect(this.U2.pins.D3, this.pins._2A4);
+		Connect(this.U2.pins.IN0_0, this.pins._2A1);
+		Connect(this.U2.pins.IN1_0, this.pins._2A2);
+		Connect(this.U2.pins.IN2_0, this.pins._2A3);
+		Connect(this.U2.pins.IN3_0, this.pins._2A4);
 		Connect(this.U2.pins.EN, this.pins.G2);
-		Connect(this.U2.pins.Q0, this.pins._2Y1);
-		Connect(this.U2.pins.Q1, this.pins._2Y2);
-		Connect(this.U2.pins.Q2, this.pins._2Y3);
-		Connect(this.U2.pins.Q3, this.pins._2Y4);
+		Connect(this.U2.pins.OUT0, this.pins._2Y1);
+		Connect(this.U2.pins.OUT1, this.pins._2Y2);
+		Connect(this.U2.pins.OUT2, this.pins._2Y3);
+		Connect(this.U2.pins.OUT3, this.pins._2Y4);
 	}
 }
 /**
@@ -3670,17 +4111,51 @@ class SN74HC242 extends Component {
 			B4: new Pin(),
 		}
 		this.UAB = new inva(2);
-		this.UC = new or(2);
-		this.UD = new nand(2);
+		Connect(this.UAB.pins.IN0_0, this.pins.G1);
+		Connect(this.UAB.pins.IN1_0, this.pins.G2);
 		let G1A = new Pin();
-		Connect(this.UD.pins.IN0, G1A);
+		Connect(this.UAB.pins.OUT0, G1A);
 		let G2A = new Pin();
+		Connect(this.UAB.pins.OUT1, G2A);
+		this.UC = new or(2);
+		Connect(this.UC.pins.IN0, G1A);
+		Connect(this.UC.pins.IN1, G2A);
+		let G1B = new Pin();
+		Connect(this.UC.pins.OUT, G1B);
+		this.UD = new nand(2);
+		Connect(this.UD.pins.IN0, G1A);
 		Connect(this.UD.pins.IN1, G2A);
 		let G2B = new Pin();
 		Connect(this.UD.pins.OUT, G2B);
 		this.UEF = new nora(2,2);
+		Connect(this.UEF.pins.IN0_0, G1B);
+		let GAB = new Pin();
+		Connect(this.UEF.pins.IN0_1, GAB);
+		Connect(this.UEF.pins.IN1_0, G2B);
+		let GBA = new Pin();
+		Connect(this.UEF.pins.IN1_1, GBA);
+		Connect(this.UEF.pins.OUT0, GBA);
+		Connect(this.UEF.pins.OUT1, GAB);
 		this.U1 = new inv3a(4);
+		Connect(this.U1.pins.IN0_0, this.pins.A1);
+		Connect(this.U1.pins.IN1_0, this.pins.A2);
+		Connect(this.U1.pins.IN2_0, this.pins.A3);
+		Connect(this.U1.pins.IN3_0, this.pins.A4);
+		Connect(this.U1.pins.EN, GAB);
+		Connect(this.U1.pins.OUT0, this.pins.B1);
+		Connect(this.U1.pins.OUT1, this.pins.B2);
+		Connect(this.U1.pins.OUT2, this.pins.B3);
+		Connect(this.U1.pins.OUT3, this.pins.B4);
 		this.U2 = new inv3a(4);
+		Connect(this.U2.pins.IN0_0, this.pins.B1);
+		Connect(this.U2.pins.IN1_0, this.pins.B2);
+		Connect(this.U2.pins.IN2_0, this.pins.B3);
+		Connect(this.U2.pins.IN3_0, this.pins.B4);
+		Connect(this.U2.pins.EN, GBA);
+		Connect(this.U2.pins.OUT0, this.pins.A1);
+		Connect(this.U2.pins.OUT1, this.pins.A2);
+		Connect(this.U2.pins.OUT2, this.pins.A3);
+		Connect(this.U2.pins.OUT3, this.pins.A4);
 	}
 }
 /**
@@ -3702,37 +4177,51 @@ class SN74HC243 extends Component {
 			B4: new Pin(),
 		}
 		this.UAB = new inva(2);
-		this.UC = new or(2);
-		this.UD = new nand(2);
+		Connect(this.UAB.pins.IN0_0, this.pins.G1);
+		Connect(this.UAB.pins.IN1_0, this.pins.G2);
 		let G1A = new Pin();
-		Connect(this.UD.pins.IN0, G1A);
+		Connect(this.UAB.pins.OUT0, G1A);
 		let G2A = new Pin();
+		Connect(this.UAB.pins.OUT1, G2A);
+		this.UC = new or(2);
+		Connect(this.UC.pins.IN0, G1A);
+		Connect(this.UC.pins.IN1, G2A);
+		let G1B = new Pin();
+		Connect(this.UC.pins.OUT, G1B);
+		this.UD = new nand(2);
+		Connect(this.UD.pins.IN0, G1A);
 		Connect(this.UD.pins.IN1, G2A);
 		let G2B = new Pin();
 		Connect(this.UD.pins.OUT, G2B);
 		this.UEF = new nora(2,2);
-		this.U1 = new buf3a(4);
-		Connect(this.U1.pins.D0, this.pins.A1);
-		Connect(this.U1.pins.D1, this.pins.A2);
-		Connect(this.U1.pins.D2, this.pins.A3);
-		Connect(this.U1.pins.D3, this.pins.A4);
+		Connect(this.UEF.pins.IN0_0, G1B);
 		let GAB = new Pin();
-		Connect(this.U1.pins.EN, GAB);
-		Connect(this.U1.pins.Q0, this.pins.B1);
-		Connect(this.U1.pins.Q1, this.pins.B2);
-		Connect(this.U1.pins.Q2, this.pins.B3);
-		Connect(this.U1.pins.Q3, this.pins.B4);
-		this.U2 = new buf3a(4);
-		Connect(this.U2.pins.D0, this.pins.B1);
-		Connect(this.U2.pins.D1, this.pins.B2);
-		Connect(this.U2.pins.D2, this.pins.B3);
-		Connect(this.U2.pins.D3, this.pins.B4);
+		Connect(this.UEF.pins.IN0_1, GAB);
+		Connect(this.UEF.pins.IN1_0, G2B);
 		let GBA = new Pin();
+		Connect(this.UEF.pins.IN1_1, GBA);
+		Connect(this.UEF.pins.OUT0, GBA);
+		Connect(this.UEF.pins.OUT1, GAB);
+		this.U1 = new buf3a(4);
+		Connect(this.U1.pins.IN0_0, this.pins.A1);
+		Connect(this.U1.pins.IN1_0, this.pins.A2);
+		Connect(this.U1.pins.IN2_0, this.pins.A3);
+		Connect(this.U1.pins.IN3_0, this.pins.A4);
+		Connect(this.U1.pins.EN, GAB);
+		Connect(this.U1.pins.OUT0, this.pins.B1);
+		Connect(this.U1.pins.OUT1, this.pins.B2);
+		Connect(this.U1.pins.OUT2, this.pins.B3);
+		Connect(this.U1.pins.OUT3, this.pins.B4);
+		this.U2 = new buf3a(4);
+		Connect(this.U2.pins.IN0_0, this.pins.B1);
+		Connect(this.U2.pins.IN1_0, this.pins.B2);
+		Connect(this.U2.pins.IN2_0, this.pins.B3);
+		Connect(this.U2.pins.IN3_0, this.pins.B4);
 		Connect(this.U2.pins.EN, GBA);
-		Connect(this.U2.pins.Q0, this.pins.A1);
-		Connect(this.U2.pins.Q1, this.pins.A2);
-		Connect(this.U2.pins.Q2, this.pins.A3);
-		Connect(this.U2.pins.Q3, this.pins.A4);
+		Connect(this.U2.pins.OUT0, this.pins.A1);
+		Connect(this.U2.pins.OUT1, this.pins.A2);
+		Connect(this.U2.pins.OUT2, this.pins.A3);
+		Connect(this.U2.pins.OUT3, this.pins.A4);
 	}
 }
 /**
@@ -3762,28 +4251,32 @@ class SN74HC244 extends Component {
 			_2Y4: new Pin(),
 		}
 		this.UAB = new inva(2);
-		this.U1 = new buf3a(4);
-		Connect(this.U1.pins.D0, this.pins._1A1);
-		Connect(this.U1.pins.D1, this.pins._1A2);
-		Connect(this.U1.pins.D2, this.pins._1A3);
-		Connect(this.U1.pins.D3, this.pins._1A4);
+		Connect(this.UAB.pins.IN0_0, this.pins.G1BAR);
+		Connect(this.UAB.pins.IN1_0, this.pins.G2BAR);
 		let G1 = new Pin();
-		Connect(this.U1.pins.EN, G1);
-		Connect(this.U1.pins.Q0, this.pins._1Y1);
-		Connect(this.U1.pins.Q1, this.pins._1Y2);
-		Connect(this.U1.pins.Q2, this.pins._1Y3);
-		Connect(this.U1.pins.Q3, this.pins._1Y4);
-		this.U2 = new buf3a(4);
-		Connect(this.U2.pins.D0, this.pins._2A1);
-		Connect(this.U2.pins.D1, this.pins._2A2);
-		Connect(this.U2.pins.D2, this.pins._2A3);
-		Connect(this.U2.pins.D3, this.pins._2A4);
+		Connect(this.UAB.pins.OUT0, G1);
 		let G2 = new Pin();
+		Connect(this.UAB.pins.OUT1, G2);
+		this.U1 = new buf3a(4);
+		Connect(this.U1.pins.IN0_0, this.pins._1A1);
+		Connect(this.U1.pins.IN1_0, this.pins._1A2);
+		Connect(this.U1.pins.IN2_0, this.pins._1A3);
+		Connect(this.U1.pins.IN3_0, this.pins._1A4);
+		Connect(this.U1.pins.EN, G1);
+		Connect(this.U1.pins.OUT0, this.pins._1Y1);
+		Connect(this.U1.pins.OUT1, this.pins._1Y2);
+		Connect(this.U1.pins.OUT2, this.pins._1Y3);
+		Connect(this.U1.pins.OUT3, this.pins._1Y4);
+		this.U2 = new buf3a(4);
+		Connect(this.U2.pins.IN0_0, this.pins._2A1);
+		Connect(this.U2.pins.IN1_0, this.pins._2A2);
+		Connect(this.U2.pins.IN2_0, this.pins._2A3);
+		Connect(this.U2.pins.IN3_0, this.pins._2A4);
 		Connect(this.U2.pins.EN, G2);
-		Connect(this.U2.pins.Q0, this.pins._2Y1);
-		Connect(this.U2.pins.Q1, this.pins._2Y2);
-		Connect(this.U2.pins.Q2, this.pins._2Y3);
-		Connect(this.U2.pins.Q3, this.pins._2Y4);
+		Connect(this.U2.pins.OUT0, this.pins._2Y1);
+		Connect(this.U2.pins.OUT1, this.pins._2Y2);
+		Connect(this.U2.pins.OUT2, this.pins._2Y3);
+		Connect(this.U2.pins.OUT3, this.pins._2Y4);
 	}
 }
 /**
@@ -3813,50 +4306,61 @@ class SN74HC245 extends Component {
 			B8_B: new Pin(),
 		}
 		this.U1 = new bufa(2);
-		this.U2 = new inv();
+		Connect(this.U1.pins.IN0_0, this.pins.DIR_I);
+		Connect(this.U1.pins.IN1_0, this.pins.GBAR_I);
 		let DIR = new Pin();
-		Connect(this.U2.pins.IN, DIR);
+		Connect(this.U1.pins.OUT0, DIR);
+		let GBAR = new Pin();
+		Connect(this.U1.pins.OUT1, GBAR);
+		this.U2 = new inv();
+		Connect(this.U2.pins.IN0, DIR);
 		let DIRBAR = new Pin();
 		Connect(this.U2.pins.OUT, DIRBAR);
 		this.U3 = new nora(2,2);
-		this.U4 = new buf3a(8);
-		Connect(this.U4.pins.D0, this.pins.A1_B);
-		Connect(this.U4.pins.D1, this.pins.A2_B);
-		Connect(this.U4.pins.D2, this.pins.A3_B);
-		Connect(this.U4.pins.D3, this.pins.A4_B);
-		Connect(this.U4.pins.D4, this.pins.A5_B);
-		Connect(this.U4.pins.D5, this.pins.A6_B);
-		Connect(this.U4.pins.D6, this.pins.A7_B);
-		Connect(this.U4.pins.D7, this.pins.A8_B);
+		Connect(this.U3.pins.IN0_0, DIRBAR);
+		Connect(this.U3.pins.IN0_1, GBAR);
+		Connect(this.U3.pins.IN1_0, DIR);
+		Connect(this.U3.pins.IN1_1, GBAR);
 		let ENABLEAB = new Pin();
-		Connect(this.U4.pins.EN, ENABLEAB);
-		Connect(this.U4.pins.Q0, this.pins.B1_B);
-		Connect(this.U4.pins.Q1, this.pins.B2_B);
-		Connect(this.U4.pins.Q2, this.pins.B3_B);
-		Connect(this.U4.pins.Q3, this.pins.B4_B);
-		Connect(this.U4.pins.Q4, this.pins.B5_B);
-		Connect(this.U4.pins.Q5, this.pins.B6_B);
-		Connect(this.U4.pins.Q6, this.pins.B7_B);
-		Connect(this.U4.pins.Q7, this.pins.B8_B);
-		this.U5 = new buf3a(8);
-		Connect(this.U5.pins.D0, this.pins.B1_B);
-		Connect(this.U5.pins.D1, this.pins.B2_B);
-		Connect(this.U5.pins.D2, this.pins.B3_B);
-		Connect(this.U5.pins.D3, this.pins.B4_B);
-		Connect(this.U5.pins.D4, this.pins.B5_B);
-		Connect(this.U5.pins.D5, this.pins.B6_B);
-		Connect(this.U5.pins.D6, this.pins.B7_B);
-		Connect(this.U5.pins.D7, this.pins.B8_B);
+		Connect(this.U3.pins.OUT0, ENABLEAB);
 		let ENABLEBA = new Pin();
+		Connect(this.U3.pins.OUT1, ENABLEBA);
+		this.U4 = new buf3a(8);
+		Connect(this.U4.pins.IN0_0, this.pins.A1_B);
+		Connect(this.U4.pins.IN1_0, this.pins.A2_B);
+		Connect(this.U4.pins.IN2_0, this.pins.A3_B);
+		Connect(this.U4.pins.IN3_0, this.pins.A4_B);
+		Connect(this.U4.pins.IN4_0, this.pins.A5_B);
+		Connect(this.U4.pins.IN5_0, this.pins.A6_B);
+		Connect(this.U4.pins.IN6_0, this.pins.A7_B);
+		Connect(this.U4.pins.IN7_0, this.pins.A8_B);
+		Connect(this.U4.pins.EN, ENABLEAB);
+		Connect(this.U4.pins.OUT0, this.pins.B1_B);
+		Connect(this.U4.pins.OUT1, this.pins.B2_B);
+		Connect(this.U4.pins.OUT2, this.pins.B3_B);
+		Connect(this.U4.pins.OUT3, this.pins.B4_B);
+		Connect(this.U4.pins.OUT4, this.pins.B5_B);
+		Connect(this.U4.pins.OUT5, this.pins.B6_B);
+		Connect(this.U4.pins.OUT6, this.pins.B7_B);
+		Connect(this.U4.pins.OUT7, this.pins.B8_B);
+		this.U5 = new buf3a(8);
+		Connect(this.U5.pins.IN0_0, this.pins.B1_B);
+		Connect(this.U5.pins.IN1_0, this.pins.B2_B);
+		Connect(this.U5.pins.IN2_0, this.pins.B3_B);
+		Connect(this.U5.pins.IN3_0, this.pins.B4_B);
+		Connect(this.U5.pins.IN4_0, this.pins.B5_B);
+		Connect(this.U5.pins.IN5_0, this.pins.B6_B);
+		Connect(this.U5.pins.IN6_0, this.pins.B7_B);
+		Connect(this.U5.pins.IN7_0, this.pins.B8_B);
 		Connect(this.U5.pins.EN, ENABLEBA);
-		Connect(this.U5.pins.Q0, this.pins.A1_B);
-		Connect(this.U5.pins.Q1, this.pins.A2_B);
-		Connect(this.U5.pins.Q2, this.pins.A3_B);
-		Connect(this.U5.pins.Q3, this.pins.A4_B);
-		Connect(this.U5.pins.Q4, this.pins.A5_B);
-		Connect(this.U5.pins.Q5, this.pins.A6_B);
-		Connect(this.U5.pins.Q6, this.pins.A7_B);
-		Connect(this.U5.pins.Q7, this.pins.A8_B);
+		Connect(this.U5.pins.OUT0, this.pins.A1_B);
+		Connect(this.U5.pins.OUT1, this.pins.A2_B);
+		Connect(this.U5.pins.OUT2, this.pins.A3_B);
+		Connect(this.U5.pins.OUT3, this.pins.A4_B);
+		Connect(this.U5.pins.OUT4, this.pins.A5_B);
+		Connect(this.U5.pins.OUT5, this.pins.A6_B);
+		Connect(this.U5.pins.OUT6, this.pins.A7_B);
+		Connect(this.U5.pins.OUT7, this.pins.A8_B);
 	}
 }
 /**
@@ -4150,19 +4654,199 @@ class SN74HC259 extends Component {
 			Q7: new Pin(),
 		}
 		this.U1 = new bufa(3);
+		Connect(this.U1.pins.IN0_0, this.pins.CLRBAR);
+		Connect(this.U1.pins.IN1_0, this.pins.GBAR);
+		Connect(this.U1.pins.IN2_0, this.pins.D);
+		let RB = new Pin();
+		Connect(this.U1.pins.OUT0, RB);
+		let GB = new Pin();
+		Connect(this.U1.pins.OUT1, GB);
+		let DATA = new Pin();
+		Connect(this.U1.pins.OUT2, DATA);
 		this.U2 = new bufa(3);
+		Connect(this.U2.pins.IN0_0, this.pins.S0);
+		Connect(this.U2.pins.IN1_0, this.pins.S1);
+		Connect(this.U2.pins.IN2_0, this.pins.S2);
+		let SA = new Pin();
+		Connect(this.U2.pins.OUT0, SA);
+		let SB = new Pin();
+		Connect(this.U2.pins.OUT1, SB);
+		let SC = new Pin();
+		Connect(this.U2.pins.OUT2, SC);
 		this.U3 = new inva(3);
+		Connect(this.U3.pins.IN0_0, SA);
+		Connect(this.U3.pins.IN1_0, SB);
+		Connect(this.U3.pins.IN2_0, SC);
+		let AB = new Pin();
+		Connect(this.U3.pins.OUT0, AB);
+		let BB = new Pin();
+		Connect(this.U3.pins.OUT1, BB);
+		let CB = new Pin();
+		Connect(this.U3.pins.OUT2, CB);
 		this.U4 = new nanda(3,8);
+		Connect(this.U4.pins.IN0_0, AB);
+		Connect(this.U4.pins.IN0_1, BB);
+		Connect(this.U4.pins.IN0_2, CB);
+		Connect(this.U4.pins.IN1_0, SA);
+		Connect(this.U4.pins.IN1_1, BB);
+		Connect(this.U4.pins.IN1_2, CB);
+		Connect(this.U4.pins.IN2_0, AB);
+		Connect(this.U4.pins.IN2_1, SB);
+		Connect(this.U4.pins.IN2_2, CB);
+		Connect(this.U4.pins.IN3_0, SA);
+		Connect(this.U4.pins.IN3_1, SB);
+		Connect(this.U4.pins.IN3_2, CB);
+		Connect(this.U4.pins.IN4_0, AB);
+		Connect(this.U4.pins.IN4_1, BB);
+		Connect(this.U4.pins.IN4_2, SC);
+		Connect(this.U4.pins.IN5_0, SA);
+		Connect(this.U4.pins.IN5_1, BB);
+		Connect(this.U4.pins.IN5_2, SC);
+		Connect(this.U4.pins.IN6_0, AB);
+		Connect(this.U4.pins.IN6_1, SB);
+		Connect(this.U4.pins.IN6_2, SC);
+		Connect(this.U4.pins.IN7_0, SA);
+		Connect(this.U4.pins.IN7_1, SB);
+		Connect(this.U4.pins.IN7_2, SC);
+		let T0 = new Pin();
+		Connect(this.U4.pins.OUT0, T0);
+		let T1 = new Pin();
+		Connect(this.U4.pins.OUT1, T1);
+		let T2 = new Pin();
+		Connect(this.U4.pins.OUT2, T2);
+		let T3 = new Pin();
+		Connect(this.U4.pins.OUT3, T3);
+		let T4 = new Pin();
+		Connect(this.U4.pins.OUT4, T4);
+		let T5 = new Pin();
+		Connect(this.U4.pins.OUT5, T5);
+		let T6 = new Pin();
+		Connect(this.U4.pins.OUT6, T6);
+		let T7 = new Pin();
+		Connect(this.U4.pins.OUT7, T7);
 		this.U5 = new nora(2,8);
+		Connect(this.U5.pins.IN0_0, GB);
+		Connect(this.U5.pins.IN0_1, T0);
+		Connect(this.U5.pins.IN1_0, GB);
+		Connect(this.U5.pins.IN1_1, T1);
+		Connect(this.U5.pins.IN2_0, GB);
+		Connect(this.U5.pins.IN2_1, T2);
+		Connect(this.U5.pins.IN3_0, GB);
+		Connect(this.U5.pins.IN3_1, T3);
+		Connect(this.U5.pins.IN4_0, GB);
+		Connect(this.U5.pins.IN4_1, T4);
+		Connect(this.U5.pins.IN5_0, GB);
+		Connect(this.U5.pins.IN5_1, T5);
+		Connect(this.U5.pins.IN6_0, GB);
+		Connect(this.U5.pins.IN6_1, T6);
+		Connect(this.U5.pins.IN7_0, GB);
+		Connect(this.U5.pins.IN7_1, T7);
+		let G0 = new Pin();
+		Connect(this.U5.pins.OUT0, G0);
+		let G1 = new Pin();
+		Connect(this.U5.pins.OUT1, G1);
+		let G2 = new Pin();
+		Connect(this.U5.pins.OUT2, G2);
+		let G3 = new Pin();
+		Connect(this.U5.pins.OUT3, G3);
+		let G4 = new Pin();
+		Connect(this.U5.pins.OUT4, G4);
+		let G5 = new Pin();
+		Connect(this.U5.pins.OUT5, G5);
+		let G6 = new Pin();
+		Connect(this.U5.pins.OUT6, G6);
+		let G7 = new Pin();
+		Connect(this.U5.pins.OUT7, G7);
 		this.U6 = new ora(2,8);
+		Connect(this.U6.pins.IN0_0, G0);
+		Connect(this.U6.pins.IN0_1, RB);
+		Connect(this.U6.pins.IN1_0, G1);
+		Connect(this.U6.pins.IN1_1, RB);
+		Connect(this.U6.pins.IN2_0, G2);
+		Connect(this.U6.pins.IN2_1, RB);
+		Connect(this.U6.pins.IN3_0, G3);
+		Connect(this.U6.pins.IN3_1, RB);
+		Connect(this.U6.pins.IN4_0, G4);
+		Connect(this.U6.pins.IN4_1, RB);
+		Connect(this.U6.pins.IN5_0, G5);
+		Connect(this.U6.pins.IN5_1, RB);
+		Connect(this.U6.pins.IN6_0, G6);
+		Connect(this.U6.pins.IN6_1, RB);
+		Connect(this.U6.pins.IN7_0, G7);
+		Connect(this.U6.pins.IN7_1, RB);
+		let R0 = new Pin();
+		Connect(this.U6.pins.OUT0, R0);
+		let R1 = new Pin();
+		Connect(this.U6.pins.OUT1, R1);
+		let R2 = new Pin();
+		Connect(this.U6.pins.OUT2, R2);
+		let R3 = new Pin();
+		Connect(this.U6.pins.OUT3, R3);
+		let R4 = new Pin();
+		Connect(this.U6.pins.OUT4, R4);
+		let R5 = new Pin();
+		Connect(this.U6.pins.OUT5, R5);
+		let R6 = new Pin();
+		Connect(this.U6.pins.OUT6, R6);
+		let R7 = new Pin();
+		Connect(this.U6.pins.OUT7, R7);
 		this.U7 = new dltch(1);
+		Connect(this.U7.pins.PRESET, _D_HI);
+		Connect(this.U7.pins.CLEAR, R0);
+		Connect(this.U7.pins.GATE, G0);
+		Connect(this.U7.pins.D0, DATA);
+		Connect(this.U7.pins.Q0, this.pins.Q0);
+		let _D_NC = new Pin();
+		Connect(this.U7.pins.QBAR0, _D_NC);
 		this.U8 = new dltch(1);
+		Connect(this.U8.pins.PRESET, _D_HI);
+		Connect(this.U8.pins.CLEAR, R1);
+		Connect(this.U8.pins.GATE, G1);
+		Connect(this.U8.pins.D0, DATA);
+		Connect(this.U8.pins.Q0, this.pins.Q1);
+		Connect(this.U8.pins.QBAR0, _D_NC);
 		this.U9 = new dltch(1);
+		Connect(this.U9.pins.PRESET, _D_HI);
+		Connect(this.U9.pins.CLEAR, R2);
+		Connect(this.U9.pins.GATE, G2);
+		Connect(this.U9.pins.D0, DATA);
+		Connect(this.U9.pins.Q0, this.pins.Q2);
+		Connect(this.U9.pins.QBAR0, _D_NC);
 		this.U10 = new dltch(1);
+		Connect(this.U10.pins.PRESET, _D_HI);
+		Connect(this.U10.pins.CLEAR, R3);
+		Connect(this.U10.pins.GATE, G3);
+		Connect(this.U10.pins.D0, DATA);
+		Connect(this.U10.pins.Q0, this.pins.Q3);
+		Connect(this.U10.pins.QBAR0, _D_NC);
 		this.U11 = new dltch(1);
+		Connect(this.U11.pins.PRESET, _D_HI);
+		Connect(this.U11.pins.CLEAR, R4);
+		Connect(this.U11.pins.GATE, G4);
+		Connect(this.U11.pins.D0, DATA);
+		Connect(this.U11.pins.Q0, this.pins.Q4);
+		Connect(this.U11.pins.QBAR0, _D_NC);
 		this.U12 = new dltch(1);
+		Connect(this.U12.pins.PRESET, _D_HI);
+		Connect(this.U12.pins.CLEAR, R5);
+		Connect(this.U12.pins.GATE, G5);
+		Connect(this.U12.pins.D0, DATA);
+		Connect(this.U12.pins.Q0, this.pins.Q5);
+		Connect(this.U12.pins.QBAR0, _D_NC);
 		this.U13 = new dltch(1);
+		Connect(this.U13.pins.PRESET, _D_HI);
+		Connect(this.U13.pins.CLEAR, R6);
+		Connect(this.U13.pins.GATE, G6);
+		Connect(this.U13.pins.D0, DATA);
+		Connect(this.U13.pins.Q0, this.pins.Q6);
+		Connect(this.U13.pins.QBAR0, _D_NC);
 		this.U14 = new dltch(1);
+		Connect(this.U14.pins.PRESET, _D_HI);
+		Connect(this.U14.pins.CLEAR, R7);
+		Connect(this.U14.pins.GATE, G7);
+		Connect(this.U14.pins.D0, DATA);
+		Connect(this.U14.pins.Q0, this.pins.Q7);
+		Connect(this.U14.pins.QBAR0, _D_NC);
 	}
 }
 /**
@@ -4177,6 +4861,9 @@ class SN74HC266 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new nxor();
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.IN1, this.pins.B);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -4225,6 +4912,15 @@ class SN74HC273 extends Component {
 		Connect(this.UD.pins.Q5, this.pins.Q6);
 		Connect(this.UD.pins.Q6, this.pins.Q7);
 		Connect(this.UD.pins.Q7, this.pins.Q8);
+		let _D_NC = new Pin();
+		Connect(this.UD.pins.QBAR0, _D_NC);
+		Connect(this.UD.pins.QBAR1, _D_NC);
+		Connect(this.UD.pins.QBAR2, _D_NC);
+		Connect(this.UD.pins.QBAR3, _D_NC);
+		Connect(this.UD.pins.QBAR4, _D_NC);
+		Connect(this.UD.pins.QBAR5, _D_NC);
+		Connect(this.UD.pins.QBAR6, _D_NC);
+		Connect(this.UD.pins.QBAR7, _D_NC);
 	}
 }
 /**
@@ -4243,15 +4939,74 @@ class SN74HC279 extends Component {
 			_2Q: new Pin(),
 		}
 		this.U1 = new bufa(2);
+		Connect(this.U1.pins.IN0_0, this.pins._1RBAR);
+		Connect(this.U1.pins.IN1_0, this.pins._2RBAR);
+		let _1RB = new Pin();
+		Connect(this.U1.pins.OUT0, _1RB);
+		let _2RB = new Pin();
+		Connect(this.U1.pins.OUT1, _2RB);
 		this.U2 = new nanda(3,2);
+		Connect(this.U2.pins.IN0_0, _1RB);
+		let Q1 = new Pin();
+		Connect(this.U2.pins.IN0_1, Q1);
+		Connect(this.U2.pins.IN0_2, _D_HI);
+		Connect(this.U2.pins.IN1_0, this.pins._1S1BAR);
+		Connect(this.U2.pins.IN1_1, this.pins._1S2BAR);
+		let Q1B = new Pin();
+		Connect(this.U2.pins.IN1_2, Q1B);
+		Connect(this.U2.pins.OUT0, Q1B);
+		Connect(this.U2.pins.OUT1, Q1);
 		this.U3 = new nanda(2,2);
+		Connect(this.U3.pins.IN0_0, _2RB);
+		let Q2 = new Pin();
+		Connect(this.U3.pins.IN0_1, Q2);
+		Connect(this.U3.pins.IN1_0, this.pins._2SBAR);
+		let Q2B = new Pin();
+		Connect(this.U3.pins.IN1_1, Q2B);
+		Connect(this.U3.pins.OUT0, Q2B);
+		Connect(this.U3.pins.OUT1, Q2);
 		this.U4 = new wdthck(5);
 		this.U5 = new ora(3,2);
+		let _1RLO = new Pin();
+		Connect(this.U5.pins.IN0_0, _1RLO);
+		let _1S1LO = new Pin();
+		Connect(this.U5.pins.IN0_1, _1S1LO);
+		let _1S2LO = new Pin();
+		Connect(this.U5.pins.IN0_2, _1S2LO);
+		let _2RLO = new Pin();
+		Connect(this.U5.pins.IN1_0, _2RLO);
+		let _2SLO = new Pin();
+		Connect(this.U5.pins.IN1_1, _2SLO);
+		let _D_LO = new Pin();
+		Connect(this.U5.pins.IN1_2, _D_LO);
+		let X1 = new Pin();
+		Connect(this.U5.pins.OUT0, X1);
+		let X2 = new Pin();
+		Connect(this.U5.pins.OUT1, X2);
 		this.U6 = new inva(2);
+		Connect(this.U6.pins.IN0_0, X1);
+		Connect(this.U6.pins.IN1_0, X2);
+		let T1 = new Pin();
+		Connect(this.U6.pins.OUT0, T1);
+		let T2 = new Pin();
+		Connect(this.U6.pins.OUT1, T2);
 		this.U7 = new buf3();
+		let _D_X = new Pin();
+		Connect(this.U7.pins.IN0, _D_X);
+		Connect(this.U7.pins.EN, X1);
+		Connect(this.U7.pins.OUT, this.pins._1Q);
 		this.U8 = new buf3();
+		Connect(this.U8.pins.IN0, _D_X);
+		Connect(this.U8.pins.EN, X2);
+		Connect(this.U8.pins.OUT, this.pins._2Q);
 		this.U9 = new buf3();
+		Connect(this.U9.pins.IN0, Q1);
+		Connect(this.U9.pins.EN, T1);
+		Connect(this.U9.pins.OUT, this.pins._1Q);
 		this.U10 = new buf3();
+		Connect(this.U10.pins.IN0, Q2);
+		Connect(this.U10.pins.EN, T2);
+		Connect(this.U10.pins.OUT, this.pins._2Q);
 	}
 }
 /**
@@ -4381,6 +5136,39 @@ class SN74HC298 extends Component {
 			QD_O: new Pin(),
 		}
 		this.U1 = new jkff(4);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		Connect(this.U1.pins.CLEAR, _D_HI);
+		let CLK = new Pin();
+		Connect(this.U1.pins.CLOCK, CLK);
+		let JA = new Pin();
+		Connect(this.U1.pins.J0, JA);
+		let JB = new Pin();
+		Connect(this.U1.pins.J1, JB);
+		let JC = new Pin();
+		Connect(this.U1.pins.J2, JC);
+		let JD = new Pin();
+		Connect(this.U1.pins.J3, JD);
+		let KA = new Pin();
+		Connect(this.U1.pins.K0, KA);
+		let KB = new Pin();
+		Connect(this.U1.pins.K1, KB);
+		let KC = new Pin();
+		Connect(this.U1.pins.K2, KC);
+		let KD = new Pin();
+		Connect(this.U1.pins.K3, KD);
+		let QA = new Pin();
+		Connect(this.U1.pins.Q0, QA);
+		let QB = new Pin();
+		Connect(this.U1.pins.Q1, QB);
+		let QC = new Pin();
+		Connect(this.U1.pins.Q2, QC);
+		let QD = new Pin();
+		Connect(this.U1.pins.Q3, QD);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
+		Connect(this.U1.pins.QBAR1, _D_NC);
+		Connect(this.U1.pins.QBAR2, _D_NC);
+		Connect(this.U1.pins.QBAR3, _D_NC);
 		this.UHC298LOG = new logicexp(['WS_I','CLK_I','A1_I','A2_I','B1_I','B2_I','C1_I','C2_I','D1_I','D2_I'], ['WS','CLK','A1','A2','B1','B2','C1','C2','D1','D2','JA','JB','JC','JD','KA','KB','KC','KD'], []).Logic('   WS =  WS_I ;   CLK =  CLK_I ;   A1 =  A1_I ;   A2 =  A2_I ;   B1 =  B1_I ;   B2 =  B2_I ;   C1 =  C1_I ;   C2 =  C2_I ;   D1 =  D1_I ;   D2 =  D2_I ;let    IWS =  !WS ;   IWS =  !WS ;   KA =  !((A1 & IWS) | (WS & A2)) ;   KB =  !((B1 & IWS) | (WS & B2)) ;   KC =  !((C1 & IWS) | (WS & C2)) ;   KD =  !((D1 & IWS) | (WS & D2)) ;   JA =  !KA ;   JB =  !KB ;   JC =  !KC ;   JD =  !KD ;');
 		Connect(this.UHC298LOG.pins.WS_I, this.pins.WS_I);
 		Connect(this.UHC298LOG.pins.CLK_I, this.pins.CLK_I);
@@ -4394,7 +5182,6 @@ class SN74HC298 extends Component {
 		Connect(this.UHC298LOG.pins.D2_I, this.pins.D2_I);
 		let WS = new Pin();
 		Connect(this.UHC298LOG.pins.WS, WS);
-		let CLK = new Pin();
 		Connect(this.UHC298LOG.pins.CLK, CLK);
 		let A1 = new Pin();
 		Connect(this.UHC298LOG.pins.A1, A1);
@@ -4412,26 +5199,18 @@ class SN74HC298 extends Component {
 		Connect(this.UHC298LOG.pins.D1, D1);
 		let D2 = new Pin();
 		Connect(this.UHC298LOG.pins.D2, D2);
-		let JA = new Pin();
 		Connect(this.UHC298LOG.pins.JA, JA);
-		let JB = new Pin();
 		Connect(this.UHC298LOG.pins.JB, JB);
-		let JC = new Pin();
 		Connect(this.UHC298LOG.pins.JC, JC);
-		let JD = new Pin();
 		Connect(this.UHC298LOG.pins.JD, JD);
-		let KA = new Pin();
 		Connect(this.UHC298LOG.pins.KA, KA);
-		let KB = new Pin();
 		Connect(this.UHC298LOG.pins.KB, KB);
-		let KC = new Pin();
 		Connect(this.UHC298LOG.pins.KC, KC);
-		let KD = new Pin();
 		Connect(this.UHC298LOG.pins.KD, KD);
-		Connect(this.pins.QA, this.pins.QA_O);
-		Connect(this.pins.QB, this.pins.QB_O);
-		Connect(this.pins.QC, this.pins.QC_O);
-		Connect(this.pins.QD, this.pins.QD_O);
+		Connect(QA, this.pins.QA_O);
+		Connect(QB, this.pins.QB_O);
+		Connect(QC, this.pins.QC_O);
+		Connect(QD, this.pins.QD_O);
 	}
 }
 /**
@@ -4563,6 +5342,15 @@ class SN74HC299 extends Component {
 		Connect(this.U1.pins.Q5, LF_QF);
 		Connect(this.U1.pins.Q6, LG_QG);
 		Connect(this.U1.pins.Q7, LH_QH);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
+		Connect(this.U1.pins.QBAR1, _D_NC);
+		Connect(this.U1.pins.QBAR2, _D_NC);
+		Connect(this.U1.pins.QBAR3, _D_NC);
+		Connect(this.U1.pins.QBAR4, _D_NC);
+		Connect(this.U1.pins.QBAR5, _D_NC);
+		Connect(this.U1.pins.QBAR6, _D_NC);
+		Connect(this.U1.pins.QBAR7, _D_NC);
 		Connect(LA_QA, this.pins.A_QA_B);
 		Connect(LB_QB, this.pins.B_QB_B);
 		Connect(LC_QC, this.pins.C_QC_B);
@@ -4823,7 +5611,47 @@ class SN74HC354 extends Component {
 		let SC = new Pin();
 		Connect(this.UHC354LOG.pins.SC, SC);
 		this.U1 = new dltch(8);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		Connect(this.U1.pins.CLEAR, _D_HI);
+		Connect(this.U1.pins.GATE, DC);
+		Connect(this.U1.pins.D0, D0);
+		Connect(this.U1.pins.D1, D1);
+		Connect(this.U1.pins.D2, D2);
+		Connect(this.U1.pins.D3, D3);
+		Connect(this.U1.pins.D4, D4);
+		Connect(this.U1.pins.D5, D5);
+		Connect(this.U1.pins.D6, D6);
+		Connect(this.U1.pins.D7, D7);
+		Connect(this.U1.pins.Q0, Q0);
+		Connect(this.U1.pins.Q1, Q1);
+		Connect(this.U1.pins.Q2, Q2);
+		Connect(this.U1.pins.Q3, Q3);
+		Connect(this.U1.pins.Q4, Q4);
+		Connect(this.U1.pins.Q5, Q5);
+		Connect(this.U1.pins.Q6, Q6);
+		Connect(this.U1.pins.Q7, Q7);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
+		Connect(this.U1.pins.QBAR1, _D_NC);
+		Connect(this.U1.pins.QBAR2, _D_NC);
+		Connect(this.U1.pins.QBAR3, _D_NC);
+		Connect(this.U1.pins.QBAR4, _D_NC);
+		Connect(this.U1.pins.QBAR5, _D_NC);
+		Connect(this.U1.pins.QBAR6, _D_NC);
+		Connect(this.U1.pins.QBAR7, _D_NC);
 		this.U2 = new dltch(3);
+		Connect(this.U2.pins.PRESET, _D_HI);
+		Connect(this.U2.pins.CLEAR, _D_HI);
+		Connect(this.U2.pins.GATE, SC);
+		Connect(this.U2.pins.D0, S0);
+		Connect(this.U2.pins.D1, S1);
+		Connect(this.U2.pins.D2, S2);
+		Connect(this.U2.pins.Q0, QS0);
+		Connect(this.U2.pins.Q1, QS1);
+		Connect(this.U2.pins.Q2, QS2);
+		Connect(this.U2.pins.QBAR0, QS0BAR);
+		Connect(this.U2.pins.QBAR1, QS1BAR);
+		Connect(this.U2.pins.QBAR2, QS2BAR);
 		Connect(Y, this.pins.Y_O);
 		Connect(W, this.pins.W_O);
 	}
@@ -4959,7 +5787,28 @@ class SN74HC356 extends Component {
 		Connect(this.U1.pins.Q5, Q5);
 		Connect(this.U1.pins.Q6, Q6);
 		Connect(this.U1.pins.Q7, Q7);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
+		Connect(this.U1.pins.QBAR1, _D_NC);
+		Connect(this.U1.pins.QBAR2, _D_NC);
+		Connect(this.U1.pins.QBAR3, _D_NC);
+		Connect(this.U1.pins.QBAR4, _D_NC);
+		Connect(this.U1.pins.QBAR5, _D_NC);
+		Connect(this.U1.pins.QBAR6, _D_NC);
+		Connect(this.U1.pins.QBAR7, _D_NC);
 		this.U2 = new dltch(3);
+		Connect(this.U2.pins.PRESET, _D_HI);
+		Connect(this.U2.pins.CLEAR, _D_HI);
+		Connect(this.U2.pins.GATE, SC);
+		Connect(this.U2.pins.D0, S0);
+		Connect(this.U2.pins.D1, S1);
+		Connect(this.U2.pins.D2, S2);
+		Connect(this.U2.pins.Q0, QS0);
+		Connect(this.U2.pins.Q1, QS1);
+		Connect(this.U2.pins.Q2, QS2);
+		Connect(this.U2.pins.QBAR0, QS0BAR);
+		Connect(this.U2.pins.QBAR1, QS1BAR);
+		Connect(this.U2.pins.QBAR2, QS2BAR);
 		Connect(Y, this.pins.Y_O);
 		Connect(W, this.pins.W_O);
 	}
@@ -4987,21 +5836,24 @@ class SN74HC365 extends Component {
 			Y6: new Pin(),
 		}
 		this.UA = new nor(2);
-		this.U1 = new buf3a(6);
-		Connect(this.U1.pins.D0, this.pins.A1);
-		Connect(this.U1.pins.D1, this.pins.A2);
-		Connect(this.U1.pins.D2, this.pins.A3);
-		Connect(this.U1.pins.D3, this.pins.A4);
-		Connect(this.U1.pins.D4, this.pins.A5);
-		Connect(this.U1.pins.D5, this.pins.A6);
+		Connect(this.UA.pins.IN0, this.pins.G1BAR);
+		Connect(this.UA.pins.IN1, this.pins.G2BAR);
 		let E = new Pin();
+		Connect(this.UA.pins.OUT, E);
+		this.U1 = new buf3a(6);
+		Connect(this.U1.pins.IN0_0, this.pins.A1);
+		Connect(this.U1.pins.IN1_0, this.pins.A2);
+		Connect(this.U1.pins.IN2_0, this.pins.A3);
+		Connect(this.U1.pins.IN3_0, this.pins.A4);
+		Connect(this.U1.pins.IN4_0, this.pins.A5);
+		Connect(this.U1.pins.IN5_0, this.pins.A6);
 		Connect(this.U1.pins.EN, E);
-		Connect(this.U1.pins.Q0, this.pins.Y1);
-		Connect(this.U1.pins.Q1, this.pins.Y2);
-		Connect(this.U1.pins.Q2, this.pins.Y3);
-		Connect(this.U1.pins.Q3, this.pins.Y4);
-		Connect(this.U1.pins.Q4, this.pins.Y5);
-		Connect(this.U1.pins.Q5, this.pins.Y6);
+		Connect(this.U1.pins.OUT0, this.pins.Y1);
+		Connect(this.U1.pins.OUT1, this.pins.Y2);
+		Connect(this.U1.pins.OUT2, this.pins.Y3);
+		Connect(this.U1.pins.OUT3, this.pins.Y4);
+		Connect(this.U1.pins.OUT4, this.pins.Y5);
+		Connect(this.U1.pins.OUT5, this.pins.Y6);
 	}
 }
 /**
@@ -5027,7 +5879,24 @@ class SN74HC366 extends Component {
 			Y6: new Pin(),
 		}
 		this.UA = new nor(2);
+		Connect(this.UA.pins.IN0, this.pins.G1BAR);
+		Connect(this.UA.pins.IN1, this.pins.G2BAR);
+		let E = new Pin();
+		Connect(this.UA.pins.OUT, E);
 		this.U1 = new inv3a(6);
+		Connect(this.U1.pins.IN0_0, this.pins.A1);
+		Connect(this.U1.pins.IN1_0, this.pins.A2);
+		Connect(this.U1.pins.IN2_0, this.pins.A3);
+		Connect(this.U1.pins.IN3_0, this.pins.A4);
+		Connect(this.U1.pins.IN4_0, this.pins.A5);
+		Connect(this.U1.pins.IN5_0, this.pins.A6);
+		Connect(this.U1.pins.EN, E);
+		Connect(this.U1.pins.OUT0, this.pins.Y1);
+		Connect(this.U1.pins.OUT1, this.pins.Y2);
+		Connect(this.U1.pins.OUT2, this.pins.Y3);
+		Connect(this.U1.pins.OUT3, this.pins.Y4);
+		Connect(this.U1.pins.OUT4, this.pins.Y5);
+		Connect(this.U1.pins.OUT5, this.pins.Y6);
 	}
 }
 /**
@@ -5053,24 +5922,28 @@ class SN74HC367 extends Component {
 			_2Y2: new Pin(),
 		}
 		this.UINV = new inva(2);
-		this.U1 = new buf3a(4);
-		Connect(this.U1.pins.D0, this.pins._1A1);
-		Connect(this.U1.pins.D1, this.pins._1A2);
-		Connect(this.U1.pins.D2, this.pins._1A3);
-		Connect(this.U1.pins.D3, this.pins._1A4);
+		Connect(this.UINV.pins.IN0_0, this.pins.G1BAR);
+		Connect(this.UINV.pins.IN1_0, this.pins.G2BAR);
 		let G1 = new Pin();
-		Connect(this.U1.pins.EN, G1);
-		Connect(this.U1.pins.Q0, this.pins._1Y1);
-		Connect(this.U1.pins.Q1, this.pins._1Y2);
-		Connect(this.U1.pins.Q2, this.pins._1Y3);
-		Connect(this.U1.pins.Q3, this.pins._1Y4);
-		this.U2 = new buf3a(2);
-		Connect(this.U2.pins.D0, this.pins._2A1);
-		Connect(this.U2.pins.D1, this.pins._2A2);
+		Connect(this.UINV.pins.OUT0, G1);
 		let G2 = new Pin();
+		Connect(this.UINV.pins.OUT1, G2);
+		this.U1 = new buf3a(4);
+		Connect(this.U1.pins.IN0_0, this.pins._1A1);
+		Connect(this.U1.pins.IN1_0, this.pins._1A2);
+		Connect(this.U1.pins.IN2_0, this.pins._1A3);
+		Connect(this.U1.pins.IN3_0, this.pins._1A4);
+		Connect(this.U1.pins.EN, G1);
+		Connect(this.U1.pins.OUT0, this.pins._1Y1);
+		Connect(this.U1.pins.OUT1, this.pins._1Y2);
+		Connect(this.U1.pins.OUT2, this.pins._1Y3);
+		Connect(this.U1.pins.OUT3, this.pins._1Y4);
+		this.U2 = new buf3a(2);
+		Connect(this.U2.pins.IN0_0, this.pins._2A1);
+		Connect(this.U2.pins.IN1_0, this.pins._2A2);
 		Connect(this.U2.pins.EN, G2);
-		Connect(this.U2.pins.Q0, this.pins._2Y1);
-		Connect(this.U2.pins.Q1, this.pins._2Y2);
+		Connect(this.U2.pins.OUT0, this.pins._2Y1);
+		Connect(this.U2.pins.OUT1, this.pins._2Y2);
 	}
 }
 /**
@@ -5096,16 +5969,34 @@ class SN74HC368 extends Component {
 			_2Y2: new Pin(),
 		}
 		this.UINV = new inva(2);
-		this.UA = new inv();
-		Connect(this.UA.pins.IN, this.pins.G1BAR);
+		Connect(this.UINV.pins.IN0_0, this.pins.G1BAR);
+		Connect(this.UINV.pins.IN1_0, this.pins.G2BAR);
 		let G1 = new Pin();
+		Connect(this.UINV.pins.OUT0, G1);
+		let G2 = new Pin();
+		Connect(this.UINV.pins.OUT1, G2);
+		this.UA = new inv();
+		Connect(this.UA.pins.IN0, this.pins.G1BAR);
 		Connect(this.UA.pins.OUT, G1);
 		this.UB = new inv();
-		Connect(this.UB.pins.IN, this.pins.G2BAR);
-		let G2 = new Pin();
+		Connect(this.UB.pins.IN0, this.pins.G2BAR);
 		Connect(this.UB.pins.OUT, G2);
 		this.U1 = new inv3a(4);
+		Connect(this.U1.pins.IN0_0, this.pins._1A1);
+		Connect(this.U1.pins.IN1_0, this.pins._1A2);
+		Connect(this.U1.pins.IN2_0, this.pins._1A3);
+		Connect(this.U1.pins.IN3_0, this.pins._1A4);
+		Connect(this.U1.pins.EN, G1);
+		Connect(this.U1.pins.OUT0, this.pins._1Y1);
+		Connect(this.U1.pins.OUT1, this.pins._1Y2);
+		Connect(this.U1.pins.OUT2, this.pins._1Y3);
+		Connect(this.U1.pins.OUT3, this.pins._1Y4);
 		this.U2 = new inv3a(2);
+		Connect(this.U2.pins.IN0_0, this.pins._2A1);
+		Connect(this.U2.pins.IN1_0, this.pins._2A2);
+		Connect(this.U2.pins.EN, G2);
+		Connect(this.U2.pins.OUT0, this.pins._2Y1);
+		Connect(this.U2.pins.OUT1, this.pins._2Y2);
 	}
 }
 /**
@@ -5135,36 +6026,64 @@ class SN74HC373 extends Component {
 			_8Q: new Pin(),
 		}
 		this.UA = new inv();
-		Connect(this.UA.pins.IN, this.pins.OCBAR);
+		Connect(this.UA.pins.IN0, this.pins.OCBAR);
 		let OC = new Pin();
 		Connect(this.UA.pins.OUT, OC);
 		this.U1 = new dltch(8);
-		this.U2 = new buf3a(8);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		Connect(this.U1.pins.CLEAR, _D_HI);
+		Connect(this.U1.pins.GATE, this.pins.C);
+		Connect(this.U1.pins.D0, this.pins._1D);
+		Connect(this.U1.pins.D1, this.pins._2D);
+		Connect(this.U1.pins.D2, this.pins._3D);
+		Connect(this.U1.pins.D3, this.pins._4D);
+		Connect(this.U1.pins.D4, this.pins._5D);
+		Connect(this.U1.pins.D5, this.pins._6D);
+		Connect(this.U1.pins.D6, this.pins._7D);
+		Connect(this.U1.pins.D7, this.pins._8D);
 		let _1QI = new Pin();
-		Connect(this.U2.pins.D0, _1QI);
+		Connect(this.U1.pins.Q0, _1QI);
 		let _2QI = new Pin();
-		Connect(this.U2.pins.D1, _2QI);
+		Connect(this.U1.pins.Q1, _2QI);
 		let _3QI = new Pin();
-		Connect(this.U2.pins.D2, _3QI);
+		Connect(this.U1.pins.Q2, _3QI);
 		let _4QI = new Pin();
-		Connect(this.U2.pins.D3, _4QI);
+		Connect(this.U1.pins.Q3, _4QI);
 		let _5QI = new Pin();
-		Connect(this.U2.pins.D4, _5QI);
+		Connect(this.U1.pins.Q4, _5QI);
 		let _6QI = new Pin();
-		Connect(this.U2.pins.D5, _6QI);
+		Connect(this.U1.pins.Q5, _6QI);
 		let _7QI = new Pin();
-		Connect(this.U2.pins.D6, _7QI);
+		Connect(this.U1.pins.Q6, _7QI);
 		let _8QI = new Pin();
-		Connect(this.U2.pins.D7, _8QI);
+		Connect(this.U1.pins.Q7, _8QI);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
+		Connect(this.U1.pins.QBAR1, _D_NC);
+		Connect(this.U1.pins.QBAR2, _D_NC);
+		Connect(this.U1.pins.QBAR3, _D_NC);
+		Connect(this.U1.pins.QBAR4, _D_NC);
+		Connect(this.U1.pins.QBAR5, _D_NC);
+		Connect(this.U1.pins.QBAR6, _D_NC);
+		Connect(this.U1.pins.QBAR7, _D_NC);
+		this.U2 = new buf3a(8);
+		Connect(this.U2.pins.IN0_0, _1QI);
+		Connect(this.U2.pins.IN1_0, _2QI);
+		Connect(this.U2.pins.IN2_0, _3QI);
+		Connect(this.U2.pins.IN3_0, _4QI);
+		Connect(this.U2.pins.IN4_0, _5QI);
+		Connect(this.U2.pins.IN5_0, _6QI);
+		Connect(this.U2.pins.IN6_0, _7QI);
+		Connect(this.U2.pins.IN7_0, _8QI);
 		Connect(this.U2.pins.EN, OC);
-		Connect(this.U2.pins.Q0, this.pins._1Q);
-		Connect(this.U2.pins.Q1, this.pins._2Q);
-		Connect(this.U2.pins.Q2, this.pins._3Q);
-		Connect(this.U2.pins.Q3, this.pins._4Q);
-		Connect(this.U2.pins.Q4, this.pins._5Q);
-		Connect(this.U2.pins.Q5, this.pins._6Q);
-		Connect(this.U2.pins.Q6, this.pins._7Q);
-		Connect(this.U2.pins.Q7, this.pins._8Q);
+		Connect(this.U2.pins.OUT0, this.pins._1Q);
+		Connect(this.U2.pins.OUT1, this.pins._2Q);
+		Connect(this.U2.pins.OUT2, this.pins._3Q);
+		Connect(this.U2.pins.OUT3, this.pins._4Q);
+		Connect(this.U2.pins.OUT4, this.pins._5Q);
+		Connect(this.U2.pins.OUT5, this.pins._6Q);
+		Connect(this.U2.pins.OUT6, this.pins._7Q);
+		Connect(this.U2.pins.OUT7, this.pins._8Q);
 	}
 }
 /**
@@ -5194,7 +6113,7 @@ class SN74HC374 extends Component {
 			Q8: new Pin(),
 		}
 		this.UOC = new inv();
-		Connect(this.UOC.pins.IN, this.pins.OCBAR);
+		Connect(this.UOC.pins.IN0, this.pins.OCBAR);
 		let OC = new Pin();
 		Connect(this.UOC.pins.OUT, OC);
 		this.UD = new dff(8);
@@ -5225,24 +6144,33 @@ class SN74HC374 extends Component {
 		Connect(this.UD.pins.Q6, SQ7);
 		let SQ8 = new Pin();
 		Connect(this.UD.pins.Q7, SQ8);
+		let _D_NC = new Pin();
+		Connect(this.UD.pins.QBAR0, _D_NC);
+		Connect(this.UD.pins.QBAR1, _D_NC);
+		Connect(this.UD.pins.QBAR2, _D_NC);
+		Connect(this.UD.pins.QBAR3, _D_NC);
+		Connect(this.UD.pins.QBAR4, _D_NC);
+		Connect(this.UD.pins.QBAR5, _D_NC);
+		Connect(this.UD.pins.QBAR6, _D_NC);
+		Connect(this.UD.pins.QBAR7, _D_NC);
 		this.UQS = new buf3a(8);
-		Connect(this.UQS.pins.D0, SQ1);
-		Connect(this.UQS.pins.D1, SQ2);
-		Connect(this.UQS.pins.D2, SQ3);
-		Connect(this.UQS.pins.D3, SQ4);
-		Connect(this.UQS.pins.D4, SQ5);
-		Connect(this.UQS.pins.D5, SQ6);
-		Connect(this.UQS.pins.D6, SQ7);
-		Connect(this.UQS.pins.D7, SQ8);
+		Connect(this.UQS.pins.IN0_0, SQ1);
+		Connect(this.UQS.pins.IN1_0, SQ2);
+		Connect(this.UQS.pins.IN2_0, SQ3);
+		Connect(this.UQS.pins.IN3_0, SQ4);
+		Connect(this.UQS.pins.IN4_0, SQ5);
+		Connect(this.UQS.pins.IN5_0, SQ6);
+		Connect(this.UQS.pins.IN6_0, SQ7);
+		Connect(this.UQS.pins.IN7_0, SQ8);
 		Connect(this.UQS.pins.EN, OC);
-		Connect(this.UQS.pins.Q0, this.pins.Q1);
-		Connect(this.UQS.pins.Q1, this.pins.Q2);
-		Connect(this.UQS.pins.Q2, this.pins.Q3);
-		Connect(this.UQS.pins.Q3, this.pins.Q4);
-		Connect(this.UQS.pins.Q4, this.pins.Q5);
-		Connect(this.UQS.pins.Q5, this.pins.Q6);
-		Connect(this.UQS.pins.Q6, this.pins.Q7);
-		Connect(this.UQS.pins.Q7, this.pins.Q8);
+		Connect(this.UQS.pins.OUT0, this.pins.Q1);
+		Connect(this.UQS.pins.OUT1, this.pins.Q2);
+		Connect(this.UQS.pins.OUT2, this.pins.Q3);
+		Connect(this.UQS.pins.OUT3, this.pins.Q4);
+		Connect(this.UQS.pins.OUT4, this.pins.Q5);
+		Connect(this.UQS.pins.OUT5, this.pins.Q6);
+		Connect(this.UQS.pins.OUT6, this.pins.Q7);
+		Connect(this.UQS.pins.OUT7, this.pins.Q8);
 	}
 }
 /**
@@ -5289,6 +6217,12 @@ class SN74HC377 extends Component {
 			_8Q: new Pin(),
 		}
 		this.UBUF = new bufa(2);
+		Connect(this.UBUF.pins.IN0_0, this.pins.GBAR);
+		Connect(this.UBUF.pins.IN1_0, this.pins.CLK);
+		let GBBUF = new Pin();
+		Connect(this.UBUF.pins.OUT0, GBBUF);
+		let CLKBUF = new Pin();
+		Connect(this.UBUF.pins.OUT1, CLKBUF);
 	}
 }
 class SNHC377DAT extends Component {
@@ -5303,19 +6237,48 @@ class SNHC377DAT extends Component {
 			DGND: new Pin(),
 		}
 		this.USET = new inva(2);
+		Connect(this.USET.pins.IN0_0, this.pins.GB);
+		Connect(this.USET.pins.IN1_0, this.pins.D);
+		let G2 = new Pin();
+		Connect(this.USET.pins.OUT0, G2);
+		let DBAR = new Pin();
+		Connect(this.USET.pins.OUT1, DBAR);
 		this.UNXOR = new nxor();
+		Connect(this.UNXOR.pins.IN0, this.pins.GB);
+		Connect(this.UNXOR.pins.IN1, G2);
+		let EN = new Pin();
+		Connect(this.UNXOR.pins.OUT, EN);
 		this.UIN = new buf3();
+		let _D_X = new Pin();
+		Connect(this.UIN.pins.IN0, _D_X);
+		Connect(this.UIN.pins.EN, EN);
+		let IN = new Pin();
+		Connect(this.UIN.pins.OUT, IN);
 		this.UINV = new inva(2);
+		Connect(this.UINV.pins.IN0_0, this.pins.GB);
+		Connect(this.UINV.pins.IN1_0, DBAR);
+		let G = new Pin();
+		Connect(this.UINV.pins.OUT0, G);
+		let DD = new Pin();
+		Connect(this.UINV.pins.OUT1, DD);
 		this.UAO = new ao(2,2);
+		Connect(this.UAO.pins.IN0_0, G);
+		Connect(this.UAO.pins.IN0_1, DD);
+		Connect(this.UAO.pins.IN1_0, this.pins.GB);
+		let QBUF = new Pin();
+		Connect(this.UAO.pins.IN1_1, QBUF);
+		Connect(this.UAO.pins.OUT, IN);
 		this.UDFF = new dff(1);
 		Connect(this.UDFF.pins.PRESET, _D_HI);
 		Connect(this.UDFF.pins.CLEAR, _D_HI);
 		Connect(this.UDFF.pins.CLOCK, this.pins.CLK);
-		let IN = new Pin();
 		Connect(this.UDFF.pins.D0, IN);
-		let QBUF = new Pin();
 		Connect(this.UDFF.pins.Q0, QBUF);
+		let _D_NC = new Pin();
+		Connect(this.UDFF.pins.QBAR0, _D_NC);
 		this.UQOUT = new buf();
+		Connect(this.UQOUT.pins.IN0, QBUF);
+		Connect(this.UQOUT.pins.OUT, this.pins.Q);
 	}
 }
 /**
@@ -5341,6 +6304,12 @@ class SN74HC378 extends Component {
 			_6Q: new Pin(),
 		}
 		this.UBUF = new bufa(2);
+		Connect(this.UBUF.pins.IN0_0, this.pins.GBAR);
+		Connect(this.UBUF.pins.IN1_0, this.pins.CLK);
+		let GBBUF = new Pin();
+		Connect(this.UBUF.pins.OUT0, GBBUF);
+		let CLKBUF = new Pin();
+		Connect(this.UBUF.pins.OUT1, CLKBUF);
 	}
 }
 class SNHC378DAT extends Component {
@@ -5355,19 +6324,48 @@ class SNHC378DAT extends Component {
 			DGND: new Pin(),
 		}
 		this.USET = new inva(2);
+		Connect(this.USET.pins.IN0_0, this.pins.GB);
+		Connect(this.USET.pins.IN1_0, this.pins.D);
+		let G2 = new Pin();
+		Connect(this.USET.pins.OUT0, G2);
+		let DBAR = new Pin();
+		Connect(this.USET.pins.OUT1, DBAR);
 		this.UNXOR = new nxor();
+		Connect(this.UNXOR.pins.IN0, this.pins.GB);
+		Connect(this.UNXOR.pins.IN1, G2);
+		let EN = new Pin();
+		Connect(this.UNXOR.pins.OUT, EN);
 		this.UIN = new buf3();
+		let _D_X = new Pin();
+		Connect(this.UIN.pins.IN0, _D_X);
+		Connect(this.UIN.pins.EN, EN);
+		let IN = new Pin();
+		Connect(this.UIN.pins.OUT, IN);
 		this.UINV = new inva(2);
+		Connect(this.UINV.pins.IN0_0, this.pins.GB);
+		Connect(this.UINV.pins.IN1_0, DBAR);
+		let G = new Pin();
+		Connect(this.UINV.pins.OUT0, G);
+		let DD = new Pin();
+		Connect(this.UINV.pins.OUT1, DD);
 		this.UAO = new ao(2,2);
+		Connect(this.UAO.pins.IN0_0, G);
+		Connect(this.UAO.pins.IN0_1, DD);
+		Connect(this.UAO.pins.IN1_0, this.pins.GB);
+		let QBUF = new Pin();
+		Connect(this.UAO.pins.IN1_1, QBUF);
+		Connect(this.UAO.pins.OUT, IN);
 		this.UDFF = new dff(1);
 		Connect(this.UDFF.pins.PRESET, _D_HI);
 		Connect(this.UDFF.pins.CLEAR, _D_HI);
 		Connect(this.UDFF.pins.CLOCK, this.pins.CLK);
-		let IN = new Pin();
 		Connect(this.UDFF.pins.D0, IN);
-		let QBUF = new Pin();
 		Connect(this.UDFF.pins.Q0, QBUF);
+		let _D_NC = new Pin();
+		Connect(this.UDFF.pins.QBAR0, _D_NC);
 		this.UQOUT = new buf();
+		Connect(this.UQOUT.pins.IN0, QBUF);
+		Connect(this.UQOUT.pins.OUT, this.pins.Q);
 	}
 }
 /**
@@ -5393,6 +6391,12 @@ class SN74HC379 extends Component {
 			_4QBAR: new Pin(),
 		}
 		this.UBUF = new bufa(2);
+		Connect(this.UBUF.pins.IN0_0, this.pins.GBAR);
+		Connect(this.UBUF.pins.IN1_0, this.pins.CLK);
+		let GBBUF = new Pin();
+		Connect(this.UBUF.pins.OUT0, GBBUF);
+		let CLKBUF = new Pin();
+		Connect(this.UBUF.pins.OUT1, CLKBUF);
 	}
 }
 class SNHC379DAT extends Component {
@@ -5408,19 +6412,50 @@ class SNHC379DAT extends Component {
 			DGND: new Pin(),
 		}
 		this.USET = new inva(2);
+		Connect(this.USET.pins.IN0_0, this.pins.GB);
+		Connect(this.USET.pins.IN1_0, this.pins.D);
+		let G2 = new Pin();
+		Connect(this.USET.pins.OUT0, G2);
+		let DBAR = new Pin();
+		Connect(this.USET.pins.OUT1, DBAR);
 		this.UNXOR = new nxor();
+		Connect(this.UNXOR.pins.IN0, this.pins.GB);
+		Connect(this.UNXOR.pins.IN1, G2);
+		let EN = new Pin();
+		Connect(this.UNXOR.pins.OUT, EN);
 		this.UIN = new buf3();
+		let _D_X = new Pin();
+		Connect(this.UIN.pins.IN0, _D_X);
+		Connect(this.UIN.pins.EN, EN);
+		let IN = new Pin();
+		Connect(this.UIN.pins.OUT, IN);
 		this.UINV = new inva(2);
+		Connect(this.UINV.pins.IN0_0, this.pins.GB);
+		Connect(this.UINV.pins.IN1_0, DBAR);
+		let G = new Pin();
+		Connect(this.UINV.pins.OUT0, G);
+		let DD = new Pin();
+		Connect(this.UINV.pins.OUT1, DD);
 		this.UAO = new ao(2,2);
+		Connect(this.UAO.pins.IN0_0, G);
+		Connect(this.UAO.pins.IN0_1, DD);
+		Connect(this.UAO.pins.IN1_0, this.pins.GB);
+		let QBUF = new Pin();
+		Connect(this.UAO.pins.IN1_1, QBUF);
+		Connect(this.UAO.pins.OUT, IN);
 		this.UDFF = new dff(1);
 		Connect(this.UDFF.pins.PRESET, _D_HI);
 		Connect(this.UDFF.pins.CLEAR, _D_HI);
 		Connect(this.UDFF.pins.CLOCK, this.pins.CLK);
-		let IN = new Pin();
 		Connect(this.UDFF.pins.D0, IN);
-		let QBUF = new Pin();
 		Connect(this.UDFF.pins.Q0, QBUF);
+		let QBBUF = new Pin();
+		Connect(this.UDFF.pins.QBAR0, QBBUF);
 		this.UQOUT = new bufa(2);
+		Connect(this.UQOUT.pins.IN0_0, QBUF);
+		Connect(this.UQOUT.pins.IN1_0, QBBUF);
+		Connect(this.UQOUT.pins.OUT0, this.pins.Q);
+		Connect(this.UQOUT.pins.OUT1, this.pins.QB);
 	}
 }
 /**
@@ -5435,6 +6470,9 @@ class SN74HC386 extends Component {
 			Y: new Pin(),
 		}
 		this.UY = new xor();
+		Connect(this.UY.pins.IN0, this.pins.A);
+		Connect(this.UY.pins.IN1, this.pins.B);
+		Connect(this.UY.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -5453,35 +6491,68 @@ class SN74HC390 extends Component {
 			QD_O: new Pin(),
 		}
 		this.U1 = new jkff(1);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		let CLRBAR = new Pin();
+		Connect(this.U1.pins.CLEAR, CLRBAR);
+		let CKA = new Pin();
+		Connect(this.U1.pins.CLOCK, CKA);
+		Connect(this.U1.pins.J0, _D_HI);
+		Connect(this.U1.pins.K0, _D_HI);
+		let QA = new Pin();
+		Connect(this.U1.pins.Q0, QA);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
 		this.U2 = new jkff(1);
+		Connect(this.U2.pins.PRESET, _D_HI);
+		Connect(this.U2.pins.CLEAR, CLRBAR);
+		let CLOCK2 = new Pin();
+		Connect(this.U2.pins.CLOCK, CLOCK2);
+		Connect(this.U2.pins.J0, _D_HI);
+		Connect(this.U2.pins.K0, _D_HI);
+		let QB = new Pin();
+		Connect(this.U2.pins.Q0, QB);
+		let QBBAR = new Pin();
+		Connect(this.U2.pins.QBAR0, QBBAR);
 		this.U3 = new jkff(1);
+		Connect(this.U3.pins.PRESET, _D_HI);
+		Connect(this.U3.pins.CLEAR, CLRBAR);
+		Connect(this.U3.pins.CLOCK, QB);
+		Connect(this.U3.pins.J0, _D_HI);
+		Connect(this.U3.pins.K0, _D_HI);
+		let QC = new Pin();
+		Connect(this.U3.pins.Q0, QC);
+		let QCBAR = new Pin();
+		Connect(this.U3.pins.QBAR0, QCBAR);
 		this.U4 = new jkff(1);
+		Connect(this.U4.pins.PRESET, _D_HI);
+		Connect(this.U4.pins.CLEAR, CLRBAR);
+		let CLOCK4 = new Pin();
+		Connect(this.U4.pins.CLOCK, CLOCK4);
+		Connect(this.U4.pins.J0, _D_HI);
+		Connect(this.U4.pins.K0, _D_HI);
+		let QD = new Pin();
+		Connect(this.U4.pins.Q0, QD);
+		let QDBAR = new Pin();
+		Connect(this.U4.pins.QBAR0, QDBAR);
 		this.UHC390LOG = new logicexp(['CKA_I','CKB_I','CLR_I','QBBAR','QCBAR','QDBAR'], ['CKA','CKB','CLR','CLRBAR','CLOCK2','CLOCK4'], []).Logic('   CKA    =  CKA_I ;   CKB    =  CKB_I ;   CLR    =  CLR_I ;   CLRBAR =  !CLR ;   CLOCK2 =  CKB & QDBAR ;   CLOCK4 =  !((QBBAR & QDBAR) | (QCBAR & QDBAR)) & CKB ;');
 		Connect(this.UHC390LOG.pins.CKA_I, this.pins.CKA_I);
 		Connect(this.UHC390LOG.pins.CKB_I, this.pins.CKB_I);
 		Connect(this.UHC390LOG.pins.CLR_I, this.pins.CLR_I);
-		let QBBAR = new Pin();
 		Connect(this.UHC390LOG.pins.QBBAR, QBBAR);
-		let QCBAR = new Pin();
 		Connect(this.UHC390LOG.pins.QCBAR, QCBAR);
-		let QDBAR = new Pin();
 		Connect(this.UHC390LOG.pins.QDBAR, QDBAR);
-		let CKA = new Pin();
 		Connect(this.UHC390LOG.pins.CKA, CKA);
 		let CKB = new Pin();
 		Connect(this.UHC390LOG.pins.CKB, CKB);
 		let CLR = new Pin();
 		Connect(this.UHC390LOG.pins.CLR, CLR);
-		let CLRBAR = new Pin();
 		Connect(this.UHC390LOG.pins.CLRBAR, CLRBAR);
-		let CLOCK2 = new Pin();
 		Connect(this.UHC390LOG.pins.CLOCK2, CLOCK2);
-		let CLOCK4 = new Pin();
 		Connect(this.UHC390LOG.pins.CLOCK4, CLOCK4);
-		Connect(this.pins.QA, this.pins.QA_O);
-		Connect(this.pins.QB, this.pins.QB_O);
-		Connect(this.pins.QC, this.pins.QC_O);
-		Connect(this.pins.QD, this.pins.QD_O);
+		Connect(QA, this.pins.QA_O);
+		Connect(QB, this.pins.QB_O);
+		Connect(QC, this.pins.QC_O);
+		Connect(QD, this.pins.QD_O);
 	}
 }
 /**
@@ -5499,19 +6570,57 @@ class SN74HC393 extends Component {
 			QD_O: new Pin(),
 		}
 		this.U1 = new jkff(1);
-		this.U2 = new jkff(1);
-		this.U3 = new jkff(1);
-		this.U4 = new jkff(1);
-		this.U5 = new bufa(2);
-		this.U6 = new inv();
-		let CLR = new Pin();
-		Connect(this.U6.pins.IN, CLR);
+		Connect(this.U1.pins.PRESET, _D_HI);
 		let CLRBAR = new Pin();
+		Connect(this.U1.pins.CLEAR, CLRBAR);
+		let A = new Pin();
+		Connect(this.U1.pins.CLOCK, A);
+		Connect(this.U1.pins.J0, _D_HI);
+		Connect(this.U1.pins.K0, _D_HI);
+		let QA = new Pin();
+		Connect(this.U1.pins.Q0, QA);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
+		this.U2 = new jkff(1);
+		Connect(this.U2.pins.PRESET, _D_HI);
+		Connect(this.U2.pins.CLEAR, CLRBAR);
+		Connect(this.U2.pins.CLOCK, QA);
+		Connect(this.U2.pins.J0, _D_HI);
+		Connect(this.U2.pins.K0, _D_HI);
+		let QB = new Pin();
+		Connect(this.U2.pins.Q0, QB);
+		Connect(this.U2.pins.QBAR0, _D_NC);
+		this.U3 = new jkff(1);
+		Connect(this.U3.pins.PRESET, _D_HI);
+		Connect(this.U3.pins.CLEAR, CLRBAR);
+		Connect(this.U3.pins.CLOCK, QB);
+		Connect(this.U3.pins.J0, _D_HI);
+		Connect(this.U3.pins.K0, _D_HI);
+		let QC = new Pin();
+		Connect(this.U3.pins.Q0, QC);
+		Connect(this.U3.pins.QBAR0, _D_NC);
+		this.U4 = new jkff(1);
+		Connect(this.U4.pins.PRESET, _D_HI);
+		Connect(this.U4.pins.CLEAR, CLRBAR);
+		Connect(this.U4.pins.CLOCK, QC);
+		Connect(this.U4.pins.J0, _D_HI);
+		Connect(this.U4.pins.K0, _D_HI);
+		let QD = new Pin();
+		Connect(this.U4.pins.Q0, QD);
+		Connect(this.U4.pins.QBAR0, _D_NC);
+		this.U5 = new bufa(2);
+		Connect(this.U5.pins.IN0_0, this.pins.A_I);
+		Connect(this.U5.pins.IN1_0, this.pins.CLR_I);
+		Connect(this.U5.pins.OUT0, A);
+		let CLR = new Pin();
+		Connect(this.U5.pins.OUT1, CLR);
+		this.U6 = new inv();
+		Connect(this.U6.pins.IN0, CLR);
 		Connect(this.U6.pins.OUT, CLRBAR);
-		Connect(this.pins.QA, this.pins.QA_O);
-		Connect(this.pins.QB, this.pins.QB_O);
-		Connect(this.pins.QC, this.pins.QC_O);
-		Connect(this.pins.QD, this.pins.QD_O);
+		Connect(QA, this.pins.QA_O);
+		Connect(QB, this.pins.QB_O);
+		Connect(QC, this.pins.QC_O);
+		Connect(QD, this.pins.QD_O);
 	}
 }
 /**
@@ -5530,41 +6639,73 @@ class SN74HC490 extends Component {
 			QD_O: new Pin(),
 		}
 		this.U1 = new jkff(1);
+		let SET9BAR = new Pin();
+		Connect(this.U1.pins.PRESET, SET9BAR);
+		let CLRBAR = new Pin();
+		Connect(this.U1.pins.CLEAR, CLRBAR);
+		let CLK = new Pin();
+		Connect(this.U1.pins.CLOCK, CLK);
+		Connect(this.U1.pins.J0, _D_HI);
+		Connect(this.U1.pins.K0, _D_HI);
+		let QA = new Pin();
+		Connect(this.U1.pins.Q0, QA);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
 		this.U2 = new jkff(1);
+		Connect(this.U2.pins.PRESET, _D_HI);
+		let CLRBAR23 = new Pin();
+		Connect(this.U2.pins.CLEAR, CLRBAR23);
+		let CLOCK2 = new Pin();
+		Connect(this.U2.pins.CLOCK, CLOCK2);
+		Connect(this.U2.pins.J0, _D_HI);
+		Connect(this.U2.pins.K0, _D_HI);
+		let QB = new Pin();
+		Connect(this.U2.pins.Q0, QB);
+		let QBBAR = new Pin();
+		Connect(this.U2.pins.QBAR0, QBBAR);
 		this.U3 = new jkff(1);
+		Connect(this.U3.pins.PRESET, _D_HI);
+		Connect(this.U3.pins.CLEAR, CLRBAR23);
+		Connect(this.U3.pins.CLOCK, QB);
+		Connect(this.U3.pins.J0, _D_HI);
+		Connect(this.U3.pins.K0, _D_HI);
+		let QC = new Pin();
+		Connect(this.U3.pins.Q0, QC);
+		let QCBAR = new Pin();
+		Connect(this.U3.pins.QBAR0, QCBAR);
 		this.U4 = new jkff(1);
+		Connect(this.U4.pins.PRESET, SET9BAR);
+		Connect(this.U4.pins.CLEAR, CLRBAR);
+		let CLOCK4 = new Pin();
+		Connect(this.U4.pins.CLOCK, CLOCK4);
+		Connect(this.U4.pins.J0, _D_HI);
+		Connect(this.U4.pins.K0, _D_HI);
+		let QD = new Pin();
+		Connect(this.U4.pins.Q0, QD);
+		let QDBAR = new Pin();
+		Connect(this.U4.pins.QBAR0, QDBAR);
 		this.UHC490LOG = new logicexp(['CLR_I','SET9_I','CLK_I','QA','QBBAR','QCBAR','QDBAR'], ['CLR','SET9','CLK','CLRBAR23','CLOCK2','CLOCK4','CLRBAR','SET9BAR'], []).Logic('   CLR      =  CLR_I ;   CLRBAR   =  !CLR ;   SET9     =  SET9_I ;   SET9BAR  =  !SET9 ;   CLK      =  CLK_I ;   CLRBAR23 =  CLRBAR & SET9BAR ;   CLOCK2   =  QA & QDBAR ;   CLOCK4   =  !( (QBBAR & QDBAR) | (QCBAR & QDBAR) ) & QA ;');
 		Connect(this.UHC490LOG.pins.CLR_I, this.pins.CLR_I);
 		Connect(this.UHC490LOG.pins.SET9_I, this.pins.SET9_I);
 		Connect(this.UHC490LOG.pins.CLK_I, this.pins.CLK_I);
-		let QA = new Pin();
 		Connect(this.UHC490LOG.pins.QA, QA);
-		let QBBAR = new Pin();
 		Connect(this.UHC490LOG.pins.QBBAR, QBBAR);
-		let QCBAR = new Pin();
 		Connect(this.UHC490LOG.pins.QCBAR, QCBAR);
-		let QDBAR = new Pin();
 		Connect(this.UHC490LOG.pins.QDBAR, QDBAR);
 		let CLR = new Pin();
 		Connect(this.UHC490LOG.pins.CLR, CLR);
 		let SET9 = new Pin();
 		Connect(this.UHC490LOG.pins.SET9, SET9);
-		let CLK = new Pin();
 		Connect(this.UHC490LOG.pins.CLK, CLK);
-		let CLRBAR23 = new Pin();
 		Connect(this.UHC490LOG.pins.CLRBAR23, CLRBAR23);
-		let CLOCK2 = new Pin();
 		Connect(this.UHC490LOG.pins.CLOCK2, CLOCK2);
-		let CLOCK4 = new Pin();
 		Connect(this.UHC490LOG.pins.CLOCK4, CLOCK4);
-		let CLRBAR = new Pin();
 		Connect(this.UHC490LOG.pins.CLRBAR, CLRBAR);
-		let SET9BAR = new Pin();
 		Connect(this.UHC490LOG.pins.SET9BAR, SET9BAR);
 		Connect(QA, this.pins.QA_O);
-		Connect(this.pins.QB, this.pins.QB_O);
-		Connect(this.pins.QC, this.pins.QC_O);
-		Connect(this.pins.QD, this.pins.QD_O);
+		Connect(QB, this.pins.QB_O);
+		Connect(QC, this.pins.QC_O);
+		Connect(QD, this.pins.QD_O);
 	}
 }
 /**
@@ -5594,36 +6735,64 @@ class SN74HC533 extends Component {
 			_8QBAR: new Pin(),
 		}
 		this.UOC = new inv();
-		Connect(this.UOC.pins.IN, this.pins.OCBAR);
+		Connect(this.UOC.pins.IN0, this.pins.OCBAR);
 		let OC = new Pin();
 		Connect(this.UOC.pins.OUT, OC);
 		this.UQI = new dltch(8);
-		this.UQBAR = new buf3a(8);
+		Connect(this.UQI.pins.PRESET, _D_HI);
+		Connect(this.UQI.pins.CLEAR, _D_HI);
+		Connect(this.UQI.pins.GATE, this.pins.C);
+		Connect(this.UQI.pins.D0, this.pins._1D);
+		Connect(this.UQI.pins.D1, this.pins._2D);
+		Connect(this.UQI.pins.D2, this.pins._3D);
+		Connect(this.UQI.pins.D3, this.pins._4D);
+		Connect(this.UQI.pins.D4, this.pins._5D);
+		Connect(this.UQI.pins.D5, this.pins._6D);
+		Connect(this.UQI.pins.D6, this.pins._7D);
+		Connect(this.UQI.pins.D7, this.pins._8D);
+		let _D_NC = new Pin();
+		Connect(this.UQI.pins.Q0, _D_NC);
+		Connect(this.UQI.pins.Q1, _D_NC);
+		Connect(this.UQI.pins.Q2, _D_NC);
+		Connect(this.UQI.pins.Q3, _D_NC);
+		Connect(this.UQI.pins.Q4, _D_NC);
+		Connect(this.UQI.pins.Q5, _D_NC);
+		Connect(this.UQI.pins.Q6, _D_NC);
+		Connect(this.UQI.pins.Q7, _D_NC);
 		let _1QI = new Pin();
-		Connect(this.UQBAR.pins.D0, _1QI);
+		Connect(this.UQI.pins.QBAR0, _1QI);
 		let _2QI = new Pin();
-		Connect(this.UQBAR.pins.D1, _2QI);
+		Connect(this.UQI.pins.QBAR1, _2QI);
 		let _3QI = new Pin();
-		Connect(this.UQBAR.pins.D2, _3QI);
+		Connect(this.UQI.pins.QBAR2, _3QI);
 		let _4QI = new Pin();
-		Connect(this.UQBAR.pins.D3, _4QI);
+		Connect(this.UQI.pins.QBAR3, _4QI);
 		let _5QI = new Pin();
-		Connect(this.UQBAR.pins.D4, _5QI);
+		Connect(this.UQI.pins.QBAR4, _5QI);
 		let _6QI = new Pin();
-		Connect(this.UQBAR.pins.D5, _6QI);
+		Connect(this.UQI.pins.QBAR5, _6QI);
 		let _7QI = new Pin();
-		Connect(this.UQBAR.pins.D6, _7QI);
+		Connect(this.UQI.pins.QBAR6, _7QI);
 		let _8QI = new Pin();
-		Connect(this.UQBAR.pins.D7, _8QI);
+		Connect(this.UQI.pins.QBAR7, _8QI);
+		this.UQBAR = new buf3a(8);
+		Connect(this.UQBAR.pins.IN0_0, _1QI);
+		Connect(this.UQBAR.pins.IN1_0, _2QI);
+		Connect(this.UQBAR.pins.IN2_0, _3QI);
+		Connect(this.UQBAR.pins.IN3_0, _4QI);
+		Connect(this.UQBAR.pins.IN4_0, _5QI);
+		Connect(this.UQBAR.pins.IN5_0, _6QI);
+		Connect(this.UQBAR.pins.IN6_0, _7QI);
+		Connect(this.UQBAR.pins.IN7_0, _8QI);
 		Connect(this.UQBAR.pins.EN, OC);
-		Connect(this.UQBAR.pins.Q0, this.pins._1QBAR);
-		Connect(this.UQBAR.pins.Q1, this.pins._2QBAR);
-		Connect(this.UQBAR.pins.Q2, this.pins._3QBAR);
-		Connect(this.UQBAR.pins.Q3, this.pins._4QBAR);
-		Connect(this.UQBAR.pins.Q4, this.pins._5QBAR);
-		Connect(this.UQBAR.pins.Q5, this.pins._6QBAR);
-		Connect(this.UQBAR.pins.Q6, this.pins._7QBAR);
-		Connect(this.UQBAR.pins.Q7, this.pins._8QBAR);
+		Connect(this.UQBAR.pins.OUT0, this.pins._1QBAR);
+		Connect(this.UQBAR.pins.OUT1, this.pins._2QBAR);
+		Connect(this.UQBAR.pins.OUT2, this.pins._3QBAR);
+		Connect(this.UQBAR.pins.OUT3, this.pins._4QBAR);
+		Connect(this.UQBAR.pins.OUT4, this.pins._5QBAR);
+		Connect(this.UQBAR.pins.OUT5, this.pins._6QBAR);
+		Connect(this.UQBAR.pins.OUT6, this.pins._7QBAR);
+		Connect(this.UQBAR.pins.OUT7, this.pins._8QBAR);
 	}
 }
 /**
@@ -5653,7 +6822,7 @@ class SN74HC534 extends Component {
 			_8QBAR: new Pin(),
 		}
 		this.UOC = new inv();
-		Connect(this.UOC.pins.IN, this.pins.OCBAR);
+		Connect(this.UOC.pins.IN0, this.pins.OCBAR);
 		let OC = new Pin();
 		Connect(this.UOC.pins.OUT, OC);
 		this.UDFF = new dff(8);
@@ -5684,7 +6853,33 @@ class SN74HC534 extends Component {
 		Connect(this.UDFF.pins.Q6, _7QQ);
 		let _8QQ = new Pin();
 		Connect(this.UDFF.pins.Q7, _8QQ);
+		let _D_NC = new Pin();
+		Connect(this.UDFF.pins.QBAR0, _D_NC);
+		Connect(this.UDFF.pins.QBAR1, _D_NC);
+		Connect(this.UDFF.pins.QBAR2, _D_NC);
+		Connect(this.UDFF.pins.QBAR3, _D_NC);
+		Connect(this.UDFF.pins.QBAR4, _D_NC);
+		Connect(this.UDFF.pins.QBAR5, _D_NC);
+		Connect(this.UDFF.pins.QBAR6, _D_NC);
+		Connect(this.UDFF.pins.QBAR7, _D_NC);
 		this.UOCQ = new inv3a(8);
+		Connect(this.UOCQ.pins.IN0_0, _1QQ);
+		Connect(this.UOCQ.pins.IN1_0, _2QQ);
+		Connect(this.UOCQ.pins.IN2_0, _3QQ);
+		Connect(this.UOCQ.pins.IN3_0, _4QQ);
+		Connect(this.UOCQ.pins.IN4_0, _5QQ);
+		Connect(this.UOCQ.pins.IN5_0, _6QQ);
+		Connect(this.UOCQ.pins.IN6_0, _7QQ);
+		Connect(this.UOCQ.pins.IN7_0, _8QQ);
+		Connect(this.UOCQ.pins.EN, OC);
+		Connect(this.UOCQ.pins.OUT0, this.pins._1QBAR);
+		Connect(this.UOCQ.pins.OUT1, this.pins._2QBAR);
+		Connect(this.UOCQ.pins.OUT2, this.pins._3QBAR);
+		Connect(this.UOCQ.pins.OUT3, this.pins._4QBAR);
+		Connect(this.UOCQ.pins.OUT4, this.pins._5QBAR);
+		Connect(this.UOCQ.pins.OUT5, this.pins._6QBAR);
+		Connect(this.UOCQ.pins.OUT6, this.pins._7QBAR);
+		Connect(this.UOCQ.pins.OUT7, this.pins._8QBAR);
 	}
 }
 /**
@@ -5714,7 +6909,28 @@ class SN74HC540 extends Component {
 			Y8: new Pin(),
 		}
 		this.UA = new nor(2);
+		Connect(this.UA.pins.IN0, this.pins.G1BAR);
+		Connect(this.UA.pins.IN1, this.pins.G2BAR);
+		let E = new Pin();
+		Connect(this.UA.pins.OUT, E);
 		this.U1 = new inv3a(8);
+		Connect(this.U1.pins.IN0_0, this.pins.A1);
+		Connect(this.U1.pins.IN1_0, this.pins.A2);
+		Connect(this.U1.pins.IN2_0, this.pins.A3);
+		Connect(this.U1.pins.IN3_0, this.pins.A4);
+		Connect(this.U1.pins.IN4_0, this.pins.A5);
+		Connect(this.U1.pins.IN5_0, this.pins.A6);
+		Connect(this.U1.pins.IN6_0, this.pins.A7);
+		Connect(this.U1.pins.IN7_0, this.pins.A8);
+		Connect(this.U1.pins.EN, E);
+		Connect(this.U1.pins.OUT0, this.pins.Y1);
+		Connect(this.U1.pins.OUT1, this.pins.Y2);
+		Connect(this.U1.pins.OUT2, this.pins.Y3);
+		Connect(this.U1.pins.OUT3, this.pins.Y4);
+		Connect(this.U1.pins.OUT4, this.pins.Y5);
+		Connect(this.U1.pins.OUT5, this.pins.Y6);
+		Connect(this.U1.pins.OUT6, this.pins.Y7);
+		Connect(this.U1.pins.OUT7, this.pins.Y8);
 	}
 }
 /**
@@ -5744,25 +6960,28 @@ class SN74HC541 extends Component {
 			Y8: new Pin(),
 		}
 		this.UA = new nor(2);
-		this.U1 = new buf3a(8);
-		Connect(this.U1.pins.D0, this.pins.A1);
-		Connect(this.U1.pins.D1, this.pins.A2);
-		Connect(this.U1.pins.D2, this.pins.A3);
-		Connect(this.U1.pins.D3, this.pins.A4);
-		Connect(this.U1.pins.D4, this.pins.A5);
-		Connect(this.U1.pins.D5, this.pins.A6);
-		Connect(this.U1.pins.D6, this.pins.A7);
-		Connect(this.U1.pins.D7, this.pins.A8);
+		Connect(this.UA.pins.IN0, this.pins.G1BAR);
+		Connect(this.UA.pins.IN1, this.pins.G2BAR);
 		let E = new Pin();
+		Connect(this.UA.pins.OUT, E);
+		this.U1 = new buf3a(8);
+		Connect(this.U1.pins.IN0_0, this.pins.A1);
+		Connect(this.U1.pins.IN1_0, this.pins.A2);
+		Connect(this.U1.pins.IN2_0, this.pins.A3);
+		Connect(this.U1.pins.IN3_0, this.pins.A4);
+		Connect(this.U1.pins.IN4_0, this.pins.A5);
+		Connect(this.U1.pins.IN5_0, this.pins.A6);
+		Connect(this.U1.pins.IN6_0, this.pins.A7);
+		Connect(this.U1.pins.IN7_0, this.pins.A8);
 		Connect(this.U1.pins.EN, E);
-		Connect(this.U1.pins.Q0, this.pins.Y1);
-		Connect(this.U1.pins.Q1, this.pins.Y2);
-		Connect(this.U1.pins.Q2, this.pins.Y3);
-		Connect(this.U1.pins.Q3, this.pins.Y4);
-		Connect(this.U1.pins.Q4, this.pins.Y5);
-		Connect(this.U1.pins.Q5, this.pins.Y6);
-		Connect(this.U1.pins.Q6, this.pins.Y7);
-		Connect(this.U1.pins.Q7, this.pins.Y8);
+		Connect(this.U1.pins.OUT0, this.pins.Y1);
+		Connect(this.U1.pins.OUT1, this.pins.Y2);
+		Connect(this.U1.pins.OUT2, this.pins.Y3);
+		Connect(this.U1.pins.OUT3, this.pins.Y4);
+		Connect(this.U1.pins.OUT4, this.pins.Y5);
+		Connect(this.U1.pins.OUT5, this.pins.Y6);
+		Connect(this.U1.pins.OUT6, this.pins.Y7);
+		Connect(this.U1.pins.OUT7, this.pins.Y8);
 	}
 }
 /**
@@ -5792,36 +7011,64 @@ class SN74HC563 extends Component {
 			_8QBAR: new Pin(),
 		}
 		this.UINV = new inv();
-		Connect(this.UINV.pins.IN, this.pins.OCBAR);
+		Connect(this.UINV.pins.IN0, this.pins.OCBAR);
 		let OC = new Pin();
 		Connect(this.UINV.pins.OUT, OC);
 		this.UQBUF = new dltch(8);
-		this.UQOUT = new buf3a(8);
+		Connect(this.UQBUF.pins.PRESET, _D_HI);
+		Connect(this.UQBUF.pins.CLEAR, _D_HI);
+		Connect(this.UQBUF.pins.GATE, this.pins.C);
+		Connect(this.UQBUF.pins.D0, this.pins._1D);
+		Connect(this.UQBUF.pins.D1, this.pins._2D);
+		Connect(this.UQBUF.pins.D2, this.pins._3D);
+		Connect(this.UQBUF.pins.D3, this.pins._4D);
+		Connect(this.UQBUF.pins.D4, this.pins._5D);
+		Connect(this.UQBUF.pins.D5, this.pins._6D);
+		Connect(this.UQBUF.pins.D6, this.pins._7D);
+		Connect(this.UQBUF.pins.D7, this.pins._8D);
+		let _D_NC = new Pin();
+		Connect(this.UQBUF.pins.Q0, _D_NC);
+		Connect(this.UQBUF.pins.Q1, _D_NC);
+		Connect(this.UQBUF.pins.Q2, _D_NC);
+		Connect(this.UQBUF.pins.Q3, _D_NC);
+		Connect(this.UQBUF.pins.Q4, _D_NC);
+		Connect(this.UQBUF.pins.Q5, _D_NC);
+		Connect(this.UQBUF.pins.Q6, _D_NC);
+		Connect(this.UQBUF.pins.Q7, _D_NC);
 		let _1QB = new Pin();
-		Connect(this.UQOUT.pins.D0, _1QB);
+		Connect(this.UQBUF.pins.QBAR0, _1QB);
 		let _2QB = new Pin();
-		Connect(this.UQOUT.pins.D1, _2QB);
+		Connect(this.UQBUF.pins.QBAR1, _2QB);
 		let _3QB = new Pin();
-		Connect(this.UQOUT.pins.D2, _3QB);
+		Connect(this.UQBUF.pins.QBAR2, _3QB);
 		let _4QB = new Pin();
-		Connect(this.UQOUT.pins.D3, _4QB);
+		Connect(this.UQBUF.pins.QBAR3, _4QB);
 		let _5QB = new Pin();
-		Connect(this.UQOUT.pins.D4, _5QB);
+		Connect(this.UQBUF.pins.QBAR4, _5QB);
 		let _6QB = new Pin();
-		Connect(this.UQOUT.pins.D5, _6QB);
+		Connect(this.UQBUF.pins.QBAR5, _6QB);
 		let _7QB = new Pin();
-		Connect(this.UQOUT.pins.D6, _7QB);
+		Connect(this.UQBUF.pins.QBAR6, _7QB);
 		let _8QB = new Pin();
-		Connect(this.UQOUT.pins.D7, _8QB);
+		Connect(this.UQBUF.pins.QBAR7, _8QB);
+		this.UQOUT = new buf3a(8);
+		Connect(this.UQOUT.pins.IN0_0, _1QB);
+		Connect(this.UQOUT.pins.IN1_0, _2QB);
+		Connect(this.UQOUT.pins.IN2_0, _3QB);
+		Connect(this.UQOUT.pins.IN3_0, _4QB);
+		Connect(this.UQOUT.pins.IN4_0, _5QB);
+		Connect(this.UQOUT.pins.IN5_0, _6QB);
+		Connect(this.UQOUT.pins.IN6_0, _7QB);
+		Connect(this.UQOUT.pins.IN7_0, _8QB);
 		Connect(this.UQOUT.pins.EN, OC);
-		Connect(this.UQOUT.pins.Q0, this.pins._1QBAR);
-		Connect(this.UQOUT.pins.Q1, this.pins._2QBAR);
-		Connect(this.UQOUT.pins.Q2, this.pins._3QBAR);
-		Connect(this.UQOUT.pins.Q3, this.pins._4QBAR);
-		Connect(this.UQOUT.pins.Q4, this.pins._5QBAR);
-		Connect(this.UQOUT.pins.Q5, this.pins._6QBAR);
-		Connect(this.UQOUT.pins.Q6, this.pins._7QBAR);
-		Connect(this.UQOUT.pins.Q7, this.pins._8QBAR);
+		Connect(this.UQOUT.pins.OUT0, this.pins._1QBAR);
+		Connect(this.UQOUT.pins.OUT1, this.pins._2QBAR);
+		Connect(this.UQOUT.pins.OUT2, this.pins._3QBAR);
+		Connect(this.UQOUT.pins.OUT3, this.pins._4QBAR);
+		Connect(this.UQOUT.pins.OUT4, this.pins._5QBAR);
+		Connect(this.UQOUT.pins.OUT5, this.pins._6QBAR);
+		Connect(this.UQOUT.pins.OUT6, this.pins._7QBAR);
+		Connect(this.UQOUT.pins.OUT7, this.pins._8QBAR);
 	}
 }
 /**
@@ -5851,7 +7098,7 @@ class SN74HC564 extends Component {
 			_8QBAR: new Pin(),
 		}
 		this.UOC = new inv();
-		Connect(this.UOC.pins.IN, this.pins.OCBAR);
+		Connect(this.UOC.pins.IN0, this.pins.OCBAR);
 		let OC = new Pin();
 		Connect(this.UOC.pins.OUT, OC);
 		this.UDFF = new dff(8);
@@ -5882,7 +7129,33 @@ class SN74HC564 extends Component {
 		Connect(this.UDFF.pins.Q6, _7QQ);
 		let _8QQ = new Pin();
 		Connect(this.UDFF.pins.Q7, _8QQ);
+		let _D_NC = new Pin();
+		Connect(this.UDFF.pins.QBAR0, _D_NC);
+		Connect(this.UDFF.pins.QBAR1, _D_NC);
+		Connect(this.UDFF.pins.QBAR2, _D_NC);
+		Connect(this.UDFF.pins.QBAR3, _D_NC);
+		Connect(this.UDFF.pins.QBAR4, _D_NC);
+		Connect(this.UDFF.pins.QBAR5, _D_NC);
+		Connect(this.UDFF.pins.QBAR6, _D_NC);
+		Connect(this.UDFF.pins.QBAR7, _D_NC);
 		this.UOCQ = new inv3a(8);
+		Connect(this.UOCQ.pins.IN0_0, _1QQ);
+		Connect(this.UOCQ.pins.IN1_0, _2QQ);
+		Connect(this.UOCQ.pins.IN2_0, _3QQ);
+		Connect(this.UOCQ.pins.IN3_0, _4QQ);
+		Connect(this.UOCQ.pins.IN4_0, _5QQ);
+		Connect(this.UOCQ.pins.IN5_0, _6QQ);
+		Connect(this.UOCQ.pins.IN6_0, _7QQ);
+		Connect(this.UOCQ.pins.IN7_0, _8QQ);
+		Connect(this.UOCQ.pins.EN, OC);
+		Connect(this.UOCQ.pins.OUT0, this.pins._1QBAR);
+		Connect(this.UOCQ.pins.OUT1, this.pins._2QBAR);
+		Connect(this.UOCQ.pins.OUT2, this.pins._3QBAR);
+		Connect(this.UOCQ.pins.OUT3, this.pins._4QBAR);
+		Connect(this.UOCQ.pins.OUT4, this.pins._5QBAR);
+		Connect(this.UOCQ.pins.OUT5, this.pins._6QBAR);
+		Connect(this.UOCQ.pins.OUT6, this.pins._7QBAR);
+		Connect(this.UOCQ.pins.OUT7, this.pins._8QBAR);
 	}
 }
 /**
@@ -5912,36 +7185,64 @@ class SN74HC573 extends Component {
 			_8Q: new Pin(),
 		}
 		this.U0 = new inv();
-		Connect(this.U0.pins.IN, this.pins.OCBAR);
+		Connect(this.U0.pins.IN0, this.pins.OCBAR);
 		let OC = new Pin();
 		Connect(this.U0.pins.OUT, OC);
 		this.U1 = new dltch(8);
-		this.U2 = new buf3a(8);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		Connect(this.U1.pins.CLEAR, _D_HI);
+		Connect(this.U1.pins.GATE, this.pins.C);
+		Connect(this.U1.pins.D0, this.pins._1D);
+		Connect(this.U1.pins.D1, this.pins._2D);
+		Connect(this.U1.pins.D2, this.pins._3D);
+		Connect(this.U1.pins.D3, this.pins._4D);
+		Connect(this.U1.pins.D4, this.pins._5D);
+		Connect(this.U1.pins.D5, this.pins._6D);
+		Connect(this.U1.pins.D6, this.pins._7D);
+		Connect(this.U1.pins.D7, this.pins._8D);
 		let _1QI = new Pin();
-		Connect(this.U2.pins.D0, _1QI);
+		Connect(this.U1.pins.Q0, _1QI);
 		let _2QI = new Pin();
-		Connect(this.U2.pins.D1, _2QI);
+		Connect(this.U1.pins.Q1, _2QI);
 		let _3QI = new Pin();
-		Connect(this.U2.pins.D2, _3QI);
+		Connect(this.U1.pins.Q2, _3QI);
 		let _4QI = new Pin();
-		Connect(this.U2.pins.D3, _4QI);
+		Connect(this.U1.pins.Q3, _4QI);
 		let _5QI = new Pin();
-		Connect(this.U2.pins.D4, _5QI);
+		Connect(this.U1.pins.Q4, _5QI);
 		let _6QI = new Pin();
-		Connect(this.U2.pins.D5, _6QI);
+		Connect(this.U1.pins.Q5, _6QI);
 		let _7QI = new Pin();
-		Connect(this.U2.pins.D6, _7QI);
+		Connect(this.U1.pins.Q6, _7QI);
 		let _8QI = new Pin();
-		Connect(this.U2.pins.D7, _8QI);
+		Connect(this.U1.pins.Q7, _8QI);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
+		Connect(this.U1.pins.QBAR1, _D_NC);
+		Connect(this.U1.pins.QBAR2, _D_NC);
+		Connect(this.U1.pins.QBAR3, _D_NC);
+		Connect(this.U1.pins.QBAR4, _D_NC);
+		Connect(this.U1.pins.QBAR5, _D_NC);
+		Connect(this.U1.pins.QBAR6, _D_NC);
+		Connect(this.U1.pins.QBAR7, _D_NC);
+		this.U2 = new buf3a(8);
+		Connect(this.U2.pins.IN0_0, _1QI);
+		Connect(this.U2.pins.IN1_0, _2QI);
+		Connect(this.U2.pins.IN2_0, _3QI);
+		Connect(this.U2.pins.IN3_0, _4QI);
+		Connect(this.U2.pins.IN4_0, _5QI);
+		Connect(this.U2.pins.IN5_0, _6QI);
+		Connect(this.U2.pins.IN6_0, _7QI);
+		Connect(this.U2.pins.IN7_0, _8QI);
 		Connect(this.U2.pins.EN, OC);
-		Connect(this.U2.pins.Q0, this.pins._1Q);
-		Connect(this.U2.pins.Q1, this.pins._2Q);
-		Connect(this.U2.pins.Q2, this.pins._3Q);
-		Connect(this.U2.pins.Q3, this.pins._4Q);
-		Connect(this.U2.pins.Q4, this.pins._5Q);
-		Connect(this.U2.pins.Q5, this.pins._6Q);
-		Connect(this.U2.pins.Q6, this.pins._7Q);
-		Connect(this.U2.pins.Q7, this.pins._8Q);
+		Connect(this.U2.pins.OUT0, this.pins._1Q);
+		Connect(this.U2.pins.OUT1, this.pins._2Q);
+		Connect(this.U2.pins.OUT2, this.pins._3Q);
+		Connect(this.U2.pins.OUT3, this.pins._4Q);
+		Connect(this.U2.pins.OUT4, this.pins._5Q);
+		Connect(this.U2.pins.OUT5, this.pins._6Q);
+		Connect(this.U2.pins.OUT6, this.pins._7Q);
+		Connect(this.U2.pins.OUT7, this.pins._8Q);
 	}
 }
 /**
@@ -5971,7 +7272,7 @@ class SN74HC574 extends Component {
 			_8Q: new Pin(),
 		}
 		this.UOC = new inv();
-		Connect(this.UOC.pins.IN, this.pins.OCBAR);
+		Connect(this.UOC.pins.IN0, this.pins.OCBAR);
 		let OC = new Pin();
 		Connect(this.UOC.pins.OUT, OC);
 		this.UD = new dff(8);
@@ -6002,24 +7303,33 @@ class SN74HC574 extends Component {
 		Connect(this.UD.pins.Q6, SQ7);
 		let SQ8 = new Pin();
 		Connect(this.UD.pins.Q7, SQ8);
+		let _D_NC = new Pin();
+		Connect(this.UD.pins.QBAR0, _D_NC);
+		Connect(this.UD.pins.QBAR1, _D_NC);
+		Connect(this.UD.pins.QBAR2, _D_NC);
+		Connect(this.UD.pins.QBAR3, _D_NC);
+		Connect(this.UD.pins.QBAR4, _D_NC);
+		Connect(this.UD.pins.QBAR5, _D_NC);
+		Connect(this.UD.pins.QBAR6, _D_NC);
+		Connect(this.UD.pins.QBAR7, _D_NC);
 		this.UQS = new buf3a(8);
-		Connect(this.UQS.pins.D0, SQ1);
-		Connect(this.UQS.pins.D1, SQ2);
-		Connect(this.UQS.pins.D2, SQ3);
-		Connect(this.UQS.pins.D3, SQ4);
-		Connect(this.UQS.pins.D4, SQ5);
-		Connect(this.UQS.pins.D5, SQ6);
-		Connect(this.UQS.pins.D6, SQ7);
-		Connect(this.UQS.pins.D7, SQ8);
+		Connect(this.UQS.pins.IN0_0, SQ1);
+		Connect(this.UQS.pins.IN1_0, SQ2);
+		Connect(this.UQS.pins.IN2_0, SQ3);
+		Connect(this.UQS.pins.IN3_0, SQ4);
+		Connect(this.UQS.pins.IN4_0, SQ5);
+		Connect(this.UQS.pins.IN5_0, SQ6);
+		Connect(this.UQS.pins.IN6_0, SQ7);
+		Connect(this.UQS.pins.IN7_0, SQ8);
 		Connect(this.UQS.pins.EN, OC);
-		Connect(this.UQS.pins.Q0, this.pins._1Q);
-		Connect(this.UQS.pins.Q1, this.pins._2Q);
-		Connect(this.UQS.pins.Q2, this.pins._3Q);
-		Connect(this.UQS.pins.Q3, this.pins._4Q);
-		Connect(this.UQS.pins.Q4, this.pins._5Q);
-		Connect(this.UQS.pins.Q5, this.pins._6Q);
-		Connect(this.UQS.pins.Q6, this.pins._7Q);
-		Connect(this.UQS.pins.Q7, this.pins._8Q);
+		Connect(this.UQS.pins.OUT0, this.pins._1Q);
+		Connect(this.UQS.pins.OUT1, this.pins._2Q);
+		Connect(this.UQS.pins.OUT2, this.pins._3Q);
+		Connect(this.UQS.pins.OUT3, this.pins._4Q);
+		Connect(this.UQS.pins.OUT4, this.pins._5Q);
+		Connect(this.UQS.pins.OUT5, this.pins._6Q);
+		Connect(this.UQS.pins.OUT6, this.pins._7Q);
+		Connect(this.UQS.pins.OUT7, this.pins._8Q);
 	}
 }
 class SN74HC590A extends Component {
@@ -6042,37 +7352,154 @@ class SN74HC590A extends Component {
 			RCOBAR_O: new Pin(),
 		}
 		this.U1 = new jkff(1);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		let CCLRBAR = new Pin();
+		Connect(this.U1.pins.CLEAR, CCLRBAR);
+		let CNTA = new Pin();
+		Connect(this.U1.pins.CLOCK, CNTA);
+		Connect(this.U1.pins.J0, _D_HI);
+		Connect(this.U1.pins.K0, _D_HI);
+		let JA = new Pin();
+		Connect(this.U1.pins.Q0, JA);
+		let KA = new Pin();
+		Connect(this.U1.pins.QBAR0, KA);
 		this.U2 = new jkff(1);
+		Connect(this.U2.pins.PRESET, _D_HI);
+		Connect(this.U2.pins.CLEAR, CCLRBAR);
+		let CNTB = new Pin();
+		Connect(this.U2.pins.CLOCK, CNTB);
+		Connect(this.U2.pins.J0, _D_HI);
+		Connect(this.U2.pins.K0, _D_HI);
+		let JB = new Pin();
+		Connect(this.U2.pins.Q0, JB);
+		let KB = new Pin();
+		Connect(this.U2.pins.QBAR0, KB);
 		this.U3 = new jkff(1);
+		Connect(this.U3.pins.PRESET, _D_HI);
+		Connect(this.U3.pins.CLEAR, CCLRBAR);
+		let CNTC = new Pin();
+		Connect(this.U3.pins.CLOCK, CNTC);
+		Connect(this.U3.pins.J0, _D_HI);
+		Connect(this.U3.pins.K0, _D_HI);
+		let JC = new Pin();
+		Connect(this.U3.pins.Q0, JC);
+		let KC = new Pin();
+		Connect(this.U3.pins.QBAR0, KC);
 		this.U4 = new jkff(1);
+		Connect(this.U4.pins.PRESET, _D_HI);
+		Connect(this.U4.pins.CLEAR, CCLRBAR);
+		let CNTD = new Pin();
+		Connect(this.U4.pins.CLOCK, CNTD);
+		Connect(this.U4.pins.J0, _D_HI);
+		Connect(this.U4.pins.K0, _D_HI);
+		let JD = new Pin();
+		Connect(this.U4.pins.Q0, JD);
+		let KD = new Pin();
+		Connect(this.U4.pins.QBAR0, KD);
 		this.U5 = new jkff(1);
+		Connect(this.U5.pins.PRESET, _D_HI);
+		Connect(this.U5.pins.CLEAR, CCLRBAR);
+		let CNTE = new Pin();
+		Connect(this.U5.pins.CLOCK, CNTE);
+		Connect(this.U5.pins.J0, _D_HI);
+		Connect(this.U5.pins.K0, _D_HI);
+		let JE = new Pin();
+		Connect(this.U5.pins.Q0, JE);
+		let KE = new Pin();
+		Connect(this.U5.pins.QBAR0, KE);
 		this.U6 = new jkff(1);
+		Connect(this.U6.pins.PRESET, _D_HI);
+		Connect(this.U6.pins.CLEAR, CCLRBAR);
+		let CNTF = new Pin();
+		Connect(this.U6.pins.CLOCK, CNTF);
+		Connect(this.U6.pins.J0, _D_HI);
+		Connect(this.U6.pins.K0, _D_HI);
+		let JF = new Pin();
+		Connect(this.U6.pins.Q0, JF);
+		let KF = new Pin();
+		Connect(this.U6.pins.QBAR0, KF);
 		this.U7 = new jkff(1);
+		Connect(this.U7.pins.PRESET, _D_HI);
+		Connect(this.U7.pins.CLEAR, CCLRBAR);
+		let CNTG = new Pin();
+		Connect(this.U7.pins.CLOCK, CNTG);
+		Connect(this.U7.pins.J0, _D_HI);
+		Connect(this.U7.pins.K0, _D_HI);
+		let JG = new Pin();
+		Connect(this.U7.pins.Q0, JG);
+		let KG = new Pin();
+		Connect(this.U7.pins.QBAR0, KG);
 		this.U8 = new jkff(1);
+		Connect(this.U8.pins.PRESET, _D_HI);
+		Connect(this.U8.pins.CLEAR, CCLRBAR);
+		let CNTH = new Pin();
+		Connect(this.U8.pins.CLOCK, CNTH);
+		Connect(this.U8.pins.J0, _D_HI);
+		Connect(this.U8.pins.K0, _D_HI);
+		let JH = new Pin();
+		Connect(this.U8.pins.Q0, JH);
+		let KH = new Pin();
+		Connect(this.U8.pins.QBAR0, KH);
 		this.U9 = new jkff(8);
+		Connect(this.U9.pins.PRESET, _D_HI);
+		Connect(this.U9.pins.CLEAR, _D_HI);
+		let MCLK = new Pin();
+		Connect(this.U9.pins.CLOCK, MCLK);
+		Connect(this.U9.pins.J0, JA);
+		Connect(this.U9.pins.J1, JB);
+		Connect(this.U9.pins.J2, JC);
+		Connect(this.U9.pins.J3, JD);
+		Connect(this.U9.pins.J4, JE);
+		Connect(this.U9.pins.J5, JF);
+		Connect(this.U9.pins.J6, JG);
+		Connect(this.U9.pins.J7, JH);
+		Connect(this.U9.pins.K0, KA);
+		Connect(this.U9.pins.K1, KB);
+		Connect(this.U9.pins.K2, KC);
+		Connect(this.U9.pins.K3, KD);
+		Connect(this.U9.pins.K4, KE);
+		Connect(this.U9.pins.K5, KF);
+		Connect(this.U9.pins.K6, KG);
+		Connect(this.U9.pins.K7, KH);
+		let QA = new Pin();
+		Connect(this.U9.pins.Q0, QA);
+		let QB = new Pin();
+		Connect(this.U9.pins.Q1, QB);
+		let QC = new Pin();
+		Connect(this.U9.pins.Q2, QC);
+		let QD = new Pin();
+		Connect(this.U9.pins.Q3, QD);
+		let QE = new Pin();
+		Connect(this.U9.pins.Q4, QE);
+		let QF = new Pin();
+		Connect(this.U9.pins.Q5, QF);
+		let QG = new Pin();
+		Connect(this.U9.pins.Q6, QG);
+		let QH = new Pin();
+		Connect(this.U9.pins.Q7, QH);
+		let _D_NC = new Pin();
+		Connect(this.U9.pins.QBAR0, _D_NC);
+		Connect(this.U9.pins.QBAR1, _D_NC);
+		Connect(this.U9.pins.QBAR2, _D_NC);
+		Connect(this.U9.pins.QBAR3, _D_NC);
+		Connect(this.U9.pins.QBAR4, _D_NC);
+		Connect(this.U9.pins.QBAR5, _D_NC);
+		Connect(this.U9.pins.QBAR6, _D_NC);
+		Connect(this.U9.pins.QBAR7, _D_NC);
 		this.UHC590ALOG = new logicexp(['GBAR_I','RCK_I','CCKENBAR_I','CCK_I','CCLRBAR_I','JA','JB','JC','JD','JE','JF','JG','JH','CNTA'], ['GBAR','RCK','CCKENBAR','CCK','CCLRBAR','CNTA','CNTB','CNTC','CNTD','CNTE','CNTF','CNTG','CNTH','MCLK','RCOBAR'], []).Logic('   GBAR =  GBAR_I ;   RCK =  RCK_I ;   CCKENBAR =  CCKENBAR_I ;   CCK =  CCK_I ;   CCLRBAR =  CCLRBAR_I ;   CNTA =  !((!(CNTA & CCKENBAR) & CCK) & CCK) ;   CNTB =  JA & CNTA ;   CNTC =  JB & CNTB ;   CNTD =  JC & CNTC ;   CNTE =  JD & CNTD ;   CNTF =  JE & CNTE ;   CNTG =  JF & CNTF ;   CNTH =  JG & CNTG ;   MCLK =  !RCK ;   RCOBAR =  !(JH & JG & JF & JE & JD & JC & JB & JA) ;');
 		Connect(this.UHC590ALOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.UHC590ALOG.pins.RCK_I, this.pins.RCK_I);
 		Connect(this.UHC590ALOG.pins.CCKENBAR_I, this.pins.CCKENBAR_I);
 		Connect(this.UHC590ALOG.pins.CCK_I, this.pins.CCK_I);
 		Connect(this.UHC590ALOG.pins.CCLRBAR_I, this.pins.CCLRBAR_I);
-		let JA = new Pin();
 		Connect(this.UHC590ALOG.pins.JA, JA);
-		let JB = new Pin();
 		Connect(this.UHC590ALOG.pins.JB, JB);
-		let JC = new Pin();
 		Connect(this.UHC590ALOG.pins.JC, JC);
-		let JD = new Pin();
 		Connect(this.UHC590ALOG.pins.JD, JD);
-		let JE = new Pin();
 		Connect(this.UHC590ALOG.pins.JE, JE);
-		let JF = new Pin();
 		Connect(this.UHC590ALOG.pins.JF, JF);
-		let JG = new Pin();
 		Connect(this.UHC590ALOG.pins.JG, JG);
-		let JH = new Pin();
 		Connect(this.UHC590ALOG.pins.JH, JH);
-		let CNTA = new Pin();
 		Connect(this.UHC590ALOG.pins.CNTA, CNTA);
 		let GBAR = new Pin();
 		Connect(this.UHC590ALOG.pins.GBAR, GBAR);
@@ -6082,34 +7509,25 @@ class SN74HC590A extends Component {
 		Connect(this.UHC590ALOG.pins.CCKENBAR, CCKENBAR);
 		let CCK = new Pin();
 		Connect(this.UHC590ALOG.pins.CCK, CCK);
-		let CCLRBAR = new Pin();
 		Connect(this.UHC590ALOG.pins.CCLRBAR, CCLRBAR);
-		let CNTB = new Pin();
 		Connect(this.UHC590ALOG.pins.CNTB, CNTB);
-		let CNTC = new Pin();
 		Connect(this.UHC590ALOG.pins.CNTC, CNTC);
-		let CNTD = new Pin();
 		Connect(this.UHC590ALOG.pins.CNTD, CNTD);
-		let CNTE = new Pin();
 		Connect(this.UHC590ALOG.pins.CNTE, CNTE);
-		let CNTF = new Pin();
 		Connect(this.UHC590ALOG.pins.CNTF, CNTF);
-		let CNTG = new Pin();
 		Connect(this.UHC590ALOG.pins.CNTG, CNTG);
-		let CNTH = new Pin();
 		Connect(this.UHC590ALOG.pins.CNTH, CNTH);
-		let MCLK = new Pin();
 		Connect(this.UHC590ALOG.pins.MCLK, MCLK);
 		let RCOBAR = new Pin();
 		Connect(this.UHC590ALOG.pins.RCOBAR, RCOBAR);
-		Connect(this.pins.QA, this.pins.QA_O);
-		Connect(this.pins.QB, this.pins.QB_O);
-		Connect(this.pins.QC, this.pins.QC_O);
-		Connect(this.pins.QD, this.pins.QD_O);
-		Connect(this.pins.QE, this.pins.QE_O);
-		Connect(this.pins.QF, this.pins.QF_O);
-		Connect(this.pins.QG, this.pins.QG_O);
-		Connect(this.pins.QH, this.pins.QH_O);
+		Connect(QA, this.pins.QA_O);
+		Connect(QB, this.pins.QB_O);
+		Connect(QC, this.pins.QC_O);
+		Connect(QD, this.pins.QD_O);
+		Connect(QE, this.pins.QE_O);
+		Connect(QF, this.pins.QF_O);
+		Connect(QG, this.pins.QG_O);
+		Connect(QH, this.pins.QH_O);
 		Connect(RCOBAR, this.pins.RCOBAR_O);
 	}
 }
@@ -6136,13 +7554,25 @@ class SN74HC594 extends Component {
 			QHP_O: new Pin(),
 		}
 		this.U1 = new bufa(5);
+		Connect(this.U1.pins.IN0_0, this.pins.SRCK_I);
+		Connect(this.U1.pins.IN1_0, this.pins.RCK_I);
+		Connect(this.U1.pins.IN2_0, this.pins.SRCLRBAR_I);
+		Connect(this.U1.pins.IN3_0, this.pins.RCLRBAR_I);
+		Connect(this.U1.pins.IN4_0, this.pins.SER_I);
+		let SRCK = new Pin();
+		Connect(this.U1.pins.OUT0, SRCK);
+		let RCK = new Pin();
+		Connect(this.U1.pins.OUT1, RCK);
+		let SRCLRBAR = new Pin();
+		Connect(this.U1.pins.OUT2, SRCLRBAR);
+		let RCLRBAR = new Pin();
+		Connect(this.U1.pins.OUT3, RCLRBAR);
+		let SER = new Pin();
+		Connect(this.U1.pins.OUT4, SER);
 		this.U2 = new dff(8);
 		Connect(this.U2.pins.PRESET, _D_HI);
-		let SRCLRBAR = new Pin();
 		Connect(this.U2.pins.CLEAR, SRCLRBAR);
-		let SRCK = new Pin();
 		Connect(this.U2.pins.CLOCK, SRCK);
-		let SER = new Pin();
 		Connect(this.U2.pins.D0, SER);
 		let Q1A = new Pin();
 		Connect(this.U2.pins.D1, Q1A);
@@ -6167,11 +7597,18 @@ class SN74HC594 extends Component {
 		Connect(this.U2.pins.Q6, Q1G);
 		let QHP = new Pin();
 		Connect(this.U2.pins.Q7, QHP);
+		let _D_NC = new Pin();
+		Connect(this.U2.pins.QBAR0, _D_NC);
+		Connect(this.U2.pins.QBAR1, _D_NC);
+		Connect(this.U2.pins.QBAR2, _D_NC);
+		Connect(this.U2.pins.QBAR3, _D_NC);
+		Connect(this.U2.pins.QBAR4, _D_NC);
+		Connect(this.U2.pins.QBAR5, _D_NC);
+		Connect(this.U2.pins.QBAR6, _D_NC);
+		Connect(this.U2.pins.QBAR7, _D_NC);
 		this.U3 = new dff(8);
 		Connect(this.U3.pins.PRESET, _D_HI);
-		let RCLRBAR = new Pin();
 		Connect(this.U3.pins.CLEAR, RCLRBAR);
-		let RCK = new Pin();
 		Connect(this.U3.pins.CLOCK, RCK);
 		Connect(this.U3.pins.D0, Q1A);
 		Connect(this.U3.pins.D1, Q1B);
@@ -6197,6 +7634,14 @@ class SN74HC594 extends Component {
 		Connect(this.U3.pins.Q6, QG);
 		let QH = new Pin();
 		Connect(this.U3.pins.Q7, QH);
+		Connect(this.U3.pins.QBAR0, _D_NC);
+		Connect(this.U3.pins.QBAR1, _D_NC);
+		Connect(this.U3.pins.QBAR2, _D_NC);
+		Connect(this.U3.pins.QBAR3, _D_NC);
+		Connect(this.U3.pins.QBAR4, _D_NC);
+		Connect(this.U3.pins.QBAR5, _D_NC);
+		Connect(this.U3.pins.QBAR6, _D_NC);
+		Connect(this.U3.pins.QBAR7, _D_NC);
 		Connect(QA, this.pins.QA_O);
 		Connect(QB, this.pins.QB_O);
 		Connect(QC, this.pins.QC_O);
@@ -6231,13 +7676,25 @@ class SN74HC595 extends Component {
 			QHP_O: new Pin(),
 		}
 		this.U1 = new bufa(5);
+		Connect(this.U1.pins.IN0_0, this.pins.SRCK_I);
+		Connect(this.U1.pins.IN1_0, this.pins.RCK_I);
+		Connect(this.U1.pins.IN2_0, this.pins.SRCLRBAR_I);
+		Connect(this.U1.pins.IN3_0, this.pins.GBAR_I);
+		Connect(this.U1.pins.IN4_0, this.pins.SER_I);
+		let SRCK = new Pin();
+		Connect(this.U1.pins.OUT0, SRCK);
+		let RCK = new Pin();
+		Connect(this.U1.pins.OUT1, RCK);
+		let SRCLRBAR = new Pin();
+		Connect(this.U1.pins.OUT2, SRCLRBAR);
+		let GBAR = new Pin();
+		Connect(this.U1.pins.OUT3, GBAR);
+		let SER = new Pin();
+		Connect(this.U1.pins.OUT4, SER);
 		this.U2 = new dff(8);
 		Connect(this.U2.pins.PRESET, _D_HI);
-		let SRCLRBAR = new Pin();
 		Connect(this.U2.pins.CLEAR, SRCLRBAR);
-		let SRCK = new Pin();
 		Connect(this.U2.pins.CLOCK, SRCK);
-		let SER = new Pin();
 		Connect(this.U2.pins.D0, SER);
 		let Q1A = new Pin();
 		Connect(this.U2.pins.D1, Q1A);
@@ -6262,10 +7719,18 @@ class SN74HC595 extends Component {
 		Connect(this.U2.pins.Q6, Q1G);
 		let QHP = new Pin();
 		Connect(this.U2.pins.Q7, QHP);
+		let _D_NC = new Pin();
+		Connect(this.U2.pins.QBAR0, _D_NC);
+		Connect(this.U2.pins.QBAR1, _D_NC);
+		Connect(this.U2.pins.QBAR2, _D_NC);
+		Connect(this.U2.pins.QBAR3, _D_NC);
+		Connect(this.U2.pins.QBAR4, _D_NC);
+		Connect(this.U2.pins.QBAR5, _D_NC);
+		Connect(this.U2.pins.QBAR6, _D_NC);
+		Connect(this.U2.pins.QBAR7, _D_NC);
 		this.U3 = new dff(8);
 		Connect(this.U3.pins.PRESET, _D_HI);
 		Connect(this.U3.pins.CLEAR, _D_HI);
-		let RCK = new Pin();
 		Connect(this.U3.pins.CLOCK, RCK);
 		Connect(this.U3.pins.D0, Q1A);
 		Connect(this.U3.pins.D1, Q1B);
@@ -6291,6 +7756,14 @@ class SN74HC595 extends Component {
 		Connect(this.U3.pins.Q6, QG);
 		let QH = new Pin();
 		Connect(this.U3.pins.Q7, QH);
+		Connect(this.U3.pins.QBAR0, _D_NC);
+		Connect(this.U3.pins.QBAR1, _D_NC);
+		Connect(this.U3.pins.QBAR2, _D_NC);
+		Connect(this.U3.pins.QBAR3, _D_NC);
+		Connect(this.U3.pins.QBAR4, _D_NC);
+		Connect(this.U3.pins.QBAR5, _D_NC);
+		Connect(this.U3.pins.QBAR6, _D_NC);
+		Connect(this.U3.pins.QBAR7, _D_NC);
 		Connect(QA, this.pins.QA_O);
 		Connect(QB, this.pins.QB_O);
 		Connect(QC, this.pins.QC_O);
@@ -6337,9 +7810,14 @@ class SN74HC604 extends Component {
 			Y8: new Pin(),
 		}
 		this.UBUF = new bufa(2);
-		this.UAB_B = new inv();
+		Connect(this.UBUF.pins.IN0_0, this.pins.A_BBAR);
+		Connect(this.UBUF.pins.IN1_0, this.pins.CLK);
 		let A_BB = new Pin();
-		Connect(this.UAB_B.pins.IN, A_BB);
+		Connect(this.UBUF.pins.OUT0, A_BB);
+		let CK = new Pin();
+		Connect(this.UBUF.pins.OUT1, CK);
+		this.UAB_B = new inv();
+		Connect(this.UAB_B.pins.IN0, A_BB);
 		let AB_B = new Pin();
 		Connect(this.UAB_B.pins.OUT, AB_B);
 	}
@@ -6367,8 +7845,20 @@ class SNHC604DAT extends Component {
 		Connect(this.UAB.pins.Q0, A);
 		let B = new Pin();
 		Connect(this.UAB.pins.Q1, B);
+		let _D_NC = new Pin();
+		Connect(this.UAB.pins.QBAR0, _D_NC);
+		Connect(this.UAB.pins.QBAR1, _D_NC);
 		this.UYI = new ao(2,2);
+		Connect(this.UYI.pins.IN0_0, this.pins.A_BB);
+		Connect(this.UYI.pins.IN0_1, A);
+		Connect(this.UYI.pins.IN1_0, this.pins.AB_B);
+		Connect(this.UYI.pins.IN1_1, B);
+		let YI = new Pin();
+		Connect(this.UYI.pins.OUT, YI);
 		this.UY = new buf3();
+		Connect(this.UY.pins.IN0, YI);
+		Connect(this.UY.pins.EN, this.pins.CK);
+		Connect(this.UY.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -6398,12 +7888,49 @@ class SN74HC620 extends Component {
 			B8_B: new Pin(),
 		}
 		this.U1 = new buf();
+		Connect(this.U1.pins.IN0, this.pins.GAB_I);
+		let GAB = new Pin();
+		Connect(this.U1.pins.OUT, GAB);
 		this.U2 = new inv();
-		Connect(this.U2.pins.IN, this.pins.GBABAR_I);
+		Connect(this.U2.pins.IN0, this.pins.GBABAR_I);
 		let GBA = new Pin();
 		Connect(this.U2.pins.OUT, GBA);
 		this.U3 = new inv3a(8);
+		Connect(this.U3.pins.IN0_0, this.pins.A1_B);
+		Connect(this.U3.pins.IN1_0, this.pins.A2_B);
+		Connect(this.U3.pins.IN2_0, this.pins.A3_B);
+		Connect(this.U3.pins.IN3_0, this.pins.A4_B);
+		Connect(this.U3.pins.IN4_0, this.pins.A5_B);
+		Connect(this.U3.pins.IN5_0, this.pins.A6_B);
+		Connect(this.U3.pins.IN6_0, this.pins.A7_B);
+		Connect(this.U3.pins.IN7_0, this.pins.A8_B);
+		Connect(this.U3.pins.EN, GAB);
+		Connect(this.U3.pins.OUT0, this.pins.B1_B);
+		Connect(this.U3.pins.OUT1, this.pins.B2_B);
+		Connect(this.U3.pins.OUT2, this.pins.B3_B);
+		Connect(this.U3.pins.OUT3, this.pins.B4_B);
+		Connect(this.U3.pins.OUT4, this.pins.B5_B);
+		Connect(this.U3.pins.OUT5, this.pins.B6_B);
+		Connect(this.U3.pins.OUT6, this.pins.B7_B);
+		Connect(this.U3.pins.OUT7, this.pins.B8_B);
 		this.U4 = new inv3a(8);
+		Connect(this.U4.pins.IN0_0, this.pins.B1_B);
+		Connect(this.U4.pins.IN1_0, this.pins.B2_B);
+		Connect(this.U4.pins.IN2_0, this.pins.B3_B);
+		Connect(this.U4.pins.IN3_0, this.pins.B4_B);
+		Connect(this.U4.pins.IN4_0, this.pins.B5_B);
+		Connect(this.U4.pins.IN5_0, this.pins.B6_B);
+		Connect(this.U4.pins.IN6_0, this.pins.B7_B);
+		Connect(this.U4.pins.IN7_0, this.pins.B8_B);
+		Connect(this.U4.pins.EN, GBA);
+		Connect(this.U4.pins.OUT0, this.pins.A1_B);
+		Connect(this.U4.pins.OUT1, this.pins.A2_B);
+		Connect(this.U4.pins.OUT2, this.pins.A3_B);
+		Connect(this.U4.pins.OUT3, this.pins.A4_B);
+		Connect(this.U4.pins.OUT4, this.pins.A5_B);
+		Connect(this.U4.pins.OUT5, this.pins.A6_B);
+		Connect(this.U4.pins.OUT6, this.pins.A7_B);
+		Connect(this.U4.pins.OUT7, this.pins.A8_B);
 	}
 }
 /**
@@ -6433,47 +7960,49 @@ class SN74HC623 extends Component {
 			B8_B: new Pin(),
 		}
 		this.U1 = new buf();
+		Connect(this.U1.pins.IN0, this.pins.GAB_I);
+		let GAB = new Pin();
+		Connect(this.U1.pins.OUT, GAB);
 		this.U2 = new inv();
-		Connect(this.U2.pins.IN, this.pins.GBABAR_I);
+		Connect(this.U2.pins.IN0, this.pins.GBABAR_I);
 		let GBA = new Pin();
 		Connect(this.U2.pins.OUT, GBA);
 		this.U3 = new buf3a(8);
-		Connect(this.U3.pins.D0, this.pins.A1_B);
-		Connect(this.U3.pins.D1, this.pins.A2_B);
-		Connect(this.U3.pins.D2, this.pins.A3_B);
-		Connect(this.U3.pins.D3, this.pins.A4_B);
-		Connect(this.U3.pins.D4, this.pins.A5_B);
-		Connect(this.U3.pins.D5, this.pins.A6_B);
-		Connect(this.U3.pins.D6, this.pins.A7_B);
-		Connect(this.U3.pins.D7, this.pins.A8_B);
-		let GAB = new Pin();
+		Connect(this.U3.pins.IN0_0, this.pins.A1_B);
+		Connect(this.U3.pins.IN1_0, this.pins.A2_B);
+		Connect(this.U3.pins.IN2_0, this.pins.A3_B);
+		Connect(this.U3.pins.IN3_0, this.pins.A4_B);
+		Connect(this.U3.pins.IN4_0, this.pins.A5_B);
+		Connect(this.U3.pins.IN5_0, this.pins.A6_B);
+		Connect(this.U3.pins.IN6_0, this.pins.A7_B);
+		Connect(this.U3.pins.IN7_0, this.pins.A8_B);
 		Connect(this.U3.pins.EN, GAB);
-		Connect(this.U3.pins.Q0, this.pins.B1_B);
-		Connect(this.U3.pins.Q1, this.pins.B2_B);
-		Connect(this.U3.pins.Q2, this.pins.B3_B);
-		Connect(this.U3.pins.Q3, this.pins.B4_B);
-		Connect(this.U3.pins.Q4, this.pins.B5_B);
-		Connect(this.U3.pins.Q5, this.pins.B6_B);
-		Connect(this.U3.pins.Q6, this.pins.B7_B);
-		Connect(this.U3.pins.Q7, this.pins.B8_B);
+		Connect(this.U3.pins.OUT0, this.pins.B1_B);
+		Connect(this.U3.pins.OUT1, this.pins.B2_B);
+		Connect(this.U3.pins.OUT2, this.pins.B3_B);
+		Connect(this.U3.pins.OUT3, this.pins.B4_B);
+		Connect(this.U3.pins.OUT4, this.pins.B5_B);
+		Connect(this.U3.pins.OUT5, this.pins.B6_B);
+		Connect(this.U3.pins.OUT6, this.pins.B7_B);
+		Connect(this.U3.pins.OUT7, this.pins.B8_B);
 		this.U4 = new buf3a(8);
-		Connect(this.U4.pins.D0, this.pins.B1_B);
-		Connect(this.U4.pins.D1, this.pins.B2_B);
-		Connect(this.U4.pins.D2, this.pins.B3_B);
-		Connect(this.U4.pins.D3, this.pins.B4_B);
-		Connect(this.U4.pins.D4, this.pins.B5_B);
-		Connect(this.U4.pins.D5, this.pins.B6_B);
-		Connect(this.U4.pins.D6, this.pins.B7_B);
-		Connect(this.U4.pins.D7, this.pins.B8_B);
+		Connect(this.U4.pins.IN0_0, this.pins.B1_B);
+		Connect(this.U4.pins.IN1_0, this.pins.B2_B);
+		Connect(this.U4.pins.IN2_0, this.pins.B3_B);
+		Connect(this.U4.pins.IN3_0, this.pins.B4_B);
+		Connect(this.U4.pins.IN4_0, this.pins.B5_B);
+		Connect(this.U4.pins.IN5_0, this.pins.B6_B);
+		Connect(this.U4.pins.IN6_0, this.pins.B7_B);
+		Connect(this.U4.pins.IN7_0, this.pins.B8_B);
 		Connect(this.U4.pins.EN, GBA);
-		Connect(this.U4.pins.Q0, this.pins.A1_B);
-		Connect(this.U4.pins.Q1, this.pins.A2_B);
-		Connect(this.U4.pins.Q2, this.pins.A3_B);
-		Connect(this.U4.pins.Q3, this.pins.A4_B);
-		Connect(this.U4.pins.Q4, this.pins.A5_B);
-		Connect(this.U4.pins.Q5, this.pins.A6_B);
-		Connect(this.U4.pins.Q6, this.pins.A7_B);
-		Connect(this.U4.pins.Q7, this.pins.A8_B);
+		Connect(this.U4.pins.OUT0, this.pins.A1_B);
+		Connect(this.U4.pins.OUT1, this.pins.A2_B);
+		Connect(this.U4.pins.OUT2, this.pins.A3_B);
+		Connect(this.U4.pins.OUT3, this.pins.A4_B);
+		Connect(this.U4.pins.OUT4, this.pins.A5_B);
+		Connect(this.U4.pins.OUT5, this.pins.A6_B);
+		Connect(this.U4.pins.OUT6, this.pins.A7_B);
+		Connect(this.U4.pins.OUT7, this.pins.A8_B);
 	}
 }
 /**
@@ -6503,14 +8032,61 @@ class SN74HC640 extends Component {
 			B8_B: new Pin(),
 		}
 		this.U1 = new bufa(2);
-		this.U2 = new inv();
+		Connect(this.U1.pins.IN0_0, this.pins.GBAR_I);
+		Connect(this.U1.pins.IN1_0, this.pins.DIR_I);
+		let GBAR = new Pin();
+		Connect(this.U1.pins.OUT0, GBAR);
 		let DIR = new Pin();
-		Connect(this.U2.pins.IN, DIR);
+		Connect(this.U1.pins.OUT1, DIR);
+		this.U2 = new inv();
+		Connect(this.U2.pins.IN0, DIR);
 		let DIRBAR = new Pin();
 		Connect(this.U2.pins.OUT, DIRBAR);
 		this.U3 = new nora(2,2);
+		Connect(this.U3.pins.IN0_0, DIRBAR);
+		Connect(this.U3.pins.IN0_1, GBAR);
+		Connect(this.U3.pins.IN1_0, DIR);
+		Connect(this.U3.pins.IN1_1, GBAR);
+		let ENABLEAB = new Pin();
+		Connect(this.U3.pins.OUT0, ENABLEAB);
+		let ENABLEBA = new Pin();
+		Connect(this.U3.pins.OUT1, ENABLEBA);
 		this.U4 = new inv3a(8);
+		Connect(this.U4.pins.IN0_0, this.pins.A1_B);
+		Connect(this.U4.pins.IN1_0, this.pins.A2_B);
+		Connect(this.U4.pins.IN2_0, this.pins.A3_B);
+		Connect(this.U4.pins.IN3_0, this.pins.A4_B);
+		Connect(this.U4.pins.IN4_0, this.pins.A5_B);
+		Connect(this.U4.pins.IN5_0, this.pins.A6_B);
+		Connect(this.U4.pins.IN6_0, this.pins.A7_B);
+		Connect(this.U4.pins.IN7_0, this.pins.A8_B);
+		Connect(this.U4.pins.EN, ENABLEAB);
+		Connect(this.U4.pins.OUT0, this.pins.B1_B);
+		Connect(this.U4.pins.OUT1, this.pins.B2_B);
+		Connect(this.U4.pins.OUT2, this.pins.B3_B);
+		Connect(this.U4.pins.OUT3, this.pins.B4_B);
+		Connect(this.U4.pins.OUT4, this.pins.B5_B);
+		Connect(this.U4.pins.OUT5, this.pins.B6_B);
+		Connect(this.U4.pins.OUT6, this.pins.B7_B);
+		Connect(this.U4.pins.OUT7, this.pins.B8_B);
 		this.U5 = new inv3a(8);
+		Connect(this.U5.pins.IN0_0, this.pins.B1_B);
+		Connect(this.U5.pins.IN1_0, this.pins.B2_B);
+		Connect(this.U5.pins.IN2_0, this.pins.B3_B);
+		Connect(this.U5.pins.IN3_0, this.pins.B4_B);
+		Connect(this.U5.pins.IN4_0, this.pins.B5_B);
+		Connect(this.U5.pins.IN5_0, this.pins.B6_B);
+		Connect(this.U5.pins.IN6_0, this.pins.B7_B);
+		Connect(this.U5.pins.IN7_0, this.pins.B8_B);
+		Connect(this.U5.pins.EN, ENABLEBA);
+		Connect(this.U5.pins.OUT0, this.pins.A1_B);
+		Connect(this.U5.pins.OUT1, this.pins.A2_B);
+		Connect(this.U5.pins.OUT2, this.pins.A3_B);
+		Connect(this.U5.pins.OUT3, this.pins.A4_B);
+		Connect(this.U5.pins.OUT4, this.pins.A5_B);
+		Connect(this.U5.pins.OUT5, this.pins.A6_B);
+		Connect(this.U5.pins.OUT6, this.pins.A7_B);
+		Connect(this.U5.pins.OUT7, this.pins.A8_B);
 	}
 }
 /**
@@ -6540,28 +8116,61 @@ class SN74HC643 extends Component {
 			B8: new Pin(),
 		}
 		this.UBUF = new buf();
+		Connect(this.UBUF.pins.IN0, this.pins.DIR);
+		let DR = new Pin();
+		Connect(this.UBUF.pins.OUT, DR);
 		this.UINV = new inva(2);
+		Connect(this.UINV.pins.IN0_0, DR);
+		Connect(this.UINV.pins.IN1_0, this.pins.GBAR);
+		let DRB = new Pin();
+		Connect(this.UINV.pins.OUT0, DRB);
+		let G = new Pin();
+		Connect(this.UINV.pins.OUT1, G);
 		this.UEN = new anda(2,2);
-		this.UA = new buf3a(8);
-		Connect(this.UA.pins.D0, this.pins.B1);
-		Connect(this.UA.pins.D1, this.pins.B2);
-		Connect(this.UA.pins.D2, this.pins.B3);
-		Connect(this.UA.pins.D3, this.pins.B4);
-		Connect(this.UA.pins.D4, this.pins.B5);
-		Connect(this.UA.pins.D5, this.pins.B6);
-		Connect(this.UA.pins.D6, this.pins.B7);
-		Connect(this.UA.pins.D7, this.pins.B8);
+		Connect(this.UEN.pins.IN0_0, DR);
+		Connect(this.UEN.pins.IN0_1, G);
+		Connect(this.UEN.pins.IN1_0, DRB);
+		Connect(this.UEN.pins.IN1_1, G);
+		let EAB = new Pin();
+		Connect(this.UEN.pins.OUT0, EAB);
 		let EBA = new Pin();
+		Connect(this.UEN.pins.OUT1, EBA);
+		this.UA = new buf3a(8);
+		Connect(this.UA.pins.IN0_0, this.pins.B1);
+		Connect(this.UA.pins.IN1_0, this.pins.B2);
+		Connect(this.UA.pins.IN2_0, this.pins.B3);
+		Connect(this.UA.pins.IN3_0, this.pins.B4);
+		Connect(this.UA.pins.IN4_0, this.pins.B5);
+		Connect(this.UA.pins.IN5_0, this.pins.B6);
+		Connect(this.UA.pins.IN6_0, this.pins.B7);
+		Connect(this.UA.pins.IN7_0, this.pins.B8);
 		Connect(this.UA.pins.EN, EBA);
-		Connect(this.UA.pins.Q0, this.pins.A1);
-		Connect(this.UA.pins.Q1, this.pins.A2);
-		Connect(this.UA.pins.Q2, this.pins.A3);
-		Connect(this.UA.pins.Q3, this.pins.A4);
-		Connect(this.UA.pins.Q4, this.pins.A5);
-		Connect(this.UA.pins.Q5, this.pins.A6);
-		Connect(this.UA.pins.Q6, this.pins.A7);
-		Connect(this.UA.pins.Q7, this.pins.A8);
+		Connect(this.UA.pins.OUT0, this.pins.A1);
+		Connect(this.UA.pins.OUT1, this.pins.A2);
+		Connect(this.UA.pins.OUT2, this.pins.A3);
+		Connect(this.UA.pins.OUT3, this.pins.A4);
+		Connect(this.UA.pins.OUT4, this.pins.A5);
+		Connect(this.UA.pins.OUT5, this.pins.A6);
+		Connect(this.UA.pins.OUT6, this.pins.A7);
+		Connect(this.UA.pins.OUT7, this.pins.A8);
 		this.UB = new inv3a(8);
+		Connect(this.UB.pins.IN0_0, this.pins.A1);
+		Connect(this.UB.pins.IN1_0, this.pins.A2);
+		Connect(this.UB.pins.IN2_0, this.pins.A3);
+		Connect(this.UB.pins.IN3_0, this.pins.A4);
+		Connect(this.UB.pins.IN4_0, this.pins.A5);
+		Connect(this.UB.pins.IN5_0, this.pins.A6);
+		Connect(this.UB.pins.IN6_0, this.pins.A7);
+		Connect(this.UB.pins.IN7_0, this.pins.A8);
+		Connect(this.UB.pins.EN, EAB);
+		Connect(this.UB.pins.OUT0, this.pins.B1);
+		Connect(this.UB.pins.OUT1, this.pins.B2);
+		Connect(this.UB.pins.OUT2, this.pins.B3);
+		Connect(this.UB.pins.OUT3, this.pins.B4);
+		Connect(this.UB.pins.OUT4, this.pins.B5);
+		Connect(this.UB.pins.OUT5, this.pins.B6);
+		Connect(this.UB.pins.OUT6, this.pins.B7);
+		Connect(this.UB.pins.OUT7, this.pins.B8);
 	}
 }
 /**
@@ -6591,51 +8200,62 @@ class SN74HC645 extends Component {
 			B8: new Pin(),
 		}
 		this.UBUFF = new bufa(2);
-		this.UA = new nor(2);
-		this.UB = new inv();
+		Connect(this.UBUFF.pins.IN0_0, this.pins.GBAR);
+		Connect(this.UBUFF.pins.IN1_0, this.pins.DIR);
 		let GBAR_BUF = new Pin();
-		Connect(this.UB.pins.IN, GBAR_BUF);
+		Connect(this.UBUFF.pins.OUT0, GBAR_BUF);
+		let DIR_BUF = new Pin();
+		Connect(this.UBUFF.pins.OUT1, DIR_BUF);
+		this.UA = new nor(2);
+		Connect(this.UA.pins.IN0, GBAR_BUF);
+		Connect(this.UA.pins.IN1, DIR_BUF);
+		let T1 = new Pin();
+		Connect(this.UA.pins.OUT, T1);
+		this.UB = new inv();
+		Connect(this.UB.pins.IN0, GBAR_BUF);
 		let RE1 = new Pin();
 		Connect(this.UB.pins.OUT, RE1);
 		this.UC = new and(2);
-		this.U1 = new buf3a(8);
-		Connect(this.U1.pins.D0, this.pins.A1);
-		Connect(this.U1.pins.D1, this.pins.A2);
-		Connect(this.U1.pins.D2, this.pins.A3);
-		Connect(this.U1.pins.D3, this.pins.A4);
-		Connect(this.U1.pins.D4, this.pins.A5);
-		Connect(this.U1.pins.D5, this.pins.A6);
-		Connect(this.U1.pins.D6, this.pins.A7);
-		Connect(this.U1.pins.D7, this.pins.A8);
+		Connect(this.UC.pins.IN0, RE1);
+		Connect(this.UC.pins.IN1, DIR_BUF);
 		let T2 = new Pin();
+		Connect(this.UC.pins.OUT, T2);
+		this.U1 = new buf3a(8);
+		Connect(this.U1.pins.IN0_0, this.pins.A1);
+		Connect(this.U1.pins.IN1_0, this.pins.A2);
+		Connect(this.U1.pins.IN2_0, this.pins.A3);
+		Connect(this.U1.pins.IN3_0, this.pins.A4);
+		Connect(this.U1.pins.IN4_0, this.pins.A5);
+		Connect(this.U1.pins.IN5_0, this.pins.A6);
+		Connect(this.U1.pins.IN6_0, this.pins.A7);
+		Connect(this.U1.pins.IN7_0, this.pins.A8);
 		Connect(this.U1.pins.EN, T2);
-		Connect(this.U1.pins.Q0, this.pins.B1);
-		Connect(this.U1.pins.Q1, this.pins.B2);
-		Connect(this.U1.pins.Q2, this.pins.B3);
-		Connect(this.U1.pins.Q3, this.pins.B4);
-		Connect(this.U1.pins.Q4, this.pins.B5);
-		Connect(this.U1.pins.Q5, this.pins.B6);
-		Connect(this.U1.pins.Q6, this.pins.B7);
-		Connect(this.U1.pins.Q7, this.pins.B8);
+		Connect(this.U1.pins.OUT0, this.pins.B1);
+		Connect(this.U1.pins.OUT1, this.pins.B2);
+		Connect(this.U1.pins.OUT2, this.pins.B3);
+		Connect(this.U1.pins.OUT3, this.pins.B4);
+		Connect(this.U1.pins.OUT4, this.pins.B5);
+		Connect(this.U1.pins.OUT5, this.pins.B6);
+		Connect(this.U1.pins.OUT6, this.pins.B7);
+		Connect(this.U1.pins.OUT7, this.pins.B8);
 		this.U2 = new buf3a(8);
-		Connect(this.U2.pins.D0, this.pins.B1);
-		Connect(this.U2.pins.D1, this.pins.B2);
-		Connect(this.U2.pins.D2, this.pins.B3);
-		Connect(this.U2.pins.D3, this.pins.B4);
-		Connect(this.U2.pins.D4, this.pins.B5);
-		Connect(this.U2.pins.D5, this.pins.B6);
-		Connect(this.U2.pins.D6, this.pins.B7);
-		Connect(this.U2.pins.D7, this.pins.B8);
-		let T1 = new Pin();
+		Connect(this.U2.pins.IN0_0, this.pins.B1);
+		Connect(this.U2.pins.IN1_0, this.pins.B2);
+		Connect(this.U2.pins.IN2_0, this.pins.B3);
+		Connect(this.U2.pins.IN3_0, this.pins.B4);
+		Connect(this.U2.pins.IN4_0, this.pins.B5);
+		Connect(this.U2.pins.IN5_0, this.pins.B6);
+		Connect(this.U2.pins.IN6_0, this.pins.B7);
+		Connect(this.U2.pins.IN7_0, this.pins.B8);
 		Connect(this.U2.pins.EN, T1);
-		Connect(this.U2.pins.Q0, this.pins.A1);
-		Connect(this.U2.pins.Q1, this.pins.A2);
-		Connect(this.U2.pins.Q2, this.pins.A3);
-		Connect(this.U2.pins.Q3, this.pins.A4);
-		Connect(this.U2.pins.Q4, this.pins.A5);
-		Connect(this.U2.pins.Q5, this.pins.A6);
-		Connect(this.U2.pins.Q6, this.pins.A7);
-		Connect(this.U2.pins.Q7, this.pins.A8);
+		Connect(this.U2.pins.OUT0, this.pins.A1);
+		Connect(this.U2.pins.OUT1, this.pins.A2);
+		Connect(this.U2.pins.OUT2, this.pins.A3);
+		Connect(this.U2.pins.OUT3, this.pins.A4);
+		Connect(this.U2.pins.OUT4, this.pins.A5);
+		Connect(this.U2.pins.OUT5, this.pins.A6);
+		Connect(this.U2.pins.OUT6, this.pins.A7);
+		Connect(this.U2.pins.OUT7, this.pins.A8);
 	}
 }
 /**
@@ -6824,6 +8444,14 @@ class SN74HC646 extends Component {
 		Connect(this.UAREG.pins.Q5, _D_NC);
 		Connect(this.UAREG.pins.Q6, _D_NC);
 		Connect(this.UAREG.pins.Q7, _D_NC);
+		Connect(this.UAREG.pins.QBAR0, QA1);
+		Connect(this.UAREG.pins.QBAR1, QA2);
+		Connect(this.UAREG.pins.QBAR2, QA3);
+		Connect(this.UAREG.pins.QBAR3, QA4);
+		Connect(this.UAREG.pins.QBAR4, QA5);
+		Connect(this.UAREG.pins.QBAR5, QA6);
+		Connect(this.UAREG.pins.QBAR6, QA7);
+		Connect(this.UAREG.pins.QBAR7, QA8);
 		this.UBREG = new dff(8);
 		Connect(this.UBREG.pins.PRESET, _D_HI);
 		Connect(this.UBREG.pins.CLEAR, _D_HI);
@@ -6844,6 +8472,14 @@ class SN74HC646 extends Component {
 		Connect(this.UBREG.pins.Q5, _D_NC);
 		Connect(this.UBREG.pins.Q6, _D_NC);
 		Connect(this.UBREG.pins.Q7, _D_NC);
+		Connect(this.UBREG.pins.QBAR0, QB1);
+		Connect(this.UBREG.pins.QBAR1, QB2);
+		Connect(this.UBREG.pins.QBAR2, QB3);
+		Connect(this.UBREG.pins.QBAR3, QB4);
+		Connect(this.UBREG.pins.QBAR4, QB5);
+		Connect(this.UBREG.pins.QBAR5, QB6);
+		Connect(this.UBREG.pins.QBAR6, QB7);
+		Connect(this.UBREG.pins.QBAR7, QB8);
 		Connect(A1_OUT, this.pins.A1_B);
 		Connect(A2_OUT, this.pins.A2_B);
 		Connect(A3_OUT, this.pins.A3_B);
@@ -7047,6 +8683,15 @@ class SN74HC648 extends Component {
 		Connect(this.UAREG.pins.Q5, QA6);
 		Connect(this.UAREG.pins.Q6, QA7);
 		Connect(this.UAREG.pins.Q7, QA8);
+		let _D_NC = new Pin();
+		Connect(this.UAREG.pins.QBAR0, _D_NC);
+		Connect(this.UAREG.pins.QBAR1, _D_NC);
+		Connect(this.UAREG.pins.QBAR2, _D_NC);
+		Connect(this.UAREG.pins.QBAR3, _D_NC);
+		Connect(this.UAREG.pins.QBAR4, _D_NC);
+		Connect(this.UAREG.pins.QBAR5, _D_NC);
+		Connect(this.UAREG.pins.QBAR6, _D_NC);
+		Connect(this.UAREG.pins.QBAR7, _D_NC);
 		this.UBREG = new dff(8);
 		Connect(this.UBREG.pins.PRESET, _D_HI);
 		Connect(this.UBREG.pins.CLEAR, _D_HI);
@@ -7067,6 +8712,14 @@ class SN74HC648 extends Component {
 		Connect(this.UBREG.pins.Q5, QB6);
 		Connect(this.UBREG.pins.Q6, QB7);
 		Connect(this.UBREG.pins.Q7, QB8);
+		Connect(this.UBREG.pins.QBAR0, _D_NC);
+		Connect(this.UBREG.pins.QBAR1, _D_NC);
+		Connect(this.UBREG.pins.QBAR2, _D_NC);
+		Connect(this.UBREG.pins.QBAR3, _D_NC);
+		Connect(this.UBREG.pins.QBAR4, _D_NC);
+		Connect(this.UBREG.pins.QBAR5, _D_NC);
+		Connect(this.UBREG.pins.QBAR6, _D_NC);
+		Connect(this.UBREG.pins.QBAR7, _D_NC);
 		Connect(A1_OUT, this.pins.A1_B);
 		Connect(A2_OUT, this.pins.A2_B);
 		Connect(A3_OUT, this.pins.A3_B);
@@ -7152,6 +8805,15 @@ class SN74HC651 extends Component {
 		Connect(this.U1.pins.Q6, QB7);
 		let QB8 = new Pin();
 		Connect(this.U1.pins.Q7, QB8);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
+		Connect(this.U1.pins.QBAR1, _D_NC);
+		Connect(this.U1.pins.QBAR2, _D_NC);
+		Connect(this.U1.pins.QBAR3, _D_NC);
+		Connect(this.U1.pins.QBAR4, _D_NC);
+		Connect(this.U1.pins.QBAR5, _D_NC);
+		Connect(this.U1.pins.QBAR6, _D_NC);
+		Connect(this.U1.pins.QBAR7, _D_NC);
 		this.U2 = new dff(8);
 		Connect(this.U2.pins.PRESET, _D_HI);
 		Connect(this.U2.pins.CLEAR, _D_HI);
@@ -7189,114 +8851,122 @@ class SN74HC651 extends Component {
 		Connect(this.U2.pins.Q6, QA7);
 		let QA8 = new Pin();
 		Connect(this.U2.pins.Q7, QA8);
+		Connect(this.U2.pins.QBAR0, _D_NC);
+		Connect(this.U2.pins.QBAR1, _D_NC);
+		Connect(this.U2.pins.QBAR2, _D_NC);
+		Connect(this.U2.pins.QBAR3, _D_NC);
+		Connect(this.U2.pins.QBAR4, _D_NC);
+		Connect(this.U2.pins.QBAR5, _D_NC);
+		Connect(this.U2.pins.QBAR6, _D_NC);
+		Connect(this.U2.pins.QBAR7, _D_NC);
 		this.U3 = new buf3a(8);
 		let A1_O = new Pin();
-		Connect(this.U3.pins.D0, A1_O);
+		Connect(this.U3.pins.IN0_0, A1_O);
 		let A2_O = new Pin();
-		Connect(this.U3.pins.D1, A2_O);
+		Connect(this.U3.pins.IN1_0, A2_O);
 		let A3_O = new Pin();
-		Connect(this.U3.pins.D2, A3_O);
+		Connect(this.U3.pins.IN2_0, A3_O);
 		let A4_O = new Pin();
-		Connect(this.U3.pins.D3, A4_O);
+		Connect(this.U3.pins.IN3_0, A4_O);
 		let A5_O = new Pin();
-		Connect(this.U3.pins.D4, A5_O);
+		Connect(this.U3.pins.IN4_0, A5_O);
 		let A6_O = new Pin();
-		Connect(this.U3.pins.D5, A6_O);
+		Connect(this.U3.pins.IN5_0, A6_O);
 		let A7_O = new Pin();
-		Connect(this.U3.pins.D6, A7_O);
+		Connect(this.U3.pins.IN6_0, A7_O);
 		let A8_O = new Pin();
-		Connect(this.U3.pins.D7, A8_O);
+		Connect(this.U3.pins.IN7_0, A8_O);
 		let IGBABAR = new Pin();
 		Connect(this.U3.pins.EN, IGBABAR);
-		Connect(this.U3.pins.Q0, A1_IO);
-		Connect(this.U3.pins.Q1, A2_IO);
-		Connect(this.U3.pins.Q2, A3_IO);
-		Connect(this.U3.pins.Q3, A4_IO);
-		Connect(this.U3.pins.Q4, A5_IO);
-		Connect(this.U3.pins.Q5, A6_IO);
-		Connect(this.U3.pins.Q6, A7_IO);
-		Connect(this.U3.pins.Q7, A8_IO);
+		Connect(this.U3.pins.OUT0, A1_IO);
+		Connect(this.U3.pins.OUT1, A2_IO);
+		Connect(this.U3.pins.OUT2, A3_IO);
+		Connect(this.U3.pins.OUT3, A4_IO);
+		Connect(this.U3.pins.OUT4, A5_IO);
+		Connect(this.U3.pins.OUT5, A6_IO);
+		Connect(this.U3.pins.OUT6, A7_IO);
+		Connect(this.U3.pins.OUT7, A8_IO);
 		this.U4 = new buf3a(8);
 		let B1_O = new Pin();
-		Connect(this.U4.pins.D0, B1_O);
+		Connect(this.U4.pins.IN0_0, B1_O);
 		let B2_O = new Pin();
-		Connect(this.U4.pins.D1, B2_O);
+		Connect(this.U4.pins.IN1_0, B2_O);
 		let B3_O = new Pin();
-		Connect(this.U4.pins.D2, B3_O);
+		Connect(this.U4.pins.IN2_0, B3_O);
 		let B4_O = new Pin();
-		Connect(this.U4.pins.D3, B4_O);
+		Connect(this.U4.pins.IN3_0, B4_O);
 		let B5_O = new Pin();
-		Connect(this.U4.pins.D4, B5_O);
+		Connect(this.U4.pins.IN4_0, B5_O);
 		let B6_O = new Pin();
-		Connect(this.U4.pins.D5, B6_O);
+		Connect(this.U4.pins.IN5_0, B6_O);
 		let B7_O = new Pin();
-		Connect(this.U4.pins.D6, B7_O);
+		Connect(this.U4.pins.IN6_0, B7_O);
 		let B8_O = new Pin();
-		Connect(this.U4.pins.D7, B8_O);
+		Connect(this.U4.pins.IN7_0, B8_O);
 		let GAB = new Pin();
 		Connect(this.U4.pins.EN, GAB);
-		Connect(this.U4.pins.Q0, B1_IO);
-		Connect(this.U4.pins.Q1, B2_IO);
-		Connect(this.U4.pins.Q2, B3_IO);
-		Connect(this.U4.pins.Q3, B4_IO);
-		Connect(this.U4.pins.Q4, B5_IO);
-		Connect(this.U4.pins.Q5, B6_IO);
-		Connect(this.U4.pins.Q6, B7_IO);
-		Connect(this.U4.pins.Q7, B8_IO);
+		Connect(this.U4.pins.OUT0, B1_IO);
+		Connect(this.U4.pins.OUT1, B2_IO);
+		Connect(this.U4.pins.OUT2, B3_IO);
+		Connect(this.U4.pins.OUT3, B4_IO);
+		Connect(this.U4.pins.OUT4, B5_IO);
+		Connect(this.U4.pins.OUT5, B6_IO);
+		Connect(this.U4.pins.OUT6, B7_IO);
+		Connect(this.U4.pins.OUT7, B8_IO);
 		this.U5 = new buf3a(8);
 		let A1 = new Pin();
-		Connect(this.U5.pins.D0, A1);
+		Connect(this.U5.pins.IN0_0, A1);
 		let A2 = new Pin();
-		Connect(this.U5.pins.D1, A2);
+		Connect(this.U5.pins.IN1_0, A2);
 		let A3 = new Pin();
-		Connect(this.U5.pins.D2, A3);
+		Connect(this.U5.pins.IN2_0, A3);
 		let A4 = new Pin();
-		Connect(this.U5.pins.D3, A4);
+		Connect(this.U5.pins.IN3_0, A4);
 		let A5 = new Pin();
-		Connect(this.U5.pins.D4, A5);
+		Connect(this.U5.pins.IN4_0, A5);
 		let A6 = new Pin();
-		Connect(this.U5.pins.D5, A6);
+		Connect(this.U5.pins.IN5_0, A6);
 		let A7 = new Pin();
-		Connect(this.U5.pins.D6, A7);
+		Connect(this.U5.pins.IN6_0, A7);
 		let A8 = new Pin();
-		Connect(this.U5.pins.D7, A8);
+		Connect(this.U5.pins.IN7_0, A8);
 		let GBABAR = new Pin();
 		Connect(this.U5.pins.EN, GBABAR);
-		Connect(this.U5.pins.Q0, A1_IO);
-		Connect(this.U5.pins.Q1, A2_IO);
-		Connect(this.U5.pins.Q2, A3_IO);
-		Connect(this.U5.pins.Q3, A4_IO);
-		Connect(this.U5.pins.Q4, A5_IO);
-		Connect(this.U5.pins.Q5, A6_IO);
-		Connect(this.U5.pins.Q6, A7_IO);
-		Connect(this.U5.pins.Q7, A8_IO);
+		Connect(this.U5.pins.OUT0, A1_IO);
+		Connect(this.U5.pins.OUT1, A2_IO);
+		Connect(this.U5.pins.OUT2, A3_IO);
+		Connect(this.U5.pins.OUT3, A4_IO);
+		Connect(this.U5.pins.OUT4, A5_IO);
+		Connect(this.U5.pins.OUT5, A6_IO);
+		Connect(this.U5.pins.OUT6, A7_IO);
+		Connect(this.U5.pins.OUT7, A8_IO);
 		this.U6 = new buf3a(8);
 		let B1 = new Pin();
-		Connect(this.U6.pins.D0, B1);
+		Connect(this.U6.pins.IN0_0, B1);
 		let B2 = new Pin();
-		Connect(this.U6.pins.D1, B2);
+		Connect(this.U6.pins.IN1_0, B2);
 		let B3 = new Pin();
-		Connect(this.U6.pins.D2, B3);
+		Connect(this.U6.pins.IN2_0, B3);
 		let B4 = new Pin();
-		Connect(this.U6.pins.D3, B4);
+		Connect(this.U6.pins.IN3_0, B4);
 		let B5 = new Pin();
-		Connect(this.U6.pins.D4, B5);
+		Connect(this.U6.pins.IN4_0, B5);
 		let B6 = new Pin();
-		Connect(this.U6.pins.D5, B6);
+		Connect(this.U6.pins.IN5_0, B6);
 		let B7 = new Pin();
-		Connect(this.U6.pins.D6, B7);
+		Connect(this.U6.pins.IN6_0, B7);
 		let B8 = new Pin();
-		Connect(this.U6.pins.D7, B8);
+		Connect(this.U6.pins.IN7_0, B8);
 		let IGAB = new Pin();
 		Connect(this.U6.pins.EN, IGAB);
-		Connect(this.U6.pins.Q0, B1_IO);
-		Connect(this.U6.pins.Q1, B2_IO);
-		Connect(this.U6.pins.Q2, B3_IO);
-		Connect(this.U6.pins.Q3, B4_IO);
-		Connect(this.U6.pins.Q4, B5_IO);
-		Connect(this.U6.pins.Q5, B6_IO);
-		Connect(this.U6.pins.Q6, B7_IO);
-		Connect(this.U6.pins.Q7, B8_IO);
+		Connect(this.U6.pins.OUT0, B1_IO);
+		Connect(this.U6.pins.OUT1, B2_IO);
+		Connect(this.U6.pins.OUT2, B3_IO);
+		Connect(this.U6.pins.OUT3, B4_IO);
+		Connect(this.U6.pins.OUT4, B5_IO);
+		Connect(this.U6.pins.OUT5, B6_IO);
+		Connect(this.U6.pins.OUT6, B7_IO);
+		Connect(this.U6.pins.OUT7, B8_IO);
 		this.UHC651LOG = new logicexp(['GBABAR_I','GAB_I','CBA_I','SBA_I','CAB_I','SAB_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B','QA1','QA2','QA3','QA4','QA5','QA6','QA7','QA8','QB1','QB2','QB3','QB4','QB5','QB6','QB7','QB8'], ['GBABAR','GAB','CBA','SBA','CAB','SAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_O','A2_O','A3_O','A4_O','A5_O','A6_O','A7_O','A8_O','B1_O','B2_O','B3_O','B4_O','B5_O','B6_O','B7_O','B8_O','IGAB','IGBABAR'], []).Logic('   GBABAR =  GBABAR_I ;   GAB =  GAB_I ;   CBA =  CBA_I ;   SBA =  SBA_I ;   CAB =  CAB_I ;   SAB =  SAB_I ;   A1 =  A1_B ;   A2 =  A2_B ;   A3 =  A3_B ;   A4 =  A4_B ;   A5 =  A5_B ;   A6 =  A6_B ;   A7 =  A7_B ;   A8 =  A8_B ;   B1 =  B1_B ;   B2 =  B2_B ;   B3 =  B3_B ;   B4 =  B4_B ;   B5 =  B5_B ;   B6 =  B6_B ;   B7 =  B7_B ;   B8 =  B8_B ;let    ISAB =  !SAB ;   ISAB =  !SAB ;let    ISBA =  !SBA ;   ISBA =  !SBA ;   IGAB =  !GAB ;   IGBABAR =  !GBABAR ;   A1_O =  !((SBA & QA1) | (ISBA & B1)) ;   A2_O =  !((SBA & QA2) | (ISBA & B2)) ;   A3_O =  !((SBA & QA3) | (ISBA & B3)) ;   A4_O =  !((SBA & QA4) | (ISBA & B4)) ;   A5_O =  !((SBA & QA5) | (ISBA & B5)) ;   A6_O =  !((SBA & QA6) | (ISBA & B6)) ;   A7_O =  !((SBA & QA7) | (ISBA & B7)) ;   A8_O =  !((SBA & QA8) | (ISBA & B8)) ;   B1_O =  !((SAB & QB1) | (ISAB & A1)) ;   B2_O =  !((SAB & QB2) | (ISAB & A2)) ;   B3_O =  !((SAB & QB3) | (ISAB & A3)) ;   B4_O =  !((SAB & QB4) | (ISAB & A4)) ;   B5_O =  !((SAB & QB5) | (ISAB & A5)) ;   B6_O =  !((SAB & QB6) | (ISAB & A6)) ;   B7_O =  !((SAB & QB7) | (ISAB & A7)) ;   B8_O =  !((SAB & QB8) | (ISAB & A8)) ;');
 		Connect(this.UHC651LOG.pins.GBABAR_I, this.pins.GBABAR_I);
 		Connect(this.UHC651LOG.pins.GAB_I, this.pins.GAB_I);
@@ -7456,6 +9126,22 @@ class SN74HC652 extends Component {
 		Connect(this.U1.pins.Q5, _D_NC);
 		Connect(this.U1.pins.Q6, _D_NC);
 		Connect(this.U1.pins.Q7, _D_NC);
+		let QB1BAR = new Pin();
+		Connect(this.U1.pins.QBAR0, QB1BAR);
+		let QB2BAR = new Pin();
+		Connect(this.U1.pins.QBAR1, QB2BAR);
+		let QB3BAR = new Pin();
+		Connect(this.U1.pins.QBAR2, QB3BAR);
+		let QB4BAR = new Pin();
+		Connect(this.U1.pins.QBAR3, QB4BAR);
+		let QB5BAR = new Pin();
+		Connect(this.U1.pins.QBAR4, QB5BAR);
+		let QB6BAR = new Pin();
+		Connect(this.U1.pins.QBAR5, QB6BAR);
+		let QB7BAR = new Pin();
+		Connect(this.U1.pins.QBAR6, QB7BAR);
+		let QB8BAR = new Pin();
+		Connect(this.U1.pins.QBAR7, QB8BAR);
 		this.U2 = new dff(8);
 		Connect(this.U2.pins.PRESET, _D_HI);
 		Connect(this.U2.pins.CLEAR, _D_HI);
@@ -7485,114 +9171,130 @@ class SN74HC652 extends Component {
 		Connect(this.U2.pins.Q5, _D_NC);
 		Connect(this.U2.pins.Q6, _D_NC);
 		Connect(this.U2.pins.Q7, _D_NC);
+		let QA1BAR = new Pin();
+		Connect(this.U2.pins.QBAR0, QA1BAR);
+		let QA2BAR = new Pin();
+		Connect(this.U2.pins.QBAR1, QA2BAR);
+		let QA3BAR = new Pin();
+		Connect(this.U2.pins.QBAR2, QA3BAR);
+		let QA4BAR = new Pin();
+		Connect(this.U2.pins.QBAR3, QA4BAR);
+		let QA5BAR = new Pin();
+		Connect(this.U2.pins.QBAR4, QA5BAR);
+		let QA6BAR = new Pin();
+		Connect(this.U2.pins.QBAR5, QA6BAR);
+		let QA7BAR = new Pin();
+		Connect(this.U2.pins.QBAR6, QA7BAR);
+		let QA8BAR = new Pin();
+		Connect(this.U2.pins.QBAR7, QA8BAR);
 		this.U3 = new buf3a(8);
 		let A1_O = new Pin();
-		Connect(this.U3.pins.D0, A1_O);
+		Connect(this.U3.pins.IN0_0, A1_O);
 		let A2_O = new Pin();
-		Connect(this.U3.pins.D1, A2_O);
+		Connect(this.U3.pins.IN1_0, A2_O);
 		let A3_O = new Pin();
-		Connect(this.U3.pins.D2, A3_O);
+		Connect(this.U3.pins.IN2_0, A3_O);
 		let A4_O = new Pin();
-		Connect(this.U3.pins.D3, A4_O);
+		Connect(this.U3.pins.IN3_0, A4_O);
 		let A5_O = new Pin();
-		Connect(this.U3.pins.D4, A5_O);
+		Connect(this.U3.pins.IN4_0, A5_O);
 		let A6_O = new Pin();
-		Connect(this.U3.pins.D5, A6_O);
+		Connect(this.U3.pins.IN5_0, A6_O);
 		let A7_O = new Pin();
-		Connect(this.U3.pins.D6, A7_O);
+		Connect(this.U3.pins.IN6_0, A7_O);
 		let A8_O = new Pin();
-		Connect(this.U3.pins.D7, A8_O);
+		Connect(this.U3.pins.IN7_0, A8_O);
 		let IGBABAR = new Pin();
 		Connect(this.U3.pins.EN, IGBABAR);
-		Connect(this.U3.pins.Q0, A1_IO);
-		Connect(this.U3.pins.Q1, A2_IO);
-		Connect(this.U3.pins.Q2, A3_IO);
-		Connect(this.U3.pins.Q3, A4_IO);
-		Connect(this.U3.pins.Q4, A5_IO);
-		Connect(this.U3.pins.Q5, A6_IO);
-		Connect(this.U3.pins.Q6, A7_IO);
-		Connect(this.U3.pins.Q7, A8_IO);
+		Connect(this.U3.pins.OUT0, A1_IO);
+		Connect(this.U3.pins.OUT1, A2_IO);
+		Connect(this.U3.pins.OUT2, A3_IO);
+		Connect(this.U3.pins.OUT3, A4_IO);
+		Connect(this.U3.pins.OUT4, A5_IO);
+		Connect(this.U3.pins.OUT5, A6_IO);
+		Connect(this.U3.pins.OUT6, A7_IO);
+		Connect(this.U3.pins.OUT7, A8_IO);
 		this.U4 = new buf3a(8);
 		let B1_O = new Pin();
-		Connect(this.U4.pins.D0, B1_O);
+		Connect(this.U4.pins.IN0_0, B1_O);
 		let B2_O = new Pin();
-		Connect(this.U4.pins.D1, B2_O);
+		Connect(this.U4.pins.IN1_0, B2_O);
 		let B3_O = new Pin();
-		Connect(this.U4.pins.D2, B3_O);
+		Connect(this.U4.pins.IN2_0, B3_O);
 		let B4_O = new Pin();
-		Connect(this.U4.pins.D3, B4_O);
+		Connect(this.U4.pins.IN3_0, B4_O);
 		let B5_O = new Pin();
-		Connect(this.U4.pins.D4, B5_O);
+		Connect(this.U4.pins.IN4_0, B5_O);
 		let B6_O = new Pin();
-		Connect(this.U4.pins.D5, B6_O);
+		Connect(this.U4.pins.IN5_0, B6_O);
 		let B7_O = new Pin();
-		Connect(this.U4.pins.D6, B7_O);
+		Connect(this.U4.pins.IN6_0, B7_O);
 		let B8_O = new Pin();
-		Connect(this.U4.pins.D7, B8_O);
+		Connect(this.U4.pins.IN7_0, B8_O);
 		let GAB = new Pin();
 		Connect(this.U4.pins.EN, GAB);
-		Connect(this.U4.pins.Q0, B1_IO);
-		Connect(this.U4.pins.Q1, B2_IO);
-		Connect(this.U4.pins.Q2, B3_IO);
-		Connect(this.U4.pins.Q3, B4_IO);
-		Connect(this.U4.pins.Q4, B5_IO);
-		Connect(this.U4.pins.Q5, B6_IO);
-		Connect(this.U4.pins.Q6, B7_IO);
-		Connect(this.U4.pins.Q7, B8_IO);
+		Connect(this.U4.pins.OUT0, B1_IO);
+		Connect(this.U4.pins.OUT1, B2_IO);
+		Connect(this.U4.pins.OUT2, B3_IO);
+		Connect(this.U4.pins.OUT3, B4_IO);
+		Connect(this.U4.pins.OUT4, B5_IO);
+		Connect(this.U4.pins.OUT5, B6_IO);
+		Connect(this.U4.pins.OUT6, B7_IO);
+		Connect(this.U4.pins.OUT7, B8_IO);
 		this.U5 = new buf3a(8);
 		let A1 = new Pin();
-		Connect(this.U5.pins.D0, A1);
+		Connect(this.U5.pins.IN0_0, A1);
 		let A2 = new Pin();
-		Connect(this.U5.pins.D1, A2);
+		Connect(this.U5.pins.IN1_0, A2);
 		let A3 = new Pin();
-		Connect(this.U5.pins.D2, A3);
+		Connect(this.U5.pins.IN2_0, A3);
 		let A4 = new Pin();
-		Connect(this.U5.pins.D3, A4);
+		Connect(this.U5.pins.IN3_0, A4);
 		let A5 = new Pin();
-		Connect(this.U5.pins.D4, A5);
+		Connect(this.U5.pins.IN4_0, A5);
 		let A6 = new Pin();
-		Connect(this.U5.pins.D5, A6);
+		Connect(this.U5.pins.IN5_0, A6);
 		let A7 = new Pin();
-		Connect(this.U5.pins.D6, A7);
+		Connect(this.U5.pins.IN6_0, A7);
 		let A8 = new Pin();
-		Connect(this.U5.pins.D7, A8);
+		Connect(this.U5.pins.IN7_0, A8);
 		let GBABAR = new Pin();
 		Connect(this.U5.pins.EN, GBABAR);
-		Connect(this.U5.pins.Q0, A1_IO);
-		Connect(this.U5.pins.Q1, A2_IO);
-		Connect(this.U5.pins.Q2, A3_IO);
-		Connect(this.U5.pins.Q3, A4_IO);
-		Connect(this.U5.pins.Q4, A5_IO);
-		Connect(this.U5.pins.Q5, A6_IO);
-		Connect(this.U5.pins.Q6, A7_IO);
-		Connect(this.U5.pins.Q7, A8_IO);
+		Connect(this.U5.pins.OUT0, A1_IO);
+		Connect(this.U5.pins.OUT1, A2_IO);
+		Connect(this.U5.pins.OUT2, A3_IO);
+		Connect(this.U5.pins.OUT3, A4_IO);
+		Connect(this.U5.pins.OUT4, A5_IO);
+		Connect(this.U5.pins.OUT5, A6_IO);
+		Connect(this.U5.pins.OUT6, A7_IO);
+		Connect(this.U5.pins.OUT7, A8_IO);
 		this.U6 = new buf3a(8);
 		let B1 = new Pin();
-		Connect(this.U6.pins.D0, B1);
+		Connect(this.U6.pins.IN0_0, B1);
 		let B2 = new Pin();
-		Connect(this.U6.pins.D1, B2);
+		Connect(this.U6.pins.IN1_0, B2);
 		let B3 = new Pin();
-		Connect(this.U6.pins.D2, B3);
+		Connect(this.U6.pins.IN2_0, B3);
 		let B4 = new Pin();
-		Connect(this.U6.pins.D3, B4);
+		Connect(this.U6.pins.IN3_0, B4);
 		let B5 = new Pin();
-		Connect(this.U6.pins.D4, B5);
+		Connect(this.U6.pins.IN4_0, B5);
 		let B6 = new Pin();
-		Connect(this.U6.pins.D5, B6);
+		Connect(this.U6.pins.IN5_0, B6);
 		let B7 = new Pin();
-		Connect(this.U6.pins.D6, B7);
+		Connect(this.U6.pins.IN6_0, B7);
 		let B8 = new Pin();
-		Connect(this.U6.pins.D7, B8);
+		Connect(this.U6.pins.IN7_0, B8);
 		let IGAB = new Pin();
 		Connect(this.U6.pins.EN, IGAB);
-		Connect(this.U6.pins.Q0, B1_IO);
-		Connect(this.U6.pins.Q1, B2_IO);
-		Connect(this.U6.pins.Q2, B3_IO);
-		Connect(this.U6.pins.Q3, B4_IO);
-		Connect(this.U6.pins.Q4, B5_IO);
-		Connect(this.U6.pins.Q5, B6_IO);
-		Connect(this.U6.pins.Q6, B7_IO);
-		Connect(this.U6.pins.Q7, B8_IO);
+		Connect(this.U6.pins.OUT0, B1_IO);
+		Connect(this.U6.pins.OUT1, B2_IO);
+		Connect(this.U6.pins.OUT2, B3_IO);
+		Connect(this.U6.pins.OUT3, B4_IO);
+		Connect(this.U6.pins.OUT4, B5_IO);
+		Connect(this.U6.pins.OUT5, B6_IO);
+		Connect(this.U6.pins.OUT6, B7_IO);
+		Connect(this.U6.pins.OUT7, B8_IO);
 		this.UHC652LOG = new logicexp(['GBABAR_I','GAB_I','CBA_I','SBA_I','CAB_I','SAB_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B','QA1BAR','QA2BAR','QA3BAR','QA4BAR','QA5BAR','QA6BAR','QA7BAR','QA8BAR','QB1BAR','QB2BAR','QB3BAR','QB4BAR','QB5BAR','QB6BAR','QB7BAR','QB8BAR'], ['GBABAR','GAB','CBA','SBA','CAB','SAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_O','A2_O','A3_O','A4_O','A5_O','A6_O','A7_O','A8_O','B1_O','B2_O','B3_O','B4_O','B5_O','B6_O','B7_O','B8_O','IGAB','IGBABAR'], []).Logic('   GBABAR =  GBABAR_I ;   GAB =  GAB_I ;   CBA =  CBA_I ;   SBA =  SBA_I ;   CAB =  CAB_I ;   SAB =  SAB_I ;   A1 =  A1_B ;   A2 =  A2_B ;   A3 =  A3_B ;   A4 =  A4_B ;   A5 =  A5_B ;   A6 =  A6_B ;   A7 =  A7_B ;   A8 =  A8_B ;   B1 =  B1_B ;   B2 =  B2_B ;   B3 =  B3_B ;   B4 =  B4_B ;   B5 =  B5_B ;   B6 =  B6_B ;   B7 =  B7_B ;   B8 =  B8_B ;let    ISAB =  !SAB ;   ISAB =  !SAB ;let    ISBA =  !SBA ;   ISBA =  !SBA ;   IGAB =  !GAB ;   IGBABAR =  !GBABAR ;   A1_O =  !((SBA & QA1BAR) | (ISBA & !B1)) ;   A2_O =  !((SBA & QA2BAR) | (ISBA & !B2)) ;   A3_O =  !((SBA & QA3BAR) | (ISBA & !B3)) ;   A4_O =  !((SBA & QA4BAR) | (ISBA & !B4)) ;   A5_O =  !((SBA & QA5BAR) | (ISBA & !B5)) ;   A6_O =  !((SBA & QA6BAR) | (ISBA & !B6)) ;   A7_O =  !((SBA & QA7BAR) | (ISBA & !B7)) ;   A8_O =  !((SBA & QA8BAR) | (ISBA & !B8)) ;   B1_O =  !((SAB & QB1BAR) | (ISAB & !A1)) ;   B2_O =  !((SAB & QB2BAR) | (ISAB & !A2)) ;   B3_O =  !((SAB & QB3BAR) | (ISAB & !A3)) ;   B4_O =  !((SAB & QB4BAR) | (ISAB & !A4)) ;   B5_O =  !((SAB & QB5BAR) | (ISAB & !A5)) ;   B6_O =  !((SAB & QB6BAR) | (ISAB & !A6)) ;   B7_O =  !((SAB & QB7BAR) | (ISAB & !A7)) ;   B8_O =  !((SAB & QB8BAR) | (ISAB & !A8)) ;');
 		Connect(this.UHC652LOG.pins.GBABAR_I, this.pins.GBABAR_I);
 		Connect(this.UHC652LOG.pins.GAB_I, this.pins.GAB_I);
@@ -7616,37 +9318,21 @@ class SN74HC652 extends Component {
 		Connect(this.UHC652LOG.pins.B6_B, this.pins.B6_B);
 		Connect(this.UHC652LOG.pins.B7_B, this.pins.B7_B);
 		Connect(this.UHC652LOG.pins.B8_B, this.pins.B8_B);
-		let QA1BAR = new Pin();
 		Connect(this.UHC652LOG.pins.QA1BAR, QA1BAR);
-		let QA2BAR = new Pin();
 		Connect(this.UHC652LOG.pins.QA2BAR, QA2BAR);
-		let QA3BAR = new Pin();
 		Connect(this.UHC652LOG.pins.QA3BAR, QA3BAR);
-		let QA4BAR = new Pin();
 		Connect(this.UHC652LOG.pins.QA4BAR, QA4BAR);
-		let QA5BAR = new Pin();
 		Connect(this.UHC652LOG.pins.QA5BAR, QA5BAR);
-		let QA6BAR = new Pin();
 		Connect(this.UHC652LOG.pins.QA6BAR, QA6BAR);
-		let QA7BAR = new Pin();
 		Connect(this.UHC652LOG.pins.QA7BAR, QA7BAR);
-		let QA8BAR = new Pin();
 		Connect(this.UHC652LOG.pins.QA8BAR, QA8BAR);
-		let QB1BAR = new Pin();
 		Connect(this.UHC652LOG.pins.QB1BAR, QB1BAR);
-		let QB2BAR = new Pin();
 		Connect(this.UHC652LOG.pins.QB2BAR, QB2BAR);
-		let QB3BAR = new Pin();
 		Connect(this.UHC652LOG.pins.QB3BAR, QB3BAR);
-		let QB4BAR = new Pin();
 		Connect(this.UHC652LOG.pins.QB4BAR, QB4BAR);
-		let QB5BAR = new Pin();
 		Connect(this.UHC652LOG.pins.QB5BAR, QB5BAR);
-		let QB6BAR = new Pin();
 		Connect(this.UHC652LOG.pins.QB6BAR, QB6BAR);
-		let QB7BAR = new Pin();
 		Connect(this.UHC652LOG.pins.QB7BAR, QB7BAR);
-		let QB8BAR = new Pin();
 		Connect(this.UHC652LOG.pins.QB8BAR, QB8BAR);
 		Connect(this.UHC652LOG.pins.GBABAR, GBABAR);
 		Connect(this.UHC652LOG.pins.GAB, GAB);
@@ -7731,9 +9417,94 @@ class SN74HC670 extends Component {
 			Q3_O: new Pin(),
 		}
 		this.UA = new dltch(4);
+		Connect(this.UA.pins.PRESET, _D_HI);
+		Connect(this.UA.pins.CLEAR, _D_HI);
+		let GATEA = new Pin();
+		Connect(this.UA.pins.GATE, GATEA);
+		let D0 = new Pin();
+		Connect(this.UA.pins.D0, D0);
+		let D1 = new Pin();
+		Connect(this.UA.pins.D1, D1);
+		let D2 = new Pin();
+		Connect(this.UA.pins.D2, D2);
+		let D3 = new Pin();
+		Connect(this.UA.pins.D3, D3);
+		let AQ0 = new Pin();
+		Connect(this.UA.pins.Q0, AQ0);
+		let AQ1 = new Pin();
+		Connect(this.UA.pins.Q1, AQ1);
+		let AQ2 = new Pin();
+		Connect(this.UA.pins.Q2, AQ2);
+		let AQ3 = new Pin();
+		Connect(this.UA.pins.Q3, AQ3);
+		let _D_NC = new Pin();
+		Connect(this.UA.pins.QBAR0, _D_NC);
+		Connect(this.UA.pins.QBAR1, _D_NC);
+		Connect(this.UA.pins.QBAR2, _D_NC);
+		Connect(this.UA.pins.QBAR3, _D_NC);
 		this.UB = new dltch(4);
+		Connect(this.UB.pins.PRESET, _D_HI);
+		Connect(this.UB.pins.CLEAR, _D_HI);
+		let GATEB = new Pin();
+		Connect(this.UB.pins.GATE, GATEB);
+		Connect(this.UB.pins.D0, D0);
+		Connect(this.UB.pins.D1, D1);
+		Connect(this.UB.pins.D2, D2);
+		Connect(this.UB.pins.D3, D3);
+		let BQ0 = new Pin();
+		Connect(this.UB.pins.Q0, BQ0);
+		let BQ1 = new Pin();
+		Connect(this.UB.pins.Q1, BQ1);
+		let BQ2 = new Pin();
+		Connect(this.UB.pins.Q2, BQ2);
+		let BQ3 = new Pin();
+		Connect(this.UB.pins.Q3, BQ3);
+		Connect(this.UB.pins.QBAR0, _D_NC);
+		Connect(this.UB.pins.QBAR1, _D_NC);
+		Connect(this.UB.pins.QBAR2, _D_NC);
+		Connect(this.UB.pins.QBAR3, _D_NC);
 		this.UC = new dltch(4);
+		Connect(this.UC.pins.PRESET, _D_HI);
+		Connect(this.UC.pins.CLEAR, _D_HI);
+		let GATEC = new Pin();
+		Connect(this.UC.pins.GATE, GATEC);
+		Connect(this.UC.pins.D0, D0);
+		Connect(this.UC.pins.D1, D1);
+		Connect(this.UC.pins.D2, D2);
+		Connect(this.UC.pins.D3, D3);
+		let CQ0 = new Pin();
+		Connect(this.UC.pins.Q0, CQ0);
+		let CQ1 = new Pin();
+		Connect(this.UC.pins.Q1, CQ1);
+		let CQ2 = new Pin();
+		Connect(this.UC.pins.Q2, CQ2);
+		let CQ3 = new Pin();
+		Connect(this.UC.pins.Q3, CQ3);
+		Connect(this.UC.pins.QBAR0, _D_NC);
+		Connect(this.UC.pins.QBAR1, _D_NC);
+		Connect(this.UC.pins.QBAR2, _D_NC);
+		Connect(this.UC.pins.QBAR3, _D_NC);
 		this.UD = new dltch(4);
+		Connect(this.UD.pins.PRESET, _D_HI);
+		Connect(this.UD.pins.CLEAR, _D_HI);
+		let GATED = new Pin();
+		Connect(this.UD.pins.GATE, GATED);
+		Connect(this.UD.pins.D0, D0);
+		Connect(this.UD.pins.D1, D1);
+		Connect(this.UD.pins.D2, D2);
+		Connect(this.UD.pins.D3, D3);
+		let DQ0 = new Pin();
+		Connect(this.UD.pins.Q0, DQ0);
+		let DQ1 = new Pin();
+		Connect(this.UD.pins.Q1, DQ1);
+		let DQ2 = new Pin();
+		Connect(this.UD.pins.Q2, DQ2);
+		let DQ3 = new Pin();
+		Connect(this.UD.pins.Q3, DQ3);
+		Connect(this.UD.pins.QBAR0, _D_NC);
+		Connect(this.UD.pins.QBAR1, _D_NC);
+		Connect(this.UD.pins.QBAR2, _D_NC);
+		Connect(this.UD.pins.QBAR3, _D_NC);
 		this.UHC670LOG = new logicexp(['WEBAR_I','REBAR_I','WA_I','WB_I','RA_I','RB_I','D0_I','D1_I','D2_I','D3_I','AQ0','AQ1','AQ2','AQ3','BQ0','BQ1','BQ2','BQ3','CQ0','CQ1','CQ2','CQ3','DQ0','DQ1','DQ2','DQ3'], ['WEBAR','REBAR','WA','WB','RA','RB','D0','D1','D2','D3','GATEA','GATEB','GATEC','GATED','Q0','Q1','Q2','Q3'], []).Logic('   WEBAR   =  WEBAR_I ;   REBAR   =  REBAR_I ;   WA      =  WA_I ;   WB      =  WB_I ;   RA      =  RA_I ;   RB      =  RB_I ;   D0      =  D0_I ;   D1      =  D1_I ;   D2      =  D2_I ;   D3      =  D3_I ;let    ENABLE2 =  !(WEBAR | WB) ;   ENABLE2 =  !(WEBAR | WB) ;let    ENABLE1 =  !(WEBAR | ENABLE2) ;   ENABLE1 =  !(WEBAR | ENABLE2) ;   GATEA   =  ENABLE2 & !WA ;   GATEB   =  ENABLE2 &  WA ;   GATEC   =  ENABLE1 & !WA ;   GATED   =  ENABLE1 &  WA ;   Q0      =  (AQ0 & !RA & !RB) |               (BQ0 &  RA & !RB) |               (CQ0 & !RA &  RB) |               (DQ0 &  RA &  RB)             ;   Q1      =  (AQ1 & !RA & !RB) |               (BQ1 &  RA & !RB) |               (CQ1 & !RA &  RB) |               (DQ1 &  RA &  RB)             ;   Q2      =  (AQ2 & !RA & !RB) |               (BQ2 &  RA & !RB) |               (CQ2 & !RA &  RB) |               (DQ2 &  RA &  RB)             ;   Q3      =  (AQ3 & !RA & !RB) |               (BQ3 &  RA & !RB) |               (CQ3 & !RA &  RB) |               (DQ3 &  RA &  RB)             ;');
 		Connect(this.UHC670LOG.pins.WEBAR_I, this.pins.WEBAR_I);
 		Connect(this.UHC670LOG.pins.REBAR_I, this.pins.REBAR_I);
@@ -7745,37 +9516,21 @@ class SN74HC670 extends Component {
 		Connect(this.UHC670LOG.pins.D1_I, this.pins.D1_I);
 		Connect(this.UHC670LOG.pins.D2_I, this.pins.D2_I);
 		Connect(this.UHC670LOG.pins.D3_I, this.pins.D3_I);
-		let AQ0 = new Pin();
 		Connect(this.UHC670LOG.pins.AQ0, AQ0);
-		let AQ1 = new Pin();
 		Connect(this.UHC670LOG.pins.AQ1, AQ1);
-		let AQ2 = new Pin();
 		Connect(this.UHC670LOG.pins.AQ2, AQ2);
-		let AQ3 = new Pin();
 		Connect(this.UHC670LOG.pins.AQ3, AQ3);
-		let BQ0 = new Pin();
 		Connect(this.UHC670LOG.pins.BQ0, BQ0);
-		let BQ1 = new Pin();
 		Connect(this.UHC670LOG.pins.BQ1, BQ1);
-		let BQ2 = new Pin();
 		Connect(this.UHC670LOG.pins.BQ2, BQ2);
-		let BQ3 = new Pin();
 		Connect(this.UHC670LOG.pins.BQ3, BQ3);
-		let CQ0 = new Pin();
 		Connect(this.UHC670LOG.pins.CQ0, CQ0);
-		let CQ1 = new Pin();
 		Connect(this.UHC670LOG.pins.CQ1, CQ1);
-		let CQ2 = new Pin();
 		Connect(this.UHC670LOG.pins.CQ2, CQ2);
-		let CQ3 = new Pin();
 		Connect(this.UHC670LOG.pins.CQ3, CQ3);
-		let DQ0 = new Pin();
 		Connect(this.UHC670LOG.pins.DQ0, DQ0);
-		let DQ1 = new Pin();
 		Connect(this.UHC670LOG.pins.DQ1, DQ1);
-		let DQ2 = new Pin();
 		Connect(this.UHC670LOG.pins.DQ2, DQ2);
-		let DQ3 = new Pin();
 		Connect(this.UHC670LOG.pins.DQ3, DQ3);
 		let WEBAR = new Pin();
 		Connect(this.UHC670LOG.pins.WEBAR, WEBAR);
@@ -7789,21 +9544,13 @@ class SN74HC670 extends Component {
 		Connect(this.UHC670LOG.pins.RA, RA);
 		let RB = new Pin();
 		Connect(this.UHC670LOG.pins.RB, RB);
-		let D0 = new Pin();
 		Connect(this.UHC670LOG.pins.D0, D0);
-		let D1 = new Pin();
 		Connect(this.UHC670LOG.pins.D1, D1);
-		let D2 = new Pin();
 		Connect(this.UHC670LOG.pins.D2, D2);
-		let D3 = new Pin();
 		Connect(this.UHC670LOG.pins.D3, D3);
-		let GATEA = new Pin();
 		Connect(this.UHC670LOG.pins.GATEA, GATEA);
-		let GATEB = new Pin();
 		Connect(this.UHC670LOG.pins.GATEB, GATEB);
-		let GATEC = new Pin();
 		Connect(this.UHC670LOG.pins.GATEC, GATEC);
-		let GATED = new Pin();
 		Connect(this.UHC670LOG.pins.GATED, GATED);
 		let Q0 = new Pin();
 		Connect(this.UHC670LOG.pins.Q0, Q0);
@@ -8015,7 +9762,15 @@ class SN74HC678 extends Component {
 		let DY = new Pin();
 		Connect(this.UHC678LOG.pins.DY, DY);
 		this.U1 = new dltch(1);
-		Connect(this.pins.Y, this.pins.Y_O);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		Connect(this.U1.pins.CLEAR, _D_HI);
+		Connect(this.U1.pins.GATE, C);
+		Connect(this.U1.pins.D0, DY);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.Q0, _D_NC);
+		let Y = new Pin();
+		Connect(this.U1.pins.QBAR0, Y);
+		Connect(Y, this.pins.Y_O);
 	}
 }
 /**
@@ -8182,7 +9937,15 @@ class SN74HC680 extends Component {
 		let DY = new Pin();
 		Connect(this.UHC680LOG.pins.DY, DY);
 		this.U1 = new dltch(1);
-		Connect(this.pins.Y, this.pins.Y_O);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		Connect(this.U1.pins.CLEAR, _D_HI);
+		Connect(this.U1.pins.GATE, C);
+		Connect(this.U1.pins.D0, DY);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.Q0, _D_NC);
+		let Y = new Pin();
+		Connect(this.U1.pins.QBAR0, Y);
+		Connect(Y, this.pins.Y_O);
 	}
 }
 /**
@@ -8380,6 +10143,9 @@ class SN74HC805 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new nor(2);
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.IN1, this.pins.B);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -8394,6 +10160,9 @@ class SN74HC808 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new and(2);
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.IN1, this.pins.B);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -8408,6 +10177,9 @@ class SN74HC832 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new or(2);
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.IN1, this.pins.B);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -8424,6 +10196,11 @@ class SN74HC4002 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new nor(4);
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.IN1, this.pins.B);
+		Connect(this.U1.pins.IN2, this.pins.C);
+		Connect(this.U1.pins.IN3, this.pins.D);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -8449,37 +10226,155 @@ class SN74HC4020 extends Component {
 			QN_O: new Pin(),
 		}
 		this.U1 = new jkff(1);
-		this.U2 = new jkff(1);
-		this.U3 = new jkff(1);
-		this.U4 = new jkff(1);
-		this.U5 = new jkff(1);
-		this.U6 = new jkff(1);
-		this.U7 = new jkff(1);
-		this.U8 = new jkff(1);
-		this.U9 = new jkff(1);
-		this.U10 = new jkff(1);
-		this.U11 = new jkff(1);
-		this.U12 = new jkff(1);
-		this.U13 = new jkff(1);
-		this.U14 = new jkff(1);
-		this.U15 = new bufa(2);
-		this.U16 = new inv();
-		let CLR = new Pin();
-		Connect(this.U16.pins.IN, CLR);
+		Connect(this.U1.pins.PRESET, _D_HI);
 		let CLRBAR = new Pin();
+		Connect(this.U1.pins.CLEAR, CLRBAR);
+		let CLK = new Pin();
+		Connect(this.U1.pins.CLOCK, CLK);
+		Connect(this.U1.pins.J0, _D_HI);
+		Connect(this.U1.pins.K0, _D_HI);
+		let QA = new Pin();
+		Connect(this.U1.pins.Q0, QA);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
+		this.U2 = new jkff(1);
+		Connect(this.U2.pins.PRESET, _D_HI);
+		Connect(this.U2.pins.CLEAR, CLRBAR);
+		Connect(this.U2.pins.CLOCK, QA);
+		Connect(this.U2.pins.J0, _D_HI);
+		Connect(this.U2.pins.K0, _D_HI);
+		let QB = new Pin();
+		Connect(this.U2.pins.Q0, QB);
+		Connect(this.U2.pins.QBAR0, _D_NC);
+		this.U3 = new jkff(1);
+		Connect(this.U3.pins.PRESET, _D_HI);
+		Connect(this.U3.pins.CLEAR, CLRBAR);
+		Connect(this.U3.pins.CLOCK, QB);
+		Connect(this.U3.pins.J0, _D_HI);
+		Connect(this.U3.pins.K0, _D_HI);
+		let QC = new Pin();
+		Connect(this.U3.pins.Q0, QC);
+		Connect(this.U3.pins.QBAR0, _D_NC);
+		this.U4 = new jkff(1);
+		Connect(this.U4.pins.PRESET, _D_HI);
+		Connect(this.U4.pins.CLEAR, CLRBAR);
+		Connect(this.U4.pins.CLOCK, QC);
+		Connect(this.U4.pins.J0, _D_HI);
+		Connect(this.U4.pins.K0, _D_HI);
+		let QD = new Pin();
+		Connect(this.U4.pins.Q0, QD);
+		Connect(this.U4.pins.QBAR0, _D_NC);
+		this.U5 = new jkff(1);
+		Connect(this.U5.pins.PRESET, _D_HI);
+		Connect(this.U5.pins.CLEAR, CLRBAR);
+		Connect(this.U5.pins.CLOCK, QD);
+		Connect(this.U5.pins.J0, _D_HI);
+		Connect(this.U5.pins.K0, _D_HI);
+		let QE = new Pin();
+		Connect(this.U5.pins.Q0, QE);
+		Connect(this.U5.pins.QBAR0, _D_NC);
+		this.U6 = new jkff(1);
+		Connect(this.U6.pins.PRESET, _D_HI);
+		Connect(this.U6.pins.CLEAR, CLRBAR);
+		Connect(this.U6.pins.CLOCK, QE);
+		Connect(this.U6.pins.J0, _D_HI);
+		Connect(this.U6.pins.K0, _D_HI);
+		let QF = new Pin();
+		Connect(this.U6.pins.Q0, QF);
+		Connect(this.U6.pins.QBAR0, _D_NC);
+		this.U7 = new jkff(1);
+		Connect(this.U7.pins.PRESET, _D_HI);
+		Connect(this.U7.pins.CLEAR, CLRBAR);
+		Connect(this.U7.pins.CLOCK, QF);
+		Connect(this.U7.pins.J0, _D_HI);
+		Connect(this.U7.pins.K0, _D_HI);
+		let QG = new Pin();
+		Connect(this.U7.pins.Q0, QG);
+		Connect(this.U7.pins.QBAR0, _D_NC);
+		this.U8 = new jkff(1);
+		Connect(this.U8.pins.PRESET, _D_HI);
+		Connect(this.U8.pins.CLEAR, CLRBAR);
+		Connect(this.U8.pins.CLOCK, QG);
+		Connect(this.U8.pins.J0, _D_HI);
+		Connect(this.U8.pins.K0, _D_HI);
+		let QH = new Pin();
+		Connect(this.U8.pins.Q0, QH);
+		Connect(this.U8.pins.QBAR0, _D_NC);
+		this.U9 = new jkff(1);
+		Connect(this.U9.pins.PRESET, _D_HI);
+		Connect(this.U9.pins.CLEAR, CLRBAR);
+		Connect(this.U9.pins.CLOCK, QH);
+		Connect(this.U9.pins.J0, _D_HI);
+		Connect(this.U9.pins.K0, _D_HI);
+		let QI = new Pin();
+		Connect(this.U9.pins.Q0, QI);
+		Connect(this.U9.pins.QBAR0, _D_NC);
+		this.U10 = new jkff(1);
+		Connect(this.U10.pins.PRESET, _D_HI);
+		Connect(this.U10.pins.CLEAR, CLRBAR);
+		Connect(this.U10.pins.CLOCK, QI);
+		Connect(this.U10.pins.J0, _D_HI);
+		Connect(this.U10.pins.K0, _D_HI);
+		let QJ = new Pin();
+		Connect(this.U10.pins.Q0, QJ);
+		Connect(this.U10.pins.QBAR0, _D_NC);
+		this.U11 = new jkff(1);
+		Connect(this.U11.pins.PRESET, _D_HI);
+		Connect(this.U11.pins.CLEAR, CLRBAR);
+		Connect(this.U11.pins.CLOCK, QJ);
+		Connect(this.U11.pins.J0, _D_HI);
+		Connect(this.U11.pins.K0, _D_HI);
+		let QK = new Pin();
+		Connect(this.U11.pins.Q0, QK);
+		Connect(this.U11.pins.QBAR0, _D_NC);
+		this.U12 = new jkff(1);
+		Connect(this.U12.pins.PRESET, _D_HI);
+		Connect(this.U12.pins.CLEAR, CLRBAR);
+		Connect(this.U12.pins.CLOCK, QK);
+		Connect(this.U12.pins.J0, _D_HI);
+		Connect(this.U12.pins.K0, _D_HI);
+		let QL = new Pin();
+		Connect(this.U12.pins.Q0, QL);
+		Connect(this.U12.pins.QBAR0, _D_NC);
+		this.U13 = new jkff(1);
+		Connect(this.U13.pins.PRESET, _D_HI);
+		Connect(this.U13.pins.CLEAR, CLRBAR);
+		Connect(this.U13.pins.CLOCK, QL);
+		Connect(this.U13.pins.J0, _D_HI);
+		Connect(this.U13.pins.K0, _D_HI);
+		let QM = new Pin();
+		Connect(this.U13.pins.Q0, QM);
+		Connect(this.U13.pins.QBAR0, _D_NC);
+		this.U14 = new jkff(1);
+		Connect(this.U14.pins.PRESET, _D_HI);
+		Connect(this.U14.pins.CLEAR, CLRBAR);
+		Connect(this.U14.pins.CLOCK, QM);
+		Connect(this.U14.pins.J0, _D_HI);
+		Connect(this.U14.pins.K0, _D_HI);
+		let QN = new Pin();
+		Connect(this.U14.pins.Q0, QN);
+		Connect(this.U14.pins.QBAR0, _D_NC);
+		this.U15 = new bufa(2);
+		Connect(this.U15.pins.IN0_0, this.pins.CLK_I);
+		Connect(this.U15.pins.IN1_0, this.pins.CLR_I);
+		Connect(this.U15.pins.OUT0, CLK);
+		let CLR = new Pin();
+		Connect(this.U15.pins.OUT1, CLR);
+		this.U16 = new inv();
+		Connect(this.U16.pins.IN0, CLR);
 		Connect(this.U16.pins.OUT, CLRBAR);
-		Connect(this.pins.QA, this.pins.QA_O);
-		Connect(this.pins.QD, this.pins.QD_O);
-		Connect(this.pins.QE, this.pins.QE_O);
-		Connect(this.pins.QF, this.pins.QF_O);
-		Connect(this.pins.QG, this.pins.QG_O);
-		Connect(this.pins.QH, this.pins.QH_O);
-		Connect(this.pins.QI, this.pins.QI_O);
-		Connect(this.pins.QJ, this.pins.QJ_O);
-		Connect(this.pins.QK, this.pins.QK_O);
-		Connect(this.pins.QL, this.pins.QL_O);
-		Connect(this.pins.QM, this.pins.QM_O);
-		Connect(this.pins.QN, this.pins.QN_O);
+		Connect(QA, this.pins.QA_O);
+		Connect(QD, this.pins.QD_O);
+		Connect(QE, this.pins.QE_O);
+		Connect(QF, this.pins.QF_O);
+		Connect(QG, this.pins.QG_O);
+		Connect(QH, this.pins.QH_O);
+		Connect(QI, this.pins.QI_O);
+		Connect(QJ, this.pins.QJ_O);
+		Connect(QK, this.pins.QK_O);
+		Connect(QL, this.pins.QL_O);
+		Connect(QM, this.pins.QM_O);
+		Connect(QN, this.pins.QN_O);
 	}
 }
 class SN74HC4024 extends Component {
@@ -8497,12 +10392,71 @@ class SN74HC4024 extends Component {
 			QG_O: new Pin(),
 		}
 		this.U1 = new jkff(1);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		let MR = new Pin();
+		Connect(this.U1.pins.CLEAR, MR);
+		let TA = new Pin();
+		Connect(this.U1.pins.CLOCK, TA);
+		Connect(this.U1.pins.J0, _D_HI);
+		Connect(this.U1.pins.K0, _D_HI);
+		let QA = new Pin();
+		Connect(this.U1.pins.Q0, QA);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
 		this.U2 = new jkff(1);
+		Connect(this.U2.pins.PRESET, _D_HI);
+		Connect(this.U2.pins.CLEAR, MR);
+		Connect(this.U2.pins.CLOCK, QA);
+		Connect(this.U2.pins.J0, _D_HI);
+		Connect(this.U2.pins.K0, _D_HI);
+		let QB = new Pin();
+		Connect(this.U2.pins.Q0, QB);
+		Connect(this.U2.pins.QBAR0, _D_NC);
 		this.U3 = new jkff(1);
+		Connect(this.U3.pins.PRESET, _D_HI);
+		Connect(this.U3.pins.CLEAR, MR);
+		Connect(this.U3.pins.CLOCK, QB);
+		Connect(this.U3.pins.J0, _D_HI);
+		Connect(this.U3.pins.K0, _D_HI);
+		let QC = new Pin();
+		Connect(this.U3.pins.Q0, QC);
+		Connect(this.U3.pins.QBAR0, _D_NC);
 		this.U4 = new jkff(1);
+		Connect(this.U4.pins.PRESET, _D_HI);
+		Connect(this.U4.pins.CLEAR, MR);
+		Connect(this.U4.pins.CLOCK, QC);
+		Connect(this.U4.pins.J0, _D_HI);
+		Connect(this.U4.pins.K0, _D_HI);
+		let QD = new Pin();
+		Connect(this.U4.pins.Q0, QD);
+		Connect(this.U4.pins.QBAR0, _D_NC);
 		this.U5 = new jkff(1);
+		Connect(this.U5.pins.PRESET, _D_HI);
+		Connect(this.U5.pins.CLEAR, MR);
+		Connect(this.U5.pins.CLOCK, QD);
+		Connect(this.U5.pins.J0, _D_HI);
+		Connect(this.U5.pins.K0, _D_HI);
+		let QE = new Pin();
+		Connect(this.U5.pins.Q0, QE);
+		Connect(this.U5.pins.QBAR0, _D_NC);
 		this.U6 = new jkff(1);
+		Connect(this.U6.pins.PRESET, _D_HI);
+		Connect(this.U6.pins.CLEAR, MR);
+		Connect(this.U6.pins.CLOCK, QE);
+		Connect(this.U6.pins.J0, _D_HI);
+		Connect(this.U6.pins.K0, _D_HI);
+		let QF = new Pin();
+		Connect(this.U6.pins.Q0, QF);
+		Connect(this.U6.pins.QBAR0, _D_NC);
 		this.U7 = new jkff(1);
+		Connect(this.U7.pins.PRESET, _D_HI);
+		Connect(this.U7.pins.CLEAR, MR);
+		Connect(this.U7.pins.CLOCK, QF);
+		Connect(this.U7.pins.J0, _D_HI);
+		Connect(this.U7.pins.K0, _D_HI);
+		let QG = new Pin();
+		Connect(this.U7.pins.Q0, QG);
+		Connect(this.U7.pins.QBAR0, _D_NC);
 		this.UHC4024LOG = new logicexp(['CLR_I','CLK_I'], ['CLR','CLK','MR','TA'], []).Logic('   CLR =  CLR_I ;   CLK =  CLK_I ;   MR =  !CLR ;   TA =  MR & CLK ;');
 		Connect(this.UHC4024LOG.pins.CLR_I, this.pins.CLR_I);
 		Connect(this.UHC4024LOG.pins.CLK_I, this.pins.CLK_I);
@@ -8510,17 +10464,15 @@ class SN74HC4024 extends Component {
 		Connect(this.UHC4024LOG.pins.CLR, CLR);
 		let CLK = new Pin();
 		Connect(this.UHC4024LOG.pins.CLK, CLK);
-		let MR = new Pin();
 		Connect(this.UHC4024LOG.pins.MR, MR);
-		let TA = new Pin();
 		Connect(this.UHC4024LOG.pins.TA, TA);
-		Connect(this.pins.QA, this.pins.QA_O);
-		Connect(this.pins.QB, this.pins.QB_O);
-		Connect(this.pins.QC, this.pins.QC_O);
-		Connect(this.pins.QD, this.pins.QD_O);
-		Connect(this.pins.QE, this.pins.QE_O);
-		Connect(this.pins.QF, this.pins.QF_O);
-		Connect(this.pins.QG, this.pins.QG_O);
+		Connect(QA, this.pins.QA_O);
+		Connect(QB, this.pins.QB_O);
+		Connect(QC, this.pins.QC_O);
+		Connect(QD, this.pins.QD_O);
+		Connect(QE, this.pins.QE_O);
+		Connect(QF, this.pins.QF_O);
+		Connect(QG, this.pins.QG_O);
 	}
 }
 /**
@@ -8546,35 +10498,137 @@ class SN74HC4040 extends Component {
 			QL_O: new Pin(),
 		}
 		this.U1 = new jkff(1);
-		this.U2 = new jkff(1);
-		this.U3 = new jkff(1);
-		this.U4 = new jkff(1);
-		this.U5 = new jkff(1);
-		this.U6 = new jkff(1);
-		this.U7 = new jkff(1);
-		this.U8 = new jkff(1);
-		this.U9 = new jkff(1);
-		this.U10 = new jkff(1);
-		this.U11 = new jkff(1);
-		this.U12 = new jkff(1);
-		this.U13 = new bufa(2);
-		this.U14 = new inv();
-		let CLR = new Pin();
-		Connect(this.U14.pins.IN, CLR);
+		Connect(this.U1.pins.PRESET, _D_HI);
 		let CLRBAR = new Pin();
+		Connect(this.U1.pins.CLEAR, CLRBAR);
+		let CLK = new Pin();
+		Connect(this.U1.pins.CLOCK, CLK);
+		Connect(this.U1.pins.J0, _D_HI);
+		Connect(this.U1.pins.K0, _D_HI);
+		let QA = new Pin();
+		Connect(this.U1.pins.Q0, QA);
+		let _D_NC = new Pin();
+		Connect(this.U1.pins.QBAR0, _D_NC);
+		this.U2 = new jkff(1);
+		Connect(this.U2.pins.PRESET, _D_HI);
+		Connect(this.U2.pins.CLEAR, CLRBAR);
+		Connect(this.U2.pins.CLOCK, QA);
+		Connect(this.U2.pins.J0, _D_HI);
+		Connect(this.U2.pins.K0, _D_HI);
+		let QB = new Pin();
+		Connect(this.U2.pins.Q0, QB);
+		Connect(this.U2.pins.QBAR0, _D_NC);
+		this.U3 = new jkff(1);
+		Connect(this.U3.pins.PRESET, _D_HI);
+		Connect(this.U3.pins.CLEAR, CLRBAR);
+		Connect(this.U3.pins.CLOCK, QB);
+		Connect(this.U3.pins.J0, _D_HI);
+		Connect(this.U3.pins.K0, _D_HI);
+		let QC = new Pin();
+		Connect(this.U3.pins.Q0, QC);
+		Connect(this.U3.pins.QBAR0, _D_NC);
+		this.U4 = new jkff(1);
+		Connect(this.U4.pins.PRESET, _D_HI);
+		Connect(this.U4.pins.CLEAR, CLRBAR);
+		Connect(this.U4.pins.CLOCK, QC);
+		Connect(this.U4.pins.J0, _D_HI);
+		Connect(this.U4.pins.K0, _D_HI);
+		let QD = new Pin();
+		Connect(this.U4.pins.Q0, QD);
+		Connect(this.U4.pins.QBAR0, _D_NC);
+		this.U5 = new jkff(1);
+		Connect(this.U5.pins.PRESET, _D_HI);
+		Connect(this.U5.pins.CLEAR, CLRBAR);
+		Connect(this.U5.pins.CLOCK, QD);
+		Connect(this.U5.pins.J0, _D_HI);
+		Connect(this.U5.pins.K0, _D_HI);
+		let QE = new Pin();
+		Connect(this.U5.pins.Q0, QE);
+		Connect(this.U5.pins.QBAR0, _D_NC);
+		this.U6 = new jkff(1);
+		Connect(this.U6.pins.PRESET, _D_HI);
+		Connect(this.U6.pins.CLEAR, CLRBAR);
+		Connect(this.U6.pins.CLOCK, QE);
+		Connect(this.U6.pins.J0, _D_HI);
+		Connect(this.U6.pins.K0, _D_HI);
+		let QF = new Pin();
+		Connect(this.U6.pins.Q0, QF);
+		Connect(this.U6.pins.QBAR0, _D_NC);
+		this.U7 = new jkff(1);
+		Connect(this.U7.pins.PRESET, _D_HI);
+		Connect(this.U7.pins.CLEAR, CLRBAR);
+		Connect(this.U7.pins.CLOCK, QF);
+		Connect(this.U7.pins.J0, _D_HI);
+		Connect(this.U7.pins.K0, _D_HI);
+		let QG = new Pin();
+		Connect(this.U7.pins.Q0, QG);
+		Connect(this.U7.pins.QBAR0, _D_NC);
+		this.U8 = new jkff(1);
+		Connect(this.U8.pins.PRESET, _D_HI);
+		Connect(this.U8.pins.CLEAR, CLRBAR);
+		Connect(this.U8.pins.CLOCK, QG);
+		Connect(this.U8.pins.J0, _D_HI);
+		Connect(this.U8.pins.K0, _D_HI);
+		let QH = new Pin();
+		Connect(this.U8.pins.Q0, QH);
+		Connect(this.U8.pins.QBAR0, _D_NC);
+		this.U9 = new jkff(1);
+		Connect(this.U9.pins.PRESET, _D_HI);
+		Connect(this.U9.pins.CLEAR, CLRBAR);
+		Connect(this.U9.pins.CLOCK, QH);
+		Connect(this.U9.pins.J0, _D_HI);
+		Connect(this.U9.pins.K0, _D_HI);
+		let QI = new Pin();
+		Connect(this.U9.pins.Q0, QI);
+		Connect(this.U9.pins.QBAR0, _D_NC);
+		this.U10 = new jkff(1);
+		Connect(this.U10.pins.PRESET, _D_HI);
+		Connect(this.U10.pins.CLEAR, CLRBAR);
+		Connect(this.U10.pins.CLOCK, QI);
+		Connect(this.U10.pins.J0, _D_HI);
+		Connect(this.U10.pins.K0, _D_HI);
+		let QJ = new Pin();
+		Connect(this.U10.pins.Q0, QJ);
+		Connect(this.U10.pins.QBAR0, _D_NC);
+		this.U11 = new jkff(1);
+		Connect(this.U11.pins.PRESET, _D_HI);
+		Connect(this.U11.pins.CLEAR, CLRBAR);
+		Connect(this.U11.pins.CLOCK, QJ);
+		Connect(this.U11.pins.J0, _D_HI);
+		Connect(this.U11.pins.K0, _D_HI);
+		let QK = new Pin();
+		Connect(this.U11.pins.Q0, QK);
+		Connect(this.U11.pins.QBAR0, _D_NC);
+		this.U12 = new jkff(1);
+		Connect(this.U12.pins.PRESET, _D_HI);
+		Connect(this.U12.pins.CLEAR, CLRBAR);
+		Connect(this.U12.pins.CLOCK, QK);
+		Connect(this.U12.pins.J0, _D_HI);
+		Connect(this.U12.pins.K0, _D_HI);
+		let QL = new Pin();
+		Connect(this.U12.pins.Q0, QL);
+		Connect(this.U12.pins.QBAR0, _D_NC);
+		this.U13 = new bufa(2);
+		Connect(this.U13.pins.IN0_0, this.pins.CLK_I);
+		Connect(this.U13.pins.IN1_0, this.pins.CLR_I);
+		Connect(this.U13.pins.OUT0, CLK);
+		let CLR = new Pin();
+		Connect(this.U13.pins.OUT1, CLR);
+		this.U14 = new inv();
+		Connect(this.U14.pins.IN0, CLR);
 		Connect(this.U14.pins.OUT, CLRBAR);
-		Connect(this.pins.QA, this.pins.QA_O);
-		Connect(this.pins.QB, this.pins.QB_O);
-		Connect(this.pins.QC, this.pins.QC_O);
-		Connect(this.pins.QD, this.pins.QD_O);
-		Connect(this.pins.QE, this.pins.QE_O);
-		Connect(this.pins.QF, this.pins.QF_O);
-		Connect(this.pins.QG, this.pins.QG_O);
-		Connect(this.pins.QH, this.pins.QH_O);
-		Connect(this.pins.QI, this.pins.QI_O);
-		Connect(this.pins.QJ, this.pins.QJ_O);
-		Connect(this.pins.QK, this.pins.QK_O);
-		Connect(this.pins.QL, this.pins.QL_O);
+		Connect(QA, this.pins.QA_O);
+		Connect(QB, this.pins.QB_O);
+		Connect(QC, this.pins.QC_O);
+		Connect(QD, this.pins.QD_O);
+		Connect(QE, this.pins.QE_O);
+		Connect(QF, this.pins.QF_O);
+		Connect(QG, this.pins.QG_O);
+		Connect(QH, this.pins.QH_O);
+		Connect(QI, this.pins.QI_O);
+		Connect(QJ, this.pins.QJ_O);
+		Connect(QK, this.pins.QK_O);
+		Connect(QL, this.pins.QL_O);
 	}
 }
 /**
@@ -8590,6 +10644,10 @@ class SN74HC4075 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new or(3);
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.IN1, this.pins.B);
+		Connect(this.U1.pins.IN2, this.pins.C);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 /**
@@ -8611,10 +10669,21 @@ class SN74HC4078A extends Component {
 			W: new Pin(),
 		}
 		this.U1 = new or(8);
-		this.U2 = new buf();
-		this.U3 = new inv();
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.IN1, this.pins.B);
+		Connect(this.U1.pins.IN2, this.pins.C);
+		Connect(this.U1.pins.IN3, this.pins.D);
+		Connect(this.U1.pins.IN4, this.pins.E);
+		Connect(this.U1.pins.IN5, this.pins.F);
+		Connect(this.U1.pins.IN6, this.pins.G);
+		Connect(this.U1.pins.IN7, this.pins.H);
 		let Y1 = new Pin();
-		Connect(this.U3.pins.IN, Y1);
+		Connect(this.U1.pins.OUT, Y1);
+		this.U2 = new buf();
+		Connect(this.U2.pins.IN0, Y1);
+		Connect(this.U2.pins.OUT, this.pins.Y);
+		this.U3 = new inv();
+		Connect(this.U3.pins.IN0, Y1);
 		Connect(this.U3.pins.OUT, this.pins.W);
 	}
 }
@@ -8649,6 +10718,34 @@ class SN74HC4514 extends Component {
 			Y15_O: new Pin(),
 		}
 		this.U1 = new dltch(4);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		Connect(this.U1.pins.CLEAR, _D_HI);
+		let LE = new Pin();
+		Connect(this.U1.pins.GATE, LE);
+		let A = new Pin();
+		Connect(this.U1.pins.D0, A);
+		let B = new Pin();
+		Connect(this.U1.pins.D1, B);
+		let C = new Pin();
+		Connect(this.U1.pins.D2, C);
+		let D = new Pin();
+		Connect(this.U1.pins.D3, D);
+		let QA = new Pin();
+		Connect(this.U1.pins.Q0, QA);
+		let QB = new Pin();
+		Connect(this.U1.pins.Q1, QB);
+		let QC = new Pin();
+		Connect(this.U1.pins.Q2, QC);
+		let QD = new Pin();
+		Connect(this.U1.pins.Q3, QD);
+		let QABAR = new Pin();
+		Connect(this.U1.pins.QBAR0, QABAR);
+		let QBBAR = new Pin();
+		Connect(this.U1.pins.QBAR1, QBBAR);
+		let QCBAR = new Pin();
+		Connect(this.U1.pins.QBAR2, QCBAR);
+		let QDBAR = new Pin();
+		Connect(this.U1.pins.QBAR3, QDBAR);
 		this.UHC4514LOG = new logicexp(['LE_I','GBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['LE','GBAR','A','B','C','D','Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10','Y11','Y12','Y13','Y14','Y15'], []).Logic('   LE      =  LE_I ;   GBAR    =  GBAR_I ;let    G       =  !GBAR ;   G       =  !GBAR ;   A       =  A_I ;   B       =  B_I ;   C       =  C_I ;   D       =  D_I ;   Y0      =  G & QDBAR & QCBAR & QBBAR & QABAR ;   Y1      =  G & QDBAR & QCBAR & QBBAR & QA    ;   Y2      =  G & QDBAR & QCBAR & QB    & QABAR ;   Y3      =  G & QDBAR & QCBAR & QB    & QA    ;   Y4      =  G & QDBAR & QC    & QBBAR & QABAR ;   Y5      =  G & QDBAR & QC    & QBBAR & QA    ;   Y6      =  G & QDBAR & QC    & QB    & QABAR ;   Y7      =  G & QDBAR & QC    & QB    & QA    ;   Y8      =  G & QD    & QCBAR & QBBAR & QABAR ;   Y9      =  G & QD    & QCBAR & QBBAR & QA    ;   Y10     =  G & QD    & QCBAR & QB    & QABAR ;   Y11     =  G & QD    & QCBAR & QB    & QA    ;   Y12     =  G & QD    & QC    & QBBAR & QABAR ;   Y13     =  G & QD    & QC    & QBBAR & QA    ;   Y14     =  G & QD    & QC    & QB    & QABAR ;   Y15     =  G & QD    & QC    & QB    & QA    ;');
 		Connect(this.UHC4514LOG.pins.LE_I, this.pins.LE_I);
 		Connect(this.UHC4514LOG.pins.GBAR_I, this.pins.GBAR_I);
@@ -8656,33 +10753,20 @@ class SN74HC4514 extends Component {
 		Connect(this.UHC4514LOG.pins.B_I, this.pins.B_I);
 		Connect(this.UHC4514LOG.pins.C_I, this.pins.C_I);
 		Connect(this.UHC4514LOG.pins.D_I, this.pins.D_I);
-		let QA = new Pin();
 		Connect(this.UHC4514LOG.pins.QA, QA);
-		let QB = new Pin();
 		Connect(this.UHC4514LOG.pins.QB, QB);
-		let QC = new Pin();
 		Connect(this.UHC4514LOG.pins.QC, QC);
-		let QD = new Pin();
 		Connect(this.UHC4514LOG.pins.QD, QD);
-		let QABAR = new Pin();
 		Connect(this.UHC4514LOG.pins.QABAR, QABAR);
-		let QBBAR = new Pin();
 		Connect(this.UHC4514LOG.pins.QBBAR, QBBAR);
-		let QCBAR = new Pin();
 		Connect(this.UHC4514LOG.pins.QCBAR, QCBAR);
-		let QDBAR = new Pin();
 		Connect(this.UHC4514LOG.pins.QDBAR, QDBAR);
-		let LE = new Pin();
 		Connect(this.UHC4514LOG.pins.LE, LE);
 		let GBAR = new Pin();
 		Connect(this.UHC4514LOG.pins.GBAR, GBAR);
-		let A = new Pin();
 		Connect(this.UHC4514LOG.pins.A, A);
-		let B = new Pin();
 		Connect(this.UHC4514LOG.pins.B, B);
-		let C = new Pin();
 		Connect(this.UHC4514LOG.pins.C, C);
-		let D = new Pin();
 		Connect(this.UHC4514LOG.pins.D, D);
 		let Y0 = new Pin();
 		Connect(this.UHC4514LOG.pins.Y0, Y0);
@@ -8765,6 +10849,34 @@ class SN74HC4515 extends Component {
 			Y15_O: new Pin(),
 		}
 		this.U1 = new dltch(4);
+		Connect(this.U1.pins.PRESET, _D_HI);
+		Connect(this.U1.pins.CLEAR, _D_HI);
+		let LE = new Pin();
+		Connect(this.U1.pins.GATE, LE);
+		let A = new Pin();
+		Connect(this.U1.pins.D0, A);
+		let B = new Pin();
+		Connect(this.U1.pins.D1, B);
+		let C = new Pin();
+		Connect(this.U1.pins.D2, C);
+		let D = new Pin();
+		Connect(this.U1.pins.D3, D);
+		let QA = new Pin();
+		Connect(this.U1.pins.Q0, QA);
+		let QB = new Pin();
+		Connect(this.U1.pins.Q1, QB);
+		let QC = new Pin();
+		Connect(this.U1.pins.Q2, QC);
+		let QD = new Pin();
+		Connect(this.U1.pins.Q3, QD);
+		let QABAR = new Pin();
+		Connect(this.U1.pins.QBAR0, QABAR);
+		let QBBAR = new Pin();
+		Connect(this.U1.pins.QBAR1, QBBAR);
+		let QCBAR = new Pin();
+		Connect(this.U1.pins.QBAR2, QCBAR);
+		let QDBAR = new Pin();
+		Connect(this.U1.pins.QBAR3, QDBAR);
 		this.UHC4515LOG = new logicexp(['LE_I','GBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['LE','GBAR','A','B','C','D','Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10','Y11','Y12','Y13','Y14','Y15'], []).Logic('   LE      =  LE_I ;   GBAR    =  GBAR_I ;   A       =  A_I ;   B       =  B_I ;   C       =  C_I ;   D       =  D_I ;let    G       =  !GBAR ;   G       =  !GBAR ;   Y0      =  !(G & QDBAR & QCBAR & QBBAR & QABAR) ;   Y1      =  !(G & QDBAR & QCBAR & QBBAR & QA   ) ;   Y2      =  !(G & QDBAR & QCBAR & QB    & QABAR) ;   Y3      =  !(G & QDBAR & QCBAR & QB    & QA   ) ;   Y4      =  !(G & QDBAR & QC    & QBBAR & QABAR) ;   Y5      =  !(G & QDBAR & QC    & QBBAR & QA   ) ;   Y6      =  !(G & QDBAR & QC    & QB    & QABAR) ;   Y7      =  !(G & QDBAR & QC    & QB    & QA   ) ;   Y8      =  !(G & QD    & QCBAR & QBBAR & QABAR) ;   Y9      =  !(G & QD    & QCBAR & QBBAR & QA   ) ;   Y10     =  !(G & QD    & QCBAR & QB    & QABAR) ;   Y11     =  !(G & QD    & QCBAR & QB    & QA   ) ;   Y12     =  !(G & QD    & QC    & QBBAR & QABAR) ;   Y13     =  !(G & QD    & QC    & QBBAR & QA   ) ;   Y14     =  !(G & QD    & QC    & QB    & QABAR) ;   Y15     =  !(G & QD    & QC    & QB    & QA   ) ;');
 		Connect(this.UHC4515LOG.pins.LE_I, this.pins.LE_I);
 		Connect(this.UHC4515LOG.pins.GBAR_I, this.pins.GBAR_I);
@@ -8772,33 +10884,20 @@ class SN74HC4515 extends Component {
 		Connect(this.UHC4515LOG.pins.B_I, this.pins.B_I);
 		Connect(this.UHC4515LOG.pins.C_I, this.pins.C_I);
 		Connect(this.UHC4515LOG.pins.D_I, this.pins.D_I);
-		let QA = new Pin();
 		Connect(this.UHC4515LOG.pins.QA, QA);
-		let QB = new Pin();
 		Connect(this.UHC4515LOG.pins.QB, QB);
-		let QC = new Pin();
 		Connect(this.UHC4515LOG.pins.QC, QC);
-		let QD = new Pin();
 		Connect(this.UHC4515LOG.pins.QD, QD);
-		let QABAR = new Pin();
 		Connect(this.UHC4515LOG.pins.QABAR, QABAR);
-		let QBBAR = new Pin();
 		Connect(this.UHC4515LOG.pins.QBBAR, QBBAR);
-		let QCBAR = new Pin();
 		Connect(this.UHC4515LOG.pins.QCBAR, QCBAR);
-		let QDBAR = new Pin();
 		Connect(this.UHC4515LOG.pins.QDBAR, QDBAR);
-		let LE = new Pin();
 		Connect(this.UHC4515LOG.pins.LE, LE);
 		let GBAR = new Pin();
 		Connect(this.UHC4515LOG.pins.GBAR, GBAR);
-		let A = new Pin();
 		Connect(this.UHC4515LOG.pins.A, A);
-		let B = new Pin();
 		Connect(this.UHC4515LOG.pins.B, B);
-		let C = new Pin();
 		Connect(this.UHC4515LOG.pins.C, C);
-		let D = new Pin();
 		Connect(this.UHC4515LOG.pins.D, D);
 		let Y0 = new Pin();
 		Connect(this.UHC4515LOG.pins.Y0, Y0);
@@ -8873,59 +10972,348 @@ class SN74HC4724 extends Component {
 			Q7: new Pin(),
 		}
 		this.U10 = new bufa(6);
+		Connect(this.U10.pins.IN0_0, this.pins.GBAR);
+		Connect(this.U10.pins.IN1_0, this.pins.CLR);
+		Connect(this.U10.pins.IN2_0, this.pins.S0);
+		Connect(this.U10.pins.IN3_0, this.pins.S1);
+		Connect(this.U10.pins.IN4_0, this.pins.S2);
+		Connect(this.U10.pins.IN5_0, this.pins.D);
+		let GB = new Pin();
+		Connect(this.U10.pins.OUT0, GB);
+		let CLRD = new Pin();
+		Connect(this.U10.pins.OUT1, CLRD);
+		let S0D = new Pin();
+		Connect(this.U10.pins.OUT2, S0D);
+		let S1D = new Pin();
+		Connect(this.U10.pins.OUT3, S1D);
+		let S2D = new Pin();
+		Connect(this.U10.pins.OUT4, S2D);
+		let DD = new Pin();
+		Connect(this.U10.pins.OUT5, DD);
 		this.U11 = new anda(3,9);
+		let ED0 = new Pin();
+		Connect(this.U11.pins.IN0_0, ED0);
+		let G = new Pin();
+		Connect(this.U11.pins.IN0_1, G);
+		Connect(this.U11.pins.IN0_2, CLRD);
+		let ED1 = new Pin();
+		Connect(this.U11.pins.IN1_0, ED1);
+		Connect(this.U11.pins.IN1_1, G);
+		Connect(this.U11.pins.IN1_2, CLRD);
+		let ED2 = new Pin();
+		Connect(this.U11.pins.IN2_0, ED2);
+		Connect(this.U11.pins.IN2_1, G);
+		Connect(this.U11.pins.IN2_2, CLRD);
+		let ED3 = new Pin();
+		Connect(this.U11.pins.IN3_0, ED3);
+		Connect(this.U11.pins.IN3_1, G);
+		Connect(this.U11.pins.IN3_2, CLRD);
+		let ED4 = new Pin();
+		Connect(this.U11.pins.IN4_0, ED4);
+		Connect(this.U11.pins.IN4_1, G);
+		Connect(this.U11.pins.IN4_2, CLRD);
+		let ED5 = new Pin();
+		Connect(this.U11.pins.IN5_0, ED5);
+		Connect(this.U11.pins.IN5_1, G);
+		Connect(this.U11.pins.IN5_2, CLRD);
+		let ED6 = new Pin();
+		Connect(this.U11.pins.IN6_0, ED6);
+		Connect(this.U11.pins.IN6_1, G);
+		Connect(this.U11.pins.IN6_2, CLRD);
+		let ED7 = new Pin();
+		Connect(this.U11.pins.IN7_0, ED7);
+		Connect(this.U11.pins.IN7_1, G);
+		Connect(this.U11.pins.IN7_2, CLRD);
+		Connect(this.U11.pins.IN8_0, GB);
+		let CLRDD = new Pin();
+		Connect(this.U11.pins.IN8_1, CLRDD);
+		Connect(this.U11.pins.IN8_2, _D_HI);
+		let CE0 = new Pin();
+		Connect(this.U11.pins.OUT0, CE0);
+		let CE1 = new Pin();
+		Connect(this.U11.pins.OUT1, CE1);
+		let CE2 = new Pin();
+		Connect(this.U11.pins.OUT2, CE2);
+		let CE3 = new Pin();
+		Connect(this.U11.pins.OUT3, CE3);
+		let CE4 = new Pin();
+		Connect(this.U11.pins.OUT4, CE4);
+		let CE5 = new Pin();
+		Connect(this.U11.pins.OUT5, CE5);
+		let CE6 = new Pin();
+		Connect(this.U11.pins.OUT6, CE6);
+		let CE7 = new Pin();
+		Connect(this.U11.pins.OUT7, CE7);
+		let XXEN = new Pin();
+		Connect(this.U11.pins.OUT8, XXEN);
 		this.U12 = new ora(2,8);
+		Connect(this.U12.pins.IN0_0, CE0);
+		let CLRB = new Pin();
+		Connect(this.U12.pins.IN0_1, CLRB);
+		Connect(this.U12.pins.IN1_0, CE1);
+		Connect(this.U12.pins.IN1_1, CLRB);
+		Connect(this.U12.pins.IN2_0, CE2);
+		Connect(this.U12.pins.IN2_1, CLRB);
+		Connect(this.U12.pins.IN3_0, CE3);
+		Connect(this.U12.pins.IN3_1, CLRB);
+		Connect(this.U12.pins.IN4_0, CE4);
+		Connect(this.U12.pins.IN4_1, CLRB);
+		Connect(this.U12.pins.IN5_0, CE5);
+		Connect(this.U12.pins.IN5_1, CLRB);
+		Connect(this.U12.pins.IN6_0, CE6);
+		Connect(this.U12.pins.IN6_1, CLRB);
+		Connect(this.U12.pins.IN7_0, CE7);
+		Connect(this.U12.pins.IN7_1, CLRB);
+		let CLR0 = new Pin();
+		Connect(this.U12.pins.OUT0, CLR0);
+		let CLR1 = new Pin();
+		Connect(this.U12.pins.OUT1, CLR1);
+		let CLR2 = new Pin();
+		Connect(this.U12.pins.OUT2, CLR2);
+		let CLR3 = new Pin();
+		Connect(this.U12.pins.OUT3, CLR3);
+		let CLR4 = new Pin();
+		Connect(this.U12.pins.OUT4, CLR4);
+		let CLR5 = new Pin();
+		Connect(this.U12.pins.OUT5, CLR5);
+		let CLR6 = new Pin();
+		Connect(this.U12.pins.OUT6, CLR6);
+		let CLR7 = new Pin();
+		Connect(this.U12.pins.OUT7, CLR7);
 		this.U13 = new buf();
+		Connect(this.U13.pins.IN0, CLRD);
+		Connect(this.U13.pins.OUT, CLRDD);
 		this.UD1 = new inva(6);
+		Connect(this.UD1.pins.IN0_0, GB);
+		Connect(this.UD1.pins.IN1_0, CLRD);
+		Connect(this.UD1.pins.IN2_0, S0D);
+		Connect(this.UD1.pins.IN3_0, S1D);
+		Connect(this.UD1.pins.IN4_0, S2D);
+		Connect(this.UD1.pins.IN5_0, XXEN);
+		Connect(this.UD1.pins.OUT0, G);
+		Connect(this.UD1.pins.OUT1, CLRB);
+		let S0B = new Pin();
+		Connect(this.UD1.pins.OUT2, S0B);
+		let S1B = new Pin();
+		Connect(this.UD1.pins.OUT3, S1B);
+		let S2B = new Pin();
+		Connect(this.UD1.pins.OUT4, S2B);
+		let XEN = new Pin();
+		Connect(this.UD1.pins.OUT5, XEN);
 		this.UD2 = new anda(3,8);
+		Connect(this.UD2.pins.IN0_0, S2B);
+		Connect(this.UD2.pins.IN0_1, S1B);
+		Connect(this.UD2.pins.IN0_2, S0B);
+		Connect(this.UD2.pins.IN1_0, S2B);
+		Connect(this.UD2.pins.IN1_1, S1B);
+		Connect(this.UD2.pins.IN1_2, S0D);
+		Connect(this.UD2.pins.IN2_0, S2B);
+		Connect(this.UD2.pins.IN2_1, S1D);
+		Connect(this.UD2.pins.IN2_2, S0B);
+		Connect(this.UD2.pins.IN3_0, S2B);
+		Connect(this.UD2.pins.IN3_1, S1D);
+		Connect(this.UD2.pins.IN3_2, S0D);
+		Connect(this.UD2.pins.IN4_0, S2D);
+		Connect(this.UD2.pins.IN4_1, S1B);
+		Connect(this.UD2.pins.IN4_2, S0B);
+		Connect(this.UD2.pins.IN5_0, S2D);
+		Connect(this.UD2.pins.IN5_1, S1B);
+		Connect(this.UD2.pins.IN5_2, S0D);
+		Connect(this.UD2.pins.IN6_0, S2D);
+		Connect(this.UD2.pins.IN6_1, S1D);
+		Connect(this.UD2.pins.IN6_2, S0B);
+		Connect(this.UD2.pins.IN7_0, S2D);
+		Connect(this.UD2.pins.IN7_1, S1D);
+		Connect(this.UD2.pins.IN7_2, S0D);
+		let E0 = new Pin();
+		Connect(this.UD2.pins.OUT0, E0);
+		let E1 = new Pin();
+		Connect(this.UD2.pins.OUT1, E1);
+		let E2 = new Pin();
+		Connect(this.UD2.pins.OUT2, E2);
+		let E3 = new Pin();
+		Connect(this.UD2.pins.OUT3, E3);
+		let E4 = new Pin();
+		Connect(this.UD2.pins.OUT4, E4);
+		let E5 = new Pin();
+		Connect(this.UD2.pins.OUT5, E5);
+		let E6 = new Pin();
+		Connect(this.UD2.pins.OUT6, E6);
+		let E7 = new Pin();
+		Connect(this.UD2.pins.OUT7, E7);
 		this.UD3 = new anda(2,8);
+		Connect(this.UD3.pins.IN0_0, E0);
+		Connect(this.UD3.pins.IN0_1, G);
+		Connect(this.UD3.pins.IN1_0, E1);
+		Connect(this.UD3.pins.IN1_1, G);
+		Connect(this.UD3.pins.IN2_0, E2);
+		Connect(this.UD3.pins.IN2_1, G);
+		Connect(this.UD3.pins.IN3_0, E3);
+		Connect(this.UD3.pins.IN3_1, G);
+		Connect(this.UD3.pins.IN4_0, E4);
+		Connect(this.UD3.pins.IN4_1, G);
+		Connect(this.UD3.pins.IN5_0, E5);
+		Connect(this.UD3.pins.IN5_1, G);
+		Connect(this.UD3.pins.IN6_0, E6);
+		Connect(this.UD3.pins.IN6_1, G);
+		Connect(this.UD3.pins.IN7_0, E7);
+		Connect(this.UD3.pins.IN7_1, G);
+		let EN0 = new Pin();
+		Connect(this.UD3.pins.OUT0, EN0);
+		let EN1 = new Pin();
+		Connect(this.UD3.pins.OUT1, EN1);
+		let EN2 = new Pin();
+		Connect(this.UD3.pins.OUT2, EN2);
+		let EN3 = new Pin();
+		Connect(this.UD3.pins.OUT3, EN3);
+		let EN4 = new Pin();
+		Connect(this.UD3.pins.OUT4, EN4);
+		let EN5 = new Pin();
+		Connect(this.UD3.pins.OUT5, EN5);
+		let EN6 = new Pin();
+		Connect(this.UD3.pins.OUT6, EN6);
+		let EN7 = new Pin();
+		Connect(this.UD3.pins.OUT7, EN7);
 		this.UD4 = new bufa(8);
+		Connect(this.UD4.pins.IN0_0, E0);
+		Connect(this.UD4.pins.IN1_0, E1);
+		Connect(this.UD4.pins.IN2_0, E2);
+		Connect(this.UD4.pins.IN3_0, E3);
+		Connect(this.UD4.pins.IN4_0, E4);
+		Connect(this.UD4.pins.IN5_0, E5);
+		Connect(this.UD4.pins.IN6_0, E6);
+		Connect(this.UD4.pins.IN7_0, E7);
+		Connect(this.UD4.pins.OUT0, ED0);
+		Connect(this.UD4.pins.OUT1, ED1);
+		Connect(this.UD4.pins.OUT2, ED2);
+		Connect(this.UD4.pins.OUT3, ED3);
+		Connect(this.UD4.pins.OUT4, ED4);
+		Connect(this.UD4.pins.OUT5, ED5);
+		Connect(this.UD4.pins.OUT6, ED6);
+		Connect(this.UD4.pins.OUT7, ED7);
 		this.UL0 = new dltch(1);
+		let PREB = new Pin();
+		Connect(this.UL0.pins.PRESET, PREB);
+		Connect(this.UL0.pins.CLEAR, CLR0);
+		Connect(this.UL0.pins.GATE, EN0);
+		Connect(this.UL0.pins.D0, DD);
+		Connect(this.UL0.pins.Q0, this.pins.Q0);
+		let _D_NC = new Pin();
+		Connect(this.UL0.pins.QBAR0, _D_NC);
 		this.UL1 = new dltch(1);
+		Connect(this.UL1.pins.PRESET, PREB);
+		Connect(this.UL1.pins.CLEAR, CLR1);
+		Connect(this.UL1.pins.GATE, EN1);
+		Connect(this.UL1.pins.D0, DD);
+		Connect(this.UL1.pins.Q0, this.pins.Q1);
+		Connect(this.UL1.pins.QBAR0, _D_NC);
 		this.UL2 = new dltch(1);
+		Connect(this.UL2.pins.PRESET, PREB);
+		Connect(this.UL2.pins.CLEAR, CLR2);
+		Connect(this.UL2.pins.GATE, EN2);
+		Connect(this.UL2.pins.D0, DD);
+		Connect(this.UL2.pins.Q0, this.pins.Q2);
+		Connect(this.UL2.pins.QBAR0, _D_NC);
 		this.UL3 = new dltch(1);
+		Connect(this.UL3.pins.PRESET, PREB);
+		Connect(this.UL3.pins.CLEAR, CLR3);
+		Connect(this.UL3.pins.GATE, EN3);
+		Connect(this.UL3.pins.D0, DD);
+		Connect(this.UL3.pins.Q0, this.pins.Q3);
+		Connect(this.UL3.pins.QBAR0, _D_NC);
 		this.UL4 = new dltch(1);
+		Connect(this.UL4.pins.PRESET, PREB);
+		Connect(this.UL4.pins.CLEAR, CLR4);
+		Connect(this.UL4.pins.GATE, EN4);
+		Connect(this.UL4.pins.D0, DD);
+		Connect(this.UL4.pins.Q0, this.pins.Q4);
+		Connect(this.UL4.pins.QBAR0, _D_NC);
 		this.UL5 = new dltch(1);
+		Connect(this.UL5.pins.PRESET, PREB);
+		Connect(this.UL5.pins.CLEAR, CLR5);
+		Connect(this.UL5.pins.GATE, EN5);
+		Connect(this.UL5.pins.D0, DD);
+		Connect(this.UL5.pins.Q0, this.pins.Q5);
+		Connect(this.UL5.pins.QBAR0, _D_NC);
 		this.UL6 = new dltch(1);
+		Connect(this.UL6.pins.PRESET, PREB);
+		Connect(this.UL6.pins.CLEAR, CLR6);
+		Connect(this.UL6.pins.GATE, EN6);
+		Connect(this.UL6.pins.D0, DD);
+		Connect(this.UL6.pins.Q0, this.pins.Q6);
+		Connect(this.UL6.pins.QBAR0, _D_NC);
 		this.UL7 = new dltch(1);
+		Connect(this.UL7.pins.PRESET, PREB);
+		Connect(this.UL7.pins.CLEAR, CLR7);
+		Connect(this.UL7.pins.GATE, EN7);
+		Connect(this.UL7.pins.D0, DD);
+		Connect(this.UL7.pins.Q0, this.pins.Q7);
+		Connect(this.UL7.pins.QBAR0, _D_NC);
 		this.UL8 = new buf();
+		Connect(this.UL8.pins.IN0, _D_HI);
+		Connect(this.UL8.pins.OUT, PREB);
 		this.UL9 = new bufa(3);
+		Connect(this.UL9.pins.IN0_0, G);
+		let G1 = new Pin();
+		Connect(this.UL9.pins.IN1_0, G1);
+		let G2 = new Pin();
+		Connect(this.UL9.pins.IN2_0, G2);
+		let GD = new Pin();
+		Connect(this.UL9.pins.OUT0, GD);
+		Connect(this.UL9.pins.OUT1, G2);
+		let G3 = new Pin();
+		Connect(this.UL9.pins.OUT2, G3);
 		this.UL10 = new and(2);
+		Connect(this.UL10.pins.IN0, this.pins.GBAR);
+		Connect(this.UL10.pins.IN1, GD);
+		Connect(this.UL10.pins.OUT, G1);
 		this.UL11 = new or(2);
+		Connect(this.UL11.pins.IN0, G1);
+		Connect(this.UL11.pins.IN1, G3);
+		let CLK = new Pin();
+		Connect(this.UL11.pins.OUT, CLK);
 		this.UL12 = new suhdck(3);
 		this.UL13 = new or(6);
+		let SU0 = new Pin();
+		Connect(this.UL13.pins.IN0, SU0);
+		let SU1 = new Pin();
+		Connect(this.UL13.pins.IN1, SU1);
+		let SU2 = new Pin();
+		Connect(this.UL13.pins.IN2, SU2);
+		let HD0 = new Pin();
+		Connect(this.UL13.pins.IN3, HD0);
+		let HD1 = new Pin();
+		Connect(this.UL13.pins.IN4, HD1);
+		let HD2 = new Pin();
+		Connect(this.UL13.pins.IN5, HD2);
+		let ENX = new Pin();
+		Connect(this.UL13.pins.OUT, ENX);
 		this.UL14 = new and(2);
+		Connect(this.UL14.pins.IN0, XEN);
+		Connect(this.UL14.pins.IN1, ENX);
+		let ENCX = new Pin();
+		Connect(this.UL14.pins.OUT, ENCX);
 		this.UL15 = new buf3a(9);
 		let _D_X = new Pin();
-		Connect(this.UL15.pins.D0, _D_X);
-		Connect(this.UL15.pins.D1, _D_X);
-		Connect(this.UL15.pins.D2, _D_X);
-		Connect(this.UL15.pins.D3, _D_X);
-		Connect(this.UL15.pins.D4, _D_X);
-		Connect(this.UL15.pins.D5, _D_X);
-		Connect(this.UL15.pins.D6, _D_X);
-		Connect(this.UL15.pins.D7, _D_X);
-		Connect(this.UL15.pins.D8, _D_X);
-		let ENCX = new Pin();
+		Connect(this.UL15.pins.IN0_0, _D_X);
+		Connect(this.UL15.pins.IN1_0, _D_X);
+		Connect(this.UL15.pins.IN2_0, _D_X);
+		Connect(this.UL15.pins.IN3_0, _D_X);
+		Connect(this.UL15.pins.IN4_0, _D_X);
+		Connect(this.UL15.pins.IN5_0, _D_X);
+		Connect(this.UL15.pins.IN6_0, _D_X);
+		Connect(this.UL15.pins.IN7_0, _D_X);
+		Connect(this.UL15.pins.IN8_0, _D_X);
 		Connect(this.UL15.pins.EN, ENCX);
-		let PREB = new Pin();
-		Connect(this.UL15.pins.Q0, PREB);
-		let CLR0 = new Pin();
-		Connect(this.UL15.pins.Q1, CLR0);
-		let CLR1 = new Pin();
-		Connect(this.UL15.pins.Q2, CLR1);
-		let CLR2 = new Pin();
-		Connect(this.UL15.pins.Q3, CLR2);
-		let CLR3 = new Pin();
-		Connect(this.UL15.pins.Q4, CLR3);
-		let CLR4 = new Pin();
-		Connect(this.UL15.pins.Q5, CLR4);
-		let CLR5 = new Pin();
-		Connect(this.UL15.pins.Q6, CLR5);
-		let CLR6 = new Pin();
-		Connect(this.UL15.pins.Q7, CLR6);
-		let CLR7 = new Pin();
-		Connect(this.UL15.pins.Q8, CLR7);
+		Connect(this.UL15.pins.OUT0, PREB);
+		Connect(this.UL15.pins.OUT1, CLR0);
+		Connect(this.UL15.pins.OUT2, CLR1);
+		Connect(this.UL15.pins.OUT3, CLR2);
+		Connect(this.UL15.pins.OUT4, CLR3);
+		Connect(this.UL15.pins.OUT5, CLR4);
+		Connect(this.UL15.pins.OUT6, CLR5);
+		Connect(this.UL15.pins.OUT7, CLR6);
+		Connect(this.UL15.pins.OUT8, CLR7);
 	}
 }
 /**
@@ -8959,28 +11347,45 @@ class SN74HC7074 extends Component {
 			_5QBAR: new Pin(),
 		}
 		this.U0 = new bufa(4);
+		Connect(this.U0.pins.IN0_0, this.pins._4PREBAR);
+		Connect(this.U0.pins.IN1_0, this.pins._4CLRBAR);
+		Connect(this.U0.pins.IN2_0, this.pins._5PREBAR);
+		Connect(this.U0.pins.IN3_0, this.pins._5CLRBAR);
+		let _4PREB = new Pin();
+		Connect(this.U0.pins.OUT0, _4PREB);
+		let _4CLRB = new Pin();
+		Connect(this.U0.pins.OUT1, _4CLRB);
+		let _5PREB = new Pin();
+		Connect(this.U0.pins.OUT2, _5PREB);
+		let _5CLRB = new Pin();
+		Connect(this.U0.pins.OUT3, _5CLRB);
 		this.U1 = new inva(2);
+		Connect(this.U1.pins.IN0_0, this.pins._1A);
+		Connect(this.U1.pins.IN1_0, this.pins._2A);
+		Connect(this.U1.pins.OUT0, this.pins._1Y);
+		Connect(this.U1.pins.OUT1, this.pins._2Y);
 		this.U2 = new nand(2);
 		Connect(this.U2.pins.IN0, this.pins._3A);
 		Connect(this.U2.pins.IN1, this.pins._3B);
 		Connect(this.U2.pins.OUT, this.pins._3Y);
 		this.U3 = new nor(2);
+		Connect(this.U3.pins.IN0, this.pins._6A);
+		Connect(this.U3.pins.IN1, this.pins._6B);
+		Connect(this.U3.pins.OUT, this.pins._6Y);
 		this.U4 = new dff(1);
-		let _4PREB = new Pin();
 		Connect(this.U4.pins.PRESET, _4PREB);
-		let _4CLRB = new Pin();
 		Connect(this.U4.pins.CLEAR, _4CLRB);
 		Connect(this.U4.pins.CLOCK, this.pins._4CLK);
 		Connect(this.U4.pins.D0, this.pins._4D);
 		Connect(this.U4.pins.Q0, this.pins._4Q);
+		Connect(this.U4.pins.QBAR0, this.pins._4QBAR);
 		this.U5 = new dff(1);
-		let _5PREB = new Pin();
 		Connect(this.U5.pins.PRESET, _5PREB);
-		let _5CLRB = new Pin();
 		Connect(this.U5.pins.CLEAR, _5CLRB);
 		Connect(this.U5.pins.CLOCK, this.pins._5CLK);
 		Connect(this.U5.pins.D0, this.pins._5D);
 		Connect(this.U5.pins.Q0, this.pins._5Q);
+		Connect(this.U5.pins.QBAR0, this.pins._5QBAR);
 	}
 }
 /**
@@ -9014,24 +11419,44 @@ class SN74HC7075 extends Component {
 			_5QBAR: new Pin(),
 		}
 		this.U1 = new bufa(4);
-		this.U2 = new inva(2);
-		this.U3 = new nanda(2,2);
-		this.U4 = new dff(1);
+		Connect(this.U1.pins.IN0_0, this.pins._4PREBAR);
+		Connect(this.U1.pins.IN1_0, this.pins._4CLRBAR);
+		Connect(this.U1.pins.IN2_0, this.pins._5PREBAR);
+		Connect(this.U1.pins.IN3_0, this.pins._5CLRBAR);
 		let _4PREB = new Pin();
-		Connect(this.U4.pins.PRESET, _4PREB);
+		Connect(this.U1.pins.OUT0, _4PREB);
 		let _4CLRB = new Pin();
+		Connect(this.U1.pins.OUT1, _4CLRB);
+		let _5PREB = new Pin();
+		Connect(this.U1.pins.OUT2, _5PREB);
+		let _5CLRB = new Pin();
+		Connect(this.U1.pins.OUT3, _5CLRB);
+		this.U2 = new inva(2);
+		Connect(this.U2.pins.IN0_0, this.pins._1A);
+		Connect(this.U2.pins.IN1_0, this.pins._2A);
+		Connect(this.U2.pins.OUT0, this.pins._1Y);
+		Connect(this.U2.pins.OUT1, this.pins._2Y);
+		this.U3 = new nanda(2,2);
+		Connect(this.U3.pins.IN0_0, this.pins._3A);
+		Connect(this.U3.pins.IN0_1, this.pins._3B);
+		Connect(this.U3.pins.IN1_0, this.pins._6A);
+		Connect(this.U3.pins.IN1_1, this.pins._6B);
+		Connect(this.U3.pins.OUT0, this.pins._3Y);
+		Connect(this.U3.pins.OUT1, this.pins._6Y);
+		this.U4 = new dff(1);
+		Connect(this.U4.pins.PRESET, _4PREB);
 		Connect(this.U4.pins.CLEAR, _4CLRB);
 		Connect(this.U4.pins.CLOCK, this.pins._4CLK);
 		Connect(this.U4.pins.D0, this.pins._4D);
 		Connect(this.U4.pins.Q0, this.pins._4Q);
+		Connect(this.U4.pins.QBAR0, this.pins._4QBAR);
 		this.U5 = new dff(1);
-		let _5PREB = new Pin();
 		Connect(this.U5.pins.PRESET, _5PREB);
-		let _5CLRB = new Pin();
 		Connect(this.U5.pins.CLEAR, _5CLRB);
 		Connect(this.U5.pins.CLOCK, this.pins._5CLK);
 		Connect(this.U5.pins.D0, this.pins._5D);
 		Connect(this.U5.pins.Q0, this.pins._5Q);
+		Connect(this.U5.pins.QBAR0, this.pins._5QBAR);
 	}
 }
 /**
@@ -9065,24 +11490,44 @@ class SN74HC7076 extends Component {
 			_5QBAR: new Pin(),
 		}
 		this.U1 = new bufa(4);
-		this.U2 = new inva(2);
-		this.U3 = new nora(2,2);
-		this.U4 = new dff(1);
+		Connect(this.U1.pins.IN0_0, this.pins._4PREBAR);
+		Connect(this.U1.pins.IN1_0, this.pins._4CLRBAR);
+		Connect(this.U1.pins.IN2_0, this.pins._5PREBAR);
+		Connect(this.U1.pins.IN3_0, this.pins._5CLRBAR);
 		let _4PREB = new Pin();
-		Connect(this.U4.pins.PRESET, _4PREB);
+		Connect(this.U1.pins.OUT0, _4PREB);
 		let _4CLRB = new Pin();
+		Connect(this.U1.pins.OUT1, _4CLRB);
+		let _5PREB = new Pin();
+		Connect(this.U1.pins.OUT2, _5PREB);
+		let _5CLRB = new Pin();
+		Connect(this.U1.pins.OUT3, _5CLRB);
+		this.U2 = new inva(2);
+		Connect(this.U2.pins.IN0_0, this.pins._1A);
+		Connect(this.U2.pins.IN1_0, this.pins._2A);
+		Connect(this.U2.pins.OUT0, this.pins._1Y);
+		Connect(this.U2.pins.OUT1, this.pins._2Y);
+		this.U3 = new nora(2,2);
+		Connect(this.U3.pins.IN0_0, this.pins._3A);
+		Connect(this.U3.pins.IN0_1, this.pins._3B);
+		Connect(this.U3.pins.IN1_0, this.pins._6A);
+		Connect(this.U3.pins.IN1_1, this.pins._6B);
+		Connect(this.U3.pins.OUT0, this.pins._3Y);
+		Connect(this.U3.pins.OUT1, this.pins._6Y);
+		this.U4 = new dff(1);
+		Connect(this.U4.pins.PRESET, _4PREB);
 		Connect(this.U4.pins.CLEAR, _4CLRB);
 		Connect(this.U4.pins.CLOCK, this.pins._4CLK);
 		Connect(this.U4.pins.D0, this.pins._4D);
 		Connect(this.U4.pins.Q0, this.pins._4Q);
+		Connect(this.U4.pins.QBAR0, this.pins._4QBAR);
 		this.U5 = new dff(1);
-		let _5PREB = new Pin();
 		Connect(this.U5.pins.PRESET, _5PREB);
-		let _5CLRB = new Pin();
 		Connect(this.U5.pins.CLEAR, _5CLRB);
 		Connect(this.U5.pins.CLOCK, this.pins._5CLK);
 		Connect(this.U5.pins.D0, this.pins._5D);
 		Connect(this.U5.pins.Q0, this.pins._5Q);
+		Connect(this.U5.pins.QBAR0, this.pins._5QBAR);
 	}
 }
 /**
@@ -9097,6 +11542,9 @@ class SN74HC7266 extends Component {
 			Y: new Pin(),
 		}
 		this.U1 = new nxor();
+		Connect(this.U1.pins.IN0, this.pins.A);
+		Connect(this.U1.pins.IN1, this.pins.B);
+		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
 }
 global.SN74HC00 = SN74HC00;

@@ -88,59 +88,176 @@ class Part {
     mapper.apply(this, [ tokenizer, this.args ]);
   }
 
-  map_nand(t, a) {
+	map_multiinputs_singlegate(t, nInputs, withEnable) {
     let vcc = t.getToken().content;
     let gnd = t.getToken().content;
-    for (var i = 0; i < a[0]; i++)
+    for (var i = 0; i < nInputs; i++)
 			this.pins[`IN${i}`] = t.getToken().content;
-		this.pins['OUT'] = t.getToken().content;
-  }
-  map_nor(t, a) { }
-  map_inv(t, a) {
-    let vcc = t.getToken().content;
-    let gnd = t.getToken().content;
-		this.pins[`IN`] = t.getToken().content;
+		if (withEnable)
+			this.pins[`EN`] = t.getToken().content;
 		this.pins['OUT'] = t.getToken().content;
 	}
-  map_and(t, a) { }
-  map_or(t, a) { }
-  map_buf(t, a) { }
-  map_aoi(t, a) { }
-  map_jkff(t, a) { }
+
+	map_multiinputs_multigate(t, nInputs, nGates, withEnable, singleOutput) {
+    let vcc = t.getToken().content;
+    let gnd = t.getToken().content;
+
+		for (var g = 0; g < nGates; g++)
+			for (var i = 0; i < nInputs; i++)
+				this.pins[`IN${g}_${i}`] = t.getToken().content;
+		if (withEnable)
+			this.pins[`EN`] = t.getToken().content;
+		if (singleOutput) {
+			this.pins['OUT'] = t.getToken().content;
+		} else {
+			for (var g = 0; g < nGates; g++)
+				this.pins[`OUT${g}`] = t.getToken().content;
+		}
+	}
+
+	// Standard gates
+  map_inv(t, a) { this.map_multiinputs_singlegate(t, 1, false); }
+  map_buf(t, a) { this.map_multiinputs_singlegate(t, 1, false); }
+  map_nxor(t, a) { this.map_multiinputs_singlegate(t, 2, false); }
+  map_xor(t, a) { this.map_multiinputs_singlegate(t, 2, false); }
+
+  map_and(t, a) { this.map_multiinputs_singlegate(t, a[0], false); }
+  map_nand(t, a) { this.map_multiinputs_singlegate(t, a[0], false); }
+  map_nor(t, a) { this.map_multiinputs_singlegate(t, a[0], false); }
+  map_or(t, a) { this.map_multiinputs_singlegate(t, a[0], false); }
+
+  map_inva(t, a) { this.map_multiinputs_multigate(t, 1, a[0], false, false); }
+  map_bufa(t, a) { this.map_multiinputs_multigate(t, 1, a[0], false, false); }
+
+  map_anda(t, a) { this.map_multiinputs_multigate(t, a[0], a[1], false, false); }
+  map_nanda(t, a) { this.map_multiinputs_multigate(t, a[0], a[1], false, false); }
+  map_nora(t, a) { this.map_multiinputs_multigate(t, a[0], a[1], false, false); }
+  map_ora(t, a) { this.map_multiinputs_multigate(t, a[0], a[1], false, false); }
+
+	map_nxora(t, a) { this.map_multiinputs_multigate(t, 2, a[0], false, false); }
+  map_xora(t, a) { this.map_multiinputs_multigate(t, 2, a[0], false, false); }
+
+  map_ao(t, a) { this.map_multiinputs_multigate(t, a[0], a[1], false, true); }
+  map_aoi(t, a) { this.map_multiinputs_multigate(t, a[0], a[1], false, true); }
+  map_oa(t, a) { this.map_multiinputs_multigate(t, a[0], a[1], false, true); }
+  map_oai(t, a) { this.map_multiinputs_multigate(t, a[0], a[1], false, true); }
+
+	// Tristate gates
+  map_inv3(t, a) { this.map_multiinputs_singlegate(t, 1, true); }
+  map_buf3(t, a) { this.map_multiinputs_singlegate(t, 1, true); }
+  map_nxor3(t, a) { this.map_multiinputs_singlegate(t, 2, true); }
+  map_xor3(t, a) { this.map_multiinputs_singlegate(t, 2, true); }
+
+  map_and3(t, a) { this.map_multiinputs_singlegate(t, a[0], true); }
+  map_nand3(t, a) { this.map_multiinputs_singlegate(t, a[0], true); }
+  map_nor3(t, a) { this.map_multiinputs_singlegate(t, a[0], true); }
+  map_or3(t, a) { this.map_multiinputs_singlegate(t, a[0], true); }
+
+  map_inv3a(t, a) { this.map_multiinputs_multigate(t, 1, a[0], true, false); }
+  map_buf3a(t, a) { this.map_multiinputs_multigate(t, 1, a[0], true, false); }
+
+  map_anda3(t, a) { this.map_multiinputs_multigate(t, a[0], a[1], true, false); }
+  map_nanda3(t, a) { this.map_multiinputs_multigate(t, a[0], a[1], true, false); }
+  map_nora3(t, a) { this.map_multiinputs_multigate(t, a[0], a[1], true, false); }
+  map_ora3(t, a) { this.map_multiinputs_multigate(t, a[0], a[1], true, false); }
+
+	map_nxor3a(t, a) { this.map_multiinputs_multigate(t, 2, a[0], true, false); }
+  map_xor3a(t, a) { this.map_multiinputs_multigate(t, 2, a[0], true, false); }
+
+	// Flip-flops and latches
   map_dff(t, a) {
     let vcc = t.getToken().content;
     let gnd = t.getToken().content;
 		this.pins[`PRESET`] = t.getToken().content;
 		this.pins[`CLEAR`] = t.getToken().content;
 		this.pins[`CLOCK`] = t.getToken().content;
-    for (var i = 0; i < a[0]; i++)
+		for (var i = 0; i < a[0]; i++)
 			this.pins[`D${i}`] = t.getToken().content;
-    for (var i = 0; i < a[0]; i++)
+		for (var i = 0; i < a[0]; i++)
 			this.pins[`Q${i}`] = t.getToken().content;
+		for (var i = 0; i < a[0]; i++)
+			this.pins[`QBAR${i}`] = t.getToken().content;
 	}
-  map_bufa(t, a) { }
-  map_dltch(t, a) { }
-  map_xor(t, a) { }
-  map_inva(t, a) { }
-  map_buf3(t, a) { }
-  map_srff(t, a) { }
-  map_inv3a(t, a) { }
-  map_buf3a(t, a) {
-		let vcc = t.getToken().content;
+  map_jkff(t, a) {
+    let vcc = t.getToken().content;
     let gnd = t.getToken().content;
+		this.pins[`PRESET`] = t.getToken().content;
+		this.pins[`CLEAR`] = t.getToken().content;
+		this.pins[`CLOCK`] = t.getToken().content;
+    for (var i = 0; i < a[0]; i++)
+			this.pins[`J${i}`] = t.getToken().content;
+		for (var i = 0; i < a[0]; i++)
+			this.pins[`K${i}`] = t.getToken().content;
+		for (var i = 0; i < a[0]; i++)
+			this.pins[`Q${i}`] = t.getToken().content;
+		for (var i = 0; i < a[0]; i++)
+			this.pins[`QBAR${i}`] = t.getToken().content;
+	}
+  map_dffde(t, a) {
+    let vcc = t.getToken().content;
+    let gnd = t.getToken().content;
+		this.pins[`PRESET`] = t.getToken().content;
+		this.pins[`CLEAR`] = t.getToken().content;
+		this.pins[`CLOCK`] = t.getToken().content;
+		this.pins[`POS_EDGE`] = t.getToken().content;
+		this.pins[`NEG_EDGE`] = t.getToken().content;
     for (var i = 0; i < a[0]; i++)
 			this.pins[`D${i}`] = t.getToken().content;
-		this.pins[`EN`] = t.getToken().content;
-    for (var i = 0; i < a[0]; i++)
+		for (var i = 0; i < a[0]; i++)
 			this.pins[`Q${i}`] = t.getToken().content;
+		for (var i = 0; i < a[0]; i++)
+			this.pins[`QBAR${i}`] = t.getToken().content;
 	}
-  map_nora(t, a) { }
-  map_nanda(t, a) { }
-  map_ora(t, a) { }
-  map_nxor(t, a) { }
+  map_jkffde(t, a) {
+    let vcc = t.getToken().content;
+    let gnd = t.getToken().content;
+		this.pins[`PRESET`] = t.getToken().content;
+		this.pins[`CLEAR`] = t.getToken().content;
+		this.pins[`CLOCK`] = t.getToken().content;
+		this.pins[`POS_EDGE`] = t.getToken().content;
+		this.pins[`NEG_EDGE`] = t.getToken().content;
+    for (var i = 0; i < a[0]; i++)
+			this.pins[`J${i}`] = t.getToken().content;
+		for (var i = 0; i < a[0]; i++)
+			this.pins[`K${i}`] = t.getToken().content;
+		for (var i = 0; i < a[0]; i++)
+			this.pins[`Q${i}`] = t.getToken().content;
+		for (var i = 0; i < a[0]; i++)
+			this.pins[`QBAR${i}`] = t.getToken().content;
+	}
+
+  map_srff(t, a) {
+    let vcc = t.getToken().content;
+    let gnd = t.getToken().content;
+		this.pins[`PRESET`] = t.getToken().content;
+		this.pins[`CLEAR`] = t.getToken().content;
+		this.pins[`GATE`] = t.getToken().content;
+    for (var i = 0; i < a[0]; i++)
+			this.pins[`S${i}`] = t.getToken().content;
+		for (var i = 0; i < a[0]; i++)
+			this.pins[`R${i}`] = t.getToken().content;
+		for (var i = 0; i < a[0]; i++)
+			this.pins[`Q${i}`] = t.getToken().content;
+		for (var i = 0; i < a[0]; i++)
+			this.pins[`QBAR${i}`] = t.getToken().content;
+	}
+  map_dltch(t, a) {
+    let vcc = t.getToken().content;
+    let gnd = t.getToken().content;
+		this.pins[`PRESET`] = t.getToken().content;
+		this.pins[`CLEAR`] = t.getToken().content;
+		this.pins[`GATE`] = t.getToken().content;
+    for (var i = 0; i < a[0]; i++)
+			this.pins[`D${i}`] = t.getToken().content;
+		for (var i = 0; i < a[0]; i++)
+			this.pins[`Q${i}`] = t.getToken().content;
+		for (var i = 0; i < a[0]; i++)
+			this.pins[`QBAR${i}`] = t.getToken().content;
+	}
+
+
+
   map_wdthck(t, a) { }
-  map_ao(t, a) { }
-  map_anda(t, a) { }
   map_suhdck(t, a) { }
 
 	map_constraint(t, a) { }

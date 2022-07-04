@@ -64,7 +64,7 @@ class Wire {
 		this.value = false;
 	}
 
-	mergeWithWire(wire) {
+	MergeWithWire(wire) {
 		if (!wire) return;
 
 		this.pins.push(...wire.pins);
@@ -73,7 +73,7 @@ class Wire {
 		wire._mergedWith = this;
 	}
 
-	connectPin(pin) {
+	ConnectPin(pin) {
 		if (this._mergedWith) {
 			Logger.Warning('Direct access to merged wire!');
 			this._mergedWith.connectPin(pin);
@@ -92,12 +92,12 @@ class Pin {
 		this.wire = null;
 	}
 
-	setValue(value) {
+	SetValue(value) {
 		if (!this.wire) return;
 		this.wire.value = value;
 	}
 
-	getValue() {
+	GetValue() {
 		if (!this.wire) return false;
 		return this.wire.value;
 	}
@@ -116,7 +116,7 @@ class Footprint {
 		}
 	}
 
-	pinMap(regexFilter) {
+	PinMap(regexFilter) {
 		const keys = Object.keys(this.pins);
 		if (regexFilter)
 			keys = keys.filter(t => t.match(regexFilter));
@@ -128,7 +128,7 @@ class Footprint {
 		return pins;
 	}
 
-	pinList(regexFilter) {
+	PinList(regexFilter) {
 		const keys = Object.keys(this.pins);
 		if (regexFilter)
 			keys = keys.filter(t => t.match(regexFilter));
@@ -145,7 +145,7 @@ class Footprint {
 		let isFootprint = i instanceof Footprint;
 
 		if (isArray) return i;
-		if (isFootprint) return i.pinList();
+		if (isFootprint) return i.PinList();
 		return [i];
 	}
 
@@ -160,7 +160,7 @@ class Footprint {
 			return out;
 		}
 
-		if (isFootprint) return i.pinMap();
+		if (isFootprint) return i.PinMap();
 
 		return { 0: i };
 	}
@@ -192,6 +192,30 @@ class Plug extends Footprint {
 		
 		//this._addDebugNames();
 	}
+
+	Split(start, end) {
+		let ret = new Plug(0);
+		for (var i = start; i <= end; i++) {
+			ret.pins[`${this.prefix}${i}`] = this.pins[`${this.prefix}${i}`];
+		}
+		ret.prefix = this.prefix;
+		ret.n = (end - start) + 1;
+		return ret;
+	}
+
+	WriteData(data) {
+		for (var i = 0; i < this.n; i++) {
+			this.pins[`${this.prefix}${i}`].SetValue(data & 0x01);
+			data = data >> 1;
+		}
+	}
+
+	ReadData() {
+		let out = 0x00;
+		for (var i = 0; i < this.n; i++)
+			out |= this.pins[`${this.prefix}${i}`].GetValue() ? (1 << i) : 0;
+		return out;
+	}
 }
 
 class Circuit extends Footprint {
@@ -205,7 +229,7 @@ class Circuit extends Footprint {
 
 	//init() {}
 
-	getCircuits() {
+	GetCircuits() {
 		let ret = {};
 		for (let k in this) {
 			let item = this[k];
@@ -217,12 +241,14 @@ class Circuit extends Footprint {
 	}
 
 	$execute() {
-		_D_HI.setValue(true);
-		_D_LO.setValue(false);
+		_D_HI.SetValue(true);
+		_D_LO.SetValue(false);
 
-		let circuits = this.getCircuits();
+		let circuits = this.GetCircuits();
 
-		for (let k in circuits)
+		let reverseCircuits = Object.keys(circuits).reverse().reduce((o, key) => ({ ...o, [key]: circuits[key]}), {})
+
+		for (let k in reverseCircuits)
 			circuits[k].$execute();
 	}
 }
@@ -259,8 +285,34 @@ class Bus extends Circuit {
 				this.pins[`${this.prefix}${i}`] = new Pin();
 		}
 	}
+
+	Split(start, end) {
+		let ret = new Bus(0);
+		for (var i = start; i <= end; i++) {
+			ret.pins[`${this.prefix}${i}`] = this.pins[`${this.prefix}${i}`];
+		}
+		ret.prefix = this.prefix;
+		return ret;
+	}
+
+	WriteData(data) {
+		for (var i = 0; i < this.n; i++) {
+			this.pins[`${this.prefix}${i}`].SetValue(data & 0x01);
+			data = data >> 1;
+		}
+	}
+
+	ReadData() {
+		let out = 0x00;
+		for (var i = 0; i < this.n; i++)
+			out |= this.pins[`${this.prefix}${i}`].GetValue() ? (1 << i) : 0;
+		return out;
+	}
 }
 
+function Execute(circ) {
+
+}
 
 function Connect(srcPin, destPin) {
 	const destIsAbsent = (destPin === undefined);
@@ -285,16 +337,16 @@ function Connect(srcPin, destPin) {
 			let srcPinItem = srcPinMap[0];
 
 			// Merge existing wires
-			newWire.mergeWithWire(srcPinItem.wire);
+			newWire.MergeWithWire(srcPinItem.wire);
 
 			let destWires = Footprint.GetConnectedWires(destPinMap);
 			for (let w of destWires)
-				newWire.mergeWithWire(w);
+				newWire.MergeWithWire(w);
 
 			// Connect pins to wire
-			newWire.connectPin(srcPinItem);
+			newWire.ConnectPin(srcPinItem);
 			for (let p of destPinMap)
-				newWire.connectPin(p);
+				newWire.ConnectPin(p);
 
 			return newWire;
 		} else {
@@ -307,12 +359,12 @@ function Connect(srcPin, destPin) {
 
 				// Merge existing wires
 				//if (srcPinItem.wire) throw srcPinItem;
-				newWire.mergeWithWire(srcPinItem.wire);
-				newWire.mergeWithWire(destPinItem.wire);
+				newWire.MergeWithWire(srcPinItem.wire);
+				newWire.MergeWithWire(destPinItem.wire);
 
 				// Connect pins to wire
-				newWire.connectPin(srcPinItem);
-				newWire.connectPin(destPinItem);
+				newWire.ConnectPin(srcPinItem);
+				newWire.ConnectPin(destPinItem);
 
 				newWires.push(newWire);
 			}
@@ -327,13 +379,13 @@ class inv extends Circuit {
 		super();
 
 		this.pins = {
-			IN: new Pin(),
+			IN0: new Pin(),
 			OUT: new Pin()
 		}
 	}
 
 	$execute() {
-		this.pins.OUT.setValue(!this.pins.IN.getValue());
+		this.pins.OUT.SetValue(!this.pins.IN0.GetValue());
 	}
 }
 
@@ -351,9 +403,9 @@ class and extends Circuit {
 	$execute() {
 		let out = true;
 		for (var i = 0; i < this.n; i++) {
-			out = out && this.pins[`IN${i}`].getValue();
+			out = out && this.pins[`IN${i}`].GetValue();
 		}
-		this.pins.OUT.setValue(out);
+		this.pins.OUT.SetValue(out);
 	}
 }
 
@@ -371,9 +423,9 @@ class or extends Circuit {
 	$execute() {
 		let out = false;
 		for (var i = 0; i < this.n; i++) {
-			out = out || this.pins[`IN${i}`].getValue();
+			out = out || this.pins[`IN${i}`].GetValue();
 		}
-		this.pins.OUT.setValue(out);
+		this.pins.OUT.SetValue(out);
 	}
 }
 
@@ -383,7 +435,7 @@ class bufa extends Circuit {
 		super();
 
 		for (var i = 0; i < n; i++) {
-			this.pins[`IN${i}`] = new Pin();
+			this.pins[`IN${i}_0`] = new Pin();
 			this.pins[`OUT${i}`] = new Pin();
 		}
 	}
@@ -419,30 +471,81 @@ class dff extends Circuit {
 		for (var i = 0; i < n; i++) {
 			this.pins[`D${i}`] = new Pin();
 			this.pins[`Q${i}`] = new Pin();
+			this.pins[`QBAR${i}`] = new Pin();
 		}
 	}
 
 	$execute() {
-		let presetActive = !this.pins.PRESET.getValue();
-		let clearActive = !this.pins.CLEAR.getValue();
-		let clock = this.pins.CLOCK.getValue();
+		let presetActive = !this.pins.PRESET.GetValue();
+		let clearActive = !this.pins.CLEAR.GetValue();
+		let clock = this.pins.CLOCK.GetValue();
 
 		if (clock && !this.oldClock) {
 			for (var i = 0; i < this.n; i++)
-				this.pins[`Q${i}`].setValue(this.pins[`D${i}`].getValue());
+				this.pins[`Q${i}`].SetValue(this.pins[`D${i}`].GetValue());
 		}
 
 		if (presetActive)
 			for (var i = 0; i < this.n; i++)
-				this.pins[`Q${i}`].setValue(true);
+				this.pins[`Q${i}`].SetValue(true);
 
 		if (clearActive)
 			for (var i = 0; i < this.n; i++)
-				this.pins[`Q${i}`].setValue(false);
+				this.pins[`Q${i}`].SetValue(false);
 		
+		for (var i = 0; i < this.n; i++) {
+			this.pins[`QBAR${i}`].SetValue(!this.pins[`Q${i}`].GetValue());
+		}
+
+
 		this.oldClock = clock;
 	}
 }
+
+
+class dltch extends Circuit {
+	constructor(n) {
+		super();
+
+		this.pins = {
+			PRESET: new Pin(),
+			CLEAR: new Pin(),
+			GATE: new Pin()
+		}
+
+		this.n = n;
+		for (var i = 0; i < n; i++) {
+			this.pins[`D${i}`] = new Pin();
+			this.pins[`Q${i}`] = new Pin();
+			this.pins[`QBAR${i}`] = new Pin();
+		}
+	}
+
+	$execute() {
+		let presetActive = !this.pins.PRESET.GetValue();
+		let clearActive = !this.pins.CLEAR.GetValue();
+		let gate = this.pins.GATE.GetValue();
+
+		if (gate) {
+			for (var i = 0; i < this.n; i++)
+				this.pins[`Q${i}`].SetValue(this.pins[`D${i}`].GetValue());
+		}
+
+		if (presetActive)
+			for (var i = 0; i < this.n; i++)
+				this.pins[`Q${i}`].SetValue(true);
+
+		if (clearActive)
+			for (var i = 0; i < this.n; i++)
+				this.pins[`Q${i}`].SetValue(false);
+		
+		for (var i = 0; i < this.n; i++) {
+			this.pins[`QBAR${i}`].SetValue(!this.pins[`Q${i}`].GetValue());
+		}
+	}
+}
+
+
 
 class buf3a extends Circuit {
 	constructor(n) {
@@ -454,15 +557,15 @@ class buf3a extends Circuit {
 
 		this.n = n;
 		for (var i = 0; i < n; i++) {
-			this.pins[`D${i}`] = new Pin();
-			this.pins[`Q${i}`] = new Pin();
+			this.pins[`IN${i}_0`] = new Pin();
+			this.pins[`OUT${i}`] = new Pin();
 		}
 	}
 
 	$execute() {
-		if (this.pins.EN.getValue())
+		if (this.pins.EN.GetValue())
 			for (var i = 0; i < this.n; i++)
-				this.pins[`Q${i}`].setValue(this.pins[`D${i}`].getValue());
+				this.pins[`OUT${i}`].SetValue(this.pins[`IN${i}_0`].GetValue());
 	}
 }
 
@@ -491,9 +594,9 @@ class logicexp extends Circuit {
 		let context = {};
 
 		for (var i of this.inputs)
-			context[i] = this.pins[i].getValue() ? 255 : 0;
+			context[i] = this.pins[i].GetValue() ? 255 : 0;
 		for (var i of this.outputs)
-			context[i] = this.pins[i].getValue() ? 255 : 0;
+			context[i] = this.pins[i].GetValue() ? 255 : 0;
 		for (var i of this.temps)
 			context[i] = false;
 
@@ -501,7 +604,7 @@ class logicexp extends Circuit {
 		vm.runInContext(this.code, context);
 
 		for (var i of this.outputs)
-			this.pins[i].setValue(context[i]);
+			this.pins[i].SetValue(context[i]);
 	}
 }
 
@@ -525,5 +628,6 @@ global.or = or;
 global.bufa = bufa;
 global.nora = nora;
 global.dff = dff;
+global.dltch = dltch;
 global.buf3a = buf3a;
 global.logicexp = logicexp;
