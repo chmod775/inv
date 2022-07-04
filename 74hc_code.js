@@ -1,4 +1,4 @@
-const { Connect, _D_HI, _D_LO, Logger, Wire, Pin, Footprint, Plug, Circuit, Component, Board, Bus, inv, inva, and, or, bufa, nora, dff, dltch, buf3a, logicexp } = require('./core.js');
+const { Connect, _D_HI, _D_LO, _D_NC, Logger, Wire, Pin, Footprint, Plug, Circuit, Component, Board, Bus, inv, inva, and, or, bufa, nora, dff, dltch, buf3a, logicexp } = require('./core.js');
 /**
  * Quadruple 2-input Positive-Nand Gates
  */
@@ -693,7 +693,6 @@ class SN74HC93 extends Component {
 		Connect(this.U1.pins.K0, _D_HI);
 		let QA = new Pin();
 		Connect(this.U1.pins.Q0, QA);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		this.U2 = new jkff(1);
 		Connect(this.U2.pins.PRESET, _D_HI);
@@ -818,7 +817,6 @@ class SN74HC95 extends Component {
 		Connect(this.U1.pins.Q2, QC);
 		let QD = new Pin();
 		Connect(this.U1.pins.Q3, QD);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		Connect(this.U1.pins.QBAR1, _D_NC);
 		Connect(this.U1.pins.QBAR2, _D_NC);
@@ -2351,7 +2349,6 @@ class SN74HC164 extends Component {
 		Connect(this.U3.pins.Q6, QG);
 		let QH = new Pin();
 		Connect(this.U3.pins.Q7, QH);
-		let _D_NC = new Pin();
 		Connect(this.U3.pins.QBAR0, _D_NC);
 		Connect(this.U3.pins.QBAR1, _D_NC);
 		Connect(this.U3.pins.QBAR2, _D_NC);
@@ -2470,7 +2467,6 @@ class SN74HC165 extends Component {
 		Connect(this.U1.pins.D0, SER);
 		let QA = new Pin();
 		Connect(this.U1.pins.Q0, QA);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		this.U2 = new dff(1);
 		Connect(this.U2.pins.PRESET, SB);
@@ -2672,7 +2668,6 @@ class SN74HC166 extends Component {
 		Connect(this.U1.pins.Q6, QG);
 		let QH = new Pin();
 		Connect(this.U1.pins.Q7, QH);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		Connect(this.U1.pins.QBAR1, _D_NC);
 		Connect(this.U1.pins.QBAR2, _D_NC);
@@ -2728,7 +2723,6 @@ class SN74HC173 extends Component {
 		Connect(this.U1.pins.Q2, _3Q);
 		let _4Q = new Pin();
 		Connect(this.U1.pins.Q3, _4Q);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		Connect(this.U1.pins.QBAR1, _D_NC);
 		Connect(this.U1.pins.QBAR2, _D_NC);
@@ -2812,7 +2806,6 @@ class SN74HC174 extends Component {
 		Connect(this.UD.pins.Q3, this.pins.Q4);
 		Connect(this.UD.pins.Q4, this.pins.Q5);
 		Connect(this.UD.pins.Q5, this.pins.Q6);
-		let _D_NC = new Pin();
 		Connect(this.UD.pins.QBAR0, _D_NC);
 		Connect(this.UD.pins.QBAR1, _D_NC);
 		Connect(this.UD.pins.QBAR2, _D_NC);
@@ -3674,7 +3667,6 @@ class SN74HC194 extends Component {
 		Connect(this.U1.pins.Q1, QB);
 		Connect(this.U1.pins.Q2, QC);
 		Connect(this.U1.pins.Q3, QD);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		Connect(this.U1.pins.QBAR1, _D_NC);
 		Connect(this.U1.pins.QBAR2, _D_NC);
@@ -3779,7 +3771,6 @@ class SN74HC195 extends Component {
 		let QD = new Pin();
 		Connect(this.U1.pins.Q3, QD);
 		Connect(this.U1.pins.QBAR0, QABAR);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR1, _D_NC);
 		Connect(this.U1.pins.QBAR2, _D_NC);
 		let QDBAR = new Pin();
@@ -4796,7 +4787,6 @@ class SN74HC259 extends Component {
 		Connect(this.U7.pins.GATE, G0);
 		Connect(this.U7.pins.D0, DATA);
 		Connect(this.U7.pins.Q0, this.pins.Q0);
-		let _D_NC = new Pin();
 		Connect(this.U7.pins.QBAR0, _D_NC);
 		this.U8 = new dltch(1);
 		Connect(this.U8.pins.PRESET, _D_HI);
@@ -4912,7 +4902,6 @@ class SN74HC273 extends Component {
 		Connect(this.UD.pins.Q5, this.pins.Q6);
 		Connect(this.UD.pins.Q6, this.pins.Q7);
 		Connect(this.UD.pins.Q7, this.pins.Q8);
-		let _D_NC = new Pin();
 		Connect(this.UD.pins.QBAR0, _D_NC);
 		Connect(this.UD.pins.QBAR1, _D_NC);
 		Connect(this.UD.pins.QBAR2, _D_NC);
@@ -5164,7 +5153,6 @@ class SN74HC298 extends Component {
 		Connect(this.U1.pins.Q2, QC);
 		let QD = new Pin();
 		Connect(this.U1.pins.Q3, QD);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		Connect(this.U1.pins.QBAR1, _D_NC);
 		Connect(this.U1.pins.QBAR2, _D_NC);
@@ -5342,7 +5330,6 @@ class SN74HC299 extends Component {
 		Connect(this.U1.pins.Q5, LF_QF);
 		Connect(this.U1.pins.Q6, LG_QG);
 		Connect(this.U1.pins.Q7, LH_QH);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		Connect(this.U1.pins.QBAR1, _D_NC);
 		Connect(this.U1.pins.QBAR2, _D_NC);
@@ -5630,7 +5617,6 @@ class SN74HC354 extends Component {
 		Connect(this.U1.pins.Q5, Q5);
 		Connect(this.U1.pins.Q6, Q6);
 		Connect(this.U1.pins.Q7, Q7);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		Connect(this.U1.pins.QBAR1, _D_NC);
 		Connect(this.U1.pins.QBAR2, _D_NC);
@@ -5787,7 +5773,6 @@ class SN74HC356 extends Component {
 		Connect(this.U1.pins.Q5, Q5);
 		Connect(this.U1.pins.Q6, Q6);
 		Connect(this.U1.pins.Q7, Q7);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		Connect(this.U1.pins.QBAR1, _D_NC);
 		Connect(this.U1.pins.QBAR2, _D_NC);
@@ -6057,7 +6042,6 @@ class SN74HC373 extends Component {
 		Connect(this.U1.pins.Q6, _7QI);
 		let _8QI = new Pin();
 		Connect(this.U1.pins.Q7, _8QI);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		Connect(this.U1.pins.QBAR1, _D_NC);
 		Connect(this.U1.pins.QBAR2, _D_NC);
@@ -6144,7 +6128,6 @@ class SN74HC374 extends Component {
 		Connect(this.UD.pins.Q6, SQ7);
 		let SQ8 = new Pin();
 		Connect(this.UD.pins.Q7, SQ8);
-		let _D_NC = new Pin();
 		Connect(this.UD.pins.QBAR0, _D_NC);
 		Connect(this.UD.pins.QBAR1, _D_NC);
 		Connect(this.UD.pins.QBAR2, _D_NC);
@@ -6274,7 +6257,6 @@ class SNHC377DAT extends Component {
 		Connect(this.UDFF.pins.CLOCK, this.pins.CLK);
 		Connect(this.UDFF.pins.D0, IN);
 		Connect(this.UDFF.pins.Q0, QBUF);
-		let _D_NC = new Pin();
 		Connect(this.UDFF.pins.QBAR0, _D_NC);
 		this.UQOUT = new buf();
 		Connect(this.UQOUT.pins.IN0, QBUF);
@@ -6361,7 +6343,6 @@ class SNHC378DAT extends Component {
 		Connect(this.UDFF.pins.CLOCK, this.pins.CLK);
 		Connect(this.UDFF.pins.D0, IN);
 		Connect(this.UDFF.pins.Q0, QBUF);
-		let _D_NC = new Pin();
 		Connect(this.UDFF.pins.QBAR0, _D_NC);
 		this.UQOUT = new buf();
 		Connect(this.UQOUT.pins.IN0, QBUF);
@@ -6500,7 +6481,6 @@ class SN74HC390 extends Component {
 		Connect(this.U1.pins.K0, _D_HI);
 		let QA = new Pin();
 		Connect(this.U1.pins.Q0, QA);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		this.U2 = new jkff(1);
 		Connect(this.U2.pins.PRESET, _D_HI);
@@ -6579,7 +6559,6 @@ class SN74HC393 extends Component {
 		Connect(this.U1.pins.K0, _D_HI);
 		let QA = new Pin();
 		Connect(this.U1.pins.Q0, QA);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		this.U2 = new jkff(1);
 		Connect(this.U2.pins.PRESET, _D_HI);
@@ -6649,7 +6628,6 @@ class SN74HC490 extends Component {
 		Connect(this.U1.pins.K0, _D_HI);
 		let QA = new Pin();
 		Connect(this.U1.pins.Q0, QA);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		this.U2 = new jkff(1);
 		Connect(this.U2.pins.PRESET, _D_HI);
@@ -6750,7 +6728,6 @@ class SN74HC533 extends Component {
 		Connect(this.UQI.pins.D5, this.pins._6D);
 		Connect(this.UQI.pins.D6, this.pins._7D);
 		Connect(this.UQI.pins.D7, this.pins._8D);
-		let _D_NC = new Pin();
 		Connect(this.UQI.pins.Q0, _D_NC);
 		Connect(this.UQI.pins.Q1, _D_NC);
 		Connect(this.UQI.pins.Q2, _D_NC);
@@ -6853,7 +6830,6 @@ class SN74HC534 extends Component {
 		Connect(this.UDFF.pins.Q6, _7QQ);
 		let _8QQ = new Pin();
 		Connect(this.UDFF.pins.Q7, _8QQ);
-		let _D_NC = new Pin();
 		Connect(this.UDFF.pins.QBAR0, _D_NC);
 		Connect(this.UDFF.pins.QBAR1, _D_NC);
 		Connect(this.UDFF.pins.QBAR2, _D_NC);
@@ -7026,7 +7002,6 @@ class SN74HC563 extends Component {
 		Connect(this.UQBUF.pins.D5, this.pins._6D);
 		Connect(this.UQBUF.pins.D6, this.pins._7D);
 		Connect(this.UQBUF.pins.D7, this.pins._8D);
-		let _D_NC = new Pin();
 		Connect(this.UQBUF.pins.Q0, _D_NC);
 		Connect(this.UQBUF.pins.Q1, _D_NC);
 		Connect(this.UQBUF.pins.Q2, _D_NC);
@@ -7129,7 +7104,6 @@ class SN74HC564 extends Component {
 		Connect(this.UDFF.pins.Q6, _7QQ);
 		let _8QQ = new Pin();
 		Connect(this.UDFF.pins.Q7, _8QQ);
-		let _D_NC = new Pin();
 		Connect(this.UDFF.pins.QBAR0, _D_NC);
 		Connect(this.UDFF.pins.QBAR1, _D_NC);
 		Connect(this.UDFF.pins.QBAR2, _D_NC);
@@ -7216,7 +7190,6 @@ class SN74HC573 extends Component {
 		Connect(this.U1.pins.Q6, _7QI);
 		let _8QI = new Pin();
 		Connect(this.U1.pins.Q7, _8QI);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		Connect(this.U1.pins.QBAR1, _D_NC);
 		Connect(this.U1.pins.QBAR2, _D_NC);
@@ -7303,7 +7276,6 @@ class SN74HC574 extends Component {
 		Connect(this.UD.pins.Q6, SQ7);
 		let SQ8 = new Pin();
 		Connect(this.UD.pins.Q7, SQ8);
-		let _D_NC = new Pin();
 		Connect(this.UD.pins.QBAR0, _D_NC);
 		Connect(this.UD.pins.QBAR1, _D_NC);
 		Connect(this.UD.pins.QBAR2, _D_NC);
@@ -7477,7 +7449,6 @@ class SN74HC590A extends Component {
 		Connect(this.U9.pins.Q6, QG);
 		let QH = new Pin();
 		Connect(this.U9.pins.Q7, QH);
-		let _D_NC = new Pin();
 		Connect(this.U9.pins.QBAR0, _D_NC);
 		Connect(this.U9.pins.QBAR1, _D_NC);
 		Connect(this.U9.pins.QBAR2, _D_NC);
@@ -7597,7 +7568,6 @@ class SN74HC594 extends Component {
 		Connect(this.U2.pins.Q6, Q1G);
 		let QHP = new Pin();
 		Connect(this.U2.pins.Q7, QHP);
-		let _D_NC = new Pin();
 		Connect(this.U2.pins.QBAR0, _D_NC);
 		Connect(this.U2.pins.QBAR1, _D_NC);
 		Connect(this.U2.pins.QBAR2, _D_NC);
@@ -7719,7 +7689,6 @@ class SN74HC595 extends Component {
 		Connect(this.U2.pins.Q6, Q1G);
 		let QHP = new Pin();
 		Connect(this.U2.pins.Q7, QHP);
-		let _D_NC = new Pin();
 		Connect(this.U2.pins.QBAR0, _D_NC);
 		Connect(this.U2.pins.QBAR1, _D_NC);
 		Connect(this.U2.pins.QBAR2, _D_NC);
@@ -7845,7 +7814,6 @@ class SNHC604DAT extends Component {
 		Connect(this.UAB.pins.Q0, A);
 		let B = new Pin();
 		Connect(this.UAB.pins.Q1, B);
-		let _D_NC = new Pin();
 		Connect(this.UAB.pins.QBAR0, _D_NC);
 		Connect(this.UAB.pins.QBAR1, _D_NC);
 		this.UYI = new ao(2,2);
@@ -8435,7 +8403,6 @@ class SN74HC646 extends Component {
 		Connect(this.UAREG.pins.D5, A6);
 		Connect(this.UAREG.pins.D6, A7);
 		Connect(this.UAREG.pins.D7, A8);
-		let _D_NC = new Pin();
 		Connect(this.UAREG.pins.Q0, _D_NC);
 		Connect(this.UAREG.pins.Q1, _D_NC);
 		Connect(this.UAREG.pins.Q2, _D_NC);
@@ -8683,7 +8650,6 @@ class SN74HC648 extends Component {
 		Connect(this.UAREG.pins.Q5, QA6);
 		Connect(this.UAREG.pins.Q6, QA7);
 		Connect(this.UAREG.pins.Q7, QA8);
-		let _D_NC = new Pin();
 		Connect(this.UAREG.pins.QBAR0, _D_NC);
 		Connect(this.UAREG.pins.QBAR1, _D_NC);
 		Connect(this.UAREG.pins.QBAR2, _D_NC);
@@ -8805,7 +8771,6 @@ class SN74HC651 extends Component {
 		Connect(this.U1.pins.Q6, QB7);
 		let QB8 = new Pin();
 		Connect(this.U1.pins.Q7, QB8);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		Connect(this.U1.pins.QBAR1, _D_NC);
 		Connect(this.U1.pins.QBAR2, _D_NC);
@@ -9117,7 +9082,6 @@ class SN74HC652 extends Component {
 		Connect(this.U1.pins.D6, A7_IO);
 		let A8_IO = new Pin();
 		Connect(this.U1.pins.D7, A8_IO);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.Q0, _D_NC);
 		Connect(this.U1.pins.Q1, _D_NC);
 		Connect(this.U1.pins.Q2, _D_NC);
@@ -9437,7 +9401,6 @@ class SN74HC670 extends Component {
 		Connect(this.UA.pins.Q2, AQ2);
 		let AQ3 = new Pin();
 		Connect(this.UA.pins.Q3, AQ3);
-		let _D_NC = new Pin();
 		Connect(this.UA.pins.QBAR0, _D_NC);
 		Connect(this.UA.pins.QBAR1, _D_NC);
 		Connect(this.UA.pins.QBAR2, _D_NC);
@@ -9766,7 +9729,6 @@ class SN74HC678 extends Component {
 		Connect(this.U1.pins.CLEAR, _D_HI);
 		Connect(this.U1.pins.GATE, C);
 		Connect(this.U1.pins.D0, DY);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.Q0, _D_NC);
 		let Y = new Pin();
 		Connect(this.U1.pins.QBAR0, Y);
@@ -9941,7 +9903,6 @@ class SN74HC680 extends Component {
 		Connect(this.U1.pins.CLEAR, _D_HI);
 		Connect(this.U1.pins.GATE, C);
 		Connect(this.U1.pins.D0, DY);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.Q0, _D_NC);
 		let Y = new Pin();
 		Connect(this.U1.pins.QBAR0, Y);
@@ -10235,7 +10196,6 @@ class SN74HC4020 extends Component {
 		Connect(this.U1.pins.K0, _D_HI);
 		let QA = new Pin();
 		Connect(this.U1.pins.Q0, QA);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		this.U2 = new jkff(1);
 		Connect(this.U2.pins.PRESET, _D_HI);
@@ -10401,7 +10361,6 @@ class SN74HC4024 extends Component {
 		Connect(this.U1.pins.K0, _D_HI);
 		let QA = new Pin();
 		Connect(this.U1.pins.Q0, QA);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		this.U2 = new jkff(1);
 		Connect(this.U2.pins.PRESET, _D_HI);
@@ -10507,7 +10466,6 @@ class SN74HC4040 extends Component {
 		Connect(this.U1.pins.K0, _D_HI);
 		let QA = new Pin();
 		Connect(this.U1.pins.Q0, QA);
-		let _D_NC = new Pin();
 		Connect(this.U1.pins.QBAR0, _D_NC);
 		this.U2 = new jkff(1);
 		Connect(this.U2.pins.PRESET, _D_HI);
@@ -11198,7 +11156,6 @@ class SN74HC4724 extends Component {
 		Connect(this.UL0.pins.GATE, EN0);
 		Connect(this.UL0.pins.D0, DD);
 		Connect(this.UL0.pins.Q0, this.pins.Q0);
-		let _D_NC = new Pin();
 		Connect(this.UL0.pins.QBAR0, _D_NC);
 		this.UL1 = new dltch(1);
 		Connect(this.UL1.pins.PRESET, PREB);

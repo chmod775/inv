@@ -105,6 +105,7 @@ class Pin {
 }
 const _D_HI = new Pin();
 const _D_LO = new Pin();
+const _D_NC = new Pin();
 
 class Footprint {
 	constructor() {
@@ -238,6 +239,20 @@ class Circuit extends Footprint {
 	}
 
 	//init() {}
+
+	GetComponents(deep, ret) {
+		ret = ret ?? [];
+		for (let k in this) {
+			let item = this[k];
+			if (item instanceof Component)
+				ret.push(item);
+			if (item instanceof Circuit)
+				if (deep)	
+					item.GetComponents(true, ret);
+		}
+
+		return ret;
+	}
 
 	GetCircuits() {
 		let ret = {};
@@ -553,7 +568,6 @@ class dff extends Circuit {
 			this.pins[`QBAR${i}`].SetValue(!this.pins[`Q${i}`].GetValue());
 		}
 
-
 		this.oldClock = clock;
 	}
 }
@@ -667,6 +681,7 @@ class logicexp extends Circuit {
 module.exports.Connect = Connect;
 module.exports._D_HI = _D_HI;
 module.exports._D_LO = _D_LO;
+module.exports._D_NC = _D_NC;
 
 module.exports.Logger = Logger;
 module.exports.Wire = Wire;

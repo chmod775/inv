@@ -444,7 +444,7 @@ class Circuit {
 					var destPin = `this.pins.${pp}`;
 	
 					if (isTemporary) {
-						if ((pp != '_D_HI') && (pp != '_D_LOW'))
+						if ((pp != '_D_HI') && (pp != '_D_LOW') && (pp != '_D_NC'))
 							if (!temporary.includes(pp)) {
 								temporary.push(pp);
 								out.push(`\t\tlet ${pp} = new Pin();`);
@@ -548,7 +548,7 @@ function ConvertFile(filename) {
 	}
 	
 	const codeLines = [];
-	codeLines.push(`const { Connect, _D_HI, _D_LO, Logger, Wire, Pin, Footprint, Plug, Circuit, Component, Board, Bus, inv, inva, and, or, bufa, nora, dff, dltch, buf3a, logicexp } = require('./core.js');`)
+	codeLines.push(`const { Connect, _D_HI, _D_LO, _D_NC, Logger, Wire, Pin, Footprint, Plug, Circuit, Component, Board, Bus, inv, inva, and, or, bufa, nora, dff, dltch, buf3a, logicexp } = require('./core.js');`)
 	for (var c of circuitsObjects) {
     let comment = comments[c.name];
     if (comment) {

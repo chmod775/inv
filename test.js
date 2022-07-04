@@ -218,14 +218,29 @@ class ALUBoard extends Board {
 			acc_oe: new Pin()
 		};
 
-		this.lsb_alu = new hc.SN74HC181();
 		this.pre_acc = new hc.SN74HC574();
 		this.post_acc = new hc.SN74HC574();
 		this.buf = new hc.SN74HC244();
 
+		this.lsb_alu = new hc.SN74HC181();
 		Connect(_D_LO, this.lsb_alu.pins.M_I);
 		Connect(_D_HI, this.lsb_alu.pins.CN_I);
 		Connect(this.pins.op, this.lsb_alu.SelBus());
+		let lsb_dataBus = this.pins.data.Split(0, 3);
+		let lsb_accBus = this.post_acc.OutputBus().Split(0, 3);
+		Connect(lsb_dataBus, this.lsb_alu.ABus());
+		Connect(lsb_accBus, this.lsb_alu.BBus());
+		Connect(this.lsb_alu.OutBus(), this.pre_acc.InputBus().Split(0, 3));
+
+		this.msb_alu = new hc.SN74HC181();
+		Connect(_D_LO, this.msb_alu.pins.M_I);
+		Connect(this.lsb_alu.pins.CN_4_O, this.msb_alu.pins.CN_I);
+		Connect(this.pins.op, this.msb_alu.SelBus());
+		let msb_dataBus = this.pins.data.Split(4, 7);
+		let msb_accBus = this.post_acc.OutputBus().Split(4, 7);
+		Connect(msb_dataBus, this.msb_alu.ABus());
+		Connect(msb_accBus, this.msb_alu.BBus());
+		Connect(this.msb_alu.OutBus(), this.pre_acc.InputBus().Split(4, 7));
 
 		this.not_exe = new hc.SN74HC05();
 		Connect(this.pins.exe, this.not_exe.pins.A);
@@ -236,17 +251,6 @@ class ALUBoard extends Board {
 		Connect(_D_LO, this.post_acc.pins.OCBAR);
 		Connect(this.not_exe.pins.Y, this.post_acc.pins.CLK);
 
-		let lsb_dataBus = this.pins.data.Split(0, 3);
-		let msb_dataBus = this.pins.data.Split(4, 7);
-
-		let lsb_accBus = this.post_acc.OutputBus().Split(0, 3);
-		let msb_accBus = this.post_acc.OutputBus().Split(4, 7);
-
-		Connect(lsb_dataBus, this.lsb_alu.ABus());
-		Connect(lsb_accBus, this.lsb_alu.BBus());
-
-		Connect(this.lsb_alu.OutBus(), this.pre_acc.InputBus().Split(0, 3));
-
 		Connect(this.pre_acc.InputBus(), this.post_acc.InputBus());
 
 		Connect(this.post_acc.OutputBus(), this.buf.InputBus());
@@ -256,9 +260,8 @@ class ALUBoard extends Board {
 
 	$debug() {
 		this.lsb_alu.PrintPinValues('lsb_alu');
+		this.msb_alu.PrintPinValues('msb_alu');
 		this.pre_acc.PrintPinValues('pre_acc');
-		this.post_acc.PrintPinValues('post_acc');
-		this.buf.PrintPinValues('buf');
 	}
 
 	LoadAcc(value) {
@@ -357,7 +360,7 @@ console.log(t.u3.pins._1Q.GetValue());
 */
 
 t.u100.pins.M_I.SetValue(false);
-t.u100.pins.CN_I.SetValue(true);
+t.u100.pins.CN_I.SetValue(false);
 t.u100.pins.S0_I.SetValue(true);
 t.u100.pins.S1_I.SetValue(false);
 t.u100.pins.S2_I.SetValue(false);
@@ -365,7 +368,7 @@ t.u100.pins.S3_I.SetValue(true);
 
 t.u100.pins.A0BAR_I.SetValue(false);
 t.u100.pins.A1BAR_I.SetValue(false);
-t.u100.pins.A2BAR_I.SetValue(true);
+t.u100.pins.A2BAR_I.SetValue(false);
 t.u100.pins.A3BAR_I.SetValue(false);
 
 t.u100.pins.B0BAR_I.SetValue(false);
@@ -375,10 +378,7 @@ t.u100.pins.B3BAR_I.SetValue(false);
 
 t.$execute();t.$execute();
 
-console.log(t.u100.pins.F0BAR_O.GetValue());
-console.log(t.u100.pins.F1BAR_O.GetValue());
-console.log(t.u100.pins.F2BAR_O.GetValue());
-console.log(t.u100.pins.F3BAR_O.GetValue());
+console.log(t.u100.pins.CN_4_O.GetValue());
 
 console.log('');
 /*
@@ -406,8 +406,8 @@ t.printSegments();
 let b = new RegistersBoard(8);
 let a = new ALUBoard();
 
-a.LoadAcc(3);
-a.pins.data.WriteData(5);
+a.LoadAcc(127);
+a.pins.data.WriteData(4);
 a.pins.op.WriteData(9);
 a.Execute();
 
@@ -416,8 +416,10 @@ a.pins.acc_oe.SetValue(false);
 a.$execute();a.$execute();
 
 a.PrintPinValues();
+
 console.log('alu', a.pins.data.ReadData());
 
+console.log(b.GetComponents(true).map(t => t.constructor.name));
 
 /*
 b.pins.data.WriteData(111);
