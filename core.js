@@ -1,5 +1,27 @@
 const vm = require('vm');
 
+Object.defineProperty(global, '__stack', {
+  get: function(){
+    var orig = Error.prepareStackTrace;
+    Error.prepareStackTrace = function(_, stack){ return stack; };
+    var err = new Error;
+    Error.captureStackTrace(err, arguments.callee);
+    var stack = err.stack;
+    Error.prepareStackTrace = orig;
+    return stack;
+  }
+});
+
+Object.defineProperty(global, '__line', {
+  get: function(){
+    return __stack[1].getLineNumber();
+  }
+});
+
+global.__deepLine = function(l) {
+	return __stack[l].getLineNumber();
+}
+
 class Logger {
   static BASH_Color_None = '\x1b[0m';
   static BASH_Color_Green = '\x1b[32m';
@@ -94,7 +116,11 @@ class Pin {
 	}
 
 	SetValue(value) {
-		if (!this.wire) return;
+		if (!this.wire) {
+			this.wire = new Wire();
+			this.wire.ConnectPin(this);
+			Logger.Warning(`Wire not defined for Pin at line ${__deepLine(2)}!`);
+		}
 		this.wire.value = value;
 	}
 
@@ -216,7 +242,7 @@ class Plug extends Footprint {
 
 	WriteData(data) {
 		for (var i = 0; i < this.n; i++) {
-			this.pins[`${this.prefix}${i}`].SetValue(data & 0x01);
+			this.pins[`${this.prefix}${i}`].SetValue(data & 1);
 			data = data >> 1;
 		}
 	}

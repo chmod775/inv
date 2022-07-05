@@ -4,6 +4,7 @@ const { Connect, _D_HI, _D_LO, Logger, Wire, Pin, Footprint, Plug, Circuit, Comp
 const core = require('./core.js');
 const hc = require('./74hc_code.js');
 const ls = require('./74ls_code.js');
+const { METHODS } = require('http');
 
 hc.SN74HC573.prototype.InputBus = function() {
 	return new Bus([
@@ -119,6 +120,24 @@ hc.SN74HC181.prototype.OutBus = function() {
 		this.pins.F1BAR_O,
 		this.pins.F2BAR_O,
 		this.pins.F3BAR_O
+	]);
+}
+
+hc.SN74HC163.prototype.SetBus = function() {
+	return new Bus([
+		this.pins.A_I,
+		this.pins.B_I,
+		this.pins.C_I,
+		this.pins.D_I
+	]);
+}
+
+hc.SN74HC163.prototype.OutBus = function() {
+	return new Bus([
+		this.pins.QA_O,
+		this.pins.QB_O,
+		this.pins.QC_O,
+		this.pins.QD_O
 	]);
 }
 
@@ -251,9 +270,9 @@ class ALUBoard extends Board {
 		Connect(_D_LO, this.post_acc.pins.OCBAR);
 		Connect(this.not_exe.pins.Y, this.post_acc.pins.CLK);
 
-		Connect(this.pre_acc.InputBus(), this.post_acc.InputBus());
+		Connect(this.pre_acc.OutputBus(), this.post_acc.InputBus());
 
-		Connect(this.post_acc.OutputBus(), this.buf.InputBus());
+		Connect(this.pre_acc.OutputBus(), this.buf.InputBus());
 		Connect(this.pins.acc_oe, [ this.buf.pins.G1BAR, this.buf.pins.G2BAR ]);
 		Connect(this.buf.OutputBus(), this.pins.data);
 	}
@@ -280,6 +299,62 @@ class ALUBoard extends Board {
 		this.$execute();this.$execute();
 	}
 }
+
+class PCDecoder extends Board {
+	constructor() {
+		super();
+
+	}
+}
+
+class RAM extends Board {
+	constructor(dataSize, addrSize) {
+		super();
+		
+		dataSize = dataSize ?? 8;
+		addrSize = addrSize ?? 16;
+
+		this.pins = {
+			data: new Plug(dataSize, 'D'),
+			addr: new Plug(addrSize, 'A'),
+			cs: new Pin(),
+			we: new Pin(),
+			oe: new Pin()
+		};
+
+		this.content = [];
+		
+		for (let i = 0; i < Math.pow(2, addrSize); i++)
+			this.content[i] = 0x00;
+		
+	}
+
+	$execute() {
+		let addr = this.pins.addr.ReadData();
+
+		if (!this.pins.cs.GetValue()) {
+			if (!this.pins.we.GetValue()) {
+				this.content[addr] = this.pins.data.ReadData();
+			} else if (!this.pins.oe.GetValue()) {
+				this.pins.data.WriteData(this.content[addr]);
+			}
+		}
+	}
+
+	PrintArea(start, banks) {
+		banks = banks ?? 8;
+
+		for (let b = 0; b < banks; b++) {
+			let startAddr = start + (16 * b);
+			let bankData = [];
+			for (let a = startAddr; a < startAddr + 16; a++)
+				bankData.push(this.content[a]);
+			
+			console.log(`[${startAddr.toString(16).padStart(4, '0')}] ${bankData.map(t => t.toString(16).padStart(2, '0')).join(' ')}`);
+		}
+	}
+}
+
 
 class TestBoard extends Board {
 	constructor() {
@@ -336,81 +411,65 @@ class TestBoard extends Board {
 	}
 }
 
-let t = new TestBoard();
-/*
-t.u3.pins._1D.SetValue(true);
-t.$execute();
-console.log(t.u3.pins._1Q.GetValue());
+//t.printSegments();
 
-t.u3.pins.CLK.SetValue(true);
-t.$execute();
-console.log(t.u3.pins._1Q.GetValue());
+let addrBus = new Bus(16);
+let dataBus = new Bus(8);
 
-t.u3.pins._1D.SetValue(false);
-t.$execute();
-console.log(t.u3.pins._1Q.GetValue());
-
-t.u3.pins.CLK.SetValue(false);
-t.$execute();
-console.log(t.u3.pins._1Q.GetValue());
-
-t.u3.pins.CLK.SetValue(true);
-t.$execute();
-console.log(t.u3.pins._1Q.GetValue());
-*/
-
-t.u100.pins.M_I.SetValue(false);
-t.u100.pins.CN_I.SetValue(false);
-t.u100.pins.S0_I.SetValue(true);
-t.u100.pins.S1_I.SetValue(false);
-t.u100.pins.S2_I.SetValue(false);
-t.u100.pins.S3_I.SetValue(true);
-
-t.u100.pins.A0BAR_I.SetValue(false);
-t.u100.pins.A1BAR_I.SetValue(false);
-t.u100.pins.A2BAR_I.SetValue(false);
-t.u100.pins.A3BAR_I.SetValue(false);
-
-t.u100.pins.B0BAR_I.SetValue(false);
-t.u100.pins.B1BAR_I.SetValue(false);
-t.u100.pins.B2BAR_I.SetValue(false);
-t.u100.pins.B3BAR_I.SetValue(false);
-
-t.$execute();t.$execute();
-
-console.log(t.u100.pins.CN_4_O.GetValue());
-
-console.log('');
-/*
-t.reg.pins.bus.WriteData(10);
-t.reg.pins.le.SetValue(true);
-t.reg.pins.oe.SetValue(true);
-t.$execute();t.$execute();
-
-t.reg.pins.le.SetValue(false);
-t.reg.pins.oe.SetValue(true);
-t.$execute();t.$execute();
-
-t.reg.pins.bus.WriteData(111);
-t.reg.pins.le.SetValue(false);
-t.reg.pins.oe.SetValue(false);
-t.$execute();t.$execute();
-
-
-console.log(t.reg.pins.bus.ReadData());
-*/
-
-t.printSegments();
-
-
+let r = new RAM(8, 16);
+let d = new PCDecoder();
 let b = new RegistersBoard(8);
 let a = new ALUBoard();
+
+Connect(addrBus, r.pins.addr);
+
+Connect(dataBus, a.pins.data);
+Connect(dataBus, b.pins.data);
+Connect(dataBus, r.pins.data);
+
+
+b.WriteValue(0, 123);
+b.WriteValue(1, 1);
+b.WriteValue(2, 255);
+b.WriteValue(3, 3);
+b.WriteValue(4, 5);
+
 
 a.LoadAcc(127);
 a.pins.data.WriteData(4);
 a.pins.op.WriteData(9);
-a.Execute();
+//a.Execute();
 
+a.pins.exe.SetValue(true);
+a.pins.acc_oe.SetValue(true);
+a.$execute();a.$execute();
+
+a.pins.exe.SetValue(false);
+a.pins.acc_oe.SetValue(false);
+a.$execute();a.$execute();
+
+
+b.pins.sel.WriteData(3);
+b.pins.le.SetValue(false);
+b.pins.oe.SetValue(true);
+b.$execute();b.$execute();
+
+b.pins.le.SetValue(true);
+b.pins.oe.SetValue(true);
+b.$execute();b.$execute();
+
+
+console.log('alu', b.pins.data.ReadData());
+
+r.pins.addr.WriteData(0x1001);
+r.pins.cs.SetValue(false);
+r.pins.oe.SetValue(true);
+r.pins.we.SetValue(false);
+r.$execute();r.$execute();
+
+r.PrintArea(0x1000);
+
+/*
 a.pins.exe.SetValue(false);
 a.pins.acc_oe.SetValue(false);
 a.$execute();a.$execute();
@@ -420,7 +479,7 @@ a.PrintPinValues();
 console.log('alu', a.pins.data.ReadData());
 
 console.log(b.GetComponents(true).map(t => t.constructor.name));
-
+*/
 /*
 b.pins.data.WriteData(111);
 b.pins.sel.WriteData(0);
@@ -441,11 +500,10 @@ b.$execute();b.$execute();
 console.log(b.pins.data.ReadData());
 */
 
-b.WriteValue(0, 123);
-b.WriteValue(1, 1);
-b.WriteValue(2, 255);
-b.WriteValue(3, 3);
-b.WriteValue(4, 5);
+
+
+
+
 console.log(b.ReadValue(0));
 console.log(b.ReadValue(1));
 console.log(b.ReadValue(2));
