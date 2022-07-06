@@ -1,0 +1,133 @@
+SET			0000v vvv		A.0-3 = v
+
+R2A			0001r rrr		A = R[r] - Move Register into A
+
+A2R			0010r rrr		R[r] = A - Move A into Register
+
+LDM			00110 rrr		A = ADDR[ R[ r*2 ] + ( R[ (r*2)+1 ] * 8 ) ] - Load from Memory
+STM			00111 rrr		ADDR[ R[ r*2 ] + ( R[ (r*2)+1 ] * 8 ) ] = A - Store into Memory
+
+JMP			01000 rrr		PC = R[ r*2 ] + ( R[ (r*2)+1 ] * 8 )	- Jump always
+CAL			01001 rrr		PC = R[ r*2 ] + ( R[ (r*2)+1 ] * 8 )	- Call
+
+SKA			01010 svv		PC = PC + _v - Skip with constant if T flag is 1
+SKN			01011 svv		PC = PC + _v - Skip with constant if T flag is 0
+
+				0110x xxx		
+
+CMP			0111x xxx		? Necessary
+
+ADD			1000r rrr		A = A + R[r] + C
+
+SUB			1001r rrr		A = A - R[r] - C
+
+AND			1010r rrr		A = A & R[r]
+
+ORA			1011r rrr		A = A | R[r]
+
+XOR			1100r rrr		A = A ^ R[r]
+
+BIT			11010 bbb		T = A.b - Get a signle bit of the accumulator
+BOT			11011 bbb		A.b = T - Set a single bit in the accumulator
+
+ARL			11100 000		- Rotate A left
+ARR			11100 001		- Rotate A right
+ASL			11100 010		- Shift A left
+ASR			11100 011		- Shift A right
+extra		11100 100		
+extra		11100 101		
+extra		11100 110		
+extra		11100 111		
+T0			11101 000		T = 0
+T2C			11101 001		C = T - Move Test flag into Carry Flag
+C2T			11101 010		T = C - Move Carry Flag into Test flag
+extra		11101 011		
+Z2T			11101 100		T = Z - Move Zero Flag into Test flag
+extra		11101 101		
+extra		11101 110		
+TNT			11101 111		T = !T - Negate T (or random explosion)
+
+SWP			11110 000		A.0-3 = A.4-7 ; A.4-7 = A.0-3
+CLR			11110 001		A = 0
+extra		11110 010		
+extra		11110 011		
+RTN			11110 100		- Return from CAL
+extra		11110 101		
+extra		11110 110		
+extra		11110 111		
+PUSH		11111 000		- Push A to Stack (increment SP)
+POP			11111 001		- Pop A to Stack (decrement SP)
+extra		11111 010		
+extra		11111 011		
+BRA			11111 100		PC = PC + A - Branch if T flag is 1
+BRN			11111 101		PC = PC + A - Branch if T flag is 0
+extra		11111 110		
+NOP			11111 111		NOPe
+
+PC - Program Counter
+Flags
+Z - Zero
+C - Carry
+
+I - Interrupt request
+B - Break
+
+T - Test bit
+
+
+ALU
+	0000	-	SET
+	0001	-	SWAP
+	0010	-	
+	0011	-	
+	0100	-	ADD
+	0101	-	SUB
+	0110	-	
+	0111	-	
+	1000	-	AND
+	1001	-	OR
+	1010	-	XOR
+	1011	-	
+	1100	-	ROTATE LEFT
+	1101	-	ROTATE RIGHT
+	1110	-	SHIFT LEFT
+	1111	-	SHIFT RIGHT
+
+STEPS
+	0		-	Fetch opcode (ADDRESS from PC, DATA from MEMORY, OPCODE from DATA)
+	1		-	
+
+
+
+A00		00-32	VCC	
+A01		01-33	INT	
+A02		02-34	RST	
+A03		03-35	GND	
+A04		04-36	CLK	
+A05		05-37	STEP_00	
+A06		06-38	STEP_01	
+A07		07-39	STEP_02	
+A08		08-40		
+A09		09-41		
+A10		10-42		
+A11		11-43		
+A12		12-44	ALU_00	
+A13		13-45	ALU_01	
+A14		14-46	ALU_02	
+A15		15-47	ALU_03	
+D00		16-48	INSTR_R2d	
+D01		17-49	INSTR_d2R	
+D02		18-50	INSTR_A2d	
+D03		19-51	INSTR_d2A	
+D04		20-52	INSTR_MEM2d	
+D05		21-53	INSTR_d2MEM	
+D06		22-54	INSTR_ALU	
+D07		23-55	INSTR_R2addr	
+OP00	24-56	INSTR_addr2PC	
+OP01	25-57	INSTR_	
+OP02	26-58	INSTR_	
+OP03	27-59	INSTR_	
+OP04	28-60	INSTR_	
+OP05	29-61	INSTR_	
+OP06	30-62	INSTR_	
+OP07	31-63	INSTR_EXTRA	

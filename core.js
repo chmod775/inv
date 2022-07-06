@@ -215,46 +215,6 @@ class Footprint {
 	}
 }
 
-class Plug extends Footprint {
-	constructor(n, prefix) {
-		super();
-
-		this.pins = {};
-
-		this.prefix = prefix ?? '';
-		this.n = n;
-
-		for (var i = 0; i < n; i++)
-			this.pins[`${this.prefix}${i}`] = new Pin();
-		
-		//this._addDebugNames();
-	}
-
-	Split(start, end) {
-		let ret = new Plug(0);
-		for (var i = start; i <= end; i++) {
-			ret.pins[`${this.prefix}${i}`] = this.pins[`${this.prefix}${i}`];
-		}
-		ret.prefix = this.prefix;
-		ret.n = (end - start) + 1;
-		return ret;
-	}
-
-	WriteData(data) {
-		for (var i = 0; i < this.n; i++) {
-			this.pins[`${this.prefix}${i}`].SetValue(data & 1);
-			data = data >> 1;
-		}
-	}
-
-	ReadData() {
-		let out = 0x00;
-		for (var i = 0; i < this.n; i++)
-			out |= this.pins[`${this.prefix}${i}`].GetValue() ? (1 << i) : 0;
-		return out;
-	}
-}
-
 class Circuit extends Footprint {
 	constructor(...args) {
 		super();
@@ -333,7 +293,7 @@ class Component extends Circuit {
 
 }
 
-class Board extends Component {
+class Board extends Circuit {
 
 }
 
@@ -748,7 +708,6 @@ module.exports.Logger = Logger;
 module.exports.Wire = Wire;
 module.exports.Pin = Pin;
 module.exports.Footprint = Footprint;
-module.exports.Plug = Plug;
 module.exports.Circuit = Circuit;
 module.exports.Component = Component;
 module.exports.Board = Board;

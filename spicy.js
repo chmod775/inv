@@ -548,7 +548,7 @@ function ConvertFile(filename) {
 	}
 	
 	const codeLines = [];
-	codeLines.push(`const { Connect, _D_HI, _D_LO, _D_NC, Logger, Wire, Pin, Footprint, Plug, Circuit, Component, Board, Bus, inv, inva, and, or, bufa, nora, dff, srff, dltch, buf3a, logicexp } = require('./core.js');`)
+	codeLines.push(`const { Connect, _D_HI, _D_LO, _D_NC, Logger, Wire, Pin, Footprint, Circuit, Component, Board, Bus, inv, inva, and, or, bufa, nora, dff, srff, dltch, buf3a, logicexp } = require('./core.js');`)
 	for (var c of circuitsObjects) {
     let comment = comments[c.name];
     if (comment) {
