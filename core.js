@@ -344,6 +344,7 @@ class Bus extends Circuit {
 		this.prefix = prefix ?? '';
 
 		if (Array.isArray(n)) {
+			this.n = n.length;
 			for (var i = 0; i < n.length; i++) {
 				let nItem = n[i];
 				if (!nItem) Logger.Panic(`Pin not found!`);
@@ -358,6 +359,7 @@ class Bus extends Circuit {
 				}
 			}
 		} else {
+			this.n = n;
 			for (var i = 0; i < n; i++)
 				this.pins[`${this.prefix}${i}`] = new Pin();
 		}
@@ -428,6 +430,7 @@ function Connect(srcPin, destPin) {
 			return newWire;
 		} else {
 			let newWires = [];
+
 			for (let k in srcPinMap) {
 				let newWire = new Wire();
 
@@ -577,20 +580,16 @@ class dff extends Circuit {
 		let clearActive = !this.pins.CLEAR.GetValue();
 		let clock = this.pins.CLOCK.GetValue();
 
-		if (clock && !this.oldClock) {
-			for (var i = 0; i < this.n; i++)
+		for (var i = 0; i < this.n; i++) {
+			if (clock && !this.oldClock)
 				this.pins[`Q${i}`].SetValue(this.pins[`D${i}`].GetValue());
-		}
 
-		if (presetActive)
-			for (var i = 0; i < this.n; i++)
+			if (presetActive)
 				this.pins[`Q${i}`].SetValue(true);
 
-		if (clearActive)
-			for (var i = 0; i < this.n; i++)
+			if (clearActive)
 				this.pins[`Q${i}`].SetValue(false);
-		
-		for (var i = 0; i < this.n; i++) {
+			
 			this.pins[`QBAR${i}`].SetValue(!this.pins[`Q${i}`].GetValue());
 		}
 
@@ -598,6 +597,47 @@ class dff extends Circuit {
 	}
 }
 
+
+class srff extends Circuit {
+	constructor(n) {
+		super();
+
+		this.pins = {
+			PRESET: new Pin(),
+			CLEAR: new Pin(),
+			GATE: new Pin()
+		}
+
+		this.n = n;
+		for (var i = 0; i < n; i++) {
+			this.pins[`S${i}`] = new Pin();
+			this.pins[`R${i}`] = new Pin();
+			this.pins[`Q${i}`] = new Pin();
+			this.pins[`QBAR${i}`] = new Pin();
+		}
+	}
+
+	$execute() {
+		let presetActive = !this.pins.PRESET.GetValue();
+		let clearActive = !this.pins.CLEAR.GetValue();
+		let gate = this.pins.GATE.GetValue();
+
+		for (var i = 0; i < this.n; i++) {
+			if (gate) {
+				if (this.pins[`S${i}`].GetValue()) this.pins[`Q${i}`].SetValue(true);
+				if (this.pins[`R${i}`].GetValue()) this.pins[`Q${i}`].SetValue(false);
+			}
+
+			if (presetActive)
+				this.pins[`Q${i}`].SetValue(true);
+
+			if (clearActive)
+					this.pins[`Q${i}`].SetValue(false);
+			
+			this.pins[`QBAR${i}`].SetValue(!this.pins[`Q${i}`].GetValue());
+		}
+	}
+}
 
 class dltch extends Circuit {
 	constructor(n) {
@@ -622,20 +662,16 @@ class dltch extends Circuit {
 		let clearActive = !this.pins.CLEAR.GetValue();
 		let gate = this.pins.GATE.GetValue();
 
-		if (gate) {
-			for (var i = 0; i < this.n; i++)
-				this.pins[`Q${i}`].SetValue(this.pins[`D${i}`].GetValue());
-		}
-
-		if (presetActive)
-			for (var i = 0; i < this.n; i++)
-				this.pins[`Q${i}`].SetValue(true);
-
-		if (clearActive)
-			for (var i = 0; i < this.n; i++)
-				this.pins[`Q${i}`].SetValue(false);
-		
 		for (var i = 0; i < this.n; i++) {
+			if (gate)
+				this.pins[`Q${i}`].SetValue(this.pins[`D${i}`].GetValue());
+	
+			if (presetActive)
+				this.pins[`Q${i}`].SetValue(true);
+	
+			if (clearActive)
+				this.pins[`Q${i}`].SetValue(false);
+			
 			this.pins[`QBAR${i}`].SetValue(!this.pins[`Q${i}`].GetValue());
 		}
 	}
@@ -683,24 +719,23 @@ class logicexp extends Circuit {
 
 	Logic(code) {
 		this.code = code;
+		this.codeScript = new vm.Script(this.code);
+		this.context = vm.createContext({});
 		return this;
 	}
 
 	$execute() {
-		let context = {};
-
 		for (var i of this.inputs)
-			context[i] = this.pins[i].GetValue() ? 255 : 0;
+			this.context[i] = this.pins[i].GetValue() ? 255 : 0;
 		for (var i of this.outputs)
-			context[i] = this.pins[i].GetValue() ? 255 : 0;
+			this.context[i] = this.pins[i].GetValue() ? 255 : 0;
 		for (var i of this.temps)
-			context[i] = false;
+			this.context[i] = false;
 
-		vm.createContext(context); 
-		vm.runInContext(this.code, context);
+		this.codeScript.runInContext(this.context);
 
 		for (var i of this.outputs)
-			this.pins[i].SetValue(context[i]);
+			this.pins[i].SetValue(this.context[i]);
 	}
 }
 
@@ -726,6 +761,7 @@ module.exports.or = or;
 module.exports.bufa = bufa;
 module.exports.nora = nora;
 module.exports.dff = dff;
+module.exports.srff = srff;
 module.exports.dltch = dltch;
 module.exports.buf3a = buf3a;
 module.exports.logicexp = logicexp;

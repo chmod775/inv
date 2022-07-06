@@ -131,8 +131,41 @@ hc.SN74HC163.prototype.SetBus = function() {
 		this.pins.D_I
 	]);
 }
-
 hc.SN74HC163.prototype.OutBus = function() {
+	return new Bus([
+		this.pins.QA_O,
+		this.pins.QB_O,
+		this.pins.QC_O,
+		this.pins.QD_O
+	]);
+}
+
+hc.SN74HC193.prototype.SetBus = function() {
+	return new Bus([
+		this.pins.A_I,
+		this.pins.B_I,
+		this.pins.C_I,
+		this.pins.D_I
+	]);
+}
+hc.SN74HC193.prototype.OutBus = function() {
+	return new Bus([
+		this.pins.QA_O,
+		this.pins.QB_O,
+		this.pins.QC_O,
+		this.pins.QD_O
+	]);
+}
+
+ls.SN74LS197.prototype.SetBus = function() {
+	return new Bus([
+		this.pins.A_I,
+		this.pins.B_I,
+		this.pins.C_I,
+		this.pins.D_I
+	]);
+}
+ls.SN74LS197.prototype.OutBus = function() {
 	return new Bus([
 		this.pins.QA_O,
 		this.pins.QB_O,
@@ -304,6 +337,60 @@ class PCDecoder extends Board {
 	constructor() {
 		super();
 
+		this.pins = {
+			data: new Plug(8, 'D'),
+			addr: new Plug(16, 'A'),
+			clk: new Pin(),
+			oe_pc: new Pin(),
+			le_pc: new Pin(),
+			le_decoder: new Pin()
+		};
+
+		this.n1_counter = new hc.SN74HC193();
+		this.n2_counter = new hc.SN74HC193();
+		this.n3_counter = new hc.SN74HC193();
+		this.n4_counter = new hc.SN74HC193();
+
+		this.lsb_buf = new hc.SN74HC244();
+		this.msb_buf = new hc.SN74HC244();
+
+		Connect(_D_HI, [ this.n1_counter.pins.DOWN_I, this.n2_counter.pins.DOWN_I, this.n3_counter.pins.DOWN_I, this.n4_counter.pins.DOWN_I ]);
+		Connect(this.pins.clk, this.n1_counter.pins.UP_I);
+		/*
+		Connect([ this.n1_counter.pins.BOBAR_O, this.n1_counter.pins.COBAR_O ], [ this.n2_counter.pins.DOWN_I, this.n2_counter.pins.UP_I ]);
+		Connect([ this.n2_counter.pins.BOBAR_O, this.n2_counter.pins.COBAR_O ], [ this.n3_counter.pins.DOWN_I, this.n3_counter.pins.UP_I ]);
+		Connect([ this.n3_counter.pins.BOBAR_O, this.n3_counter.pins.COBAR_O ], [ this.n4_counter.pins.DOWN_I, this.n4_counter.pins.UP_I ]);
+*/
+		Connect(this.n1_counter.pins.COBAR_O, this.n2_counter.pins.UP_I);
+		Connect(this.n2_counter.pins.COBAR_O, this.n3_counter.pins.UP_I);
+		Connect(this.n3_counter.pins.COBAR_O, this.n4_counter.pins.UP_I);
+
+
+		Connect(_D_LO, [ this.n1_counter.pins.CLR_I, this.n2_counter.pins.CLR_I, this.n3_counter.pins.CLR_I, this.n4_counter.pins.CLR_I ]);
+
+		Connect(this.pins.addr.Split(0, 3), this.n1_counter.SetBus());
+		Connect(this.pins.addr.Split(4, 7), this.n2_counter.SetBus());
+		Connect(this.pins.addr.Split(8, 11), this.n3_counter.SetBus());
+		Connect(this.pins.addr.Split(12, 15), this.n4_counter.SetBus());
+		Connect(this.pins.le_pc, [ this.n1_counter.pins.LOADBAR_I, this.n2_counter.pins.LOADBAR_I, this.n3_counter.pins.LOADBAR_I, this.n4_counter.pins.LOADBAR_I ])
+
+		Connect(this.pins.oe_pc, [ this.lsb_buf.pins.G1BAR, this.lsb_buf.pins.G2BAR, this.msb_buf.pins.G1BAR, this.msb_buf.pins.G2BAR ]);
+
+		Connect(this.n1_counter.OutBus(), this.lsb_buf.InputBus().Split(0, 3));
+		Connect(this.n2_counter.OutBus(), this.lsb_buf.InputBus().Split(4, 7));
+		Connect(this.n3_counter.OutBus(), this.msb_buf.InputBus().Split(0, 3));
+		Connect(this.n4_counter.OutBus(), this.msb_buf.InputBus().Split(4, 7));
+
+		Connect(this.lsb_buf.OutputBus(), this.pins.addr.Split(0, 7));
+		Connect(this.msb_buf.OutputBus(), this.pins.addr.Split(8, 15));
+		
+	}
+
+	ClockPulse() {
+		this.n1_counter.pins.UP_I.SetValue(false);
+		this.$execute();//this.$execute();
+		this.n1_counter.pins.UP_I.SetValue(true);
+		this.$execute();//this.$execute();
 	}
 }
 
@@ -469,43 +556,73 @@ r.$execute();r.$execute();
 
 r.PrintArea(0x1000);
 
+console.log('PCDecoder');
+
+d.pins.addr.WriteData(0);
+d.pins.oe_pc.SetValue(true);
+d.pins.clk.SetValue(false);
+d.pins.le_pc.SetValue(false);
+d.$execute();d.$execute();
+
+console.log('CLOCK');
+
+d.pins.clk.SetValue(false);
+d.pins.le_pc.SetValue(true);
+d.$execute();d.$execute();
+
+//d.pins.oe_pc.SetValue(false);
+d.pins.clk.SetValue(false);
+d.pins.le_pc.SetValue(false);
+d.$execute();d.$execute();
+
+d.pins.clk.SetValue(false);
+d.pins.le_pc.SetValue(true);
+d.$execute();d.$execute();
 /*
-a.pins.exe.SetValue(false);
-a.pins.acc_oe.SetValue(false);
-a.$execute();a.$execute();
+d.pins.clk.SetValue(true);
+d.pins.le_pc.SetValue(true);
+d.$execute();d.$execute();
 
-a.PrintPinValues();
+d.pins.clk.SetValue(false);
+d.pins.le_pc.SetValue(true);
+d.$execute();d.$execute();
+*/
 
-console.log('alu', a.pins.data.ReadData());
-
-console.log(b.GetComponents(true).map(t => t.constructor.name));
+/*
+d.pins.addr.WriteData(1);
+d.pins.oe_pc.SetValue(true);
+d.pins.le_pc.SetValue(true);
+d.$execute();d.$execute();
 */
 /*
-b.pins.data.WriteData(111);
-b.pins.sel.WriteData(0);
-b.pins.le.SetValue(false);
-b.pins.oe.SetValue(true);
-b.$execute();b.$execute();
+d.pins.le_pc.SetValue(true);
 
-b.pins.le.SetValue(true);
-b.pins.oe.SetValue(true);
-b.$execute();b.$execute();
-
-b.pins.data.WriteData(3);
-b.pins.sel.WriteData(0);
-b.pins.le.SetValue(true);
-b.pins.oe.SetValue(false);
-b.$execute();b.$execute();
-
-console.log(b.pins.data.ReadData());
+d.ClockPulse();
+console.log(d.pins.addr.ReadData());
+d.ClockPulse();
+console.log(d.pins.addr.ReadData());
+d.ClockPulse();
 */
 
+for (var i = 0; i < 4096; i++)
+	d.ClockPulse();
+
+d.pins.oe_pc.SetValue(false);
+d.$execute();d.$execute();
 
 
-
-
-console.log(b.ReadValue(0));
-console.log(b.ReadValue(1));
-console.log(b.ReadValue(2));
-console.log(b.ReadValue(3));
-console.log(b.ReadValue(4));
+console.log(d.pins.addr.ReadData());
+console.log([
+	d.n1_counter.OutBus().ReadData(),
+	d.n2_counter.OutBus().ReadData(),
+	d.n3_counter.OutBus().ReadData(),
+	d.n4_counter.OutBus().ReadData()
+]);
+console.log([
+	d.lsb_buf.InputBus().ReadData(),
+	d.msb_buf.InputBus().ReadData()
+]);
+console.log([
+	d.lsb_buf.OutputBus().ReadData(),
+	d.msb_buf.OutputBus().ReadData()
+]);
