@@ -30,6 +30,21 @@ hc.SN74HC573.prototype.OutputBus = function() {
 		this.pins._8Q
 	]);
 }
+hc.SN74HC573.prototype._readValue = function() {
+	let internalBus = new Bus([
+		this.U2.pins.IN0_0,
+		this.U2.pins.IN1_0,
+		this.U2.pins.IN2_0,
+		this.U2.pins.IN3_0,
+		this.U2.pins.IN4_0,
+		this.U2.pins.IN5_0,
+		this.U2.pins.IN6_0,
+		this.U2.pins.IN7_0
+	]);
+
+	return internalBus.ReadData();
+}
+
 
 hc.SN74HC574.prototype.InputBus = function() {
 	return new Bus([
@@ -238,7 +253,7 @@ class Register_8Bit extends Circuit {
 		this.pins = {
 			bus: new Bus(8, 'D'),
 			le: new Pin(),
-			oe: new Pin()
+			$oe: new Pin()
 		}
 
 		this.b1 = new Bus(8);
@@ -251,8 +266,12 @@ class Register_8Bit extends Circuit {
 		//Connect(this.c1.OutputBus(), this.c2.InputBus());
 		Connect(this.c1.OutputBus(), this.b1);
 
-		Connect(this.pins.oe, this.c1.pins.OCBAR);
+		Connect(this.pins.$oe, this.c1.pins.OCBAR);
 		Connect(this.pins.le, this.c1.pins.C);
+	}
+
+	_readValue() {
+		return this.c1._readValue();
 	}
 }
 
@@ -262,10 +281,12 @@ class RegistersBoard extends Board {
 
 		this.pins = {
 			data: new Bus(8, 'D'),
-			sel: new Bus(4, 'A'),
-			le: new Pin(),
-			oe: new Pin()
+			sel: new Bus(4, 'S'),
+			$le: new Pin(),
+			$oe: new Pin()
 		};
+
+		this.n_regs = n_regs;
 
 		for (var i = 0; i < n_regs; i++) {
 			this[`reg_${i}`] = new Register_8Bit();
@@ -274,16 +295,16 @@ class RegistersBoard extends Board {
 		
 		// OE Demultiplexer
 		this.oe_demult = new hc.SN74HC154();
-		Connect(this.pins.oe, this.oe_demult.pins.G1BAR_I);
-		Connect(this.pins.oe, this.oe_demult.pins.G2BAR_I);
+		Connect(this.pins.$oe, this.oe_demult.pins.G1BAR_I);
+		Connect(this.pins.$oe, this.oe_demult.pins.G2BAR_I);
 		Connect(this.pins.sel, this.oe_demult.SelBus());
 		for (var i = 0; i < n_regs; i++)
-			Connect(this.oe_demult.pins[`Y${i}_O`], this[`reg_${i}`].pins.oe);
+			Connect(this.oe_demult.pins[`Y${i}_O`], this[`reg_${i}`].pins.$oe);
 		
 		// LE Demultiplexer
 		this.le_demult = new hc.SN74HC154();
-		Connect(this.pins.le, this.le_demult.pins.G1BAR_I);
-		Connect(this.pins.le, this.le_demult.pins.G2BAR_I);
+		Connect(this.pins.$le, this.le_demult.pins.G1BAR_I);
+		Connect(this.pins.$le, this.le_demult.pins.G2BAR_I);
 		Connect(this.pins.sel, this.le_demult.SelBus());
 		for (var i = 0; i < n_regs; i++) {
 			let newInv = new hc.SN74HC04();
@@ -314,6 +335,15 @@ class RegistersBoard extends Board {
 
 		return this.pins.data.ReadData();
 	}
+
+	_readRegisters() {
+		let ret = [];
+		for (let i = 0; i < this.n_regs; i++) {
+			let reg = this[`reg_${i}`];
+			ret.push(reg._readValue());
+		}
+		return ret;
+	}
 }
 
 class ALUBoard extends Board {
@@ -322,20 +352,21 @@ class ALUBoard extends Board {
 
 		this.pins = {
 			data: new Bus(8, 'D'),
-			op: new Bus(4, 'OP'),
+			op_lsb: new Bus(4, 'OP'),
+			op_msb: new Bus(4, 'OP'),
+			op_M: new Pin(),
 			exe: new Pin(),
-			acc_oe: new Pin(),
-			acc_load_nibble: new Pin()
+			$acc_oe: new Pin()
 		};
 
-		this.pre_acc = new hc.SN74HC574();
-		this.post_acc = new hc.SN74HC574();
+		this.pre_acc = new hc.SN74HC573();
+		this.post_acc = new hc.SN74HC573();
 		this.buf = new hc.SN74HC244();
 
 		this.lsb_alu = new hc.SN74HC181();
-		Connect(_D_LO, this.lsb_alu.pins.M_I);
+		Connect(this.pins.op_M, this.lsb_alu.pins.M_I);
 		Connect(_D_HI, this.lsb_alu.pins.CN_I);
-		Connect(this.pins.op, this.lsb_alu.SelBus());
+		Connect(this.pins.op_lsb, this.lsb_alu.SelBus());
 		let lsb_dataBus = this.pins.data.Split(0, 3);
 		let lsb_accBus = this.post_acc.OutputBus().Split(0, 3);
 		Connect(lsb_dataBus, this.lsb_alu.ABus());
@@ -343,9 +374,9 @@ class ALUBoard extends Board {
 		Connect(this.lsb_alu.OutBus(), this.pre_acc.InputBus().Split(0, 3));
 
 		this.msb_alu = new hc.SN74HC181();
-		Connect(_D_LO, this.msb_alu.pins.M_I);
+		Connect(this.pins.op_M, this.msb_alu.pins.M_I);
 		Connect(this.lsb_alu.pins.CN_4_O, this.msb_alu.pins.CN_I);
-		Connect(this.pins.op, this.msb_alu.SelBus());
+		Connect(this.pins.op_msb, this.msb_alu.SelBus());
 		let msb_dataBus = this.pins.data.Split(4, 7);
 		let msb_accBus = this.post_acc.OutputBus().Split(4, 7);
 		Connect(msb_dataBus, this.msb_alu.ABus());
@@ -356,28 +387,26 @@ class ALUBoard extends Board {
 		Connect(this.pins.exe, this.not_exe.pins.A);
 
 		Connect(_D_LO, this.pre_acc.pins.OCBAR);
-		Connect(this.pins.exe, this.pre_acc.pins.CLK);
+		Connect(this.pins.exe, this.pre_acc.pins.C);
 
 		Connect(_D_LO, this.post_acc.pins.OCBAR);
-		Connect(this.not_exe.pins.Y, this.post_acc.pins.CLK);
+		Connect(this.not_exe.pins.Y, this.post_acc.pins.C);
 
 		Connect(this.pre_acc.OutputBus(), this.post_acc.InputBus());
 
 		Connect(this.pre_acc.OutputBus(), this.buf.InputBus());
-		Connect(this.pins.acc_oe, [ this.buf.pins.G1BAR, this.buf.pins.G2BAR ]);
+		Connect(this.pins.$acc_oe, [ this.buf.pins.G1BAR, this.buf.pins.G2BAR ]);
 		Connect(this.buf.OutputBus(), this.pins.data);
-	}
-
-	$debug() {
-		this.lsb_alu.PrintPinValues('lsb_alu');
-		this.msb_alu.PrintPinValues('msb_alu');
-		this.pre_acc.PrintPinValues('pre_acc');
 	}
 
 	LoadAcc(value) {
 		this.pins.data.WriteData(value);
 		this.pins.op.WriteData(0);
 		this.Execute();
+	}
+
+	_readAccValue() {
+		return this.pre_acc.OutputBus().ReadData();
 	}
 
 	Execute() {
@@ -389,6 +418,11 @@ class ALUBoard extends Board {
 		this.pins.acc_oe.SetValue(true);
 		this.$execute();this.$execute();
 	}
+
+	$debug() {
+		console.log('alu_acc', this._readAccValue().toString(16));
+		console.log('alu_data', this.pins.data.ReadData().toString(16));
+	}
 }
 
 class PCDecoder extends Board {
@@ -399,12 +433,15 @@ class PCDecoder extends Board {
 			data: new Bus(8, 'D'),
 			addr: new Bus(16, 'A'),
 			clk: new Pin(),
+			clk2: new Pin(),
 			reset: new Pin(),
 			decoded: {
-				alu_op: new Pin(),
+				alu_op_lsb: new Bus(4, 'OP'),
+				alu_op_msb: new Bus(4, 'OP'),
+				alu_M: new Pin(),
 				alu_exe: new Pin(),
 				alu_acc_oe: new Pin(),
-				reg_sel: new Pin(),
+				reg_sel: new Bus(4, 'S'),
 				reg_le: new Pin(),
 				reg_oe: new Pin(),
 				ram_we: new Pin(),
@@ -448,10 +485,28 @@ class PCDecoder extends Board {
 		Connect(this.lsb_buf.OutputBus(), this.pins.addr.Split(0, 7));
 		Connect(this.msb_buf.OutputBus(), this.pins.addr.Split(8, 15));
 		
+		this.instr = 0xFF;
 	}
 
 	$execute() {
 		let clk = this.pins.clk.GetValue();
+		let clk2 = this.pins.clk2.GetValue();
+
+		if (!clk2) {
+			this.pins.decoded.ram_we.SetValue(true);
+			this.pins.decoded.ram_oe.SetValue(true);
+
+			this.pins.decoded.alu_exe.SetValue(false);
+			this.pins.decoded.alu_acc_oe.SetValue(true);
+
+			this.pins.decoded.reg_oe.SetValue(true);
+			this.pins.decoded.reg_le.SetValue(true);
+
+			this.oe_pc.SetValue(false);
+			this.le_pc.SetValue(true);
+			return;
+		}
+
 		if (clk) {
 			this.pins.decoded.ram_we.SetValue(true);
 			this.pins.decoded.ram_oe.SetValue(false);
@@ -460,17 +515,62 @@ class PCDecoder extends Board {
 			this.pins.decoded.alu_acc_oe.SetValue(true);
 
 			this.pins.decoded.reg_oe.SetValue(true);
-			this.pins.decoded.reg_le.SetValue(false);
+			this.pins.decoded.reg_le.SetValue(true);
 
 			this.oe_pc.SetValue(false);
 			this.le_pc.SetValue(true);
-		} else {
 
+			this.instr = this.pins.data.ReadData();
+		} else {
+			this.pins.decoded.ram_we.SetValue(true);
+			this.pins.decoded.ram_oe.SetValue(true);
+
+			let instr_lsb = this.instr & 0x0F;
+			let instr_msb = this.instr & 0xF0;
+
+			console.log('instr', this.instr.toString(16));
+
+			switch (instr_msb) {
+				case 0x00: // Set ACC nibble
+					this.pins.decoded.alu_M.SetValue(true);
+					this.pins.decoded.alu_op_lsb.WriteData(0b1111);
+					this.pins.decoded.alu_op_msb.WriteData(0b1010);
+					this.pins.decoded.alu_exe.SetValue(true);
+					break;
+
+				case 0x10: // Move Register into Acc
+					this.pins.decoded.reg_sel.WriteData(instr_lsb);
+					this.pins.decoded.reg_oe.SetValue(false);
+
+					this.pins.decoded.alu_M.SetValue(true);
+					this.pins.decoded.alu_op_lsb.WriteData(0b1111);
+					this.pins.decoded.alu_op_msb.WriteData(0b1111);
+					this.pins.decoded.alu_exe.SetValue(true);
+					break;
+
+				case 0x20: // Move Acc into Register
+					this.pins.decoded.alu_acc_oe.SetValue(false);
+					this.pins.decoded.reg_sel.WriteData(instr_lsb);
+					this.pins.decoded.reg_le.SetValue(false);
+					break;
+
+				case 0x80: // Add
+					this.pins.decoded.reg_sel.WriteData(instr_lsb);
+					this.pins.decoded.reg_oe.SetValue(false);
+
+					this.pins.decoded.alu_M.SetValue(false);
+					this.pins.decoded.alu_op_lsb.WriteData(0b1001);
+					this.pins.decoded.alu_op_msb.WriteData(0b1001);
+					this.pins.decoded.alu_exe.SetValue(true);
+					break;
+
+				case 0xF0:
+					if (instr_lsb == 0x0F) return;
+			}
 		}
 
 		super.$execute();
 
-		console.log(this.pins.data.ReadData());
 	}
 }
 
@@ -484,9 +584,9 @@ class RAM extends Board {
 		this.pins = {
 			data: new Bus(dataSize, 'D'),
 			addr: new Bus(addrSize, 'A'),
-			cs: new Pin(),
-			we: new Pin(),
-			oe: new Pin()
+			$cs: new Pin(),
+			$we: new Pin(),
+			$oe: new Pin()
 		};
 
 		this.content = [];
@@ -499,10 +599,10 @@ class RAM extends Board {
 	$execute() {
 		let addr = this.pins.addr.ReadData();
 
-		if (!this.pins.cs.GetValue()) {
-			if (!this.pins.we.GetValue()) {
+		if (!this.pins.$cs.GetValue()) {
+			if (!this.pins.$we.GetValue()) {
 				this.content[addr] = this.pins.data.ReadData();
-			} else if (!this.pins.oe.GetValue()) {
+			} else if (!this.pins.$oe.GetValue()) {
 				this.pins.data.WriteData(this.content[addr]);
 			}
 		}
@@ -527,13 +627,14 @@ class RAM extends Board {
 	}
 }
 
-class MainBoard extends Board {
+class CPU extends Board {
 	constructor() {
 		super();
 
 		this.addrBus = new Bus(16);
 		this.dataBus = new Bus(8);
 		this.clk = new Pin();
+		this.clk2 = new Pin();
 		
 		this.ram = new RAM(8, 16);
 		this.pc = new PCDecoder();
@@ -541,6 +642,7 @@ class MainBoard extends Board {
 		this.alu = new ALUBoard();
 		
 		Connect(this.clk, [ this.pc.pins.clk ]);
+		Connect(this.clk2, [ this.pc.pins.clk2 ]);
 		
 		Connect(this.addrBus, this.ram.pins.addr);
 		Connect(this.addrBus, this.pc.pins.addr);
@@ -550,18 +652,24 @@ class MainBoard extends Board {
 		Connect(this.dataBus, this.pc.pins.data);
 		Connect(this.dataBus, this.ram.pins.data);
 		
-		Connect(this.pc.pins.decoded.alu_op, this.alu.pins.op);
+		Connect(this.pc.pins.decoded.alu_op_lsb, this.alu.pins.op_lsb);
+		Connect(this.pc.pins.decoded.alu_op_msb, this.alu.pins.op_msb);
+		Connect(this.pc.pins.decoded.alu_M, this.alu.pins.op_M);
 		Connect(this.pc.pins.decoded.alu_exe, this.alu.pins.exe);
-		Connect(this.pc.pins.decoded.alu_acc_oe, this.alu.pins.acc_oe);
+		Connect(this.pc.pins.decoded.alu_acc_oe, this.alu.pins.$acc_oe);
 		
 		Connect(this.pc.pins.decoded.reg_sel, this.regs.pins.sel);
-		Connect(this.pc.pins.decoded.reg_oe, this.regs.pins.oe);
-		Connect(this.pc.pins.decoded.reg_le, this.regs.pins.le);
+		Connect(this.pc.pins.decoded.reg_oe, this.regs.pins.$oe);
+		Connect(this.pc.pins.decoded.reg_le, this.regs.pins.$le);
 
-		Connect(_D_LO, this.ram.pins.cs);
-		Connect(this.pc.pins.decoded.ram_oe, this.ram.pins.oe);
-		Connect(this.pc.pins.decoded.ram_we, this.ram.pins.we);
+		Connect(_D_LO, this.ram.pins.$cs);
+		Connect(this.pc.pins.decoded.ram_oe, this.ram.pins.$oe);
+		Connect(this.pc.pins.decoded.ram_we, this.ram.pins.$we);
 
+	}
+
+	$debug() {
+		console.log('dataBus', this.dataBus.ReadData().toString(16));
 	}
 
 	$execute() {
@@ -569,33 +677,87 @@ class MainBoard extends Board {
 
 		//console.log(this.pc.pins.decoded);
 	}
+
+	Execute(clk1, clk2) {
+		let realWires = wires.filter(t => !t._mergedWith);
+		//for (let w of realWires)
+	//		w.value = null;
+		this.clk.SetValue(clk1); this.clk2.SetValue(clk2);
+		this.$execute();this.$execute();this.$execute();
+		this.$execute();this.$execute();this.$execute();
+	}
+
+	Step() {
+		this.Execute(true, false);
+		this.Execute(false, false);
+		this.Execute(true, true);
+		this.Execute(false, true);
+	}
+
+	StepOn() {
+		this.clk.SetValue(true);
+		this.$execute();this.$execute();this.$execute();
+	}
+
+	StepOff() {
+		this.clk.SetValue(false);
+		this.$execute();this.$execute();this.$execute();
+	}
+
+	static ASM = {
+		SET: function(nibble) { return (nibble & 0x0F); },
+		R2A: function(reg) { return 0x10 | (reg & 0x0F); },
+		A2R: function(reg) { return 0x20 | (reg & 0x0F); },
+		ADD: function(reg) { return 0x80 | (reg & 0x0F); }
+	};
 }
 
 //t.printSegments();
 
-let m = new MainBoard();
+let m = new CPU();
 
-m.ram.Write(0, [ 0x10, 2, 3, 4, 5 ]);
+m.ram.Write(0, [
+	CPU.ASM.SET(7),
+	CPU.ASM.A2R(0),
+	CPU.ASM.SET(3),
+	CPU.ASM.A2R(1),
+	CPU.ASM.R2A(0),
+	CPU.ASM.ADD(1),
+	CPU.ASM.A2R(2)
+]);
 m.ram.PrintArea(0);
 
-m.clk.SetValue(true);
+
+console.log('acc', m.alu._readAccValue());
+
+m.clk.SetValue(true);m.clk2.SetValue(true);
 m.pc.pins.reset.SetValue(true);
-m.$execute();m.$execute();m.$execute();m.$execute();
+m.$execute();m.$execute();m.$execute();
 
 m.pc.pins.reset.SetValue(false);
-m.clk.SetValue(true);
-m.$execute();m.$execute();m.$execute();m.$execute();
+m.clk.SetValue(false);m.clk2.SetValue(false);
+m.$execute();m.$execute();m.$execute();
 
-m.clk.SetValue(false);
-m.$execute();m.$execute();m.$execute();m.$execute();
-m.clk.SetValue(true);
-m.$execute();m.$execute();m.$execute();m.$execute();
+m.Step();
+m.Step();
+m.Step();
+m.Step();
+m.Step();
+m.Step();
+m.Step();
+m.Step();
 
-m.clk.SetValue(false);
-m.$execute();m.$execute();m.$execute();m.$execute();
-m.clk.SetValue(true);
-m.$execute();m.$execute();m.$execute();m.$execute();
+console.log('acc', m.alu._readAccValue().toString(16));
+console.log('regs', m.regs._readRegisters());
+/*
+var hrstart = process.hrtime()
+for (var i = 0; i < 10000; i++)
+	m.$execute();
+var hrend = process.hrtime(hrstart);
+console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000)
 
-console.log(m.dataBus.ReadData());
+console.log(m.addrBus.ReadData());
 
-console.log(m.GetComponents(true).map(t => t.constructor.name));
+
+*/
+console.log();

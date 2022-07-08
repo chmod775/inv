@@ -1,3 +1,4 @@
+const { monitorEventLoopDelay } = require('perf_hooks');
 const vm = require('vm');
 
 Object.defineProperty(global, '__stack', {
@@ -81,10 +82,12 @@ class Logger {
 }
 
 
+global.wires = [];
 class Wire {
 	constructor() {
 		this.pins = [];
 		this.value = null;
+		global.wires.push(this);
 	}
 
 	MergeWithWire(wire) {
@@ -125,7 +128,7 @@ class Pin {
 	}
 
 	GetValue() {
-		if (!this.wire) return false;
+		if (!this.wire) return null;
 		return this.wire.value;
 	}
 }
@@ -255,12 +258,18 @@ class Circuit extends Footprint {
 		_D_HI.SetValue(true);
 		_D_LO.SetValue(false);
 
-		let circuits = this.GetCircuits();
+		if (!this.exeOrder) {
+			let circuits = this.GetCircuits();
+			let reverseCircuits = Object.keys(circuits).reverse().reduce((o, key) => ({ ...o, [key]: circuits[key]}), {})
+			this.exeOrder = reverseCircuits;
+		}
 
-		let reverseCircuits = Object.keys(circuits).reverse().reduce((o, key) => ({ ...o, [key]: circuits[key]}), {})
-
-		for (let k in reverseCircuits)
-			circuits[k].$execute();
+		for (let k in this.exeOrder)
+			this.exeOrder[k].$execute();
+		
+		if (global.debug)
+			if (this.$debug)
+				this.$debug();
 	}
 
 	PrintPinValues(prefix) {
@@ -661,6 +670,8 @@ class buf3a extends Circuit {
 	}
 }
 
+const scopeEval = require('./eval.js');
+
 class logicexp extends Circuit {
 	constructor(inputs, outputs, temps) {
 		super();
@@ -692,7 +703,8 @@ class logicexp extends Circuit {
 		for (var i of this.temps)
 			this.context[i] = false;
 
-		this.codeScript.runInContext(this.context);
+		scopeEval(this.code, this.context);
+		//this.codeScript.runInContext(this.context);
 
 		for (var i of this.outputs)
 			this.pins[i].SetValue(this.context[i]);
