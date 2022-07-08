@@ -345,7 +345,7 @@ class Bus extends Circuit {
 
 	WriteData(data) {
 		for (var i = 0; i < this.n; i++) {
-			this.pins[`${this.prefix}${i}`].SetValue(data & 0x01);
+			this.pins[`${this.prefix}${i}`].SetValue(data & 0x01 ? true : false);
 			data = data >> 1;
 		}
 	}
@@ -475,6 +475,26 @@ class and extends Circuit {
 			out = out && this.pins[`IN${i}`].GetValue();
 		}
 		this.pins.OUT.SetValue(out);
+	}
+}
+
+class nand extends Circuit {
+	constructor(n) {
+		super();
+
+		this.n = n;
+		for (var i = 0; i < n; i++) {
+			this.pins[`IN${i}`] = new Pin();
+		}
+		this.pins.OUT = new Pin();
+	}
+
+	$execute() {
+		let out = true;
+		for (var i = 0; i < this.n; i++) {
+			out = out && this.pins[`IN${i}`].GetValue();
+		}
+		this.pins.OUT.SetValue(!out);
 	}
 }
 
@@ -728,6 +748,7 @@ module.exports.Bus = Bus;
 module.exports.inv = inv;
 module.exports.inva = inva;
 module.exports.and = and;
+module.exports.nand = nand;
 module.exports.or = or;
 module.exports.bufa = bufa;
 module.exports.nora = nora;
