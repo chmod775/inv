@@ -661,7 +661,7 @@ class PCDecoder extends Board {
 					break;
 
 				case 0x30: // LDM or STM
-					let reg = instr_lsb & 0x07;
+					var reg = instr_lsb & 0x07;
 					this.pins.decoded.reg_sel.WriteData(reg);
 
 					if (instr_lsb & 0x08) { // STM
@@ -676,6 +676,15 @@ class PCDecoder extends Board {
 						this.pins.decoded.alu_op_lsb.WriteData(0b1111);
 						this.pins.decoded.alu_op_msb.WriteData(0b1111);
 						this.pins.decoded.alu_exe.SetValue(true);
+					}
+					break;
+
+				case 0x40: // JMP
+					var reg = instr_lsb & 0x07;
+					if (!(instr_lsb & 0x08)) { // JMP
+						this.pins.decoded.reg_sel.WriteData(reg);
+						this.pins.decoded.reg_oe_addr.SetValue(false);
+						this.le_pc.SetValue(false);
 					}
 
 					break;
@@ -829,12 +838,17 @@ class CPU extends Board {
 		this.$execute();this.$execute();this.$execute();
 	}
 
+	static LABEL = function(name, asm) {
+		return asm;
+	};
+
 	static ASM = {
 		SET: function(nibble) { return (nibble & 0x0F); },
 		R2A: function(reg) { return 0x10 | (reg & 0x0F); },
 		A2R: function(reg) { return 0x20 | (reg & 0x0F); },
 		LDM: function(reg) { return 0x30 | (reg & 0x07); },
 		STM: function(reg) { return 0x38 | (reg & 0x07); },
+		JMP: function(reg) { return 0x40 | (reg & 0x07); },
 		ADD: function(reg) { return 0x80 | (reg & 0x0F); }
 	};
 }
@@ -848,11 +862,21 @@ m.ram.Write(0, [
 	CPU.ASM.A2R(0),
 	CPU.ASM.SET(3),
 	CPU.ASM.A2R(1),
+
+	CPU.ASM.ADD(0),
+	CPU.ASM.A2R(2),
+	CPU.ASM.JMP(1),
+	/*
+	CPU.ASM.SET(7),
+	CPU.ASM.A2R(0),
+	CPU.ASM.SET(3),
+	CPU.ASM.A2R(1),
 	CPU.ASM.R2A(0),
 	CPU.ASM.ADD(1),
 	CPU.ASM.A2R(2),
 	CPU.ASM.STM(2),
-	CPU.ASM.LDM(1)
+	CPU.LABEL("loop", CPU.ASM.LDM(1))
+	*/
 ]);
 
 
@@ -866,6 +890,18 @@ m.pc.pins.reset.SetValue(false);
 m.clk.SetValue(false);m.clk2.SetValue(false);
 m.$execute();m.$execute();m.$execute();
 
+m.Step();
+m.Step();
+m.Step();
+m.Step();
+m.Step();
+m.Step();
+m.Step();
+m.Step();
+m.Step();
+m.Step();
+m.Step();
+m.Step();
 m.Step();
 m.Step();
 m.Step();

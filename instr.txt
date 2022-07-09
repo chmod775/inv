@@ -8,10 +8,10 @@ LDM			00110 rrr		A = ADDR[ R[ r*2 ] + ( R[ (r*2)+1 ] * 8 ) ] - Load from Memory
 STM			00111 rrr		ADDR[ R[ r*2 ] + ( R[ (r*2)+1 ] * 8 ) ] = A - Store into Memory
 
 JMP			01000 rrr		PC = R[ r*2 ] + ( R[ (r*2)+1 ] * 8 )	- Jump always
-CAL			01001 rrr		PC = R[ r*2 ] + ( R[ (r*2)+1 ] * 8 )	- Call
+				01001 xxx		
 
-SKA			01010 svv		PC = PC + _v - Skip with constant if T flag is 1
-SKN			01011 svv		PC = PC + _v - Skip with constant if T flag is 0
+JPA			01010 rrr		PC = R[ r*2 ] + ( R[ (r*2)+1 ] * 8 ) - Jump to Address if T flag is 1
+JPN			01011 rrr		PC = R[ r*2 ] + ( R[ (r*2)+1 ] * 8 ) - Jump to Address if T flag is 0
 
 				0110x xxx		
 
@@ -51,7 +51,7 @@ SWP			11110 000		A.0-3 = A.4-7 ; A.4-7 = A.0-3
 CLR			11110 001		A = 0
 extra		11110 010		
 extra		11110 011		
-RTN			11110 100		- Return from CAL
+extra		11110 100	
 extra		11110 101		
 extra		11110 110		
 extra		11110 111		
