@@ -1,4 +1,4 @@
-const { Connect, _D_HI, _D_LO, _D_NC, Logger, Wire, Pin, Footprint, Circuit, Component, Board, Bus, inv, inva, and, nand, or, bufa, nora, dff, srff, dltch, buf3a, logicexp } = require('./core.js');
+const { Connect, _D_HI, _D_LO, _D_NC, Logger, Wire, Pin, Footprint, Circuit, Component, Board, Bus, inv, inva, and, nand, or, bufa, nora, dff, srff, dltch, buf3a, logicexp } = require('../src/core.js');
 /**
  * Quadruple 2-input Positive-Nand Gates
  */

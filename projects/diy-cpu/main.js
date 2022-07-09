@@ -1,10 +1,8 @@
 const repl = require('repl');
 
-const { Connect, _D_HI, _D_LO, Logger, Wire, Pin, Footprint, Circuit, Component, Board, Bus, inv, inva, and, or, bufa, nora, dff, dltch, buf3a, logicexp } = require('./core.js');
-const core = require('./core.js');
-const hc = require('./74hc_code.js');
-const ls = require('./74ls_code.js');
-const { METHODS } = require('http');
+const { Connect, _D_HI, _D_LO, Logger, Wire, Pin, Footprint, Circuit, Component, Board, Bus, inv, inva, and, or, bufa, nora, dff, dltch, buf3a, logicexp } = require('../../src/core.js');
+const hc = require('../../generated/74hc_code.js');
+const ls = require('../../generated/74ls_code.js');
 
 hc.SN74HC573.prototype.InputBus = function() {
 	return new Bus([
@@ -921,4 +919,4 @@ m.ram.PrintArea(0);
 let components = m.GetComponents(true).map(t => t.constructor.name);
 console.log(components.length, components);
 
-//m.regs.ReadAddrFromRegister(5);
+//m.regs.ReadAddrFromRegister(5);test

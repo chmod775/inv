@@ -7,7 +7,7 @@ function escapeRegExp(string){
 	return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 		
-/* Define functin to find and replace specified term with replacement string */
+/* Define function to find and replace specified term with replacement string */
 String.prototype.replaceAll = function(term, replacement) {
 	return this.replace(new RegExp(escapeRegExp(term), 'g'), replacement);
 }
@@ -472,7 +472,7 @@ class Circuit {
 const core = require('./core');
 
 function ConvertFile(filename) {
-	const data = fs.readFileSync(filename + '.lib', 'utf8');
+	const data = fs.readFileSync('./libs/' + filename + '.lib', 'utf8');
 	const lines = data.split('\n');
 
 	const outLines = [];
@@ -550,7 +550,7 @@ function ConvertFile(filename) {
 	}
 	
 	const codeLines = [];
-	codeLines.push(`const { ${Object.keys(core).join(', ')} } = require('./core.js');`)
+	codeLines.push(`const { ${Object.keys(core).join(', ')} } = require('../src/core.js');`)
 	for (var c of circuitsObjects) {
     let comment = comments[c.name];
     if (comment) {
@@ -566,7 +566,7 @@ function ConvertFile(filename) {
 	}
 	codeLines.push(exp.join('\n'));
 	
-	fs.writeFileSync(filename + '_code.js', codeLines.join('\n'));
+	fs.writeFileSync('./generated/' + filename + '_code.js', codeLines.join('\n'));
 }
 
 ConvertFile('74hc');
