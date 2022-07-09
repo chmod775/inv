@@ -1,0 +1,26 @@
+{
+  "name": "inv",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gui.js",
+  "dependencies": {
+    "@svgdotjs/svg.js": "^3.1.2",
+    "elkjs": "^0.7.1",
+    "elkjs-svg": "^0.2.1",
+    "svgdom": "^0.1.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chmod775/inv.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chmod775/inv/issues"
+  },
+  "homepage": "https://github.com/chmod775/inv#readme"
+}

@@ -230,11 +230,11 @@ class Circuit extends Footprint {
 	//init() {}
 
 	GetComponents(deep, ret) {
-		ret = ret ?? [];
+		ret = ret ?? {};
 		for (let k in this) {
 			let item = this[k];
 			if (item instanceof Component)
-				ret.push(item);
+				ret[k] = item;
 			if (item instanceof Circuit)
 				if (deep)	
 					item.GetComponents(true, ret);

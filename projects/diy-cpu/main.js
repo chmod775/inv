@@ -916,7 +916,9 @@ console.log('regs', m.regs._readRegisters());
 m.ram.PrintArea(0);
 
 
-let components = m.GetComponents(true).map(t => t.constructor.name);
-console.log(components.length, components);
 
 //m.regs.ReadAddrFromRegister(5);test
+
+
+const generator = require('../../gui');
+generator.Export(m);
