@@ -632,8 +632,6 @@ class PCDecoder extends Board {
 			let instr_lsb = this.instr & 0x0F;
 			let instr_msb = this.instr & 0xF0;
 
-			console.log('instr', this.instr.toString(16));
-
 			switch (instr_msb) {
 				case 0x00: // Set ACC nibble
 					this.pins.decoded.alu_M.SetValue(true);
@@ -916,9 +914,14 @@ console.log('regs', m.regs._readRegisters());
 m.ram.PrintArea(0);
 
 
+var hrstart = process.hrtime()
+for (var i = 0; i < 30000; i++)
+	m.$execute();
+var hrend = process.hrtime(hrstart);
+console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000)
 
 //m.regs.ReadAddrFromRegister(5);test
-
+console.log(Object.keys(m.alu.GetComponents()));
 
 const generator = require('../../gui');
-generator.Export(m);
+//generator.Export(m.alu);

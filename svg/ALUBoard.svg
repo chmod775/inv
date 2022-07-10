@@ -1,0 +1,742 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="499" height="397.75" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs">
+  <defs>
+    <style type="text/css">
+      <![CDATA[
+        rect {
+          stroke-width: 1;
+          shape-rendering: crispEdges;
+        }
+        rect.port {
+          opacity: 1;
+          fill: #326CB2;
+        }
+        text {
+          font-size: 10px;
+          font-family: sans-serif;
+          text-align: left;
+        }
+        g.port > text {
+          font-size: 8px;
+        }
+        polyline {
+          fill: none;
+          stroke: black;
+          stroke-width: 1;
+          shape-rendering: crispEdges;
+        }
+        path {
+          fill: none;
+          stroke: black;
+          stroke-width: 1;
+          shape-rendering: crispEdges;
+        }
+        line {
+          fill: none;
+          shape-rendering: crispEdges;
+        }
+        rect {
+          stroke: black;
+        }
+        circle {
+          stroke: black;
+        }
+        .error { 
+          stroke: red !important;
+        }
+      ]]>
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto">
+      <path d="M0,7 L10,4 L0,1 L0,7" style="fill: #000000;" />
+    </marker>
+  </defs>
+  <g>
+    <polyline points="17,276 12,276 12,221 102,221" id="e.not_exe.A.pre_acc.C.0" class="edge" />
+    <polyline points="392,79 407,79 407,30 72,30 72,210 102,210" id="e.lsb_alu.F0BAR_O.pre_acc._1D.0" class="edge" />
+    <polyline points="392,88 402,88 402,36 82,36 82,200 102,200" id="e.lsb_alu.F1BAR_O.pre_acc._2D.0" class="edge" />
+    <polyline points="392,97 397,97 397,42 97,42 97,189 102,189" id="e.lsb_alu.F2BAR_O.pre_acc._3D.0" class="edge" />
+    <polyline points="392,105 397,105 397,307 87,307 87,179 102,179" id="e.lsb_alu.F3BAR_O.pre_acc._4D.0" class="edge" />
+    <polyline points="462,312 477,312 477,18 92,18 92,168 102,168" id="e.msb_alu.F0BAR_O.pre_acc._5D.0" class="edge" />
+    <polyline points="462,321 467,321 467,384 77,384 77,158 102,158" id="e.msb_alu.F1BAR_O.pre_acc._6D.0" class="edge" />
+    <polyline points="462,329 487,329 487,12 87,12 87,147 102,147" id="e.msb_alu.F2BAR_O.pre_acc._7D.0" class="edge" />
+    <polyline points="462,338 482,338 482,24 157,24 157,147 152,147" id="e.msb_alu.F3BAR_O.pre_acc._8D.0" class="edge" />
+    <polyline points="102,231 97,231 97,282 202,282 202,179 222,179" id="e.pre_acc.OCBAR.post_acc.OCBAR.0" class="edge" />
+    <polyline points="67,276 197,276 197,168 222,168" id="e.not_exe.Y.post_acc.C.0" class="edge" />
+    <polyline points="152,158 222,158" id="e.pre_acc._1Q.post_acc._1D.0" class="edge" />
+    <polyline points="152,168 192,168 192,147 222,147" id="e.pre_acc._2Q.post_acc._2D.0" class="edge" />
+    <g>
+      <circle cx="192" cy="168.75" r="3" class="junction" />
+    </g>
+    <polyline points="152,179 172,179 172,137 222,137" id="e.pre_acc._3Q.post_acc._3D.0" class="edge" />
+    <g>
+      <circle cx="172" cy="179.25" r="3" class="junction" />
+    </g>
+    <polyline points="152,189 177,189 177,126 222,126" id="e.pre_acc._4Q.post_acc._4D.0" class="edge" />
+    <g>
+      <circle cx="177" cy="189.75" r="3" class="junction" />
+    </g>
+    <polyline points="152,200 182,200 182,116 222,116" id="e.pre_acc._5Q.post_acc._5D.0" class="edge" />
+    <g>
+      <circle cx="182" cy="200.25" r="3" class="junction" />
+    </g>
+    <polyline points="152,210 187,210 187,105 222,105" id="e.pre_acc._6Q.post_acc._6D.0" class="edge" />
+    <g>
+      <circle cx="187" cy="210.75" r="3" class="junction" />
+    </g>
+    <polyline points="152,221 167,221 167,95 222,95" id="e.pre_acc._7Q.post_acc._7D.0" class="edge" />
+    <g>
+      <circle cx="167" cy="221.25" r="3" class="junction" />
+    </g>
+    <polyline points="152,231 162,231 162,88 212,88 212,82 282,82 282,95 272,95" id="e.pre_acc._8Q.post_acc._8D.0" class="edge" />
+    <g>
+      <circle cx="212" cy="88.75" r="3" class="junction" />
+    </g>
+    <polyline points="152,158 207,158 207,294 222,294" id="e.pre_acc._1Q.buf._1A1.0" class="edge" />
+    <g>
+      <circle cx="207" cy="158.25" r="3" class="junction" />
+    </g>
+    <polyline points="152,168 192,168 192,283 222,283" id="e.pre_acc._2Q.buf._1A2.0" class="edge" />
+    <polyline points="152,179 172,179 172,273 222,273" id="e.pre_acc._3Q.buf._1A3.0" class="edge" />
+    <polyline points="152,189 177,189 177,262 222,262" id="e.pre_acc._4Q.buf._1A4.0" class="edge" />
+    <polyline points="152,200 182,200 182,252 222,252" id="e.pre_acc._5Q.buf._2A1.0" class="edge" />
+    <polyline points="152,210 187,210 187,241 222,241" id="e.pre_acc._6Q.buf._2A2.0" class="edge" />
+    <polyline points="152,221 167,221 167,231 222,231" id="e.pre_acc._7Q.buf._2A3.0" class="edge" />
+    <polyline points="152,231 162,231 162,88 212,88 212,220 222,220" id="e.pre_acc._8Q.buf._2A4.0" class="edge" />
+    <polyline points="222,210 217,210 217,197 277,197 277,210 272,210" id="e.buf.G1BAR.buf.G2BAR.0" class="edge" />
+    <polyline points="272,220 317,220 317,140 342,140" id="e.buf._1Y1.lsb_alu.A0BAR_I.0" class="edge" />
+    <polyline points="272,231 312,231 312,132 342,132" id="e.buf._1Y2.lsb_alu.A1BAR_I.0" class="edge" />
+    <polyline points="272,241 307,241 307,123 342,123" id="e.buf._1Y3.lsb_alu.A2BAR_I.0" class="edge" />
+    <polyline points="272,252 302,252 302,114 342,114" id="e.buf._1Y4.lsb_alu.A3BAR_I.0" class="edge" />
+    <polyline points="272,105 342,105" id="e.post_acc._1Q.lsb_alu.B0BAR_I.0" class="edge" />
+    <polyline points="272,116 297,116 297,97 342,97" id="e.post_acc._2Q.lsb_alu.B1BAR_I.0" class="edge" />
+    <polyline points="272,126 292,126 292,88 342,88" id="e.post_acc._3Q.lsb_alu.B2BAR_I.0" class="edge" />
+    <polyline points="272,137 287,137 287,79 342,79" id="e.post_acc._4Q.lsb_alu.B3BAR_I.0" class="edge" />
+    <polyline points="272,262 282,262 282,373 412,373" id="e.buf._2Y1.msb_alu.A0BAR_I.0" class="edge" />
+    <polyline points="272,273 287,273 287,364 412,364" id="e.buf._2Y2.msb_alu.A1BAR_I.0" class="edge" />
+    <polyline points="272,283 292,283 292,356 412,356" id="e.buf._2Y3.msb_alu.A2BAR_I.0" class="edge" />
+    <polyline points="272,294 297,294 297,347 412,347" id="e.buf._2Y4.msb_alu.A3BAR_I.0" class="edge" />
+    <polyline points="272,147 337,147 337,338 412,338" id="e.post_acc._5Q.msb_alu.B0BAR_I.0" class="edge" />
+    <polyline points="272,158 332,158 332,329 412,329" id="e.post_acc._6Q.msb_alu.B1BAR_I.0" class="edge" />
+    <polyline points="272,168 327,168 327,321 412,321" id="e.post_acc._7Q.msb_alu.B2BAR_I.0" class="edge" />
+    <polyline points="272,179 322,179 322,312 412,312" id="e.post_acc._8Q.msb_alu.B3BAR_I.0" class="edge" />
+    <polyline points="392,62 467,62 467,294 462,294" id="e.lsb_alu.M_I.msb_alu.M_I.0" class="edge" />
+    <polyline points="392,140 472,140 472,303 462,303" id="e.lsb_alu.CN_4_O.msb_alu.CN_I.0" class="edge" />
+<g transform="matrix(1,0,0,1,127,189.75)"><rect width="40" height="100" x="-20" y="-50" fill="none" stroke-width="1"></rect><text text-anchor="end" transform="matrix(1,0,0,1,-20,-60)" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="0" x="0" svgjs:data="{&quot;newLined&quot;:true}">pre_acc</tspan></text></g>
+    <g transform="translate(107,139.75)">
+      <rect id="pre_acc.OCBAR" class="node" x="-5" y="89.5" width="5" height="5" />
+      <g id="pre_acc.OCBAR" class="port" transform="translate(-5,89.5)">
+        <text id="lbl.pre_acc.OCBAR" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          OCBAR
+        </text>
+      </g>
+      <rect id="pre_acc.C" class="node" x="-5" y="79" width="5" height="5" />
+      <g id="pre_acc.C" class="port" transform="translate(-5,79)">
+        <text id="lbl.pre_acc.C" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          C
+        </text>
+      </g>
+      <rect id="pre_acc._1D" class="node" x="-5" y="68.5" width="5" height="5" />
+      <g id="pre_acc._1D" class="port" transform="translate(-5,68.5)">
+        <text id="lbl.pre_acc._1D" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _1D
+        </text>
+      </g>
+      <rect id="pre_acc._2D" class="node" x="-5" y="58" width="5" height="5" />
+      <g id="pre_acc._2D" class="port" transform="translate(-5,58)">
+        <text id="lbl.pre_acc._2D" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _2D
+        </text>
+      </g>
+      <rect id="pre_acc._3D" class="node" x="-5" y="47.5" width="5" height="5" />
+      <g id="pre_acc._3D" class="port" transform="translate(-5,47.5)">
+        <text id="lbl.pre_acc._3D" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _3D
+        </text>
+      </g>
+      <rect id="pre_acc._4D" class="node" x="-5" y="37" width="5" height="5" />
+      <g id="pre_acc._4D" class="port" transform="translate(-5,37)">
+        <text id="lbl.pre_acc._4D" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _4D
+        </text>
+      </g>
+      <rect id="pre_acc._5D" class="node" x="-5" y="26.5" width="5" height="5" />
+      <g id="pre_acc._5D" class="port" transform="translate(-5,26.5)">
+        <text id="lbl.pre_acc._5D" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _5D
+        </text>
+      </g>
+      <rect id="pre_acc._6D" class="node" x="-5" y="16" width="5" height="5" />
+      <g id="pre_acc._6D" class="port" transform="translate(-5,16)">
+        <text id="lbl.pre_acc._6D" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _6D
+        </text>
+      </g>
+      <rect id="pre_acc._7D" class="node" x="-5" y="5.5" width="5" height="5" />
+      <g id="pre_acc._7D" class="port" transform="translate(-5,5.5)">
+        <text id="lbl.pre_acc._7D" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _7D
+        </text>
+      </g>
+      <rect id="pre_acc._8D" class="node" x="40" y="5.5" width="5" height="5" />
+      <g id="pre_acc._8D" class="port" transform="translate(40,5.5)">
+        <text id="lbl.pre_acc._8D" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _8D
+        </text>
+      </g>
+      <rect id="pre_acc._1Q" class="node" x="40" y="16" width="5" height="5" />
+      <g id="pre_acc._1Q" class="port" transform="translate(40,16)">
+        <text id="lbl.pre_acc._1Q" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _1Q
+        </text>
+      </g>
+      <rect id="pre_acc._2Q" class="node" x="40" y="26.5" width="5" height="5" />
+      <g id="pre_acc._2Q" class="port" transform="translate(40,26.5)">
+        <text id="lbl.pre_acc._2Q" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _2Q
+        </text>
+      </g>
+      <rect id="pre_acc._3Q" class="node" x="40" y="37" width="5" height="5" />
+      <g id="pre_acc._3Q" class="port" transform="translate(40,37)">
+        <text id="lbl.pre_acc._3Q" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _3Q
+        </text>
+      </g>
+      <rect id="pre_acc._4Q" class="node" x="40" y="47.5" width="5" height="5" />
+      <g id="pre_acc._4Q" class="port" transform="translate(40,47.5)">
+        <text id="lbl.pre_acc._4Q" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _4Q
+        </text>
+      </g>
+      <rect id="pre_acc._5Q" class="node" x="40" y="58" width="5" height="5" />
+      <g id="pre_acc._5Q" class="port" transform="translate(40,58)">
+        <text id="lbl.pre_acc._5Q" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _5Q
+        </text>
+      </g>
+      <rect id="pre_acc._6Q" class="node" x="40" y="68.5" width="5" height="5" />
+      <g id="pre_acc._6Q" class="port" transform="translate(40,68.5)">
+        <text id="lbl.pre_acc._6Q" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _6Q
+        </text>
+      </g>
+      <rect id="pre_acc._7Q" class="node" x="40" y="79" width="5" height="5" />
+      <g id="pre_acc._7Q" class="port" transform="translate(40,79)">
+        <text id="lbl.pre_acc._7Q" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _7Q
+        </text>
+      </g>
+      <rect id="pre_acc._8Q" class="node" x="40" y="89.5" width="5" height="5" />
+      <g id="pre_acc._8Q" class="port" transform="translate(40,89.5)">
+        <text id="lbl.pre_acc._8Q" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _8Q
+        </text>
+      </g>
+    </g>
+<g transform="matrix(1,0,0,1,247,137.25)"><rect width="40" height="100" x="-20" y="-50" fill="none" stroke-width="1"></rect><text text-anchor="end" transform="matrix(1,0,0,1,-20,-60)" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="0" x="0" svgjs:data="{&quot;newLined&quot;:true}">post_acc</tspan></text></g>
+    <g transform="translate(227,87.25)">
+      <rect id="post_acc.OCBAR" class="node" x="-5" y="89.5" width="5" height="5" />
+      <g id="post_acc.OCBAR" class="port" transform="translate(-5,89.5)">
+        <text id="lbl.post_acc.OCBAR" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          OCBAR
+        </text>
+      </g>
+      <rect id="post_acc.C" class="node" x="-5" y="79" width="5" height="5" />
+      <g id="post_acc.C" class="port" transform="translate(-5,79)">
+        <text id="lbl.post_acc.C" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          C
+        </text>
+      </g>
+      <rect id="post_acc._1D" class="node" x="-5" y="68.5" width="5" height="5" />
+      <g id="post_acc._1D" class="port" transform="translate(-5,68.5)">
+        <text id="lbl.post_acc._1D" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _1D
+        </text>
+      </g>
+      <rect id="post_acc._2D" class="node" x="-5" y="58" width="5" height="5" />
+      <g id="post_acc._2D" class="port" transform="translate(-5,58)">
+        <text id="lbl.post_acc._2D" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _2D
+        </text>
+      </g>
+      <rect id="post_acc._3D" class="node" x="-5" y="47.5" width="5" height="5" />
+      <g id="post_acc._3D" class="port" transform="translate(-5,47.5)">
+        <text id="lbl.post_acc._3D" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _3D
+        </text>
+      </g>
+      <rect id="post_acc._4D" class="node" x="-5" y="37" width="5" height="5" />
+      <g id="post_acc._4D" class="port" transform="translate(-5,37)">
+        <text id="lbl.post_acc._4D" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _4D
+        </text>
+      </g>
+      <rect id="post_acc._5D" class="node" x="-5" y="26.5" width="5" height="5" />
+      <g id="post_acc._5D" class="port" transform="translate(-5,26.5)">
+        <text id="lbl.post_acc._5D" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _5D
+        </text>
+      </g>
+      <rect id="post_acc._6D" class="node" x="-5" y="16" width="5" height="5" />
+      <g id="post_acc._6D" class="port" transform="translate(-5,16)">
+        <text id="lbl.post_acc._6D" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _6D
+        </text>
+      </g>
+      <rect id="post_acc._7D" class="node" x="-5" y="5.5" width="5" height="5" />
+      <g id="post_acc._7D" class="port" transform="translate(-5,5.5)">
+        <text id="lbl.post_acc._7D" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _7D
+        </text>
+      </g>
+      <rect id="post_acc._8D" class="node" x="40" y="5.5" width="5" height="5" />
+      <g id="post_acc._8D" class="port" transform="translate(40,5.5)">
+        <text id="lbl.post_acc._8D" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _8D
+        </text>
+      </g>
+      <rect id="post_acc._1Q" class="node" x="40" y="16" width="5" height="5" />
+      <g id="post_acc._1Q" class="port" transform="translate(40,16)">
+        <text id="lbl.post_acc._1Q" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _1Q
+        </text>
+      </g>
+      <rect id="post_acc._2Q" class="node" x="40" y="26.5" width="5" height="5" />
+      <g id="post_acc._2Q" class="port" transform="translate(40,26.5)">
+        <text id="lbl.post_acc._2Q" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _2Q
+        </text>
+      </g>
+      <rect id="post_acc._3Q" class="node" x="40" y="37" width="5" height="5" />
+      <g id="post_acc._3Q" class="port" transform="translate(40,37)">
+        <text id="lbl.post_acc._3Q" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _3Q
+        </text>
+      </g>
+      <rect id="post_acc._4Q" class="node" x="40" y="47.5" width="5" height="5" />
+      <g id="post_acc._4Q" class="port" transform="translate(40,47.5)">
+        <text id="lbl.post_acc._4Q" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _4Q
+        </text>
+      </g>
+      <rect id="post_acc._5Q" class="node" x="40" y="58" width="5" height="5" />
+      <g id="post_acc._5Q" class="port" transform="translate(40,58)">
+        <text id="lbl.post_acc._5Q" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _5Q
+        </text>
+      </g>
+      <rect id="post_acc._6Q" class="node" x="40" y="68.5" width="5" height="5" />
+      <g id="post_acc._6Q" class="port" transform="translate(40,68.5)">
+        <text id="lbl.post_acc._6Q" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _6Q
+        </text>
+      </g>
+      <rect id="post_acc._7Q" class="node" x="40" y="79" width="5" height="5" />
+      <g id="post_acc._7Q" class="port" transform="translate(40,79)">
+        <text id="lbl.post_acc._7Q" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _7Q
+        </text>
+      </g>
+      <rect id="post_acc._8Q" class="node" x="40" y="89.5" width="5" height="5" />
+      <g id="post_acc._8Q" class="port" transform="translate(40,89.5)">
+        <text id="lbl.post_acc._8Q" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _8Q
+        </text>
+      </g>
+    </g>
+<g transform="matrix(1,0,0,1,247,252.25)"><rect width="40" height="100" x="-20" y="-50" fill="none" stroke-width="1"></rect><text text-anchor="end" transform="matrix(1,0,0,1,-20,-60)" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="0" x="0" svgjs:data="{&quot;newLined&quot;:true}">buf</tspan></text></g>
+    <g transform="translate(227,202.25)">
+      <rect id="buf._1A1" class="node" x="-5" y="89.5" width="5" height="5" />
+      <g id="buf._1A1" class="port" transform="translate(-5,89.5)">
+        <text id="lbl.buf._1A1" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _1A1
+        </text>
+      </g>
+      <rect id="buf._1A2" class="node" x="-5" y="79" width="5" height="5" />
+      <g id="buf._1A2" class="port" transform="translate(-5,79)">
+        <text id="lbl.buf._1A2" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _1A2
+        </text>
+      </g>
+      <rect id="buf._1A3" class="node" x="-5" y="68.5" width="5" height="5" />
+      <g id="buf._1A3" class="port" transform="translate(-5,68.5)">
+        <text id="lbl.buf._1A3" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _1A3
+        </text>
+      </g>
+      <rect id="buf._1A4" class="node" x="-5" y="58" width="5" height="5" />
+      <g id="buf._1A4" class="port" transform="translate(-5,58)">
+        <text id="lbl.buf._1A4" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _1A4
+        </text>
+      </g>
+      <rect id="buf._2A1" class="node" x="-5" y="47.5" width="5" height="5" />
+      <g id="buf._2A1" class="port" transform="translate(-5,47.5)">
+        <text id="lbl.buf._2A1" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _2A1
+        </text>
+      </g>
+      <rect id="buf._2A2" class="node" x="-5" y="37" width="5" height="5" />
+      <g id="buf._2A2" class="port" transform="translate(-5,37)">
+        <text id="lbl.buf._2A2" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _2A2
+        </text>
+      </g>
+      <rect id="buf._2A3" class="node" x="-5" y="26.5" width="5" height="5" />
+      <g id="buf._2A3" class="port" transform="translate(-5,26.5)">
+        <text id="lbl.buf._2A3" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _2A3
+        </text>
+      </g>
+      <rect id="buf._2A4" class="node" x="-5" y="16" width="5" height="5" />
+      <g id="buf._2A4" class="port" transform="translate(-5,16)">
+        <text id="lbl.buf._2A4" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          _2A4
+        </text>
+      </g>
+      <rect id="buf.G1BAR" class="node" x="-5" y="5.5" width="5" height="5" />
+      <g id="buf.G1BAR" class="port" transform="translate(-5,5.5)">
+        <text id="lbl.buf.G1BAR" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          G1BAR
+        </text>
+      </g>
+      <rect id="buf.G2BAR" class="node" x="40" y="5.5" width="5" height="5" />
+      <g id="buf.G2BAR" class="port" transform="translate(40,5.5)">
+        <text id="lbl.buf.G2BAR" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          G2BAR
+        </text>
+      </g>
+      <rect id="buf._1Y1" class="node" x="40" y="16" width="5" height="5" />
+      <g id="buf._1Y1" class="port" transform="translate(40,16)">
+        <text id="lbl.buf._1Y1" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _1Y1
+        </text>
+      </g>
+      <rect id="buf._1Y2" class="node" x="40" y="26.5" width="5" height="5" />
+      <g id="buf._1Y2" class="port" transform="translate(40,26.5)">
+        <text id="lbl.buf._1Y2" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _1Y2
+        </text>
+      </g>
+      <rect id="buf._1Y3" class="node" x="40" y="37" width="5" height="5" />
+      <g id="buf._1Y3" class="port" transform="translate(40,37)">
+        <text id="lbl.buf._1Y3" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _1Y3
+        </text>
+      </g>
+      <rect id="buf._1Y4" class="node" x="40" y="47.5" width="5" height="5" />
+      <g id="buf._1Y4" class="port" transform="translate(40,47.5)">
+        <text id="lbl.buf._1Y4" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _1Y4
+        </text>
+      </g>
+      <rect id="buf._2Y1" class="node" x="40" y="58" width="5" height="5" />
+      <g id="buf._2Y1" class="port" transform="translate(40,58)">
+        <text id="lbl.buf._2Y1" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _2Y1
+        </text>
+      </g>
+      <rect id="buf._2Y2" class="node" x="40" y="68.5" width="5" height="5" />
+      <g id="buf._2Y2" class="port" transform="translate(40,68.5)">
+        <text id="lbl.buf._2Y2" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _2Y2
+        </text>
+      </g>
+      <rect id="buf._2Y3" class="node" x="40" y="79" width="5" height="5" />
+      <g id="buf._2Y3" class="port" transform="translate(40,79)">
+        <text id="lbl.buf._2Y3" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _2Y3
+        </text>
+      </g>
+      <rect id="buf._2Y4" class="node" x="40" y="89.5" width="5" height="5" />
+      <g id="buf._2Y4" class="port" transform="translate(40,89.5)">
+        <text id="lbl.buf._2Y4" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          _2Y4
+        </text>
+      </g>
+    </g>
+<g transform="matrix(1,0,0,1,367,97)"><rect width="40" height="100" x="-20" y="-50" fill="none" stroke-width="1"></rect><text text-anchor="end" transform="matrix(1,0,0,1,-20,-60)" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="0" x="0" svgjs:data="{&quot;newLined&quot;:true}">lsb_alu</tspan></text></g>
+    <g transform="translate(347,47)">
+      <rect id="lsb_alu.A0BAR_I" class="node" x="-5" y="91.25" width="5" height="5" />
+      <g id="lsb_alu.A0BAR_I" class="port" transform="translate(-5,91.25)">
+        <text id="lbl.lsb_alu.A0BAR_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          A0BAR_I
+        </text>
+      </g>
+      <rect id="lsb_alu.A1BAR_I" class="node" x="-5" y="82.5" width="5" height="5" />
+      <g id="lsb_alu.A1BAR_I" class="port" transform="translate(-5,82.5)">
+        <text id="lbl.lsb_alu.A1BAR_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          A1BAR_I
+        </text>
+      </g>
+      <rect id="lsb_alu.A2BAR_I" class="node" x="-5" y="73.75" width="5" height="5" />
+      <g id="lsb_alu.A2BAR_I" class="port" transform="translate(-5,73.75)">
+        <text id="lbl.lsb_alu.A2BAR_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          A2BAR_I
+        </text>
+      </g>
+      <rect id="lsb_alu.A3BAR_I" class="node" x="-5" y="65" width="5" height="5" />
+      <g id="lsb_alu.A3BAR_I" class="port" transform="translate(-5,65)">
+        <text id="lbl.lsb_alu.A3BAR_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          A3BAR_I
+        </text>
+      </g>
+      <rect id="lsb_alu.B0BAR_I" class="node" x="-5" y="56.25" width="5" height="5" />
+      <g id="lsb_alu.B0BAR_I" class="port" transform="translate(-5,56.25)">
+        <text id="lbl.lsb_alu.B0BAR_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          B0BAR_I
+        </text>
+      </g>
+      <rect id="lsb_alu.B1BAR_I" class="node" x="-5" y="47.5" width="5" height="5" />
+      <g id="lsb_alu.B1BAR_I" class="port" transform="translate(-5,47.5)">
+        <text id="lbl.lsb_alu.B1BAR_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          B1BAR_I
+        </text>
+      </g>
+      <rect id="lsb_alu.B2BAR_I" class="node" x="-5" y="38.75" width="5" height="5" />
+      <g id="lsb_alu.B2BAR_I" class="port" transform="translate(-5,38.75)">
+        <text id="lbl.lsb_alu.B2BAR_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          B2BAR_I
+        </text>
+      </g>
+      <rect id="lsb_alu.B3BAR_I" class="node" x="-5" y="30" width="5" height="5" />
+      <g id="lsb_alu.B3BAR_I" class="port" transform="translate(-5,30)">
+        <text id="lbl.lsb_alu.B3BAR_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          B3BAR_I
+        </text>
+      </g>
+      <rect id="lsb_alu.S0_I" class="node" x="-5" y="21.25" width="5" height="5" />
+      <g id="lsb_alu.S0_I" class="port" transform="translate(-5,21.25)">
+        <text id="lbl.lsb_alu.S0_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          S0_I
+        </text>
+      </g>
+      <rect id="lsb_alu.S1_I" class="node" x="-5" y="12.5" width="5" height="5" />
+      <g id="lsb_alu.S1_I" class="port" transform="translate(-5,12.5)">
+        <text id="lbl.lsb_alu.S1_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          S1_I
+        </text>
+      </g>
+      <rect id="lsb_alu.S2_I" class="node" x="-5" y="3.75" width="5" height="5" />
+      <g id="lsb_alu.S2_I" class="port" transform="translate(-5,3.75)">
+        <text id="lbl.lsb_alu.S2_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          S2_I
+        </text>
+      </g>
+      <rect id="lsb_alu.S3_I" class="node" x="40" y="3.75" width="5" height="5" />
+      <g id="lsb_alu.S3_I" class="port" transform="translate(40,3.75)">
+        <text id="lbl.lsb_alu.S3_I" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          S3_I
+        </text>
+      </g>
+      <rect id="lsb_alu.M_I" class="node" x="40" y="12.5" width="5" height="5" />
+      <g id="lsb_alu.M_I" class="port" transform="translate(40,12.5)">
+        <text id="lbl.lsb_alu.M_I" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          M_I
+        </text>
+      </g>
+      <rect id="lsb_alu.CN_I" class="node" x="40" y="21.25" width="5" height="5" />
+      <g id="lsb_alu.CN_I" class="port" transform="translate(40,21.25)">
+        <text id="lbl.lsb_alu.CN_I" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          CN_I
+        </text>
+      </g>
+      <rect id="lsb_alu.F0BAR_O" class="node" x="40" y="30" width="5" height="5" />
+      <g id="lsb_alu.F0BAR_O" class="port" transform="translate(40,30)">
+        <text id="lbl.lsb_alu.F0BAR_O" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          F0BAR_O
+        </text>
+      </g>
+      <rect id="lsb_alu.F1BAR_O" class="node" x="40" y="38.75" width="5" height="5" />
+      <g id="lsb_alu.F1BAR_O" class="port" transform="translate(40,38.75)">
+        <text id="lbl.lsb_alu.F1BAR_O" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          F1BAR_O
+        </text>
+      </g>
+      <rect id="lsb_alu.F2BAR_O" class="node" x="40" y="47.5" width="5" height="5" />
+      <g id="lsb_alu.F2BAR_O" class="port" transform="translate(40,47.5)">
+        <text id="lbl.lsb_alu.F2BAR_O" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          F2BAR_O
+        </text>
+      </g>
+      <rect id="lsb_alu.F3BAR_O" class="node" x="40" y="56.25" width="5" height="5" />
+      <g id="lsb_alu.F3BAR_O" class="port" transform="translate(40,56.25)">
+        <text id="lbl.lsb_alu.F3BAR_O" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          F3BAR_O
+        </text>
+      </g>
+      <rect id="lsb_alu.AEQUALB_O" class="node" x="40" y="65" width="5" height="5" />
+      <g id="lsb_alu.AEQUALB_O" class="port" transform="translate(40,65)">
+        <text id="lbl.lsb_alu.AEQUALB_O" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          AEQUALB_O
+        </text>
+      </g>
+      <rect id="lsb_alu.PBAR_O" class="node" x="40" y="73.75" width="5" height="5" />
+      <g id="lsb_alu.PBAR_O" class="port" transform="translate(40,73.75)">
+        <text id="lbl.lsb_alu.PBAR_O" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          PBAR_O
+        </text>
+      </g>
+      <rect id="lsb_alu.GBAR_O" class="node" x="40" y="82.5" width="5" height="5" />
+      <g id="lsb_alu.GBAR_O" class="port" transform="translate(40,82.5)">
+        <text id="lbl.lsb_alu.GBAR_O" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          GBAR_O
+        </text>
+      </g>
+      <rect id="lsb_alu.CN_4_O" class="node" x="40" y="91.25" width="5" height="5" />
+      <g id="lsb_alu.CN_4_O" class="port" transform="translate(40,91.25)">
+        <text id="lbl.lsb_alu.CN_4_O" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          CN_4_O
+        </text>
+      </g>
+    </g>
+<g transform="matrix(1,0,0,1,437,329.75)"><rect width="40" height="100" x="-20" y="-50" fill="none" stroke-width="1"></rect><text text-anchor="end" transform="matrix(1,0,0,1,-20,-60)" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="0" x="0" svgjs:data="{&quot;newLined&quot;:true}">msb_alu</tspan></text></g>
+    <g transform="translate(417,279.75)">
+      <rect id="msb_alu.A0BAR_I" class="node" x="-5" y="91.25" width="5" height="5" />
+      <g id="msb_alu.A0BAR_I" class="port" transform="translate(-5,91.25)">
+        <text id="lbl.msb_alu.A0BAR_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          A0BAR_I
+        </text>
+      </g>
+      <rect id="msb_alu.A1BAR_I" class="node" x="-5" y="82.5" width="5" height="5" />
+      <g id="msb_alu.A1BAR_I" class="port" transform="translate(-5,82.5)">
+        <text id="lbl.msb_alu.A1BAR_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          A1BAR_I
+        </text>
+      </g>
+      <rect id="msb_alu.A2BAR_I" class="node" x="-5" y="73.75" width="5" height="5" />
+      <g id="msb_alu.A2BAR_I" class="port" transform="translate(-5,73.75)">
+        <text id="lbl.msb_alu.A2BAR_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          A2BAR_I
+        </text>
+      </g>
+      <rect id="msb_alu.A3BAR_I" class="node" x="-5" y="65" width="5" height="5" />
+      <g id="msb_alu.A3BAR_I" class="port" transform="translate(-5,65)">
+        <text id="lbl.msb_alu.A3BAR_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          A3BAR_I
+        </text>
+      </g>
+      <rect id="msb_alu.B0BAR_I" class="node" x="-5" y="56.25" width="5" height="5" />
+      <g id="msb_alu.B0BAR_I" class="port" transform="translate(-5,56.25)">
+        <text id="lbl.msb_alu.B0BAR_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          B0BAR_I
+        </text>
+      </g>
+      <rect id="msb_alu.B1BAR_I" class="node" x="-5" y="47.5" width="5" height="5" />
+      <g id="msb_alu.B1BAR_I" class="port" transform="translate(-5,47.5)">
+        <text id="lbl.msb_alu.B1BAR_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          B1BAR_I
+        </text>
+      </g>
+      <rect id="msb_alu.B2BAR_I" class="node" x="-5" y="38.75" width="5" height="5" />
+      <g id="msb_alu.B2BAR_I" class="port" transform="translate(-5,38.75)">
+        <text id="lbl.msb_alu.B2BAR_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          B2BAR_I
+        </text>
+      </g>
+      <rect id="msb_alu.B3BAR_I" class="node" x="-5" y="30" width="5" height="5" />
+      <g id="msb_alu.B3BAR_I" class="port" transform="translate(-5,30)">
+        <text id="lbl.msb_alu.B3BAR_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          B3BAR_I
+        </text>
+      </g>
+      <rect id="msb_alu.S0_I" class="node" x="-5" y="21.25" width="5" height="5" />
+      <g id="msb_alu.S0_I" class="port" transform="translate(-5,21.25)">
+        <text id="lbl.msb_alu.S0_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          S0_I
+        </text>
+      </g>
+      <rect id="msb_alu.S1_I" class="node" x="-5" y="12.5" width="5" height="5" />
+      <g id="msb_alu.S1_I" class="port" transform="translate(-5,12.5)">
+        <text id="lbl.msb_alu.S1_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          S1_I
+        </text>
+      </g>
+      <rect id="msb_alu.S2_I" class="node" x="-5" y="3.75" width="5" height="5" />
+      <g id="msb_alu.S2_I" class="port" transform="translate(-5,3.75)">
+        <text id="lbl.msb_alu.S2_I" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          S2_I
+        </text>
+      </g>
+      <rect id="msb_alu.S3_I" class="node" x="40" y="3.75" width="5" height="5" />
+      <g id="msb_alu.S3_I" class="port" transform="translate(40,3.75)">
+        <text id="lbl.msb_alu.S3_I" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          S3_I
+        </text>
+      </g>
+      <rect id="msb_alu.M_I" class="node" x="40" y="12.5" width="5" height="5" />
+      <g id="msb_alu.M_I" class="port" transform="translate(40,12.5)">
+        <text id="lbl.msb_alu.M_I" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          M_I
+        </text>
+      </g>
+      <rect id="msb_alu.CN_I" class="node" x="40" y="21.25" width="5" height="5" />
+      <g id="msb_alu.CN_I" class="port" transform="translate(40,21.25)">
+        <text id="lbl.msb_alu.CN_I" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          CN_I
+        </text>
+      </g>
+      <rect id="msb_alu.F0BAR_O" class="node" x="40" y="30" width="5" height="5" />
+      <g id="msb_alu.F0BAR_O" class="port" transform="translate(40,30)">
+        <text id="lbl.msb_alu.F0BAR_O" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          F0BAR_O
+        </text>
+      </g>
+      <rect id="msb_alu.F1BAR_O" class="node" x="40" y="38.75" width="5" height="5" />
+      <g id="msb_alu.F1BAR_O" class="port" transform="translate(40,38.75)">
+        <text id="lbl.msb_alu.F1BAR_O" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          F1BAR_O
+        </text>
+      </g>
+      <rect id="msb_alu.F2BAR_O" class="node" x="40" y="47.5" width="5" height="5" />
+      <g id="msb_alu.F2BAR_O" class="port" transform="translate(40,47.5)">
+        <text id="lbl.msb_alu.F2BAR_O" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          F2BAR_O
+        </text>
+      </g>
+      <rect id="msb_alu.F3BAR_O" class="node" x="40" y="56.25" width="5" height="5" />
+      <g id="msb_alu.F3BAR_O" class="port" transform="translate(40,56.25)">
+        <text id="lbl.msb_alu.F3BAR_O" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          F3BAR_O
+        </text>
+      </g>
+      <rect id="msb_alu.AEQUALB_O" class="node" x="40" y="65" width="5" height="5" />
+      <g id="msb_alu.AEQUALB_O" class="port" transform="translate(40,65)">
+        <text id="lbl.msb_alu.AEQUALB_O" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          AEQUALB_O
+        </text>
+      </g>
+      <rect id="msb_alu.PBAR_O" class="node" x="40" y="73.75" width="5" height="5" />
+      <g id="msb_alu.PBAR_O" class="port" transform="translate(40,73.75)">
+        <text id="lbl.msb_alu.PBAR_O" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          PBAR_O
+        </text>
+      </g>
+      <rect id="msb_alu.GBAR_O" class="node" x="40" y="82.5" width="5" height="5" />
+      <g id="msb_alu.GBAR_O" class="port" transform="translate(40,82.5)">
+        <text id="lbl.msb_alu.GBAR_O" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          GBAR_O
+        </text>
+      </g>
+      <rect id="msb_alu.CN_4_O" class="node" x="40" y="91.25" width="5" height="5" />
+      <g id="msb_alu.CN_4_O" class="port" transform="translate(40,91.25)">
+        <text id="lbl.msb_alu.CN_4_O" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          CN_4_O
+        </text>
+      </g>
+    </g>
+<g transform="matrix(1,0,0,1,42,276.25)"><rect width="40" height="100" x="-20" y="-50" fill="none" stroke-width="1"></rect><text text-anchor="end" transform="matrix(1,0,0,1,-20,-60)" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}"><tspan dy="0" x="0" svgjs:data="{&quot;newLined&quot;:true}">not_exe</tspan></text></g>
+    <g transform="translate(22,226.25)">
+      <rect id="not_exe.A" class="node" x="-5" y="47.5" width="5" height="5" />
+      <g id="not_exe.A" class="port" transform="translate(-5,47.5)">
+        <text id="lbl.not_exe.A" class="label" dominant-baseline="middle" text-anchor="start" x="5.5" y="2.5" width="0" height="0">
+          A
+        </text>
+      </g>
+      <rect id="not_exe.Y" class="node" x="40" y="47.5" width="5" height="5" />
+      <g id="not_exe.Y" class="port" transform="translate(40,47.5)">
+        <text id="lbl.not_exe.Y" class="label" dominant-baseline="middle" text-anchor="end" x="-0.5" y="2.5" width="0" height="0">
+          Y
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -579,7 +579,7 @@ class SN74LS42 extends Component {
 			Y8_O: new Pin(),
 			Y9_O: new Pin(),
 		}
-		this.ULS42LOG = new logicexp(['A_I','B_I','C_I','D_I'], ['A','B','C','D','Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9'], ['ABAR','BBAR','CBAR','DBAR']).Logic('   A    =  A_I ;   B    =  B_I ;   C    =  C_I ;   D    =  D_I ;   ABAR =  !A ;   BBAR =  !B ;   CBAR =  !C ;   DBAR =  !D ;   Y0   =  !(DBAR & CBAR & BBAR & ABAR ) ;   Y1   =  !(DBAR & CBAR & BBAR & A    ) ;   Y2   =  !(DBAR & CBAR & B    & ABAR ) ;   Y3   =  !(DBAR & CBAR & B    & A    ) ;   Y4   =  !(DBAR & C    & BBAR & ABAR ) ;   Y5   =  !(DBAR & C    & BBAR & A    ) ;   Y6   =  !(DBAR & C    & B    & ABAR ) ;   Y7   =  !(DBAR & C    & B    & A    ) ;   Y8   =  !(D    & CBAR & BBAR & ABAR ) ;   Y9   =  !(D    & CBAR & BBAR & A    ) ;');
+		this.ULS42LOG = new logicexp(['A_I','B_I','C_I','D_I'], ['A','B','C','D','Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9']).Callback(this.$exe_ULS42LOG);
 		Connect(this.ULS42LOG.pins.A_I, this.pins.A_I);
 		Connect(this.ULS42LOG.pins.B_I, this.pins.B_I);
 		Connect(this.ULS42LOG.pins.C_I, this.pins.C_I);
@@ -623,6 +623,48 @@ class SN74LS42 extends Component {
 		Connect(Y8, this.pins.Y8_O);
 		Connect(Y9, this.pins.Y9_O);
 	}
+	$exe_ULS42LOG() {
+		var ABAR, BBAR, CBAR, DBAR; // Temps
+		var A_I, B_I, C_I, D_I; // Inputs
+		var A, B, C, D, Y0, Y1, Y2, Y3, Y4, Y5, Y6, Y7, Y8, Y9; // Outputs
+		A_I = this.ULS42LOG.pins.A_I.GetValue();
+		B_I = this.ULS42LOG.pins.B_I.GetValue();
+		C_I = this.ULS42LOG.pins.C_I.GetValue();
+		D_I = this.ULS42LOG.pins.D_I.GetValue();
+		   A    =  A_I ;
+		   B    =  B_I ;
+		   C    =  C_I ;
+		   D    =  D_I ;
+		   ABAR =  !A ;
+		   BBAR =  !B ;
+		   CBAR =  !C ;
+		   DBAR =  !D ;
+		   Y0   =  !(DBAR & CBAR & BBAR & ABAR ) ;
+		   Y1   =  !(DBAR & CBAR & BBAR & A    ) ;
+		   Y2   =  !(DBAR & CBAR & B    & ABAR ) ;
+		   Y3   =  !(DBAR & CBAR & B    & A    ) ;
+		   Y4   =  !(DBAR & C    & BBAR & ABAR ) ;
+		   Y5   =  !(DBAR & C    & BBAR & A    ) ;
+		   Y6   =  !(DBAR & C    & B    & ABAR ) ;
+		   Y7   =  !(DBAR & C    & B    & A    ) ;
+		   Y8   =  !(D    & CBAR & BBAR & ABAR ) ;
+		   Y9   =  !(D    & CBAR & BBAR & A    ) ;
+		
+		this.ULS42LOG.pins.A.SetValue(A);
+		this.ULS42LOG.pins.B.SetValue(B);
+		this.ULS42LOG.pins.C.SetValue(C);
+		this.ULS42LOG.pins.D.SetValue(D);
+		this.ULS42LOG.pins.Y0.SetValue(Y0);
+		this.ULS42LOG.pins.Y1.SetValue(Y1);
+		this.ULS42LOG.pins.Y2.SetValue(Y2);
+		this.ULS42LOG.pins.Y3.SetValue(Y3);
+		this.ULS42LOG.pins.Y4.SetValue(Y4);
+		this.ULS42LOG.pins.Y5.SetValue(Y5);
+		this.ULS42LOG.pins.Y6.SetValue(Y6);
+		this.ULS42LOG.pins.Y7.SetValue(Y7);
+		this.ULS42LOG.pins.Y8.SetValue(Y8);
+		this.ULS42LOG.pins.Y9.SetValue(Y9);
+	}
 }
 /**
  * DECODER_DRIVER BCD-7 SEGMENT WITH OPEN COLLECTOR OUTPUTS
@@ -660,7 +702,7 @@ class SN74LS47 extends Component {
 		let IND = new Pin();
 		Connect(this.U1.pins.IN5, IND);
 		Connect(this.U1.pins.OUT, this.pins.BIBAR_RBOBAR_B);
-		this.ULS47LOG = new logicexp(['INA_I','INB_I','INC_I','IND_I','RBIBAR_I','LTBAR_I','BIBAR_RBOBAR_B'], ['INA','INB','INC','IND','RBIBAR','LT','OUTA','OUTB','OUTC','OUTD','OUTE','OUTF','OUTG'], ['LTBAR','BIBAR_RBOBAR','ALT','BLT','CLT','DLT','ABI','BBI','CBI','DBI']).Logic('   INA    =  INA_I ;   INB    =  INB_I ;   INC    =  INC_I ;   IND    =  IND_I ;   RBIBAR =  RBIBAR_I ;   LTBAR  =  LTBAR_I ;   BIBAR_RBOBAR  =  BIBAR_RBOBAR_B ;   LT     =  !LTBAR ;   ALT    =  !(INA & LTBAR) ;   BLT    =  !(INB & LTBAR) ;   CLT    =  !(INC & LTBAR) ;   DLT    =  !IND ;   ABI    =  !(ALT & BIBAR_RBOBAR) ;   BBI    =  !(BLT & BIBAR_RBOBAR) ;   CBI    =  !(CLT & BIBAR_RBOBAR) ;   DBI    =  !(DLT & BIBAR_RBOBAR) ;   OUTA   =  (BBI & DBI) | (ALT & CBI) | (ABI & BLT & CLT & DLT) ;   OUTB   =  (BBI & DBI) | (ABI & BLT & CBI) | (ALT & BBI & CBI) ;   OUTC   =  (CBI & DBI) | (ALT & BBI & CLT) ;   OUTD   =  (ABI & BLT & CLT) | (ALT & BLT & CBI) | (ABI & BBI & CBI) ;   OUTE   =   ABI | (BLT & CBI) ;   OUTF   =  (ABI & BBI) | (BBI & CLT) | (ABI & CLT & DLT) ;   OUTG   =  (ABI & BBI & CBI) | (BLT & CLT & DLT & LTBAR) ;');
+		this.ULS47LOG = new logicexp(['INA_I','INB_I','INC_I','IND_I','RBIBAR_I','LTBAR_I','BIBAR_RBOBAR_B'], ['INA','INB','INC','IND','RBIBAR','LT','OUTA','OUTB','OUTC','OUTD','OUTE','OUTF','OUTG']).Callback(this.$exe_ULS47LOG);
 		Connect(this.ULS47LOG.pins.INA_I, this.pins.INA_I);
 		Connect(this.ULS47LOG.pins.INB_I, this.pins.INB_I);
 		Connect(this.ULS47LOG.pins.INC_I, this.pins.INC_I);
@@ -695,6 +737,55 @@ class SN74LS47 extends Component {
 		Connect(OUTE, this.pins.OUTE_O);
 		Connect(OUTF, this.pins.OUTF_O);
 		Connect(OUTG, this.pins.OUTG_O);
+	}
+	$exe_ULS47LOG() {
+		var LTBAR, BIBAR_RBOBAR, ALT, BLT, CLT, DLT, ABI, BBI, CBI, DBI; // Temps
+		var INA_I, INB_I, INC_I, IND_I, RBIBAR_I, LTBAR_I, BIBAR_RBOBAR_B; // Inputs
+		var INA, INB, INC, IND, RBIBAR, LT, OUTA, OUTB, OUTC, OUTD, OUTE, OUTF, OUTG; // Outputs
+		INA_I = this.ULS47LOG.pins.INA_I.GetValue();
+		INB_I = this.ULS47LOG.pins.INB_I.GetValue();
+		INC_I = this.ULS47LOG.pins.INC_I.GetValue();
+		IND_I = this.ULS47LOG.pins.IND_I.GetValue();
+		RBIBAR_I = this.ULS47LOG.pins.RBIBAR_I.GetValue();
+		LTBAR_I = this.ULS47LOG.pins.LTBAR_I.GetValue();
+		BIBAR_RBOBAR_B = this.ULS47LOG.pins.BIBAR_RBOBAR_B.GetValue();
+		   INA    =  INA_I ;
+		   INB    =  INB_I ;
+		   INC    =  INC_I ;
+		   IND    =  IND_I ;
+		   RBIBAR =  RBIBAR_I ;
+		   LTBAR  =  LTBAR_I ;
+		   BIBAR_RBOBAR  =  BIBAR_RBOBAR_B ;
+		   LT     =  !LTBAR ;
+		   ALT    =  !(INA & LTBAR) ;
+		   BLT    =  !(INB & LTBAR) ;
+		   CLT    =  !(INC & LTBAR) ;
+		   DLT    =  !IND ;
+		   ABI    =  !(ALT & BIBAR_RBOBAR) ;
+		   BBI    =  !(BLT & BIBAR_RBOBAR) ;
+		   CBI    =  !(CLT & BIBAR_RBOBAR) ;
+		   DBI    =  !(DLT & BIBAR_RBOBAR) ;
+		   OUTA   =  (BBI & DBI) | (ALT & CBI) | (ABI & BLT & CLT & DLT) ;
+		   OUTB   =  (BBI & DBI) | (ABI & BLT & CBI) | (ALT & BBI & CBI) ;
+		   OUTC   =  (CBI & DBI) | (ALT & BBI & CLT) ;
+		   OUTD   =  (ABI & BLT & CLT) | (ALT & BLT & CBI) | (ABI & BBI & CBI) ;
+		   OUTE   =   ABI | (BLT & CBI) ;
+		   OUTF   =  (ABI & BBI) | (BBI & CLT) | (ABI & CLT & DLT) ;
+		   OUTG   =  (ABI & BBI & CBI) | (BLT & CLT & DLT & LTBAR) ;
+		
+		this.ULS47LOG.pins.INA.SetValue(INA);
+		this.ULS47LOG.pins.INB.SetValue(INB);
+		this.ULS47LOG.pins.INC.SetValue(INC);
+		this.ULS47LOG.pins.IND.SetValue(IND);
+		this.ULS47LOG.pins.RBIBAR.SetValue(RBIBAR);
+		this.ULS47LOG.pins.LT.SetValue(LT);
+		this.ULS47LOG.pins.OUTA.SetValue(OUTA);
+		this.ULS47LOG.pins.OUTB.SetValue(OUTB);
+		this.ULS47LOG.pins.OUTC.SetValue(OUTC);
+		this.ULS47LOG.pins.OUTD.SetValue(OUTD);
+		this.ULS47LOG.pins.OUTE.SetValue(OUTE);
+		this.ULS47LOG.pins.OUTF.SetValue(OUTF);
+		this.ULS47LOG.pins.OUTG.SetValue(OUTG);
 	}
 }
 /**
@@ -733,7 +824,7 @@ class SN74LS48 extends Component {
 		let IND = new Pin();
 		Connect(this.U1.pins.IN5, IND);
 		Connect(this.U1.pins.OUT, this.pins.BIBAR_RBOBAR_B);
-		this.ULS48LOG = new logicexp(['INA_I','INB_I','INC_I','IND_I','RBIBAR_I','LTBAR_I','BIBAR_RBOBAR_B'], ['INA','INB','INC','IND','RBIBAR','LT','OUTA','OUTB','OUTC','OUTD','OUTE','OUTF','OUTG'], ['LTBAR','BIBAR_RBOBAR','ALT','BLT','CLT','DLT','ABI','BBI','CBI','DBI']).Logic('   INA    =  INA_I ;   INB    =  INB_I ;   INC    =  INC_I ;   IND    =  IND_I ;   RBIBAR =  RBIBAR_I ;   LTBAR  =  LTBAR_I ;   BIBAR_RBOBAR  =  BIBAR_RBOBAR_B ;   LT     =  !LTBAR ;   ALT    =  !(INA & LTBAR) ;   BLT    =  !(INB & LTBAR) ;   CLT    =  !(INC & LTBAR) ;   DLT    =  !IND ;   ABI    =  !(ALT & BIBAR_RBOBAR) ;   BBI    =  !(BLT & BIBAR_RBOBAR) ;   CBI    =  !(CLT & BIBAR_RBOBAR) ;   DBI    =  !(DLT & BIBAR_RBOBAR) ;   OUTA   =  !((BBI & DBI) | (ALT & CBI) | (ABI & BLT & CLT & DLT)) ;   OUTB   =  !((BBI & DBI) | (ABI & BLT & CBI) | (ALT & BBI & CBI)) ;   OUTC   =  !((CBI & DBI) | (ALT & BBI & CLT)) ;   OUTD   =  !((ABI & BLT & CLT) | (ALT & BLT & CBI) | (ABI & BBI & CBI)) ;   OUTE   =  !( ABI | (BLT & CBI)) ;   OUTF   =  !((ABI & BBI) | (BBI & CLT) | (ABI & CLT & DLT)) ;   OUTG   =  !((ABI & BBI & CBI) | (BLT & CLT & DLT & LTBAR)) ;');
+		this.ULS48LOG = new logicexp(['INA_I','INB_I','INC_I','IND_I','RBIBAR_I','LTBAR_I','BIBAR_RBOBAR_B'], ['INA','INB','INC','IND','RBIBAR','LT','OUTA','OUTB','OUTC','OUTD','OUTE','OUTF','OUTG']).Callback(this.$exe_ULS48LOG);
 		Connect(this.ULS48LOG.pins.INA_I, this.pins.INA_I);
 		Connect(this.ULS48LOG.pins.INB_I, this.pins.INB_I);
 		Connect(this.ULS48LOG.pins.INC_I, this.pins.INC_I);
@@ -769,6 +860,55 @@ class SN74LS48 extends Component {
 		Connect(OUTF, this.pins.OUTF_O);
 		Connect(OUTG, this.pins.OUTG_O);
 	}
+	$exe_ULS48LOG() {
+		var LTBAR, BIBAR_RBOBAR, ALT, BLT, CLT, DLT, ABI, BBI, CBI, DBI; // Temps
+		var INA_I, INB_I, INC_I, IND_I, RBIBAR_I, LTBAR_I, BIBAR_RBOBAR_B; // Inputs
+		var INA, INB, INC, IND, RBIBAR, LT, OUTA, OUTB, OUTC, OUTD, OUTE, OUTF, OUTG; // Outputs
+		INA_I = this.ULS48LOG.pins.INA_I.GetValue();
+		INB_I = this.ULS48LOG.pins.INB_I.GetValue();
+		INC_I = this.ULS48LOG.pins.INC_I.GetValue();
+		IND_I = this.ULS48LOG.pins.IND_I.GetValue();
+		RBIBAR_I = this.ULS48LOG.pins.RBIBAR_I.GetValue();
+		LTBAR_I = this.ULS48LOG.pins.LTBAR_I.GetValue();
+		BIBAR_RBOBAR_B = this.ULS48LOG.pins.BIBAR_RBOBAR_B.GetValue();
+		   INA    =  INA_I ;
+		   INB    =  INB_I ;
+		   INC    =  INC_I ;
+		   IND    =  IND_I ;
+		   RBIBAR =  RBIBAR_I ;
+		   LTBAR  =  LTBAR_I ;
+		   BIBAR_RBOBAR  =  BIBAR_RBOBAR_B ;
+		   LT     =  !LTBAR ;
+		   ALT    =  !(INA & LTBAR) ;
+		   BLT    =  !(INB & LTBAR) ;
+		   CLT    =  !(INC & LTBAR) ;
+		   DLT    =  !IND ;
+		   ABI    =  !(ALT & BIBAR_RBOBAR) ;
+		   BBI    =  !(BLT & BIBAR_RBOBAR) ;
+		   CBI    =  !(CLT & BIBAR_RBOBAR) ;
+		   DBI    =  !(DLT & BIBAR_RBOBAR) ;
+		   OUTA   =  !((BBI & DBI) | (ALT & CBI) | (ABI & BLT & CLT & DLT)) ;
+		   OUTB   =  !((BBI & DBI) | (ABI & BLT & CBI) | (ALT & BBI & CBI)) ;
+		   OUTC   =  !((CBI & DBI) | (ALT & BBI & CLT)) ;
+		   OUTD   =  !((ABI & BLT & CLT) | (ALT & BLT & CBI) | (ABI & BBI & CBI)) ;
+		   OUTE   =  !( ABI | (BLT & CBI)) ;
+		   OUTF   =  !((ABI & BBI) | (BBI & CLT) | (ABI & CLT & DLT)) ;
+		   OUTG   =  !((ABI & BBI & CBI) | (BLT & CLT & DLT & LTBAR)) ;
+		
+		this.ULS48LOG.pins.INA.SetValue(INA);
+		this.ULS48LOG.pins.INB.SetValue(INB);
+		this.ULS48LOG.pins.INC.SetValue(INC);
+		this.ULS48LOG.pins.IND.SetValue(IND);
+		this.ULS48LOG.pins.RBIBAR.SetValue(RBIBAR);
+		this.ULS48LOG.pins.LT.SetValue(LT);
+		this.ULS48LOG.pins.OUTA.SetValue(OUTA);
+		this.ULS48LOG.pins.OUTB.SetValue(OUTB);
+		this.ULS48LOG.pins.OUTC.SetValue(OUTC);
+		this.ULS48LOG.pins.OUTD.SetValue(OUTD);
+		this.ULS48LOG.pins.OUTE.SetValue(OUTE);
+		this.ULS48LOG.pins.OUTF.SetValue(OUTF);
+		this.ULS48LOG.pins.OUTG.SetValue(OUTG);
+	}
 }
 /**
  * DECODER_DRIVER BCD-7 SEGMENT WITH OPEN COLLECTOR OUTPUTS
@@ -790,7 +930,7 @@ class SN74LS49 extends Component {
 			OUTF_O: new Pin(),
 			OUTG_O: new Pin(),
 		}
-		this.ULS49LOG = new logicexp(['INA_I','INB_I','INC_I','IND_I','BIBAR_I'], ['OUTA','OUTB','OUTC','OUTD','OUTE','OUTF','OUTG'], ['INA','INB','INC','IND','BIBAR','ABAR','BBAR','CBAR','DBAR','ABI','BBI','CBI','DBI']).Logic('   INA   =  INA_I ;   INB   =  INB_I ;   INC   =  INC_I ;   IND   =  IND_I ;   BIBAR =  BIBAR_I ;   ABAR  =  !INA ;   BBAR  =  !INB ;   CBAR  =  !INC ;   DBAR  =  !IND ;   ABI   =  !(ABAR & BIBAR) ;   BBI   =  !(BBAR & BIBAR) ;   CBI   =  !(CBAR & BIBAR) ;   DBI   =  !(DBAR & BIBAR) ;   OUTA  =  !((BBI & DBI) | (ABAR & CBI) | (ABI & BBAR & CBAR & DBAR)) ;   OUTB  =  !((BBI & DBI) | (ABI & BBAR & CBI) | (ABAR & BBI & CBI)) ;   OUTC  =  !((CBI & DBI) | (ABAR & BBI & CBAR)) ;   OUTD  =  !((ABI & BBAR & CBAR) | (ABAR & BBAR & CBI) |               (ABI & BBI & CBI)) ;   OUTE  =  !( ABI | (BBAR & CBI)) ;   OUTF  =  !((ABI & BBI) | (BBI & CBAR) | (ABI & CBAR & DBAR)) ;   OUTG  =  !((ABI & BBI & CBI) | (BBAR & CBAR & DBAR)) ;');
+		this.ULS49LOG = new logicexp(['INA_I','INB_I','INC_I','IND_I','BIBAR_I'], ['OUTA','OUTB','OUTC','OUTD','OUTE','OUTF','OUTG']).Callback(this.$exe_ULS49LOG);
 		Connect(this.ULS49LOG.pins.INA_I, this.pins.INA_I);
 		Connect(this.ULS49LOG.pins.INB_I, this.pins.INB_I);
 		Connect(this.ULS49LOG.pins.INC_I, this.pins.INC_I);
@@ -817,6 +957,44 @@ class SN74LS49 extends Component {
 		Connect(OUTE, this.pins.OUTE_O);
 		Connect(OUTF, this.pins.OUTF_O);
 		Connect(OUTG, this.pins.OUTG_O);
+	}
+	$exe_ULS49LOG() {
+		var INA, INB, INC, IND, BIBAR, ABAR, BBAR, CBAR, DBAR, ABI, BBI, CBI, DBI; // Temps
+		var INA_I, INB_I, INC_I, IND_I, BIBAR_I; // Inputs
+		var OUTA, OUTB, OUTC, OUTD, OUTE, OUTF, OUTG; // Outputs
+		INA_I = this.ULS49LOG.pins.INA_I.GetValue();
+		INB_I = this.ULS49LOG.pins.INB_I.GetValue();
+		INC_I = this.ULS49LOG.pins.INC_I.GetValue();
+		IND_I = this.ULS49LOG.pins.IND_I.GetValue();
+		BIBAR_I = this.ULS49LOG.pins.BIBAR_I.GetValue();
+		   INA   =  INA_I ;
+		   INB   =  INB_I ;
+		   INC   =  INC_I ;
+		   IND   =  IND_I ;
+		   BIBAR =  BIBAR_I ;
+		   ABAR  =  !INA ;
+		   BBAR  =  !INB ;
+		   CBAR  =  !INC ;
+		   DBAR  =  !IND ;
+		   ABI   =  !(ABAR & BIBAR) ;
+		   BBI   =  !(BBAR & BIBAR) ;
+		   CBI   =  !(CBAR & BIBAR) ;
+		   DBI   =  !(DBAR & BIBAR) ;
+		   OUTA  =  !((BBI & DBI) | (ABAR & CBI) | (ABI & BBAR & CBAR & DBAR)) ;
+		   OUTB  =  !((BBI & DBI) | (ABI & BBAR & CBI) | (ABAR & BBI & CBI)) ;
+		   OUTC  =  !((CBI & DBI) | (ABAR & BBI & CBAR)) ;
+		   OUTD  =  !((ABI & BBAR & CBAR) | (ABAR & BBAR & CBI) |               (ABI & BBI & CBI)) ;
+		   OUTE  =  !( ABI | (BBAR & CBI)) ;
+		   OUTF  =  !((ABI & BBI) | (BBI & CBAR) | (ABI & CBAR & DBAR)) ;
+		   OUTG  =  !((ABI & BBI & CBI) | (BBAR & CBAR & DBAR)) ;
+		
+		this.ULS49LOG.pins.OUTA.SetValue(OUTA);
+		this.ULS49LOG.pins.OUTB.SetValue(OUTB);
+		this.ULS49LOG.pins.OUTC.SetValue(OUTC);
+		this.ULS49LOG.pins.OUTD.SetValue(OUTD);
+		this.ULS49LOG.pins.OUTE.SetValue(OUTE);
+		this.ULS49LOG.pins.OUTF.SetValue(OUTF);
+		this.ULS49LOG.pins.OUTG.SetValue(OUTG);
 	}
 }
 /**
@@ -1271,7 +1449,7 @@ class SN74LS68 extends Component {
 		Connect(this.U8.pins.Q0, _2QD);
 		let _2QDBAR = new Pin();
 		Connect(this.U8.pins.QBAR0, _2QDBAR);
-		this.ULS68LOG = new logicexp(['_1CLRBAR_I','_1CLKA_I','_1CLKB_I','_1QBBAR','_1QCBAR','_1QDBAR','_2CLRBAR_I','_2CLK_I','_2QA','_2QBBAR','_2QCBAR','_2QDBAR'], ['_1CLRBAR','_1CLKA','_1CLKB','_1CLOCK2','_1CLOCK4','_2CLRBAR','_2CLK','_2CLOCK2','_2CLOCK4'], []).Logic('   _1CLRBAR =  _1CLRBAR_I ;   _1CLKA   =  _1CLKA_I ;   _1CLKB   =  _1CLKB_I ;   _1CLOCK2 =  _1CLKB & 1QDBAR ;   _1CLOCK4 =  !( (1QBBAR & 1QDBAR) | (1QCBAR & 1QDBAR) ) & _1CLKB ;   _2CLRBAR =  _2CLRBAR_I ;   _2CLK    =  _2CLK_I ;   _2CLOCK2 =  2QA & 2QDBAR ;   _2CLOCK4 =  !( (2QBBAR & 2QDBAR) | (2QCBAR & 2QDBAR) ) & 2QA ;');
+		this.ULS68LOG = new logicexp(['_1CLRBAR_I','_1CLKA_I','_1CLKB_I','_1QBBAR','_1QCBAR','_1QDBAR','_2CLRBAR_I','_2CLK_I','_2QA','_2QBBAR','_2QCBAR','_2QDBAR'], ['_1CLRBAR','_1CLKA','_1CLKB','_1CLOCK2','_1CLOCK4','_2CLRBAR','_2CLK','_2CLOCK2','_2CLOCK4']).Callback(this.$exe_ULS68LOG);
 		Connect(this.ULS68LOG.pins._1CLRBAR_I, this.pins._1CLRBAR_I);
 		Connect(this.ULS68LOG.pins._1CLKA_I, this.pins._1CLKA_I);
 		Connect(this.ULS68LOG.pins._1CLKB_I, this.pins._1CLKB_I);
@@ -1302,6 +1480,42 @@ class SN74LS68 extends Component {
 		Connect(_2QB, this.pins._2QB_O);
 		Connect(_2QC, this.pins._2QC_O);
 		Connect(_2QD, this.pins._2QD_O);
+	}
+	$exe_ULS68LOG() {
+		var __1CLRBAR, __1CLKA, __1CLKB, __1CLOCK2, __1CLOCK4, __2CLRBAR, __2CLK, __2CLOCK2, __2CLOCK4; // Temps
+		var _1CLRBAR_I, _1CLKA_I, _1CLKB_I, _1QBBAR, _1QCBAR, _1QDBAR, _2CLRBAR_I, _2CLK_I, _2QA, _2QBBAR, _2QCBAR, _2QDBAR; // Inputs
+		var _1CLRBAR, _1CLKA, _1CLKB, _1CLOCK2, _1CLOCK4, _2CLRBAR, _2CLK, _2CLOCK2, _2CLOCK4; // Outputs
+		_1CLRBAR_I = this.ULS68LOG.pins._1CLRBAR_I.GetValue();
+		_1CLKA_I = this.ULS68LOG.pins._1CLKA_I.GetValue();
+		_1CLKB_I = this.ULS68LOG.pins._1CLKB_I.GetValue();
+		_1QBBAR = this.ULS68LOG.pins._1QBBAR.GetValue();
+		_1QCBAR = this.ULS68LOG.pins._1QCBAR.GetValue();
+		_1QDBAR = this.ULS68LOG.pins._1QDBAR.GetValue();
+		_2CLRBAR_I = this.ULS68LOG.pins._2CLRBAR_I.GetValue();
+		_2CLK_I = this.ULS68LOG.pins._2CLK_I.GetValue();
+		_2QA = this.ULS68LOG.pins._2QA.GetValue();
+		_2QBBAR = this.ULS68LOG.pins._2QBBAR.GetValue();
+		_2QCBAR = this.ULS68LOG.pins._2QCBAR.GetValue();
+		_2QDBAR = this.ULS68LOG.pins._2QDBAR.GetValue();
+		   __1CLRBAR =  ___1CLRBAR_I ;
+		   __1CLKA   =  ___1CLKA_I ;
+		   __1CLKB   =  ___1CLKB_I ;
+		   __1CLOCK2 =  __1CLKB & _1QDBAR ;
+		   __1CLOCK4 =  !( (_1QBBAR & _1QDBAR) | (_1QCBAR & _1QDBAR) ) & __1CLKB ;
+		   __2CLRBAR =  ___2CLRBAR_I ;
+		   __2CLK    =  ___2CLK_I ;
+		   __2CLOCK2 =  _2QA & _2QDBAR ;
+		   __2CLOCK4 =  !( (_2QBBAR & _2QDBAR) | (_2QCBAR & _2QDBAR) ) & _2QA ;
+		
+		this.ULS68LOG.pins._1CLRBAR.SetValue(_1CLRBAR);
+		this.ULS68LOG.pins._1CLKA.SetValue(_1CLKA);
+		this.ULS68LOG.pins._1CLKB.SetValue(_1CLKB);
+		this.ULS68LOG.pins._1CLOCK2.SetValue(_1CLOCK2);
+		this.ULS68LOG.pins._1CLOCK4.SetValue(_1CLOCK4);
+		this.ULS68LOG.pins._2CLRBAR.SetValue(_2CLRBAR);
+		this.ULS68LOG.pins._2CLK.SetValue(_2CLK);
+		this.ULS68LOG.pins._2CLOCK2.SetValue(_2CLOCK2);
+		this.ULS68LOG.pins._2CLOCK4.SetValue(_2CLOCK4);
 	}
 }
 /**
@@ -1641,7 +1855,7 @@ class SN74LS83A extends Component {
 			SUM3_O: new Pin(),
 			SUM4_O: new Pin(),
 		}
-		this.ULS83ALOG = new logicexp(['C0_I','A1_I','A2_I','A3_I','A4_I','B1_I','B2_I','B3_I','B4_I'], ['C0','A1','A2','A3','A4','B1','B2','B3','B4','C4','SUM1','SUM2','SUM3','SUM4'], ['NAND4','NAND3','NAND2','NAND1','NOR4','NOR3','NOR2','NOR1','C0BAR']).Logic('   C0 =  C0_I ;   A1 =  A1_I ;   A2 =  A2_I ;   A3 =  A3_I ;   A4 =  A4_I ;   B1 =  B1_I ;   B2 =  B2_I ;   B3 =  B3_I ;   B4 =  B4_I ;   NAND4 =  !(A4 & B4) ;   NAND3 =  !(A3 & B3) ;   NAND2 =  !(A2 & B2) ;   NAND1 =  !(A1 & B1) ;   NOR4 =  !(A4 | B4) ;   NOR3 =  !(A3 | B3) ;   NOR2 =  !(A2 | B2) ;   NOR1 =  !(A1 | B1) ;   C0BAR =  !C0 ;   SUM1 =  (NAND1 & !NOR1) ^ C0 ;   SUM2 =  (NAND2 & !NOR2) ^ (!(NOR1 | (NAND1 & C0BAR))) ;   SUM3 =  (NAND3 & !NOR3) ^ (!(NOR2 | (NOR1 & NAND2) |            (NAND2 & NAND1 & C0BAR))) ;   SUM4 =  (NAND4 & !NOR4) ^ (!(NOR3 | (NOR2 & NAND3) |            (NOR1 & NAND3 & NAND2) | (NAND3 & NAND2 & NAND1 & C0BAR))) ;   C4 =  !( NOR4 | (NOR3 & NAND4) | (NOR2 & NAND4 & NAND3) |             (NOR1 & NAND4 & NAND3 & NAND2) |             (NAND4 & NAND3 & NAND2 & NAND1 & C0BAR) ) ;');
+		this.ULS83ALOG = new logicexp(['C0_I','A1_I','A2_I','A3_I','A4_I','B1_I','B2_I','B3_I','B4_I'], ['C0','A1','A2','A3','A4','B1','B2','B3','B4','C4','SUM1','SUM2','SUM3','SUM4']).Callback(this.$exe_ULS83ALOG);
 		Connect(this.ULS83ALOG.pins.C0_I, this.pins.C0_I);
 		Connect(this.ULS83ALOG.pins.A1_I, this.pins.A1_I);
 		Connect(this.ULS83ALOG.pins.A2_I, this.pins.A2_I);
@@ -1685,6 +1899,58 @@ class SN74LS83A extends Component {
 		Connect(SUM4, this.pins.SUM4_O);
 		Connect(C4, this.pins.C4_O);
 	}
+	$exe_ULS83ALOG() {
+		var NAND4, NAND3, NAND2, NAND1, NOR4, NOR3, NOR2, NOR1, C0BAR; // Temps
+		var C0_I, A1_I, A2_I, A3_I, A4_I, B1_I, B2_I, B3_I, B4_I; // Inputs
+		var C0, A1, A2, A3, A4, B1, B2, B3, B4, C4, SUM1, SUM2, SUM3, SUM4; // Outputs
+		C0_I = this.ULS83ALOG.pins.C0_I.GetValue();
+		A1_I = this.ULS83ALOG.pins.A1_I.GetValue();
+		A2_I = this.ULS83ALOG.pins.A2_I.GetValue();
+		A3_I = this.ULS83ALOG.pins.A3_I.GetValue();
+		A4_I = this.ULS83ALOG.pins.A4_I.GetValue();
+		B1_I = this.ULS83ALOG.pins.B1_I.GetValue();
+		B2_I = this.ULS83ALOG.pins.B2_I.GetValue();
+		B3_I = this.ULS83ALOG.pins.B3_I.GetValue();
+		B4_I = this.ULS83ALOG.pins.B4_I.GetValue();
+		   C0 =  C0_I ;
+		   A1 =  A1_I ;
+		   A2 =  A2_I ;
+		   A3 =  A3_I ;
+		   A4 =  A4_I ;
+		   B1 =  B1_I ;
+		   B2 =  B2_I ;
+		   B3 =  B3_I ;
+		   B4 =  B4_I ;
+		   NAND4 =  !(A4 & B4) ;
+		   NAND3 =  !(A3 & B3) ;
+		   NAND2 =  !(A2 & B2) ;
+		   NAND1 =  !(A1 & B1) ;
+		   NOR4 =  !(A4 | B4) ;
+		   NOR3 =  !(A3 | B3) ;
+		   NOR2 =  !(A2 | B2) ;
+		   NOR1 =  !(A1 | B1) ;
+		   C0BAR =  !C0 ;
+		   SUM1 =  (NAND1 & !NOR1) ^ C0 ;
+		   SUM2 =  (NAND2 & !NOR2) ^ (!(NOR1 | (NAND1 & C0BAR))) ;
+		   SUM3 =  (NAND3 & !NOR3) ^ (!(NOR2 | (NOR1 & NAND2) |            (NAND2 & NAND1 & C0BAR))) ;
+		   SUM4 =  (NAND4 & !NOR4) ^ (!(NOR3 | (NOR2 & NAND3) |            (NOR1 & NAND3 & NAND2) | (NAND3 & NAND2 & NAND1 & C0BAR))) ;
+		   C4 =  !( NOR4 | (NOR3 & NAND4) | (NOR2 & NAND4 & NAND3) |             (NOR1 & NAND4 & NAND3 & NAND2) |             (NAND4 & NAND3 & NAND2 & NAND1 & C0BAR) ) ;
+		
+		this.ULS83ALOG.pins.C0.SetValue(C0);
+		this.ULS83ALOG.pins.A1.SetValue(A1);
+		this.ULS83ALOG.pins.A2.SetValue(A2);
+		this.ULS83ALOG.pins.A3.SetValue(A3);
+		this.ULS83ALOG.pins.A4.SetValue(A4);
+		this.ULS83ALOG.pins.B1.SetValue(B1);
+		this.ULS83ALOG.pins.B2.SetValue(B2);
+		this.ULS83ALOG.pins.B3.SetValue(B3);
+		this.ULS83ALOG.pins.B4.SetValue(B4);
+		this.ULS83ALOG.pins.C4.SetValue(C4);
+		this.ULS83ALOG.pins.SUM1.SetValue(SUM1);
+		this.ULS83ALOG.pins.SUM2.SetValue(SUM2);
+		this.ULS83ALOG.pins.SUM3.SetValue(SUM3);
+		this.ULS83ALOG.pins.SUM4.SetValue(SUM4);
+	}
 }
 /**
  * 4-BIT MAGNITUDE COMPARATOR
@@ -1708,7 +1974,7 @@ class SN74LS85 extends Component {
 			AEBOUT_O: new Pin(),
 			ALBOUT_O: new Pin(),
 		}
-		this.ULS85LOG = new logicexp(['A3_I','A2_I','A1_I','A0_I','B3_I','B2_I','B1_I','B0_I','AGBIN_I','AEBIN_I','ALBIN_I'], ['A3','A2','A1','A0','B3','B2','B1','B0','AGBIN','AEBIN','ALBIN','AGBOUT','AEBOUT','ALBOUT'], ['C3','C2','C1','C0','A3C3','A2C2','A1C1','A0C0','B3C3','B2C2','B1C1','B0C0','D3','D2','D1','D0','D32','D31','D30']).Logic('   A3     =  A3_I ;   A2     =  A2_I ;   A1     =  A1_I ;   A0     =  A0_I ;   B3     =  B3_I ;   B2     =  B2_I ;   B1     =  B1_I ;   B0     =  B0_I ;   AGBIN  =  AGBIN_I ;   AEBIN  =  AEBIN_I ;   ALBIN  =  ALBIN_I ;   C3     =  !(A3 & B3) ;   C2     =  !(A2 & B2) ;   C1     =  !(A1 & B1) ;   C0     =  !(A0 & B0) ;   A3C3    =  A3 & C3 ;   A2C2    =  A2 & C2 ;   A1C1    =  A1 & C1 ;   A0C0    =  A0 & C0 ;   B3C3    =  B3 & C3 ;   B2C2    =  B2 & C2 ;   B1C1    =  B1 & C1 ;   B0C0    =  B0 & C0 ;   D3      =  !(A3C3 | B3C3) ;   D2      =  !(A2C2 | B2C2) ;   D1      =  !(A1C1 | B1C1) ;   D0      =  !(A0C0 | B0C0) ;   D32     =  D3 & D2 ;   D31     =  D32 & D1 ;   D30     =  D31 & D0 ;   AGBOUT  =  !B3C3 & !(B2C2 & D3) & !(B1C1 & D32) & !(B0C0 & D31) &               !(ALBIN & D30) & !(AEBIN & D30) ;   AEBOUT  =  D30 & AEBIN ;   ALBOUT  =  !(AEBIN & D30) & !(AGBIN & D30) & !(A0C0 & D31) &               !(A1C1 & D32)  & !(A2C2 & D3)   & !A3C3 ;');
+		this.ULS85LOG = new logicexp(['A3_I','A2_I','A1_I','A0_I','B3_I','B2_I','B1_I','B0_I','AGBIN_I','AEBIN_I','ALBIN_I'], ['A3','A2','A1','A0','B3','B2','B1','B0','AGBIN','AEBIN','ALBIN','AGBOUT','AEBOUT','ALBOUT']).Callback(this.$exe_ULS85LOG);
 		Connect(this.ULS85LOG.pins.A3_I, this.pins.A3_I);
 		Connect(this.ULS85LOG.pins.A2_I, this.pins.A2_I);
 		Connect(this.ULS85LOG.pins.A1_I, this.pins.A1_I);
@@ -1751,6 +2017,70 @@ class SN74LS85 extends Component {
 		Connect(AGBOUT, this.pins.AGBOUT_O);
 		Connect(AEBOUT, this.pins.AEBOUT_O);
 		Connect(ALBOUT, this.pins.ALBOUT_O);
+	}
+	$exe_ULS85LOG() {
+		var C3, C2, C1, C0, A3C3, A2C2, A1C1, A0C0, B3C3, B2C2, B1C1, B0C0, D3, D2, D1, D0, D32, D31, D30; // Temps
+		var A3_I, A2_I, A1_I, A0_I, B3_I, B2_I, B1_I, B0_I, AGBIN_I, AEBIN_I, ALBIN_I; // Inputs
+		var A3, A2, A1, A0, B3, B2, B1, B0, AGBIN, AEBIN, ALBIN, AGBOUT, AEBOUT, ALBOUT; // Outputs
+		A3_I = this.ULS85LOG.pins.A3_I.GetValue();
+		A2_I = this.ULS85LOG.pins.A2_I.GetValue();
+		A1_I = this.ULS85LOG.pins.A1_I.GetValue();
+		A0_I = this.ULS85LOG.pins.A0_I.GetValue();
+		B3_I = this.ULS85LOG.pins.B3_I.GetValue();
+		B2_I = this.ULS85LOG.pins.B2_I.GetValue();
+		B1_I = this.ULS85LOG.pins.B1_I.GetValue();
+		B0_I = this.ULS85LOG.pins.B0_I.GetValue();
+		AGBIN_I = this.ULS85LOG.pins.AGBIN_I.GetValue();
+		AEBIN_I = this.ULS85LOG.pins.AEBIN_I.GetValue();
+		ALBIN_I = this.ULS85LOG.pins.ALBIN_I.GetValue();
+		   A3     =  A3_I ;
+		   A2     =  A2_I ;
+		   A1     =  A1_I ;
+		   A0     =  A0_I ;
+		   B3     =  B3_I ;
+		   B2     =  B2_I ;
+		   B1     =  B1_I ;
+		   B0     =  B0_I ;
+		   AGBIN  =  AGBIN_I ;
+		   AEBIN  =  AEBIN_I ;
+		   ALBIN  =  ALBIN_I ;
+		   C3     =  !(A3 & B3) ;
+		   C2     =  !(A2 & B2) ;
+		   C1     =  !(A1 & B1) ;
+		   C0     =  !(A0 & B0) ;
+		   A3C3    =  A3 & C3 ;
+		   A2C2    =  A2 & C2 ;
+		   A1C1    =  A1 & C1 ;
+		   A0C0    =  A0 & C0 ;
+		   B3C3    =  B3 & C3 ;
+		   B2C2    =  B2 & C2 ;
+		   B1C1    =  B1 & C1 ;
+		   B0C0    =  B0 & C0 ;
+		   D3      =  !(A3C3 | B3C3) ;
+		   D2      =  !(A2C2 | B2C2) ;
+		   D1      =  !(A1C1 | B1C1) ;
+		   D0      =  !(A0C0 | B0C0) ;
+		   D32     =  D3 & D2 ;
+		   D31     =  D32 & D1 ;
+		   D30     =  D31 & D0 ;
+		   AGBOUT  =  !B3C3 & !(B2C2 & D3) & !(B1C1 & D32) & !(B0C0 & D31) &               !(ALBIN & D30) & !(AEBIN & D30) ;
+		   AEBOUT  =  D30 & AEBIN ;
+		   ALBOUT  =  !(AEBIN & D30) & !(AGBIN & D30) & !(A0C0 & D31) &               !(A1C1 & D32)  & !(A2C2 & D3)   & !A3C3 ;
+		
+		this.ULS85LOG.pins.A3.SetValue(A3);
+		this.ULS85LOG.pins.A2.SetValue(A2);
+		this.ULS85LOG.pins.A1.SetValue(A1);
+		this.ULS85LOG.pins.A0.SetValue(A0);
+		this.ULS85LOG.pins.B3.SetValue(B3);
+		this.ULS85LOG.pins.B2.SetValue(B2);
+		this.ULS85LOG.pins.B1.SetValue(B1);
+		this.ULS85LOG.pins.B0.SetValue(B0);
+		this.ULS85LOG.pins.AGBIN.SetValue(AGBIN);
+		this.ULS85LOG.pins.AEBIN.SetValue(AEBIN);
+		this.ULS85LOG.pins.ALBIN.SetValue(ALBIN);
+		this.ULS85LOG.pins.AGBOUT.SetValue(AGBOUT);
+		this.ULS85LOG.pins.AEBOUT.SetValue(AEBOUT);
+		this.ULS85LOG.pins.ALBOUT.SetValue(ALBOUT);
 	}
 }
 class SN74LS86A extends Component {
@@ -1845,7 +2175,7 @@ class SN74LS90 extends Component {
 		Connect(this.U4.pins.K0, QD);
 		Connect(this.U4.pins.Q0, QD);
 		Connect(this.U4.pins.QBAR0, QDBAR);
-		this.ULS90LOG = new logicexp(['R91_I','R92_I','CKA_I','CKB_I','R01_I','R02_I','QB','QC'], ['R91','R92','CKA','CKB','R01','R02','J4','SET9BAR','CLRBAR','CLRBAR23'], []).Logic('   R91      =  R91_I ;   R92      =  R92_I ;   CKA      =  CKA_I ;   CKB      =  CKB_I ;   R01      =  R01_I ;   R02      =  R02_I ;   SET9BAR  =  !(R91 & R92) ;   CLRBAR   =  !(R01 & R02) ;   CLRBAR23 =  CLRBAR & SET9BAR ;   J4       =  QB & QC ;');
+		this.ULS90LOG = new logicexp(['R91_I','R92_I','CKA_I','CKB_I','R01_I','R02_I','QB','QC'], ['R91','R92','CKA','CKB','R01','R02','J4','SET9BAR','CLRBAR','CLRBAR23']).Callback(this.$exe_ULS90LOG);
 		Connect(this.ULS90LOG.pins.R91_I, this.pins.R91_I);
 		Connect(this.ULS90LOG.pins.R92_I, this.pins.R92_I);
 		Connect(this.ULS90LOG.pins.CKA_I, this.pins.CKA_I);
@@ -1872,6 +2202,39 @@ class SN74LS90 extends Component {
 		Connect(QB, this.pins.QB_O);
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
+	}
+	$exe_ULS90LOG() {
+		var R91_I, R92_I, CKA_I, CKB_I, R01_I, R02_I, QB, QC; // Inputs
+		var R91, R92, CKA, CKB, R01, R02, J4, SET9BAR, CLRBAR, CLRBAR23; // Outputs
+		R91_I = this.ULS90LOG.pins.R91_I.GetValue();
+		R92_I = this.ULS90LOG.pins.R92_I.GetValue();
+		CKA_I = this.ULS90LOG.pins.CKA_I.GetValue();
+		CKB_I = this.ULS90LOG.pins.CKB_I.GetValue();
+		R01_I = this.ULS90LOG.pins.R01_I.GetValue();
+		R02_I = this.ULS90LOG.pins.R02_I.GetValue();
+		QB = this.ULS90LOG.pins.QB.GetValue();
+		QC = this.ULS90LOG.pins.QC.GetValue();
+		   R91      =  R91_I ;
+		   R92      =  R92_I ;
+		   CKA      =  CKA_I ;
+		   CKB      =  CKB_I ;
+		   R01      =  R01_I ;
+		   R02      =  R02_I ;
+		   SET9BAR  =  !(R91 & R92) ;
+		   CLRBAR   =  !(R01 & R02) ;
+		   CLRBAR23 =  CLRBAR & SET9BAR ;
+		   J4       =  QB & QC ;
+		
+		this.ULS90LOG.pins.R91.SetValue(R91);
+		this.ULS90LOG.pins.R92.SetValue(R92);
+		this.ULS90LOG.pins.CKA.SetValue(CKA);
+		this.ULS90LOG.pins.CKB.SetValue(CKB);
+		this.ULS90LOG.pins.R01.SetValue(R01);
+		this.ULS90LOG.pins.R02.SetValue(R02);
+		this.ULS90LOG.pins.J4.SetValue(J4);
+		this.ULS90LOG.pins.SET9BAR.SetValue(SET9BAR);
+		this.ULS90LOG.pins.CLRBAR.SetValue(CLRBAR);
+		this.ULS90LOG.pins.CLRBAR23.SetValue(CLRBAR23);
 	}
 }
 /**
@@ -2138,7 +2501,7 @@ class SN74LS95B extends Component {
 			QC_O: new Pin(),
 			QD_O: new Pin(),
 		}
-		this.ULS95BLOG = new logicexp(['MODE_I','CLK1_I','CLK2_I','SER_I','A_I','B_I','C_I','D_I','QA','QB','QC'], ['MODE','CLK1','CLK2','SER','A','B','C','D','CLK','DA','DB','DC','DD'], ['MODEBAR']).Logic('   MODE =  MODE_I ;   CLK1 =  CLK1_I ;   CLK2 =  CLK2_I ;   SER =  SER_I ;   A   =  A_I ;   B   =  B_I ;   C   =  C_I ;   D   =  D_I ;   MODEBAR =  !MODE ;   CLK =  !((MODEBAR  & CLK1) | (MODE  & CLK2)) ;   DA  =  (MODEBAR  & SER)    | (MODE  & A) ;   DB  =  (MODEBAR  & QA) | (MODE  & B) ;   DC  =  (MODEBAR  & QB) | (MODE  & C) ;   DD  =  (MODEBAR  & QC) | (MODE  & D) ;');
+		this.ULS95BLOG = new logicexp(['MODE_I','CLK1_I','CLK2_I','SER_I','A_I','B_I','C_I','D_I','QA','QB','QC'], ['MODE','CLK1','CLK2','SER','A','B','C','D','CLK','DA','DB','DC','DD']).Callback(this.$exe_ULS95BLOG);
 		Connect(this.ULS95BLOG.pins.MODE_I, this.pins.MODE_I);
 		Connect(this.ULS95BLOG.pins.CLK1_I, this.pins.CLK1_I);
 		Connect(this.ULS95BLOG.pins.CLK2_I, this.pins.CLK2_I);
@@ -2200,6 +2563,50 @@ class SN74LS95B extends Component {
 		Connect(QB, this.pins.QB_O);
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
+	}
+	$exe_ULS95BLOG() {
+		var MODEBAR; // Temps
+		var MODE_I, CLK1_I, CLK2_I, SER_I, A_I, B_I, C_I, D_I, QA, QB, QC; // Inputs
+		var MODE, CLK1, CLK2, SER, A, B, C, D, CLK, DA, DB, DC, DD; // Outputs
+		MODE_I = this.ULS95BLOG.pins.MODE_I.GetValue();
+		CLK1_I = this.ULS95BLOG.pins.CLK1_I.GetValue();
+		CLK2_I = this.ULS95BLOG.pins.CLK2_I.GetValue();
+		SER_I = this.ULS95BLOG.pins.SER_I.GetValue();
+		A_I = this.ULS95BLOG.pins.A_I.GetValue();
+		B_I = this.ULS95BLOG.pins.B_I.GetValue();
+		C_I = this.ULS95BLOG.pins.C_I.GetValue();
+		D_I = this.ULS95BLOG.pins.D_I.GetValue();
+		QA = this.ULS95BLOG.pins.QA.GetValue();
+		QB = this.ULS95BLOG.pins.QB.GetValue();
+		QC = this.ULS95BLOG.pins.QC.GetValue();
+		   MODE =  MODE_I ;
+		   CLK1 =  CLK1_I ;
+		   CLK2 =  CLK2_I ;
+		   SER =  SER_I ;
+		   A   =  A_I ;
+		   B   =  B_I ;
+		   C   =  C_I ;
+		   D   =  D_I ;
+		   MODEBAR =  !MODE ;
+		   CLK =  !((MODEBAR  & CLK1) | (MODE  & CLK2)) ;
+		   DA  =  (MODEBAR  & SER)    | (MODE  & A) ;
+		   DB  =  (MODEBAR  & QA) | (MODE  & B) ;
+		   DC  =  (MODEBAR  & QB) | (MODE  & C) ;
+		   DD  =  (MODEBAR  & QC) | (MODE  & D) ;
+		
+		this.ULS95BLOG.pins.MODE.SetValue(MODE);
+		this.ULS95BLOG.pins.CLK1.SetValue(CLK1);
+		this.ULS95BLOG.pins.CLK2.SetValue(CLK2);
+		this.ULS95BLOG.pins.SER.SetValue(SER);
+		this.ULS95BLOG.pins.A.SetValue(A);
+		this.ULS95BLOG.pins.B.SetValue(B);
+		this.ULS95BLOG.pins.C.SetValue(C);
+		this.ULS95BLOG.pins.D.SetValue(D);
+		this.ULS95BLOG.pins.CLK.SetValue(CLK);
+		this.ULS95BLOG.pins.DA.SetValue(DA);
+		this.ULS95BLOG.pins.DB.SetValue(DB);
+		this.ULS95BLOG.pins.DC.SetValue(DC);
+		this.ULS95BLOG.pins.DD.SetValue(DD);
 	}
 }
 class SN74LS96 extends Component {
@@ -2606,7 +3013,7 @@ class SN74LS137 extends Component {
 		Connect(this.U1.pins.QBAR1, QBBAR);
 		let QCBAR = new Pin();
 		Connect(this.U1.pins.QBAR2, QCBAR);
-		this.ULS137LOG = new logicexp(['G1_I','G2BAR_I','GLBAR_I','A_I','B_I','C_I','QA','QB','QC','QABAR','QBBAR','QCBAR'], ['G1','G2BAR','GLBAR','A','B','C','LATCHEN','ENABLE','Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7'], []).Logic('   G1      =  G1_I ;   G2BAR   =  G2BAR_I ;   GLBAR   =  GLBAR_I ;   A       =  A_I ;   B       =  B_I ;   C       =  C_I ;   LATCHEN =  !GLBAR ;   ENABLE  =  G1 & !G2BAR ;   Y0      =  !(ENABLE & QCBAR & QBBAR & QABAR) ;   Y1      =  !(ENABLE & QCBAR & QBBAR & QA   ) ;   Y2      =  !(ENABLE & QCBAR & QB    & QABAR) ;   Y3      =  !(ENABLE & QCBAR & QB    & QA   ) ;   Y4      =  !(ENABLE & QC    & QBBAR & QABAR) ;   Y5      =  !(ENABLE & QC    & QBBAR & QA   ) ;   Y6      =  !(ENABLE & QC    & QB    & QABAR) ;   Y7      =  !(ENABLE & QC    & QB    & QA   ) ;');
+		this.ULS137LOG = new logicexp(['G1_I','G2BAR_I','GLBAR_I','A_I','B_I','C_I','QA','QB','QC','QABAR','QBBAR','QCBAR'], ['G1','G2BAR','GLBAR','A','B','C','LATCHEN','ENABLE','Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7']).Callback(this.$exe_ULS137LOG);
 		Connect(this.ULS137LOG.pins.G1_I, this.pins.G1_I);
 		Connect(this.ULS137LOG.pins.G2BAR_I, this.pins.G2BAR_I);
 		Connect(this.ULS137LOG.pins.GLBAR_I, this.pins.GLBAR_I);
@@ -2656,6 +3063,55 @@ class SN74LS137 extends Component {
 		Connect(Y6, this.pins.Y6_O);
 		Connect(Y7, this.pins.Y7_O);
 	}
+	$exe_ULS137LOG() {
+		var G1_I, G2BAR_I, GLBAR_I, A_I, B_I, C_I, QA, QB, QC, QABAR, QBBAR, QCBAR; // Inputs
+		var G1, G2BAR, GLBAR, A, B, C, LATCHEN, ENABLE, Y0, Y1, Y2, Y3, Y4, Y5, Y6, Y7; // Outputs
+		G1_I = this.ULS137LOG.pins.G1_I.GetValue();
+		G2BAR_I = this.ULS137LOG.pins.G2BAR_I.GetValue();
+		GLBAR_I = this.ULS137LOG.pins.GLBAR_I.GetValue();
+		A_I = this.ULS137LOG.pins.A_I.GetValue();
+		B_I = this.ULS137LOG.pins.B_I.GetValue();
+		C_I = this.ULS137LOG.pins.C_I.GetValue();
+		QA = this.ULS137LOG.pins.QA.GetValue();
+		QB = this.ULS137LOG.pins.QB.GetValue();
+		QC = this.ULS137LOG.pins.QC.GetValue();
+		QABAR = this.ULS137LOG.pins.QABAR.GetValue();
+		QBBAR = this.ULS137LOG.pins.QBBAR.GetValue();
+		QCBAR = this.ULS137LOG.pins.QCBAR.GetValue();
+		   G1      =  G1_I ;
+		   G2BAR   =  G2BAR_I ;
+		   GLBAR   =  GLBAR_I ;
+		   A       =  A_I ;
+		   B       =  B_I ;
+		   C       =  C_I ;
+		   LATCHEN =  !GLBAR ;
+		   ENABLE  =  G1 & !G2BAR ;
+		   Y0      =  !(ENABLE & QCBAR & QBBAR & QABAR) ;
+		   Y1      =  !(ENABLE & QCBAR & QBBAR & QA   ) ;
+		   Y2      =  !(ENABLE & QCBAR & QB    & QABAR) ;
+		   Y3      =  !(ENABLE & QCBAR & QB    & QA   ) ;
+		   Y4      =  !(ENABLE & QC    & QBBAR & QABAR) ;
+		   Y5      =  !(ENABLE & QC    & QBBAR & QA   ) ;
+		   Y6      =  !(ENABLE & QC    & QB    & QABAR) ;
+		   Y7      =  !(ENABLE & QC    & QB    & QA   ) ;
+		
+		this.ULS137LOG.pins.G1.SetValue(G1);
+		this.ULS137LOG.pins.G2BAR.SetValue(G2BAR);
+		this.ULS137LOG.pins.GLBAR.SetValue(GLBAR);
+		this.ULS137LOG.pins.A.SetValue(A);
+		this.ULS137LOG.pins.B.SetValue(B);
+		this.ULS137LOG.pins.C.SetValue(C);
+		this.ULS137LOG.pins.LATCHEN.SetValue(LATCHEN);
+		this.ULS137LOG.pins.ENABLE.SetValue(ENABLE);
+		this.ULS137LOG.pins.Y0.SetValue(Y0);
+		this.ULS137LOG.pins.Y1.SetValue(Y1);
+		this.ULS137LOG.pins.Y2.SetValue(Y2);
+		this.ULS137LOG.pins.Y3.SetValue(Y3);
+		this.ULS137LOG.pins.Y4.SetValue(Y4);
+		this.ULS137LOG.pins.Y5.SetValue(Y5);
+		this.ULS137LOG.pins.Y6.SetValue(Y6);
+		this.ULS137LOG.pins.Y7.SetValue(Y7);
+	}
 }
 /**
  * DECODER_DEMULTIPLEXER 3-8 LINE
@@ -2679,7 +3135,7 @@ class SN74LS138 extends Component {
 			Y6_O: new Pin(),
 			Y7_O: new Pin(),
 		}
-		this.ULS138LOG = new logicexp(['G1_I','G2ABAR_I','G2BBAR_I','A_I','B_I','C_I'], ['G1','G2ABAR','G2BBAR','A','B','C','ENABLE','Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7'], ['ABAR','BBAR','CBAR']).Logic('   G1     =  G1_I ;   G2ABAR =  G2ABAR_I ;   G2BBAR =  G2BBAR_I ;   A      =  A_I ;   B      =  B_I ;   C      =  C_I ;   ABAR   =  !A ;   BBAR   =  !B ;   CBAR   =  !C ;   ENABLE =  !G2ABAR & !G2BBAR & G1 ;   Y0     =  !(ENABLE & CBAR & BBAR & ABAR) ;   Y1     =  !(ENABLE & CBAR & BBAR & A   ) ;   Y2     =  !(ENABLE & CBAR & B    & ABAR) ;   Y3     =  !(ENABLE & CBAR & B    & A   ) ;   Y4     =  !(ENABLE & C    & BBAR & ABAR) ;   Y5     =  !(ENABLE & C    & BBAR & A   ) ;   Y6     =  !(ENABLE & C    & B    & ABAR) ;   Y7     =  !(ENABLE & C    & B    & A   ) ;');
+		this.ULS138LOG = new logicexp(['G1_I','G2ABAR_I','G2BBAR_I','A_I','B_I','C_I'], ['G1','G2ABAR','G2BBAR','A','B','C','ENABLE','Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7']).Callback(this.$exe_ULS138LOG);
 		Connect(this.ULS138LOG.pins.G1_I, this.pins.G1_I);
 		Connect(this.ULS138LOG.pins.G2ABAR_I, this.pins.G2ABAR_I);
 		Connect(this.ULS138LOG.pins.G2BBAR_I, this.pins.G2BBAR_I);
@@ -2725,6 +3181,51 @@ class SN74LS138 extends Component {
 		Connect(Y6, this.pins.Y6_O);
 		Connect(Y7, this.pins.Y7_O);
 	}
+	$exe_ULS138LOG() {
+		var ABAR, BBAR, CBAR; // Temps
+		var G1_I, G2ABAR_I, G2BBAR_I, A_I, B_I, C_I; // Inputs
+		var G1, G2ABAR, G2BBAR, A, B, C, ENABLE, Y0, Y1, Y2, Y3, Y4, Y5, Y6, Y7; // Outputs
+		G1_I = this.ULS138LOG.pins.G1_I.GetValue();
+		G2ABAR_I = this.ULS138LOG.pins.G2ABAR_I.GetValue();
+		G2BBAR_I = this.ULS138LOG.pins.G2BBAR_I.GetValue();
+		A_I = this.ULS138LOG.pins.A_I.GetValue();
+		B_I = this.ULS138LOG.pins.B_I.GetValue();
+		C_I = this.ULS138LOG.pins.C_I.GetValue();
+		   G1     =  G1_I ;
+		   G2ABAR =  G2ABAR_I ;
+		   G2BBAR =  G2BBAR_I ;
+		   A      =  A_I ;
+		   B      =  B_I ;
+		   C      =  C_I ;
+		   ABAR   =  !A ;
+		   BBAR   =  !B ;
+		   CBAR   =  !C ;
+		   ENABLE =  !G2ABAR & !G2BBAR & G1 ;
+		   Y0     =  !(ENABLE & CBAR & BBAR & ABAR) ;
+		   Y1     =  !(ENABLE & CBAR & BBAR & A   ) ;
+		   Y2     =  !(ENABLE & CBAR & B    & ABAR) ;
+		   Y3     =  !(ENABLE & CBAR & B    & A   ) ;
+		   Y4     =  !(ENABLE & C    & BBAR & ABAR) ;
+		   Y5     =  !(ENABLE & C    & BBAR & A   ) ;
+		   Y6     =  !(ENABLE & C    & B    & ABAR) ;
+		   Y7     =  !(ENABLE & C    & B    & A   ) ;
+		
+		this.ULS138LOG.pins.G1.SetValue(G1);
+		this.ULS138LOG.pins.G2ABAR.SetValue(G2ABAR);
+		this.ULS138LOG.pins.G2BBAR.SetValue(G2BBAR);
+		this.ULS138LOG.pins.A.SetValue(A);
+		this.ULS138LOG.pins.B.SetValue(B);
+		this.ULS138LOG.pins.C.SetValue(C);
+		this.ULS138LOG.pins.ENABLE.SetValue(ENABLE);
+		this.ULS138LOG.pins.Y0.SetValue(Y0);
+		this.ULS138LOG.pins.Y1.SetValue(Y1);
+		this.ULS138LOG.pins.Y2.SetValue(Y2);
+		this.ULS138LOG.pins.Y3.SetValue(Y3);
+		this.ULS138LOG.pins.Y4.SetValue(Y4);
+		this.ULS138LOG.pins.Y5.SetValue(Y5);
+		this.ULS138LOG.pins.Y6.SetValue(Y6);
+		this.ULS138LOG.pins.Y7.SetValue(Y7);
+	}
 }
 /**
  * DECODER_DEMULTIPLEXER 2-4 LINE
@@ -2741,7 +3242,7 @@ class SN74LS139A extends Component {
 			Y2_O: new Pin(),
 			Y3_O: new Pin(),
 		}
-		this.ULS139LOG = new logicexp(['GBAR_I','A_I','B_I'], ['GBAR','A','B','Y0','Y1','Y2','Y3'], ['ABAR','BBAR','ENABLE']).Logic('   GBAR   =  GBAR_I ;   A      =  A_I ;   B      =  B_I ;   ABAR   =  !A ;   BBAR   =  !B ;   ENABLE =  !GBAR ;   Y0     =  !(ENABLE & BBAR & ABAR ) ;   Y1     =  !(ENABLE & BBAR & A    ) ;   Y2     =  !(ENABLE & B    & ABAR ) ;   Y3     =  !(ENABLE & B    & A    ) ;');
+		this.ULS139LOG = new logicexp(['GBAR_I','A_I','B_I'], ['GBAR','A','B','Y0','Y1','Y2','Y3']).Callback(this.$exe_ULS139LOG);
 		Connect(this.ULS139LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS139LOG.pins.A_I, this.pins.A_I);
 		Connect(this.ULS139LOG.pins.B_I, this.pins.B_I);
@@ -2763,6 +3264,32 @@ class SN74LS139A extends Component {
 		Connect(Y1, this.pins.Y1_O);
 		Connect(Y2, this.pins.Y2_O);
 		Connect(Y3, this.pins.Y3_O);
+	}
+	$exe_ULS139LOG() {
+		var ABAR, BBAR, ENABLE; // Temps
+		var GBAR_I, A_I, B_I; // Inputs
+		var GBAR, A, B, Y0, Y1, Y2, Y3; // Outputs
+		GBAR_I = this.ULS139LOG.pins.GBAR_I.GetValue();
+		A_I = this.ULS139LOG.pins.A_I.GetValue();
+		B_I = this.ULS139LOG.pins.B_I.GetValue();
+		   GBAR   =  GBAR_I ;
+		   A      =  A_I ;
+		   B      =  B_I ;
+		   ABAR   =  !A ;
+		   BBAR   =  !B ;
+		   ENABLE =  !GBAR ;
+		   Y0     =  !(ENABLE & BBAR & ABAR ) ;
+		   Y1     =  !(ENABLE & BBAR & A    ) ;
+		   Y2     =  !(ENABLE & B    & ABAR ) ;
+		   Y3     =  !(ENABLE & B    & A    ) ;
+		
+		this.ULS139LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS139LOG.pins.A.SetValue(A);
+		this.ULS139LOG.pins.B.SetValue(B);
+		this.ULS139LOG.pins.Y0.SetValue(Y0);
+		this.ULS139LOG.pins.Y1.SetValue(Y1);
+		this.ULS139LOG.pins.Y2.SetValue(Y2);
+		this.ULS139LOG.pins.Y3.SetValue(Y3);
 	}
 }
 /**
@@ -2787,7 +3314,7 @@ class SN74LS145 extends Component {
 			Y8_O: new Pin(),
 			Y9_O: new Pin(),
 		}
-		this.ULS145LOG = new logicexp(['A_I','B_I','C_I','D_I'], ['Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9'], ['A','B','C','D','ABAR','BBAR','CBAR','DBAR']).Logic('   A    =  A_I ;   B    =  B_I ;   C    =  C_I ;   D    =  D_I ;   ABAR =  !A ;   BBAR =  !B ;   CBAR =  !C ;   DBAR =  !D ;   Y0   =  !(DBAR & CBAR & BBAR & ABAR ) ;   Y1   =  !(DBAR & CBAR & BBAR & A    ) ;   Y2   =  !(DBAR & CBAR & B    & ABAR ) ;   Y3   =  !(DBAR & CBAR & B    & A    ) ;   Y4   =  !(DBAR & C    & BBAR & ABAR ) ;   Y5   =  !(DBAR & C    & BBAR & A    ) ;   Y6   =  !(DBAR & C    & B    & ABAR ) ;   Y7   =  !(DBAR & C    & B    & A    ) ;   Y8   =  !(D    & CBAR & BBAR & ABAR ) ;   Y9   =  !(D    & CBAR & BBAR & A    ) ;');
+		this.ULS145LOG = new logicexp(['A_I','B_I','C_I','D_I'], ['Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9']).Callback(this.$exe_ULS145LOG);
 		Connect(this.ULS145LOG.pins.A_I, this.pins.A_I);
 		Connect(this.ULS145LOG.pins.B_I, this.pins.B_I);
 		Connect(this.ULS145LOG.pins.C_I, this.pins.C_I);
@@ -2823,6 +3350,44 @@ class SN74LS145 extends Component {
 		Connect(Y8, this.pins.Y8_O);
 		Connect(Y9, this.pins.Y9_O);
 	}
+	$exe_ULS145LOG() {
+		var A, B, C, D, ABAR, BBAR, CBAR, DBAR; // Temps
+		var A_I, B_I, C_I, D_I; // Inputs
+		var Y0, Y1, Y2, Y3, Y4, Y5, Y6, Y7, Y8, Y9; // Outputs
+		A_I = this.ULS145LOG.pins.A_I.GetValue();
+		B_I = this.ULS145LOG.pins.B_I.GetValue();
+		C_I = this.ULS145LOG.pins.C_I.GetValue();
+		D_I = this.ULS145LOG.pins.D_I.GetValue();
+		   A    =  A_I ;
+		   B    =  B_I ;
+		   C    =  C_I ;
+		   D    =  D_I ;
+		   ABAR =  !A ;
+		   BBAR =  !B ;
+		   CBAR =  !C ;
+		   DBAR =  !D ;
+		   Y0   =  !(DBAR & CBAR & BBAR & ABAR ) ;
+		   Y1   =  !(DBAR & CBAR & BBAR & A    ) ;
+		   Y2   =  !(DBAR & CBAR & B    & ABAR ) ;
+		   Y3   =  !(DBAR & CBAR & B    & A    ) ;
+		   Y4   =  !(DBAR & C    & BBAR & ABAR ) ;
+		   Y5   =  !(DBAR & C    & BBAR & A    ) ;
+		   Y6   =  !(DBAR & C    & B    & ABAR ) ;
+		   Y7   =  !(DBAR & C    & B    & A    ) ;
+		   Y8   =  !(D    & CBAR & BBAR & ABAR ) ;
+		   Y9   =  !(D    & CBAR & BBAR & A    ) ;
+		
+		this.ULS145LOG.pins.Y0.SetValue(Y0);
+		this.ULS145LOG.pins.Y1.SetValue(Y1);
+		this.ULS145LOG.pins.Y2.SetValue(Y2);
+		this.ULS145LOG.pins.Y3.SetValue(Y3);
+		this.ULS145LOG.pins.Y4.SetValue(Y4);
+		this.ULS145LOG.pins.Y5.SetValue(Y5);
+		this.ULS145LOG.pins.Y6.SetValue(Y6);
+		this.ULS145LOG.pins.Y7.SetValue(Y7);
+		this.ULS145LOG.pins.Y8.SetValue(Y8);
+		this.ULS145LOG.pins.Y9.SetValue(Y9);
+	}
 }
 /**
  * PRIORITY ENCODER 10-4 LINE
@@ -2845,7 +3410,7 @@ class SN74LS147 extends Component {
 			C_O: new Pin(),
 			D_O: new Pin(),
 		}
-		this.ULS147LOG = new logicexp(['IN1_I','IN2_I','IN3_I','IN4_I','IN5_I','IN6_I','IN7_I','IN8_I','IN9_I'], ['IN1','IN2','IN3','IN4','IN5','IN6','IN7','IN8','IN9','A','B','C','D'], ['IN1BAR','IN2BAR','IN3BAR','IN4BAR','IN5BAR','IN6BAR','IN7BAR','IN8BAR','IN9BAR']).Logic(' IN1    =  IN1_I ; IN2    =  IN2_I ; IN3    =  IN3_I ; IN4    =  IN4_I ; IN5    =  IN5_I ; IN6    =  IN6_I ; IN7    =  IN7_I ; IN8    =  IN8_I ; IN9    =  IN9_I ; IN1BAR =  !IN1 ; IN2BAR =  !IN2 ; IN3BAR =  !IN3 ; IN4BAR =  !IN4 ; IN5BAR =  !IN5 ; IN6BAR =  !IN6 ; IN7BAR =  !IN7 ; IN8BAR =  !IN8 ; IN9BAR =  !IN9 ; D      =  IN8 & IN9 ; C      =  !(D & (IN4BAR | IN5BAR | IN6BAR | IN7BAR)) ; B      =  !(D & ((IN2BAR & IN4 & IN5) |                       (IN3BAR & IN4 & IN5) | IN6BAR | IN7BAR)) ; A      =  !(IN9BAR | D & ((IN1BAR & IN2 & IN4 & IN6) |                       (IN3BAR & IN4 & IN6) | (IN5BAR & IN6) | IN7BAR)) ;');
+		this.ULS147LOG = new logicexp(['IN1_I','IN2_I','IN3_I','IN4_I','IN5_I','IN6_I','IN7_I','IN8_I','IN9_I'], ['IN1','IN2','IN3','IN4','IN5','IN6','IN7','IN8','IN9','A','B','C','D']).Callback(this.$exe_ULS147LOG);
 		Connect(this.ULS147LOG.pins.IN1_I, this.pins.IN1_I);
 		Connect(this.ULS147LOG.pins.IN2_I, this.pins.IN2_I);
 		Connect(this.ULS147LOG.pins.IN3_I, this.pins.IN3_I);
@@ -2886,6 +3451,56 @@ class SN74LS147 extends Component {
 		Connect(C, this.pins.C_O);
 		Connect(D, this.pins.D_O);
 	}
+	$exe_ULS147LOG() {
+		var IN1BAR, IN2BAR, IN3BAR, IN4BAR, IN5BAR, IN6BAR, IN7BAR, IN8BAR, IN9BAR; // Temps
+		var IN1_I, IN2_I, IN3_I, IN4_I, IN5_I, IN6_I, IN7_I, IN8_I, IN9_I; // Inputs
+		var IN1, IN2, IN3, IN4, IN5, IN6, IN7, IN8, IN9, A, B, C, D; // Outputs
+		IN1_I = this.ULS147LOG.pins.IN1_I.GetValue();
+		IN2_I = this.ULS147LOG.pins.IN2_I.GetValue();
+		IN3_I = this.ULS147LOG.pins.IN3_I.GetValue();
+		IN4_I = this.ULS147LOG.pins.IN4_I.GetValue();
+		IN5_I = this.ULS147LOG.pins.IN5_I.GetValue();
+		IN6_I = this.ULS147LOG.pins.IN6_I.GetValue();
+		IN7_I = this.ULS147LOG.pins.IN7_I.GetValue();
+		IN8_I = this.ULS147LOG.pins.IN8_I.GetValue();
+		IN9_I = this.ULS147LOG.pins.IN9_I.GetValue();
+		 IN1    =  IN1_I ;
+		 IN2    =  IN2_I ;
+		 IN3    =  IN3_I ;
+		 IN4    =  IN4_I ;
+		 IN5    =  IN5_I ;
+		 IN6    =  IN6_I ;
+		 IN7    =  IN7_I ;
+		 IN8    =  IN8_I ;
+		 IN9    =  IN9_I ;
+		 IN1BAR =  !IN1 ;
+		 IN2BAR =  !IN2 ;
+		 IN3BAR =  !IN3 ;
+		 IN4BAR =  !IN4 ;
+		 IN5BAR =  !IN5 ;
+		 IN6BAR =  !IN6 ;
+		 IN7BAR =  !IN7 ;
+		 IN8BAR =  !IN8 ;
+		 IN9BAR =  !IN9 ;
+		 D      =  IN8 & IN9 ;
+		 C      =  !(D & (IN4BAR | IN5BAR | IN6BAR | IN7BAR)) ;
+		 B      =  !(D & ((IN2BAR & IN4 & IN5) |                       (IN3BAR & IN4 & IN5) | IN6BAR | IN7BAR)) ;
+		 A      =  !(IN9BAR | D & ((IN1BAR & IN2 & IN4 & IN6) |                       (IN3BAR & IN4 & IN6) | (IN5BAR & IN6) | IN7BAR)) ;
+		
+		this.ULS147LOG.pins.IN1.SetValue(IN1);
+		this.ULS147LOG.pins.IN2.SetValue(IN2);
+		this.ULS147LOG.pins.IN3.SetValue(IN3);
+		this.ULS147LOG.pins.IN4.SetValue(IN4);
+		this.ULS147LOG.pins.IN5.SetValue(IN5);
+		this.ULS147LOG.pins.IN6.SetValue(IN6);
+		this.ULS147LOG.pins.IN7.SetValue(IN7);
+		this.ULS147LOG.pins.IN8.SetValue(IN8);
+		this.ULS147LOG.pins.IN9.SetValue(IN9);
+		this.ULS147LOG.pins.A.SetValue(A);
+		this.ULS147LOG.pins.B.SetValue(B);
+		this.ULS147LOG.pins.C.SetValue(C);
+		this.ULS147LOG.pins.D.SetValue(D);
+	}
 }
 /**
  * PRIORITY ENCODER 8-3 LINE
@@ -2909,7 +3524,7 @@ class SN74LS148 extends Component {
 			GS_O: new Pin(),
 			EO_O: new Pin(),
 		}
-		this.ULS148LOG = new logicexp(['IN0_I','IN1_I','IN2_I','IN3_I','IN4_I','IN5_I','IN6_I','IN7_I','EI_I'], ['IN0','IN1','IN2','IN3','IN4','IN5','IN6','IN7','EI','A0','A1','A2','GS','EO'], ['IN0BAR','IN1BAR','IN2BAR','IN3BAR','IN4BAR','IN5BAR','IN6BAR','IN7BAR','EIBAR']).Logic(' IN0    =  IN0_I ; IN1    =  IN1_I ; IN2    =  IN2_I ; IN3    =  IN3_I ; IN4    =  IN4_I ; IN5    =  IN5_I ; IN6    =  IN6_I ; IN7    =  IN7_I ; EI     =  EI_I ; IN0BAR =  !IN0 ; IN1BAR =  !IN1 ; IN2BAR =  !IN2 ; IN3BAR =  !IN3 ; IN4BAR =  !IN4 ; IN5BAR =  !IN5 ; IN6BAR =  !IN6 ; IN7BAR =  !IN7 ; EIBAR  =  !EI ; A0     =  !(EIBAR & ((IN1BAR & IN2 & IN4 & IN6) |                       (IN3BAR & IN4 & IN6) | (IN5BAR & IN6) | IN7BAR)) ; A1     =  !(EIBAR & ((IN2BAR & IN4 & IN5) |                       (IN3BAR & IN4 & IN5) | IN6BAR | IN7BAR)) ; A2     =  !(EIBAR & (IN4BAR | IN5BAR | IN6BAR | IN7BAR)) ; EO     =  !(IN0 & IN1 & IN2 & IN3 & IN4 & IN5 & IN6 & IN7 & EIBAR) ; GS     =  !(EO & EIBAR) ;');
+		this.ULS148LOG = new logicexp(['IN0_I','IN1_I','IN2_I','IN3_I','IN4_I','IN5_I','IN6_I','IN7_I','EI_I'], ['IN0','IN1','IN2','IN3','IN4','IN5','IN6','IN7','EI','A0','A1','A2','GS','EO']).Callback(this.$exe_ULS148LOG);
 		Connect(this.ULS148LOG.pins.IN0_I, this.pins.IN0_I);
 		Connect(this.ULS148LOG.pins.IN1_I, this.pins.IN1_I);
 		Connect(this.ULS148LOG.pins.IN2_I, this.pins.IN2_I);
@@ -2953,6 +3568,58 @@ class SN74LS148 extends Component {
 		Connect(GS, this.pins.GS_O);
 		Connect(EO, this.pins.EO_O);
 	}
+	$exe_ULS148LOG() {
+		var IN0BAR, IN1BAR, IN2BAR, IN3BAR, IN4BAR, IN5BAR, IN6BAR, IN7BAR, EIBAR; // Temps
+		var IN0_I, IN1_I, IN2_I, IN3_I, IN4_I, IN5_I, IN6_I, IN7_I, EI_I; // Inputs
+		var IN0, IN1, IN2, IN3, IN4, IN5, IN6, IN7, EI, A0, A1, A2, GS, EO; // Outputs
+		IN0_I = this.ULS148LOG.pins.IN0_I.GetValue();
+		IN1_I = this.ULS148LOG.pins.IN1_I.GetValue();
+		IN2_I = this.ULS148LOG.pins.IN2_I.GetValue();
+		IN3_I = this.ULS148LOG.pins.IN3_I.GetValue();
+		IN4_I = this.ULS148LOG.pins.IN4_I.GetValue();
+		IN5_I = this.ULS148LOG.pins.IN5_I.GetValue();
+		IN6_I = this.ULS148LOG.pins.IN6_I.GetValue();
+		IN7_I = this.ULS148LOG.pins.IN7_I.GetValue();
+		EI_I = this.ULS148LOG.pins.EI_I.GetValue();
+		 IN0    =  IN0_I ;
+		 IN1    =  IN1_I ;
+		 IN2    =  IN2_I ;
+		 IN3    =  IN3_I ;
+		 IN4    =  IN4_I ;
+		 IN5    =  IN5_I ;
+		 IN6    =  IN6_I ;
+		 IN7    =  IN7_I ;
+		 EI     =  EI_I ;
+		 IN0BAR =  !IN0 ;
+		 IN1BAR =  !IN1 ;
+		 IN2BAR =  !IN2 ;
+		 IN3BAR =  !IN3 ;
+		 IN4BAR =  !IN4 ;
+		 IN5BAR =  !IN5 ;
+		 IN6BAR =  !IN6 ;
+		 IN7BAR =  !IN7 ;
+		 EIBAR  =  !EI ;
+		 A0     =  !(EIBAR & ((IN1BAR & IN2 & IN4 & IN6) |                       (IN3BAR & IN4 & IN6) | (IN5BAR & IN6) | IN7BAR)) ;
+		 A1     =  !(EIBAR & ((IN2BAR & IN4 & IN5) |                       (IN3BAR & IN4 & IN5) | IN6BAR | IN7BAR)) ;
+		 A2     =  !(EIBAR & (IN4BAR | IN5BAR | IN6BAR | IN7BAR)) ;
+		 EO     =  !(IN0 & IN1 & IN2 & IN3 & IN4 & IN5 & IN6 & IN7 & EIBAR) ;
+		 GS     =  !(EO & EIBAR) ;
+		
+		this.ULS148LOG.pins.IN0.SetValue(IN0);
+		this.ULS148LOG.pins.IN1.SetValue(IN1);
+		this.ULS148LOG.pins.IN2.SetValue(IN2);
+		this.ULS148LOG.pins.IN3.SetValue(IN3);
+		this.ULS148LOG.pins.IN4.SetValue(IN4);
+		this.ULS148LOG.pins.IN5.SetValue(IN5);
+		this.ULS148LOG.pins.IN6.SetValue(IN6);
+		this.ULS148LOG.pins.IN7.SetValue(IN7);
+		this.ULS148LOG.pins.EI.SetValue(EI);
+		this.ULS148LOG.pins.A0.SetValue(A0);
+		this.ULS148LOG.pins.A1.SetValue(A1);
+		this.ULS148LOG.pins.A2.SetValue(A2);
+		this.ULS148LOG.pins.GS.SetValue(GS);
+		this.ULS148LOG.pins.EO.SetValue(EO);
+	}
 }
 /**
  * MULTIPLEXER_DATA SELECTOR 8-1 LINE
@@ -2976,7 +3643,7 @@ class SN74LS151 extends Component {
 			Y_O: new Pin(),
 			W_O: new Pin(),
 		}
-		this.ULS151LOG = new logicexp(['GBAR_I','A_I','B_I','C_I','D0_I','D1_I','D2_I','D3_I','D4_I','D5_I','D6_I','D7_I'], ['GBAR','A','B','C','D0','D1','D2','D3','D4','D5','D6','D7','W','Y'], ['IA','IB','IC','IG','ID0','ID1','ID2','ID3','ID4','ID5','ID6','ID7']).Logic('   GBAR =  GBAR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D0 =  D0_I ;   D1 =  D1_I ;   D2 =  D2_I ;   D3 =  D3_I ;   D4 =  D4_I ;   D5 =  D5_I ;   D6 =  D6_I ;   D7 =  D7_I ;   IA =  !A ;   IB =  !B ;   IC =  !C ;   IG =  !GBAR ;   ID0 =  D0 & IA & IB & IC & IG ;   ID1 =  D1 & A & IB & IC & IG ;   ID2 =  D2 & IA & B & IC & IG ;   ID3 =  D3 & A & B & IC & IG ;   ID4 =  D4 & IA & IB & C & IG ;   ID5 =  D5 & A & IB & C & IG ;   ID6 =  D6 & IA & B & C & IG ;   ID7 =  D7 & A & B & C & IG ;   W =  !(ID0 | ID1 | ID2 | ID3 | ID4 | ID5 | ID6 | ID7) ;   Y =  !W ;');
+		this.ULS151LOG = new logicexp(['GBAR_I','A_I','B_I','C_I','D0_I','D1_I','D2_I','D3_I','D4_I','D5_I','D6_I','D7_I'], ['GBAR','A','B','C','D0','D1','D2','D3','D4','D5','D6','D7','W','Y']).Callback(this.$exe_ULS151LOG);
 		Connect(this.ULS151LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS151LOG.pins.A_I, this.pins.A_I);
 		Connect(this.ULS151LOG.pins.B_I, this.pins.B_I);
@@ -3020,6 +3687,64 @@ class SN74LS151 extends Component {
 		Connect(W, this.pins.W_O);
 		Connect(Y, this.pins.Y_O);
 	}
+	$exe_ULS151LOG() {
+		var IA, IB, IC, IG, ID0, ID1, ID2, ID3, ID4, ID5, ID6, ID7; // Temps
+		var GBAR_I, A_I, B_I, C_I, D0_I, D1_I, D2_I, D3_I, D4_I, D5_I, D6_I, D7_I; // Inputs
+		var GBAR, A, B, C, D0, D1, D2, D3, D4, D5, D6, D7, W, Y; // Outputs
+		GBAR_I = this.ULS151LOG.pins.GBAR_I.GetValue();
+		A_I = this.ULS151LOG.pins.A_I.GetValue();
+		B_I = this.ULS151LOG.pins.B_I.GetValue();
+		C_I = this.ULS151LOG.pins.C_I.GetValue();
+		D0_I = this.ULS151LOG.pins.D0_I.GetValue();
+		D1_I = this.ULS151LOG.pins.D1_I.GetValue();
+		D2_I = this.ULS151LOG.pins.D2_I.GetValue();
+		D3_I = this.ULS151LOG.pins.D3_I.GetValue();
+		D4_I = this.ULS151LOG.pins.D4_I.GetValue();
+		D5_I = this.ULS151LOG.pins.D5_I.GetValue();
+		D6_I = this.ULS151LOG.pins.D6_I.GetValue();
+		D7_I = this.ULS151LOG.pins.D7_I.GetValue();
+		   GBAR =  GBAR_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D0 =  D0_I ;
+		   D1 =  D1_I ;
+		   D2 =  D2_I ;
+		   D3 =  D3_I ;
+		   D4 =  D4_I ;
+		   D5 =  D5_I ;
+		   D6 =  D6_I ;
+		   D7 =  D7_I ;
+		   IA =  !A ;
+		   IB =  !B ;
+		   IC =  !C ;
+		   IG =  !GBAR ;
+		   ID0 =  D0 & IA & IB & IC & IG ;
+		   ID1 =  D1 & A & IB & IC & IG ;
+		   ID2 =  D2 & IA & B & IC & IG ;
+		   ID3 =  D3 & A & B & IC & IG ;
+		   ID4 =  D4 & IA & IB & C & IG ;
+		   ID5 =  D5 & A & IB & C & IG ;
+		   ID6 =  D6 & IA & B & C & IG ;
+		   ID7 =  D7 & A & B & C & IG ;
+		   W =  !(ID0 | ID1 | ID2 | ID3 | ID4 | ID5 | ID6 | ID7) ;
+		   Y =  !W ;
+		
+		this.ULS151LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS151LOG.pins.A.SetValue(A);
+		this.ULS151LOG.pins.B.SetValue(B);
+		this.ULS151LOG.pins.C.SetValue(C);
+		this.ULS151LOG.pins.D0.SetValue(D0);
+		this.ULS151LOG.pins.D1.SetValue(D1);
+		this.ULS151LOG.pins.D2.SetValue(D2);
+		this.ULS151LOG.pins.D3.SetValue(D3);
+		this.ULS151LOG.pins.D4.SetValue(D4);
+		this.ULS151LOG.pins.D5.SetValue(D5);
+		this.ULS151LOG.pins.D6.SetValue(D6);
+		this.ULS151LOG.pins.D7.SetValue(D7);
+		this.ULS151LOG.pins.W.SetValue(W);
+		this.ULS151LOG.pins.Y.SetValue(Y);
+	}
 }
 class SN54LS152 extends Component {
 	constructor() {
@@ -3038,7 +3763,7 @@ class SN54LS152 extends Component {
 			D7_I: new Pin(),
 			W_O: new Pin(),
 		}
-		this.ULS152LOG = new logicexp(['A_I','B_I','C_I','D0_I','D1_I','D2_I','D3_I','D4_I','D5_I','D6_I','D7_I'], ['A','B','C','D0','D1','D2','D3','D4','D5','D6','D7','W'], ['IA','IB','IC','ID0','ID1','ID2','ID3','ID4','ID5','ID6','ID7']).Logic('   A =  A_I ;   B =  B_I ;   C =  C_I ;   D0 =  D0_I ;   D1 =  D1_I ;   D2 =  D2_I ;   D3 =  D3_I ;   D4 =  D4_I ;   D5 =  D5_I ;   D6 =  D6_I ;   D7 =  D7_I ;   IA =  !A ;   IB =  !B ;   IC =  !C ;   ID0 =  D0 & IA & IB & IC ;   ID1 =  D1 & A & IB & IC ;   ID2 =  D2 & IA & B & IC ;   ID3 =  D3 & A & B & IC ;   ID4 =  D4 & IA & IB & C ;   ID5 =  D5 & A & IB & C ;   ID6 =  D6 & IA & B & C ;   ID7 =  D7 & A & B & C ;   W =  !(ID0 | ID1 | ID2 | ID3 | ID4 | ID5 | ID6 | ID7) ;');
+		this.ULS152LOG = new logicexp(['A_I','B_I','C_I','D0_I','D1_I','D2_I','D3_I','D4_I','D5_I','D6_I','D7_I'], ['A','B','C','D0','D1','D2','D3','D4','D5','D6','D7','W']).Callback(this.$exe_ULS152LOG);
 		Connect(this.ULS152LOG.pins.A_I, this.pins.A_I);
 		Connect(this.ULS152LOG.pins.B_I, this.pins.B_I);
 		Connect(this.ULS152LOG.pins.C_I, this.pins.C_I);
@@ -3076,6 +3801,58 @@ class SN54LS152 extends Component {
 		Connect(this.ULS152LOG.pins.W, W);
 		Connect(W, this.pins.W_O);
 	}
+	$exe_ULS152LOG() {
+		var IA, IB, IC, ID0, ID1, ID2, ID3, ID4, ID5, ID6, ID7; // Temps
+		var A_I, B_I, C_I, D0_I, D1_I, D2_I, D3_I, D4_I, D5_I, D6_I, D7_I; // Inputs
+		var A, B, C, D0, D1, D2, D3, D4, D5, D6, D7, W; // Outputs
+		A_I = this.ULS152LOG.pins.A_I.GetValue();
+		B_I = this.ULS152LOG.pins.B_I.GetValue();
+		C_I = this.ULS152LOG.pins.C_I.GetValue();
+		D0_I = this.ULS152LOG.pins.D0_I.GetValue();
+		D1_I = this.ULS152LOG.pins.D1_I.GetValue();
+		D2_I = this.ULS152LOG.pins.D2_I.GetValue();
+		D3_I = this.ULS152LOG.pins.D3_I.GetValue();
+		D4_I = this.ULS152LOG.pins.D4_I.GetValue();
+		D5_I = this.ULS152LOG.pins.D5_I.GetValue();
+		D6_I = this.ULS152LOG.pins.D6_I.GetValue();
+		D7_I = this.ULS152LOG.pins.D7_I.GetValue();
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D0 =  D0_I ;
+		   D1 =  D1_I ;
+		   D2 =  D2_I ;
+		   D3 =  D3_I ;
+		   D4 =  D4_I ;
+		   D5 =  D5_I ;
+		   D6 =  D6_I ;
+		   D7 =  D7_I ;
+		   IA =  !A ;
+		   IB =  !B ;
+		   IC =  !C ;
+		   ID0 =  D0 & IA & IB & IC ;
+		   ID1 =  D1 & A & IB & IC ;
+		   ID2 =  D2 & IA & B & IC ;
+		   ID3 =  D3 & A & B & IC ;
+		   ID4 =  D4 & IA & IB & C ;
+		   ID5 =  D5 & A & IB & C ;
+		   ID6 =  D6 & IA & B & C ;
+		   ID7 =  D7 & A & B & C ;
+		   W =  !(ID0 | ID1 | ID2 | ID3 | ID4 | ID5 | ID6 | ID7) ;
+		
+		this.ULS152LOG.pins.A.SetValue(A);
+		this.ULS152LOG.pins.B.SetValue(B);
+		this.ULS152LOG.pins.C.SetValue(C);
+		this.ULS152LOG.pins.D0.SetValue(D0);
+		this.ULS152LOG.pins.D1.SetValue(D1);
+		this.ULS152LOG.pins.D2.SetValue(D2);
+		this.ULS152LOG.pins.D3.SetValue(D3);
+		this.ULS152LOG.pins.D4.SetValue(D4);
+		this.ULS152LOG.pins.D5.SetValue(D5);
+		this.ULS152LOG.pins.D6.SetValue(D6);
+		this.ULS152LOG.pins.D7.SetValue(D7);
+		this.ULS152LOG.pins.W.SetValue(W);
+	}
 }
 /**
  * DUAL 4-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS
@@ -3099,7 +3876,7 @@ class SN74LS153 extends Component {
 			Y1_O: new Pin(),
 			Y2_O: new Pin(),
 		}
-		this.ULS153LOG = new logicexp(['G1BAR_I','G2BAR_I','A_I','B_I','_1C0_I','_1C1_I','_1C2_I','_1C3_I','_2C0_I','_2C1_I','_2C2_I','_2C3_I'], ['G1BAR','G2BAR','A','B','_1C0','_1C1','_1C2','_1C3','_2C0','_2C1','_2C2','_2C3','Y1','Y2'], ['G1','G2','ABAR','BBAR','I0','I1','I2','I3','I4','I5','I6','I7']).Logic('   G1BAR =  G1BAR_I ;   G2BAR =  G2BAR_I ;   A =  A_I ;   B =  B_I ;   _1C0 =  _1C0_I ;   _1C1 =  _1C1_I ;   _1C2 =  _1C2_I ;   _1C3 =  _1C3_I ;   _2C0 =  _2C0_I ;   _2C1 =  _2C1_I ;   _2C2 =  _2C2_I ;   _2C3 =  _2C3_I ;   G1 =  !G1BAR ;   G2 =  !G2BAR ;   ABAR =  !A ;   BBAR =  !B ;   I0 =  G1 & BBAR & ABAR & _1C0 ;   I1 =  G1 & BBAR & A    & _1C1 ;   I2 =  G1 & B    & ABAR & _1C2 ;   I3 =  G1 & B    & A    & _1C3 ;   I4 =  G2 & BBAR & ABAR & _2C0 ;   I5 =  G2 & BBAR & A    & _2C1 ;   I6 =  G2 & B    & ABAR & _2C2 ;   I7 =  G2 & B    & A    & _2C3 ;   Y1 =  I0 | I1 | I2 | I3 ;   Y2 =  I4 | I5 | I6 | I7 ;');
+		this.ULS153LOG = new logicexp(['G1BAR_I','G2BAR_I','A_I','B_I','_1C0_I','_1C1_I','_1C2_I','_1C3_I','_2C0_I','_2C1_I','_2C2_I','_2C3_I'], ['G1BAR','G2BAR','A','B','_1C0','_1C1','_1C2','_1C3','_2C0','_2C1','_2C2','_2C3','Y1','Y2']).Callback(this.$exe_ULS153LOG);
 		Connect(this.ULS153LOG.pins.G1BAR_I, this.pins.G1BAR_I);
 		Connect(this.ULS153LOG.pins.G2BAR_I, this.pins.G2BAR_I);
 		Connect(this.ULS153LOG.pins.A_I, this.pins.A_I);
@@ -3143,6 +3920,64 @@ class SN74LS153 extends Component {
 		Connect(Y1, this.pins.Y1_O);
 		Connect(Y2, this.pins.Y2_O);
 	}
+	$exe_ULS153LOG() {
+		var __1C0, __1C1, __1C2, __1C3, __2C0, __2C1, __2C2, __2C3, G1, G2, ABAR, BBAR, I0, I1, I2, I3, I4, I5, I6, I7; // Temps
+		var G1BAR_I, G2BAR_I, A_I, B_I, _1C0_I, _1C1_I, _1C2_I, _1C3_I, _2C0_I, _2C1_I, _2C2_I, _2C3_I; // Inputs
+		var G1BAR, G2BAR, A, B, _1C0, _1C1, _1C2, _1C3, _2C0, _2C1, _2C2, _2C3, Y1, Y2; // Outputs
+		G1BAR_I = this.ULS153LOG.pins.G1BAR_I.GetValue();
+		G2BAR_I = this.ULS153LOG.pins.G2BAR_I.GetValue();
+		A_I = this.ULS153LOG.pins.A_I.GetValue();
+		B_I = this.ULS153LOG.pins.B_I.GetValue();
+		_1C0_I = this.ULS153LOG.pins._1C0_I.GetValue();
+		_1C1_I = this.ULS153LOG.pins._1C1_I.GetValue();
+		_1C2_I = this.ULS153LOG.pins._1C2_I.GetValue();
+		_1C3_I = this.ULS153LOG.pins._1C3_I.GetValue();
+		_2C0_I = this.ULS153LOG.pins._2C0_I.GetValue();
+		_2C1_I = this.ULS153LOG.pins._2C1_I.GetValue();
+		_2C2_I = this.ULS153LOG.pins._2C2_I.GetValue();
+		_2C3_I = this.ULS153LOG.pins._2C3_I.GetValue();
+		   G1BAR =  G1BAR_I ;
+		   G2BAR =  G2BAR_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   __1C0 =  ___1C0_I ;
+		   __1C1 =  ___1C1_I ;
+		   __1C2 =  ___1C2_I ;
+		   __1C3 =  ___1C3_I ;
+		   __2C0 =  ___2C0_I ;
+		   __2C1 =  ___2C1_I ;
+		   __2C2 =  ___2C2_I ;
+		   __2C3 =  ___2C3_I ;
+		   G1 =  !G1BAR ;
+		   G2 =  !G2BAR ;
+		   ABAR =  !A ;
+		   BBAR =  !B ;
+		   I0 =  G1 & BBAR & ABAR & __1C0 ;
+		   I1 =  G1 & BBAR & A    & __1C1 ;
+		   I2 =  G1 & B    & ABAR & __1C2 ;
+		   I3 =  G1 & B    & A    & __1C3 ;
+		   I4 =  G2 & BBAR & ABAR & __2C0 ;
+		   I5 =  G2 & BBAR & A    & __2C1 ;
+		   I6 =  G2 & B    & ABAR & __2C2 ;
+		   I7 =  G2 & B    & A    & __2C3 ;
+		   Y1 =  I0 | I1 | I2 | I3 ;
+		   Y2 =  I4 | I5 | I6 | I7 ;
+		
+		this.ULS153LOG.pins.G1BAR.SetValue(G1BAR);
+		this.ULS153LOG.pins.G2BAR.SetValue(G2BAR);
+		this.ULS153LOG.pins.A.SetValue(A);
+		this.ULS153LOG.pins.B.SetValue(B);
+		this.ULS153LOG.pins._1C0.SetValue(_1C0);
+		this.ULS153LOG.pins._1C1.SetValue(_1C1);
+		this.ULS153LOG.pins._1C2.SetValue(_1C2);
+		this.ULS153LOG.pins._1C3.SetValue(_1C3);
+		this.ULS153LOG.pins._2C0.SetValue(_2C0);
+		this.ULS153LOG.pins._2C1.SetValue(_2C1);
+		this.ULS153LOG.pins._2C2.SetValue(_2C2);
+		this.ULS153LOG.pins._2C3.SetValue(_2C3);
+		this.ULS153LOG.pins.Y1.SetValue(Y1);
+		this.ULS153LOG.pins.Y2.SetValue(Y2);
+	}
 }
 /**
  * DECODER_DEMULTIPLEXER 4-16 LINE
@@ -3174,7 +4009,7 @@ class SN74LS154 extends Component {
 			Y14_O: new Pin(),
 			Y15_O: new Pin(),
 		}
-		this.ULS154LOG = new logicexp(['G1BAR_I','G2BAR_I','A_I','B_I','C_I','D_I'], ['ENABLE','A','B','C','D','Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10','Y11','Y12','Y13','Y14','Y15'], ['G1BAR','G2BAR','ABAR','BBAR','CBAR','DBAR']).Logic('   G1BAR  =  G1BAR_I ;   G2BAR  =  G2BAR_I ;   ENABLE =  !(G1BAR | G2BAR) ;   A      =  A_I ;   B      =  B_I ;   C      =  C_I ;   D      =  D_I ;   ABAR   =  !A ;   BBAR   =  !B ;   CBAR   =  !C ;   DBAR   =  !D ;   Y0     =  !(ENABLE & DBAR & CBAR & BBAR & ABAR) ;   Y1     =  !(ENABLE & DBAR & CBAR & BBAR & A   ) ;   Y2     =  !(ENABLE & DBAR & CBAR & B    & ABAR) ;   Y3     =  !(ENABLE & DBAR & CBAR & B    & A   ) ;   Y4     =  !(ENABLE & DBAR & C    & BBAR & ABAR) ;   Y5     =  !(ENABLE & DBAR & C    & BBAR & A   ) ;   Y6     =  !(ENABLE & DBAR & C    & B    & ABAR) ;   Y7     =  !(ENABLE & DBAR & C    & B    & A   ) ;   Y8     =  !(ENABLE & D    & CBAR & BBAR & ABAR) ;   Y9     =  !(ENABLE & D    & CBAR & BBAR & A   ) ;   Y10    =  !(ENABLE & D    & CBAR & B    & ABAR) ;   Y11    =  !(ENABLE & D    & CBAR & B    & A   ) ;   Y12    =  !(ENABLE & D    & C    & BBAR & ABAR) ;   Y13    =  !(ENABLE & D    & C    & BBAR & A   ) ;   Y14    =  !(ENABLE & D    & C    & B    & ABAR) ;   Y15    =  !(ENABLE & D    & C    & B    & A   ) ;');
+		this.ULS154LOG = new logicexp(['G1BAR_I','G2BAR_I','A_I','B_I','C_I','D_I'], ['ENABLE','A','B','C','D','Y0','Y1','Y2','Y3','Y4','Y5','Y6','Y7','Y8','Y9','Y10','Y11','Y12','Y13','Y14','Y15']).Callback(this.$exe_ULS154LOG);
 		Connect(this.ULS154LOG.pins.G1BAR_I, this.pins.G1BAR_I);
 		Connect(this.ULS154LOG.pins.G2BAR_I, this.pins.G2BAR_I);
 		Connect(this.ULS154LOG.pins.A_I, this.pins.A_I);
@@ -3240,6 +4075,66 @@ class SN74LS154 extends Component {
 		Connect(Y14, this.pins.Y14_O);
 		Connect(Y15, this.pins.Y15_O);
 	}
+	$exe_ULS154LOG() {
+		var G1BAR, G2BAR, ABAR, BBAR, CBAR, DBAR; // Temps
+		var G1BAR_I, G2BAR_I, A_I, B_I, C_I, D_I; // Inputs
+		var ENABLE, A, B, C, D, Y0, Y1, Y2, Y3, Y4, Y5, Y6, Y7, Y8, Y9, Y10, Y11, Y12, Y13, Y14, Y15; // Outputs
+		G1BAR_I = this.ULS154LOG.pins.G1BAR_I.GetValue();
+		G2BAR_I = this.ULS154LOG.pins.G2BAR_I.GetValue();
+		A_I = this.ULS154LOG.pins.A_I.GetValue();
+		B_I = this.ULS154LOG.pins.B_I.GetValue();
+		C_I = this.ULS154LOG.pins.C_I.GetValue();
+		D_I = this.ULS154LOG.pins.D_I.GetValue();
+		   G1BAR  =  G1BAR_I ;
+		   G2BAR  =  G2BAR_I ;
+		   ENABLE =  !(G1BAR | G2BAR) ;
+		   A      =  A_I ;
+		   B      =  B_I ;
+		   C      =  C_I ;
+		   D      =  D_I ;
+		   ABAR   =  !A ;
+		   BBAR   =  !B ;
+		   CBAR   =  !C ;
+		   DBAR   =  !D ;
+		   Y0     =  !(ENABLE & DBAR & CBAR & BBAR & ABAR) ;
+		   Y1     =  !(ENABLE & DBAR & CBAR & BBAR & A   ) ;
+		   Y2     =  !(ENABLE & DBAR & CBAR & B    & ABAR) ;
+		   Y3     =  !(ENABLE & DBAR & CBAR & B    & A   ) ;
+		   Y4     =  !(ENABLE & DBAR & C    & BBAR & ABAR) ;
+		   Y5     =  !(ENABLE & DBAR & C    & BBAR & A   ) ;
+		   Y6     =  !(ENABLE & DBAR & C    & B    & ABAR) ;
+		   Y7     =  !(ENABLE & DBAR & C    & B    & A   ) ;
+		   Y8     =  !(ENABLE & D    & CBAR & BBAR & ABAR) ;
+		   Y9     =  !(ENABLE & D    & CBAR & BBAR & A   ) ;
+		   Y10    =  !(ENABLE & D    & CBAR & B    & ABAR) ;
+		   Y11    =  !(ENABLE & D    & CBAR & B    & A   ) ;
+		   Y12    =  !(ENABLE & D    & C    & BBAR & ABAR) ;
+		   Y13    =  !(ENABLE & D    & C    & BBAR & A   ) ;
+		   Y14    =  !(ENABLE & D    & C    & B    & ABAR) ;
+		   Y15    =  !(ENABLE & D    & C    & B    & A   ) ;
+		
+		this.ULS154LOG.pins.ENABLE.SetValue(ENABLE);
+		this.ULS154LOG.pins.A.SetValue(A);
+		this.ULS154LOG.pins.B.SetValue(B);
+		this.ULS154LOG.pins.C.SetValue(C);
+		this.ULS154LOG.pins.D.SetValue(D);
+		this.ULS154LOG.pins.Y0.SetValue(Y0);
+		this.ULS154LOG.pins.Y1.SetValue(Y1);
+		this.ULS154LOG.pins.Y2.SetValue(Y2);
+		this.ULS154LOG.pins.Y3.SetValue(Y3);
+		this.ULS154LOG.pins.Y4.SetValue(Y4);
+		this.ULS154LOG.pins.Y5.SetValue(Y5);
+		this.ULS154LOG.pins.Y6.SetValue(Y6);
+		this.ULS154LOG.pins.Y7.SetValue(Y7);
+		this.ULS154LOG.pins.Y8.SetValue(Y8);
+		this.ULS154LOG.pins.Y9.SetValue(Y9);
+		this.ULS154LOG.pins.Y10.SetValue(Y10);
+		this.ULS154LOG.pins.Y11.SetValue(Y11);
+		this.ULS154LOG.pins.Y12.SetValue(Y12);
+		this.ULS154LOG.pins.Y13.SetValue(Y13);
+		this.ULS154LOG.pins.Y14.SetValue(Y14);
+		this.ULS154LOG.pins.Y15.SetValue(Y15);
+	}
 }
 /**
  * DECODER_DEMULTIPLEXER 2-4 LINE
@@ -3263,7 +4158,7 @@ class SN74LS155A extends Component {
 			_2Y2_O: new Pin(),
 			_2Y3_O: new Pin(),
 		}
-		this.ULS155ALOG = new logicexp(['G1BAR_I','G2BAR_I','A_I','B_I','C1_I','C2BAR_I'], ['G1BAR','A','B','C1','ENABLE1','ENABLE2','_1Y0','_1Y1','_1Y2','_1Y3','_2Y0','_2Y1','_2Y2','_2Y3'], ['G2BAR','C2BAR','ABAR','BBAR']).Logic('   G1BAR   =  G1BAR_I ;   G2BAR   =  G2BAR_I ;   A       =  A_I ;   B       =  B_I ;   C1      =  C1_I ;   C2BAR   =  C2BAR_I ;   ABAR    =  !A ;   BBAR    =  !B ;   ENABLE1 =  !G1BAR &  C1 ;   ENABLE2 =  !G2BAR & !C2BAR ;   _1Y0     =  !(ENABLE1 & BBAR & ABAR) ;   _1Y1     =  !(ENABLE1 & BBAR & A   ) ;   _1Y2     =  !(ENABLE1 & B    & ABAR) ;   _1Y3     =  !(ENABLE1 & B    & A   ) ;   _2Y0     =  !(ENABLE2 & BBAR & ABAR) ;   _2Y1     =  !(ENABLE2 & BBAR & A   ) ;   _2Y2     =  !(ENABLE2 & B    & ABAR) ;   _2Y3     =  !(ENABLE2 & B    & A   ) ;');
+		this.ULS155ALOG = new logicexp(['G1BAR_I','G2BAR_I','A_I','B_I','C1_I','C2BAR_I'], ['G1BAR','A','B','C1','ENABLE1','ENABLE2','_1Y0','_1Y1','_1Y2','_1Y3','_2Y0','_2Y1','_2Y2','_2Y3']).Callback(this.$exe_ULS155ALOG);
 		Connect(this.ULS155ALOG.pins.G1BAR_I, this.pins.G1BAR_I);
 		Connect(this.ULS155ALOG.pins.G2BAR_I, this.pins.G2BAR_I);
 		Connect(this.ULS155ALOG.pins.A_I, this.pins.A_I);
@@ -3307,6 +4202,50 @@ class SN74LS155A extends Component {
 		Connect(_2Y2, this.pins._2Y2_O);
 		Connect(_2Y3, this.pins._2Y3_O);
 	}
+	$exe_ULS155ALOG() {
+		var G2BAR, C2BAR, ABAR, BBAR, __1Y0, __1Y1, __1Y2, __1Y3, __2Y0, __2Y1, __2Y2, __2Y3; // Temps
+		var G1BAR_I, G2BAR_I, A_I, B_I, C1_I, C2BAR_I; // Inputs
+		var G1BAR, A, B, C1, ENABLE1, ENABLE2, _1Y0, _1Y1, _1Y2, _1Y3, _2Y0, _2Y1, _2Y2, _2Y3; // Outputs
+		G1BAR_I = this.ULS155ALOG.pins.G1BAR_I.GetValue();
+		G2BAR_I = this.ULS155ALOG.pins.G2BAR_I.GetValue();
+		A_I = this.ULS155ALOG.pins.A_I.GetValue();
+		B_I = this.ULS155ALOG.pins.B_I.GetValue();
+		C1_I = this.ULS155ALOG.pins.C1_I.GetValue();
+		C2BAR_I = this.ULS155ALOG.pins.C2BAR_I.GetValue();
+		   G1BAR   =  G1BAR_I ;
+		   G2BAR   =  G2BAR_I ;
+		   A       =  A_I ;
+		   B       =  B_I ;
+		   C1      =  C1_I ;
+		   C2BAR   =  C2BAR_I ;
+		   ABAR    =  !A ;
+		   BBAR    =  !B ;
+		   ENABLE1 =  !G1BAR &  C1 ;
+		   ENABLE2 =  !G2BAR & !C2BAR ;
+		   __1Y0     =  !(ENABLE1 & BBAR & ABAR) ;
+		   __1Y1     =  !(ENABLE1 & BBAR & A   ) ;
+		   __1Y2     =  !(ENABLE1 & B    & ABAR) ;
+		   __1Y3     =  !(ENABLE1 & B    & A   ) ;
+		   __2Y0     =  !(ENABLE2 & BBAR & ABAR) ;
+		   __2Y1     =  !(ENABLE2 & BBAR & A   ) ;
+		   __2Y2     =  !(ENABLE2 & B    & ABAR) ;
+		   __2Y3     =  !(ENABLE2 & B    & A   ) ;
+		
+		this.ULS155ALOG.pins.G1BAR.SetValue(G1BAR);
+		this.ULS155ALOG.pins.A.SetValue(A);
+		this.ULS155ALOG.pins.B.SetValue(B);
+		this.ULS155ALOG.pins.C1.SetValue(C1);
+		this.ULS155ALOG.pins.ENABLE1.SetValue(ENABLE1);
+		this.ULS155ALOG.pins.ENABLE2.SetValue(ENABLE2);
+		this.ULS155ALOG.pins._1Y0.SetValue(_1Y0);
+		this.ULS155ALOG.pins._1Y1.SetValue(_1Y1);
+		this.ULS155ALOG.pins._1Y2.SetValue(_1Y2);
+		this.ULS155ALOG.pins._1Y3.SetValue(_1Y3);
+		this.ULS155ALOG.pins._2Y0.SetValue(_2Y0);
+		this.ULS155ALOG.pins._2Y1.SetValue(_2Y1);
+		this.ULS155ALOG.pins._2Y2.SetValue(_2Y2);
+		this.ULS155ALOG.pins._2Y3.SetValue(_2Y3);
+	}
 }
 /**
  * DECODER_DEMULTIPLEXER 2-4 LINE WITH OPEN COLLECTOR OUTPUTS
@@ -3330,7 +4269,7 @@ class SN74LS156 extends Component {
 			_2Y2_O: new Pin(),
 			_2Y3_O: new Pin(),
 		}
-		this.ULS156LOG = new logicexp(['G1BAR_I','G2BAR_I','A_I','B_I','C1_I','C2BAR_I'], ['G1BAR','A','B','C1','ENABLE1','ENABLE2','_1Y0','_1Y1','_1Y2','_1Y3','_2Y0','_2Y1','_2Y2','_2Y3'], ['G2BAR','C2BAR','ABAR','BBAR']).Logic('   G1BAR   =  G1BAR_I ;   G2BAR   =  G2BAR_I ;   A       =  A_I ;   B       =  B_I ;   C1      =  C1_I ;   C2BAR   =  C2BAR_I ;   ABAR    =  !A ;   BBAR    =  !B ;   ENABLE1 =  !G1BAR &  C1 ;   ENABLE2 =  !G2BAR & !C2BAR ;   _1Y0     =  !(ENABLE1 & BBAR & ABAR) ;   _1Y1     =  !(ENABLE1 & BBAR & A   ) ;   _1Y2     =  !(ENABLE1 & B    & ABAR) ;   _1Y3     =  !(ENABLE1 & B    & A   ) ;   _2Y0     =  !(ENABLE2 & BBAR & ABAR) ;   _2Y1     =  !(ENABLE2 & BBAR & A   ) ;   _2Y2     =  !(ENABLE2 & B    & ABAR) ;   _2Y3     =  !(ENABLE2 & B    & A   ) ;');
+		this.ULS156LOG = new logicexp(['G1BAR_I','G2BAR_I','A_I','B_I','C1_I','C2BAR_I'], ['G1BAR','A','B','C1','ENABLE1','ENABLE2','_1Y0','_1Y1','_1Y2','_1Y3','_2Y0','_2Y1','_2Y2','_2Y3']).Callback(this.$exe_ULS156LOG);
 		Connect(this.ULS156LOG.pins.G1BAR_I, this.pins.G1BAR_I);
 		Connect(this.ULS156LOG.pins.G2BAR_I, this.pins.G2BAR_I);
 		Connect(this.ULS156LOG.pins.A_I, this.pins.A_I);
@@ -3374,6 +4313,50 @@ class SN74LS156 extends Component {
 		Connect(_2Y2, this.pins._2Y2_O);
 		Connect(_2Y3, this.pins._2Y3_O);
 	}
+	$exe_ULS156LOG() {
+		var G2BAR, C2BAR, ABAR, BBAR, __1Y0, __1Y1, __1Y2, __1Y3, __2Y0, __2Y1, __2Y2, __2Y3; // Temps
+		var G1BAR_I, G2BAR_I, A_I, B_I, C1_I, C2BAR_I; // Inputs
+		var G1BAR, A, B, C1, ENABLE1, ENABLE2, _1Y0, _1Y1, _1Y2, _1Y3, _2Y0, _2Y1, _2Y2, _2Y3; // Outputs
+		G1BAR_I = this.ULS156LOG.pins.G1BAR_I.GetValue();
+		G2BAR_I = this.ULS156LOG.pins.G2BAR_I.GetValue();
+		A_I = this.ULS156LOG.pins.A_I.GetValue();
+		B_I = this.ULS156LOG.pins.B_I.GetValue();
+		C1_I = this.ULS156LOG.pins.C1_I.GetValue();
+		C2BAR_I = this.ULS156LOG.pins.C2BAR_I.GetValue();
+		   G1BAR   =  G1BAR_I ;
+		   G2BAR   =  G2BAR_I ;
+		   A       =  A_I ;
+		   B       =  B_I ;
+		   C1      =  C1_I ;
+		   C2BAR   =  C2BAR_I ;
+		   ABAR    =  !A ;
+		   BBAR    =  !B ;
+		   ENABLE1 =  !G1BAR &  C1 ;
+		   ENABLE2 =  !G2BAR & !C2BAR ;
+		   __1Y0     =  !(ENABLE1 & BBAR & ABAR) ;
+		   __1Y1     =  !(ENABLE1 & BBAR & A   ) ;
+		   __1Y2     =  !(ENABLE1 & B    & ABAR) ;
+		   __1Y3     =  !(ENABLE1 & B    & A   ) ;
+		   __2Y0     =  !(ENABLE2 & BBAR & ABAR) ;
+		   __2Y1     =  !(ENABLE2 & BBAR & A   ) ;
+		   __2Y2     =  !(ENABLE2 & B    & ABAR) ;
+		   __2Y3     =  !(ENABLE2 & B    & A   ) ;
+		
+		this.ULS156LOG.pins.G1BAR.SetValue(G1BAR);
+		this.ULS156LOG.pins.A.SetValue(A);
+		this.ULS156LOG.pins.B.SetValue(B);
+		this.ULS156LOG.pins.C1.SetValue(C1);
+		this.ULS156LOG.pins.ENABLE1.SetValue(ENABLE1);
+		this.ULS156LOG.pins.ENABLE2.SetValue(ENABLE2);
+		this.ULS156LOG.pins._1Y0.SetValue(_1Y0);
+		this.ULS156LOG.pins._1Y1.SetValue(_1Y1);
+		this.ULS156LOG.pins._1Y2.SetValue(_1Y2);
+		this.ULS156LOG.pins._1Y3.SetValue(_1Y3);
+		this.ULS156LOG.pins._2Y0.SetValue(_2Y0);
+		this.ULS156LOG.pins._2Y1.SetValue(_2Y1);
+		this.ULS156LOG.pins._2Y2.SetValue(_2Y2);
+		this.ULS156LOG.pins._2Y3.SetValue(_2Y3);
+	}
 }
 /**
  * QUADRUPLE 2-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS
@@ -3397,7 +4380,7 @@ class SN74LS157 extends Component {
 			Y3_O: new Pin(),
 			Y4_O: new Pin(),
 		}
-		this.ULS157LOG = new logicexp(['GBAR_I','_1A_I','_1B_I','_2A_I','_2B_I','_3A_I','_3B_I','_4A_I','_4B_I','SEL_I'], ['GBAR','_1A','_1B','_2A','_2B','_3A','_3B','_4A','_4B','SEL','Y1','Y2','Y3','Y4'], ['SEL1','SEL2']).Logic('   GBAR =  GBAR_I ;   _1A =  _1A_I ;   _1B =  _1B_I ;   _2A =  _2A_I ;   _2B =  _2B_I ;   _3A =  _3A_I ;   _3B =  _3B_I ;   _4A =  _4A_I ;   _4B =  _4B_I ;   SEL =  SEL_I ;   SEL1 =  !GBAR & !SEL ;   SEL2 =  !GBAR &  SEL ;   Y1 =  (_1A & SEL1) | (_1B & SEL2) ;   Y2 =  (_2A & SEL1) | (_2B & SEL2) ;   Y3 =  (_3A & SEL1) | (_3B & SEL2) ;   Y4 =  (_4A & SEL1) | (_4B & SEL2) ;');
+		this.ULS157LOG = new logicexp(['GBAR_I','_1A_I','_1B_I','_2A_I','_2B_I','_3A_I','_3B_I','_4A_I','_4B_I','SEL_I'], ['GBAR','_1A','_1B','_2A','_2B','_3A','_3B','_4A','_4B','SEL','Y1','Y2','Y3','Y4']).Callback(this.$exe_ULS157LOG);
 		Connect(this.ULS157LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS157LOG.pins._1A_I, this.pins._1A_I);
 		Connect(this.ULS157LOG.pins._1B_I, this.pins._1B_I);
@@ -3441,6 +4424,52 @@ class SN74LS157 extends Component {
 		Connect(Y3, this.pins.Y3_O);
 		Connect(Y4, this.pins.Y4_O);
 	}
+	$exe_ULS157LOG() {
+		var __1A, __1B, __2A, __2B, __3A, __3B, __4A, __4B, SEL1, SEL2; // Temps
+		var GBAR_I, _1A_I, _1B_I, _2A_I, _2B_I, _3A_I, _3B_I, _4A_I, _4B_I, SEL_I; // Inputs
+		var GBAR, _1A, _1B, _2A, _2B, _3A, _3B, _4A, _4B, SEL, Y1, Y2, Y3, Y4; // Outputs
+		GBAR_I = this.ULS157LOG.pins.GBAR_I.GetValue();
+		_1A_I = this.ULS157LOG.pins._1A_I.GetValue();
+		_1B_I = this.ULS157LOG.pins._1B_I.GetValue();
+		_2A_I = this.ULS157LOG.pins._2A_I.GetValue();
+		_2B_I = this.ULS157LOG.pins._2B_I.GetValue();
+		_3A_I = this.ULS157LOG.pins._3A_I.GetValue();
+		_3B_I = this.ULS157LOG.pins._3B_I.GetValue();
+		_4A_I = this.ULS157LOG.pins._4A_I.GetValue();
+		_4B_I = this.ULS157LOG.pins._4B_I.GetValue();
+		SEL_I = this.ULS157LOG.pins.SEL_I.GetValue();
+		   GBAR =  GBAR_I ;
+		   __1A =  ___1A_I ;
+		   __1B =  ___1B_I ;
+		   __2A =  ___2A_I ;
+		   __2B =  ___2B_I ;
+		   __3A =  ___3A_I ;
+		   __3B =  ___3B_I ;
+		   __4A =  ___4A_I ;
+		   __4B =  ___4B_I ;
+		   SEL =  SEL_I ;
+		   SEL1 =  !GBAR & !SEL ;
+		   SEL2 =  !GBAR &  SEL ;
+		   Y1 =  (__1A & SEL1) | (__1B & SEL2) ;
+		   Y2 =  (__2A & SEL1) | (__2B & SEL2) ;
+		   Y3 =  (__3A & SEL1) | (__3B & SEL2) ;
+		   Y4 =  (__4A & SEL1) | (__4B & SEL2) ;
+		
+		this.ULS157LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS157LOG.pins._1A.SetValue(_1A);
+		this.ULS157LOG.pins._1B.SetValue(_1B);
+		this.ULS157LOG.pins._2A.SetValue(_2A);
+		this.ULS157LOG.pins._2B.SetValue(_2B);
+		this.ULS157LOG.pins._3A.SetValue(_3A);
+		this.ULS157LOG.pins._3B.SetValue(_3B);
+		this.ULS157LOG.pins._4A.SetValue(_4A);
+		this.ULS157LOG.pins._4B.SetValue(_4B);
+		this.ULS157LOG.pins.SEL.SetValue(SEL);
+		this.ULS157LOG.pins.Y1.SetValue(Y1);
+		this.ULS157LOG.pins.Y2.SetValue(Y2);
+		this.ULS157LOG.pins.Y3.SetValue(Y3);
+		this.ULS157LOG.pins.Y4.SetValue(Y4);
+	}
 }
 /**
  * DUAL 4-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS
@@ -3464,7 +4493,7 @@ class SN74LS158 extends Component {
 			Y3_O: new Pin(),
 			Y4_O: new Pin(),
 		}
-		this.ULS158LOG = new logicexp(['GBAR_I','_1A_I','_1B_I','_2A_I','_2B_I','_3A_I','_3B_I','_4A_I','_4B_I','SEL_I'], ['GBAR','_1A','_1B','_2A','_2B','_3A','_3B','_4A','_4B','SEL','Y1','Y2','Y3','Y4'], ['SEL1','SEL2']).Logic('   GBAR =  GBAR_I ;   _1A =  _1A_I ;   _1B =  _1B_I ;   _2A =  _2A_I ;   _2B =  _2B_I ;   _3A =  _3A_I ;   _3B =  _3B_I ;   _4A =  _4A_I ;   _4B =  _4B_I ;   SEL =  SEL_I ;   SEL1 =  !GBAR & !SEL ;   SEL2 =  !GBAR &  SEL ;   Y1 =  !((_1A & SEL1) | (_1B & SEL2)) ;   Y2 =  !((_2A & SEL1) | (_2B & SEL2)) ;   Y3 =  !((_3A & SEL1) | (_3B & SEL2)) ;   Y4 =  !((_4A & SEL1) | (_4B & SEL2)) ;');
+		this.ULS158LOG = new logicexp(['GBAR_I','_1A_I','_1B_I','_2A_I','_2B_I','_3A_I','_3B_I','_4A_I','_4B_I','SEL_I'], ['GBAR','_1A','_1B','_2A','_2B','_3A','_3B','_4A','_4B','SEL','Y1','Y2','Y3','Y4']).Callback(this.$exe_ULS158LOG);
 		Connect(this.ULS158LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS158LOG.pins._1A_I, this.pins._1A_I);
 		Connect(this.ULS158LOG.pins._1B_I, this.pins._1B_I);
@@ -3508,6 +4537,52 @@ class SN74LS158 extends Component {
 		Connect(Y3, this.pins.Y3_O);
 		Connect(Y4, this.pins.Y4_O);
 	}
+	$exe_ULS158LOG() {
+		var __1A, __1B, __2A, __2B, __3A, __3B, __4A, __4B, SEL1, SEL2; // Temps
+		var GBAR_I, _1A_I, _1B_I, _2A_I, _2B_I, _3A_I, _3B_I, _4A_I, _4B_I, SEL_I; // Inputs
+		var GBAR, _1A, _1B, _2A, _2B, _3A, _3B, _4A, _4B, SEL, Y1, Y2, Y3, Y4; // Outputs
+		GBAR_I = this.ULS158LOG.pins.GBAR_I.GetValue();
+		_1A_I = this.ULS158LOG.pins._1A_I.GetValue();
+		_1B_I = this.ULS158LOG.pins._1B_I.GetValue();
+		_2A_I = this.ULS158LOG.pins._2A_I.GetValue();
+		_2B_I = this.ULS158LOG.pins._2B_I.GetValue();
+		_3A_I = this.ULS158LOG.pins._3A_I.GetValue();
+		_3B_I = this.ULS158LOG.pins._3B_I.GetValue();
+		_4A_I = this.ULS158LOG.pins._4A_I.GetValue();
+		_4B_I = this.ULS158LOG.pins._4B_I.GetValue();
+		SEL_I = this.ULS158LOG.pins.SEL_I.GetValue();
+		   GBAR =  GBAR_I ;
+		   __1A =  ___1A_I ;
+		   __1B =  ___1B_I ;
+		   __2A =  ___2A_I ;
+		   __2B =  ___2B_I ;
+		   __3A =  ___3A_I ;
+		   __3B =  ___3B_I ;
+		   __4A =  ___4A_I ;
+		   __4B =  ___4B_I ;
+		   SEL =  SEL_I ;
+		   SEL1 =  !GBAR & !SEL ;
+		   SEL2 =  !GBAR &  SEL ;
+		   Y1 =  !((__1A & SEL1) | (__1B & SEL2)) ;
+		   Y2 =  !((__2A & SEL1) | (__2B & SEL2)) ;
+		   Y3 =  !((__3A & SEL1) | (__3B & SEL2)) ;
+		   Y4 =  !((__4A & SEL1) | (__4B & SEL2)) ;
+		
+		this.ULS158LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS158LOG.pins._1A.SetValue(_1A);
+		this.ULS158LOG.pins._1B.SetValue(_1B);
+		this.ULS158LOG.pins._2A.SetValue(_2A);
+		this.ULS158LOG.pins._2B.SetValue(_2B);
+		this.ULS158LOG.pins._3A.SetValue(_3A);
+		this.ULS158LOG.pins._3B.SetValue(_3B);
+		this.ULS158LOG.pins._4A.SetValue(_4A);
+		this.ULS158LOG.pins._4B.SetValue(_4B);
+		this.ULS158LOG.pins.SEL.SetValue(SEL);
+		this.ULS158LOG.pins.Y1.SetValue(Y1);
+		this.ULS158LOG.pins.Y2.SetValue(Y2);
+		this.ULS158LOG.pins.Y3.SetValue(Y3);
+		this.ULS158LOG.pins.Y4.SetValue(Y4);
+	}
 }
 /**
  * Synchronous 4-bit Decade Counters with asynchronous clear
@@ -3531,7 +4606,7 @@ class SN74LS160A extends Component {
 			QD_O: new Pin(),
 			RCO_O: new Pin(),
 		}
-		this.ULS160ALOG = new logicexp(['CLK_I','ENP_I','ENT_I','CLRBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD'], ['CLK','ENP','ENT','CLRBAR','LOADBAR','A','B','C','D','RCO','DA','DB','DC','DD','EN'], ['LOAD','QAB','QBB','QCB','QDB']).Logic('   CLK =  CLK_I ;                        ENP =  ENP_I ;   ENT =  ENT_I ;   CLRBAR =  CLRBAR_I ;   LOADBAR =  LOADBAR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   LOAD =  !LOADBAR ;                  EN =  ENP & ENT & LOADBAR ;   QAB =  !QA ;   QBB =  !QB ;   QCB =  !QC ;   QDB =  !QD ;   DA =  (!EN & LOADBAR & QA) | (EN & QAB) | (LOAD & A) ;   DB =  (QB & !(QA & EN) & LOADBAR) | (QA & EN & QDB & QBB)     | (LOAD & B) ;   DC =  (QC & !(QB & QA & EN) & LOADBAR) | (QB & QA & EN & QCB)     | (LOAD & C) ;   DD =  (QD & !(QA & EN) & LOADBAR) | (QC & QB & QA & EN & QDB)     | (LOAD & D) ;   RCO =  ENT & QA & QD ;');
+		this.ULS160ALOG = new logicexp(['CLK_I','ENP_I','ENT_I','CLRBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD'], ['CLK','ENP','ENT','CLRBAR','LOADBAR','A','B','C','D','RCO','DA','DB','DC','DD','EN']).Callback(this.$exe_ULS160ALOG);
 		Connect(this.ULS160ALOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.ULS160ALOG.pins.ENP_I, this.pins.ENP_I);
 		Connect(this.ULS160ALOG.pins.ENT_I, this.pins.ENT_I);
@@ -3605,6 +4680,60 @@ class SN74LS160A extends Component {
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
 	}
+	$exe_ULS160ALOG() {
+		var LOAD, QAB, QBB, QCB, QDB; // Temps
+		var CLK_I, ENP_I, ENT_I, CLRBAR_I, LOADBAR_I, A_I, B_I, C_I, D_I, QA, QB, QC, QD; // Inputs
+		var CLK, ENP, ENT, CLRBAR, LOADBAR, A, B, C, D, RCO, DA, DB, DC, DD, EN; // Outputs
+		CLK_I = this.ULS160ALOG.pins.CLK_I.GetValue();
+		ENP_I = this.ULS160ALOG.pins.ENP_I.GetValue();
+		ENT_I = this.ULS160ALOG.pins.ENT_I.GetValue();
+		CLRBAR_I = this.ULS160ALOG.pins.CLRBAR_I.GetValue();
+		LOADBAR_I = this.ULS160ALOG.pins.LOADBAR_I.GetValue();
+		A_I = this.ULS160ALOG.pins.A_I.GetValue();
+		B_I = this.ULS160ALOG.pins.B_I.GetValue();
+		C_I = this.ULS160ALOG.pins.C_I.GetValue();
+		D_I = this.ULS160ALOG.pins.D_I.GetValue();
+		QA = this.ULS160ALOG.pins.QA.GetValue();
+		QB = this.ULS160ALOG.pins.QB.GetValue();
+		QC = this.ULS160ALOG.pins.QC.GetValue();
+		QD = this.ULS160ALOG.pins.QD.GetValue();
+		   CLK =  CLK_I ;
+		                        ENP =  ENP_I ;
+		   ENT =  ENT_I ;
+		   CLRBAR =  CLRBAR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   LOAD =  !LOADBAR ;
+		                  EN =  ENP & ENT & LOADBAR ;
+		   QAB =  !QA ;
+		   QBB =  !QB ;
+		   QCB =  !QC ;
+		   QDB =  !QD ;
+		   DA =  (!EN & LOADBAR & QA) | (EN & QAB) | (LOAD & A) ;
+		   DB =  (QB & !(QA & EN) & LOADBAR) | (QA & EN & QDB & QBB)     | (LOAD & B) ;
+		   DC =  (QC & !(QB & QA & EN) & LOADBAR) | (QB & QA & EN & QCB)     | (LOAD & C) ;
+		   DD =  (QD & !(QA & EN) & LOADBAR) | (QC & QB & QA & EN & QDB)     | (LOAD & D) ;
+		   RCO =  ENT & QA & QD ;
+		
+		this.ULS160ALOG.pins.CLK.SetValue(CLK);
+		this.ULS160ALOG.pins.ENP.SetValue(ENP);
+		this.ULS160ALOG.pins.ENT.SetValue(ENT);
+		this.ULS160ALOG.pins.CLRBAR.SetValue(CLRBAR);
+		this.ULS160ALOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS160ALOG.pins.A.SetValue(A);
+		this.ULS160ALOG.pins.B.SetValue(B);
+		this.ULS160ALOG.pins.C.SetValue(C);
+		this.ULS160ALOG.pins.D.SetValue(D);
+		this.ULS160ALOG.pins.RCO.SetValue(RCO);
+		this.ULS160ALOG.pins.DA.SetValue(DA);
+		this.ULS160ALOG.pins.DB.SetValue(DB);
+		this.ULS160ALOG.pins.DC.SetValue(DC);
+		this.ULS160ALOG.pins.DD.SetValue(DD);
+		this.ULS160ALOG.pins.EN.SetValue(EN);
+	}
 }
 /**
  * Synchronous 4-bit Binary Counter with Direct Clear
@@ -3658,7 +4787,7 @@ class SN74LS161A extends Component {
 		Connect(this.U1.pins.QBAR2, QCBAR);
 		let QDBAR = new Pin();
 		Connect(this.U1.pins.QBAR3, QDBAR);
-		this.ULS161ALOG = new logicexp(['CLK_I','ENP_I','ENT_I','CLRBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['CLK','ENP','ENT','CLRBAR','LOADBAR','A','B','C','D','RCO','DA','DB','DC','DD','IEN'], ['ILD','IA1','IA2','IB1','IB2','IC1','IC2','ID1','ID2']).Logic('   CLK =  CLK_I ;   ENP =  ENP_I ;   ENT =  ENT_I ;   CLRBAR =  CLRBAR_I ;   LOADBAR =  LOADBAR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   IEN =  LOADBAR & ENP & ENT ;   ILD =  !LOADBAR ;   IA1 =  LOADBAR & QA & !IEN ;   IA2 =  IEN & QABAR ;   IB1 =  QB & !(QA & IEN) & LOADBAR ;   IB2 =  QA & IEN & QBBAR ;   IC1 =  QC & !(QB & QA & IEN) & LOADBAR ;   IC2 =  QB & QA & IEN & QCBAR ;   ID1 =  QD & !(QC & QB & QA & IEN) & LOADBAR ;   ID2 =  QC & QB & QA & IEN & QDBAR ;   RCO =  QD & QC & QB & QA & ENT ;   DA =  IA1 | IA2 | (ILD & A) ;   DB =  IB1 | IB2 | (ILD & B) ;   DC =  IC1 | IC2 | (ILD & C) ;   DD =  ID1 | ID2 | (ILD & D) ;');
+		this.ULS161ALOG = new logicexp(['CLK_I','ENP_I','ENT_I','CLRBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['CLK','ENP','ENT','CLRBAR','LOADBAR','A','B','C','D','RCO','DA','DB','DC','DD','IEN']).Callback(this.$exe_ULS161ALOG);
 		Connect(this.ULS161ALOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.ULS161ALOG.pins.ENP_I, this.pins.ENP_I);
 		Connect(this.ULS161ALOG.pins.ENT_I, this.pins.ENT_I);
@@ -3706,6 +4835,68 @@ class SN74LS161A extends Component {
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
 	}
+	$exe_ULS161ALOG() {
+		var ILD, IA1, IA2, IB1, IB2, IC1, IC2, ID1, ID2; // Temps
+		var CLK_I, ENP_I, ENT_I, CLRBAR_I, LOADBAR_I, A_I, B_I, C_I, D_I, QA, QB, QC, QD, QABAR, QBBAR, QCBAR, QDBAR; // Inputs
+		var CLK, ENP, ENT, CLRBAR, LOADBAR, A, B, C, D, RCO, DA, DB, DC, DD, IEN; // Outputs
+		CLK_I = this.ULS161ALOG.pins.CLK_I.GetValue();
+		ENP_I = this.ULS161ALOG.pins.ENP_I.GetValue();
+		ENT_I = this.ULS161ALOG.pins.ENT_I.GetValue();
+		CLRBAR_I = this.ULS161ALOG.pins.CLRBAR_I.GetValue();
+		LOADBAR_I = this.ULS161ALOG.pins.LOADBAR_I.GetValue();
+		A_I = this.ULS161ALOG.pins.A_I.GetValue();
+		B_I = this.ULS161ALOG.pins.B_I.GetValue();
+		C_I = this.ULS161ALOG.pins.C_I.GetValue();
+		D_I = this.ULS161ALOG.pins.D_I.GetValue();
+		QA = this.ULS161ALOG.pins.QA.GetValue();
+		QB = this.ULS161ALOG.pins.QB.GetValue();
+		QC = this.ULS161ALOG.pins.QC.GetValue();
+		QD = this.ULS161ALOG.pins.QD.GetValue();
+		QABAR = this.ULS161ALOG.pins.QABAR.GetValue();
+		QBBAR = this.ULS161ALOG.pins.QBBAR.GetValue();
+		QCBAR = this.ULS161ALOG.pins.QCBAR.GetValue();
+		QDBAR = this.ULS161ALOG.pins.QDBAR.GetValue();
+		   CLK =  CLK_I ;
+		   ENP =  ENP_I ;
+		   ENT =  ENT_I ;
+		   CLRBAR =  CLRBAR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   IEN =  LOADBAR & ENP & ENT ;
+		   ILD =  !LOADBAR ;
+		   IA1 =  LOADBAR & QA & !IEN ;
+		   IA2 =  IEN & QABAR ;
+		   IB1 =  QB & !(QA & IEN) & LOADBAR ;
+		   IB2 =  QA & IEN & QBBAR ;
+		   IC1 =  QC & !(QB & QA & IEN) & LOADBAR ;
+		   IC2 =  QB & QA & IEN & QCBAR ;
+		   ID1 =  QD & !(QC & QB & QA & IEN) & LOADBAR ;
+		   ID2 =  QC & QB & QA & IEN & QDBAR ;
+		   RCO =  QD & QC & QB & QA & ENT ;
+		   DA =  IA1 | IA2 | (ILD & A) ;
+		   DB =  IB1 | IB2 | (ILD & B) ;
+		   DC =  IC1 | IC2 | (ILD & C) ;
+		   DD =  ID1 | ID2 | (ILD & D) ;
+		
+		this.ULS161ALOG.pins.CLK.SetValue(CLK);
+		this.ULS161ALOG.pins.ENP.SetValue(ENP);
+		this.ULS161ALOG.pins.ENT.SetValue(ENT);
+		this.ULS161ALOG.pins.CLRBAR.SetValue(CLRBAR);
+		this.ULS161ALOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS161ALOG.pins.A.SetValue(A);
+		this.ULS161ALOG.pins.B.SetValue(B);
+		this.ULS161ALOG.pins.C.SetValue(C);
+		this.ULS161ALOG.pins.D.SetValue(D);
+		this.ULS161ALOG.pins.RCO.SetValue(RCO);
+		this.ULS161ALOG.pins.DA.SetValue(DA);
+		this.ULS161ALOG.pins.DB.SetValue(DB);
+		this.ULS161ALOG.pins.DC.SetValue(DC);
+		this.ULS161ALOG.pins.DD.SetValue(DD);
+		this.ULS161ALOG.pins.IEN.SetValue(IEN);
+	}
 }
 /**
  * Synchronous 4-bit Decade Counters with synchronous clear
@@ -3729,7 +4920,7 @@ class SN74LS162A extends Component {
 			QD_O: new Pin(),
 			RCO_O: new Pin(),
 		}
-		this.ULS162ALOG = new logicexp(['CLK_I','ENP_I','ENT_I','CLRBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD'], ['CLK','ENP','ENT','CLRBAR','LOADBAR','A','B','C','D','RCO','DA','DB','DC','DD','EN'], ['LOAD','ICLR','QAB','QBB','QCB','QDB']).Logic('   CLK =  CLK_I ;                        ENP =  ENP_I ;   ENT =  ENT_I ;   CLRBAR =  CLRBAR_I ;   LOADBAR =  LOADBAR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   LOAD =  !LOADBAR & !CLRBAR ;        ICLR =  !(!CLRBAR | LOAD) ;   EN =  ENP & ENT & LOADBAR & CLRBAR ;   QAB =  !QA ;   QBB =  !QB ;   QCB =  !QC ;   QDB =  !QD ;   DA =  (!EN & ICLR & QA) | (EN & QAB) | (LOAD & A) ;   DB =  (QB & !(QA & EN) & ICLR) | (QA & EN & QDB & QBB)     | (LOAD & B) ;   DC =  (QC & !(QB & QA & EN) & ICLR) | (QB & QA & EN & QCB)     | (LOAD & C) ;   DD =  (QD & !(QA & EN) & ICLR) | (QC & QB & QA & EN & QDB)     | (LOAD & D) ;   RCO =  ENT & QA & QD ;');
+		this.ULS162ALOG = new logicexp(['CLK_I','ENP_I','ENT_I','CLRBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD'], ['CLK','ENP','ENT','CLRBAR','LOADBAR','A','B','C','D','RCO','DA','DB','DC','DD','EN']).Callback(this.$exe_ULS162ALOG);
 		Connect(this.ULS162ALOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.ULS162ALOG.pins.ENP_I, this.pins.ENP_I);
 		Connect(this.ULS162ALOG.pins.ENT_I, this.pins.ENT_I);
@@ -3803,6 +4994,61 @@ class SN74LS162A extends Component {
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
 	}
+	$exe_ULS162ALOG() {
+		var LOAD, ICLR, QAB, QBB, QCB, QDB; // Temps
+		var CLK_I, ENP_I, ENT_I, CLRBAR_I, LOADBAR_I, A_I, B_I, C_I, D_I, QA, QB, QC, QD; // Inputs
+		var CLK, ENP, ENT, CLRBAR, LOADBAR, A, B, C, D, RCO, DA, DB, DC, DD, EN; // Outputs
+		CLK_I = this.ULS162ALOG.pins.CLK_I.GetValue();
+		ENP_I = this.ULS162ALOG.pins.ENP_I.GetValue();
+		ENT_I = this.ULS162ALOG.pins.ENT_I.GetValue();
+		CLRBAR_I = this.ULS162ALOG.pins.CLRBAR_I.GetValue();
+		LOADBAR_I = this.ULS162ALOG.pins.LOADBAR_I.GetValue();
+		A_I = this.ULS162ALOG.pins.A_I.GetValue();
+		B_I = this.ULS162ALOG.pins.B_I.GetValue();
+		C_I = this.ULS162ALOG.pins.C_I.GetValue();
+		D_I = this.ULS162ALOG.pins.D_I.GetValue();
+		QA = this.ULS162ALOG.pins.QA.GetValue();
+		QB = this.ULS162ALOG.pins.QB.GetValue();
+		QC = this.ULS162ALOG.pins.QC.GetValue();
+		QD = this.ULS162ALOG.pins.QD.GetValue();
+		   CLK =  CLK_I ;
+		                        ENP =  ENP_I ;
+		   ENT =  ENT_I ;
+		   CLRBAR =  CLRBAR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   LOAD =  !LOADBAR & !CLRBAR ;
+		        ICLR =  !(!CLRBAR | LOAD) ;
+		   EN =  ENP & ENT & LOADBAR & CLRBAR ;
+		   QAB =  !QA ;
+		   QBB =  !QB ;
+		   QCB =  !QC ;
+		   QDB =  !QD ;
+		   DA =  (!EN & ICLR & QA) | (EN & QAB) | (LOAD & A) ;
+		   DB =  (QB & !(QA & EN) & ICLR) | (QA & EN & QDB & QBB)     | (LOAD & B) ;
+		   DC =  (QC & !(QB & QA & EN) & ICLR) | (QB & QA & EN & QCB)     | (LOAD & C) ;
+		   DD =  (QD & !(QA & EN) & ICLR) | (QC & QB & QA & EN & QDB)     | (LOAD & D) ;
+		   RCO =  ENT & QA & QD ;
+		
+		this.ULS162ALOG.pins.CLK.SetValue(CLK);
+		this.ULS162ALOG.pins.ENP.SetValue(ENP);
+		this.ULS162ALOG.pins.ENT.SetValue(ENT);
+		this.ULS162ALOG.pins.CLRBAR.SetValue(CLRBAR);
+		this.ULS162ALOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS162ALOG.pins.A.SetValue(A);
+		this.ULS162ALOG.pins.B.SetValue(B);
+		this.ULS162ALOG.pins.C.SetValue(C);
+		this.ULS162ALOG.pins.D.SetValue(D);
+		this.ULS162ALOG.pins.RCO.SetValue(RCO);
+		this.ULS162ALOG.pins.DA.SetValue(DA);
+		this.ULS162ALOG.pins.DB.SetValue(DB);
+		this.ULS162ALOG.pins.DC.SetValue(DC);
+		this.ULS162ALOG.pins.DD.SetValue(DD);
+		this.ULS162ALOG.pins.EN.SetValue(EN);
+	}
 }
 /**
  * Synchronous 4-bit Binary Counter with Direct Clear
@@ -3855,7 +5101,7 @@ class SN74LS163A extends Component {
 		Connect(this.U1.pins.QBAR2, QCBAR);
 		let QDBAR = new Pin();
 		Connect(this.U1.pins.QBAR3, QDBAR);
-		this.ULS163ALOG = new logicexp(['CLK_I','ENP_I','ENT_I','CLRBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['CLK','ENP','ENT','CLRBAR','LOADBAR','A','B','C','D','RCO','DA','DB','DC','DD','IEN'], ['ILD','ILC','IA1','IA2','IB1','IB2','IC1','IC2','IDB','IDC']).Logic('   CLK =  CLK_I ;   ENP =  ENP_I ;   ENT =  ENT_I ;   CLRBAR =  CLRBAR_I ;   LOADBAR =  LOADBAR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   IEN =  CLRBAR & LOADBAR & ENP & ENT ;   ILD =  CLRBAR & !LOADBAR ;   ILC =  !(!CLRBAR | ILD) ;   IA1 =  ILC & QA & !IEN ;   IA2 =  IEN & QABAR ;   IB1 =  QB & !(QA & IEN) & ILC ;   IB2 =  QA & IEN & QBBAR ;   IC1 =  QC & !(QB & QA & IEN) & ILC ;   IC2 =  QB & QA & IEN & QCBAR ;   IDB =  QD & !(QC & QB & QA & IEN) & ILC ;   IDC =  QC & QB & QA & IEN & QDBAR ;   RCO =  QD & QC & QB & QA & ENT ;   DA =  IA1 | IA2 | (ILD & A) ;   DB =  IB1 | IB2 | (ILD & B) ;   DC =  IC1 | IC2 | (ILD & C) ;   DD =  IDB | IDC | (ILD & D) ;');
+		this.ULS163ALOG = new logicexp(['CLK_I','ENP_I','ENT_I','CLRBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['CLK','ENP','ENT','CLRBAR','LOADBAR','A','B','C','D','RCO','DA','DB','DC','DD','IEN']).Callback(this.$exe_ULS163ALOG);
 		Connect(this.ULS163ALOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.ULS163ALOG.pins.ENP_I, this.pins.ENP_I);
 		Connect(this.ULS163ALOG.pins.ENT_I, this.pins.ENT_I);
@@ -3903,6 +5149,69 @@ class SN74LS163A extends Component {
 		Connect(QB, this.pins.QB_O);
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
+	}
+	$exe_ULS163ALOG() {
+		var ILD, ILC, IA1, IA2, IB1, IB2, IC1, IC2, IDB, IDC; // Temps
+		var CLK_I, ENP_I, ENT_I, CLRBAR_I, LOADBAR_I, A_I, B_I, C_I, D_I, QA, QB, QC, QD, QABAR, QBBAR, QCBAR, QDBAR; // Inputs
+		var CLK, ENP, ENT, CLRBAR, LOADBAR, A, B, C, D, RCO, DA, DB, DC, DD, IEN; // Outputs
+		CLK_I = this.ULS163ALOG.pins.CLK_I.GetValue();
+		ENP_I = this.ULS163ALOG.pins.ENP_I.GetValue();
+		ENT_I = this.ULS163ALOG.pins.ENT_I.GetValue();
+		CLRBAR_I = this.ULS163ALOG.pins.CLRBAR_I.GetValue();
+		LOADBAR_I = this.ULS163ALOG.pins.LOADBAR_I.GetValue();
+		A_I = this.ULS163ALOG.pins.A_I.GetValue();
+		B_I = this.ULS163ALOG.pins.B_I.GetValue();
+		C_I = this.ULS163ALOG.pins.C_I.GetValue();
+		D_I = this.ULS163ALOG.pins.D_I.GetValue();
+		QA = this.ULS163ALOG.pins.QA.GetValue();
+		QB = this.ULS163ALOG.pins.QB.GetValue();
+		QC = this.ULS163ALOG.pins.QC.GetValue();
+		QD = this.ULS163ALOG.pins.QD.GetValue();
+		QABAR = this.ULS163ALOG.pins.QABAR.GetValue();
+		QBBAR = this.ULS163ALOG.pins.QBBAR.GetValue();
+		QCBAR = this.ULS163ALOG.pins.QCBAR.GetValue();
+		QDBAR = this.ULS163ALOG.pins.QDBAR.GetValue();
+		   CLK =  CLK_I ;
+		   ENP =  ENP_I ;
+		   ENT =  ENT_I ;
+		   CLRBAR =  CLRBAR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   IEN =  CLRBAR & LOADBAR & ENP & ENT ;
+		   ILD =  CLRBAR & !LOADBAR ;
+		   ILC =  !(!CLRBAR | ILD) ;
+		   IA1 =  ILC & QA & !IEN ;
+		   IA2 =  IEN & QABAR ;
+		   IB1 =  QB & !(QA & IEN) & ILC ;
+		   IB2 =  QA & IEN & QBBAR ;
+		   IC1 =  QC & !(QB & QA & IEN) & ILC ;
+		   IC2 =  QB & QA & IEN & QCBAR ;
+		   IDB =  QD & !(QC & QB & QA & IEN) & ILC ;
+		   IDC =  QC & QB & QA & IEN & QDBAR ;
+		   RCO =  QD & QC & QB & QA & ENT ;
+		   DA =  IA1 | IA2 | (ILD & A) ;
+		   DB =  IB1 | IB2 | (ILD & B) ;
+		   DC =  IC1 | IC2 | (ILD & C) ;
+		   DD =  IDB | IDC | (ILD & D) ;
+		
+		this.ULS163ALOG.pins.CLK.SetValue(CLK);
+		this.ULS163ALOG.pins.ENP.SetValue(ENP);
+		this.ULS163ALOG.pins.ENT.SetValue(ENT);
+		this.ULS163ALOG.pins.CLRBAR.SetValue(CLRBAR);
+		this.ULS163ALOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS163ALOG.pins.A.SetValue(A);
+		this.ULS163ALOG.pins.B.SetValue(B);
+		this.ULS163ALOG.pins.C.SetValue(C);
+		this.ULS163ALOG.pins.D.SetValue(D);
+		this.ULS163ALOG.pins.RCO.SetValue(RCO);
+		this.ULS163ALOG.pins.DA.SetValue(DA);
+		this.ULS163ALOG.pins.DB.SetValue(DB);
+		this.ULS163ALOG.pins.DC.SetValue(DC);
+		this.ULS163ALOG.pins.DD.SetValue(DD);
+		this.ULS163ALOG.pins.IEN.SetValue(IEN);
 	}
 }
 class SN74LS164 extends Component {
@@ -4008,7 +5317,7 @@ class SN74LS165A extends Component {
 			QH_O: new Pin(),
 			QHBAR_O: new Pin(),
 		}
-		this.ULS165LOG = new logicexp(['SH_LDBAR_I','CLK_INH_I','CLK_I','SER_I','A_I','B_I','C_I','D_I','E_I','F_I','G_I','H_I'], ['SH_LDBAR','CLK_INH','CLK','SER','A','B','C','D','E','F','G','H','SA','SB','SC','SD','SE','SF','SG','SH','RA','RB','RC','RD','RE','RF','RG','RH','CK'], ['LOAD']).Logic('   SH_LDBAR =  SH_LDBAR_I ;   CLK_INH =  CLK_INH_I ;   CLK =  CLK_I ;   SER =  SER_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   E =  E_I ;   F =  F_I ;   G =  G_I ;   H =  H_I ;   LOAD =  !SH_LDBAR ;   SA =  !(LOAD & A) ;   SB =  !(LOAD & B) ;   SC =  !(LOAD & C) ;   SD =  !(LOAD & D) ;   SE =  !(LOAD & E) ;   SF =  !(LOAD & F) ;   SG =  !(LOAD & G) ;   SH =  !(LOAD & H) ;   RA =  !(LOAD & SA) ;   RB =  !(LOAD & SB) ;   RC =  !(LOAD & SC) ;   RD =  !(LOAD & SD) ;   RE =  !(LOAD & SE) ;   RF =  !(LOAD & SF) ;   RG =  !(LOAD & SG) ;   RH =  !(LOAD & SH) ;   CK =  CLK_INH | CLK ;');
+		this.ULS165LOG = new logicexp(['SH_LDBAR_I','CLK_INH_I','CLK_I','SER_I','A_I','B_I','C_I','D_I','E_I','F_I','G_I','H_I'], ['SH_LDBAR','CLK_INH','CLK','SER','A','B','C','D','E','F','G','H','SA','SB','SC','SD','SE','SF','SG','SH','RA','RB','RC','RD','RE','RF','RG','RH','CK']).Callback(this.$exe_ULS165LOG);
 		Connect(this.ULS165LOG.pins.SH_LDBAR_I, this.pins.SH_LDBAR_I);
 		Connect(this.ULS165LOG.pins.CLK_INH_I, this.pins.CLK_INH_I);
 		Connect(this.ULS165LOG.pins.CLK_I, this.pins.CLK_I);
@@ -4147,6 +5456,83 @@ class SN74LS165A extends Component {
 		Connect(QH, this.pins.QH_O);
 		Connect(QHBAR, this.pins.QHBAR_O);
 	}
+	$exe_ULS165LOG() {
+		var LOAD; // Temps
+		var SH_LDBAR_I, CLK_INH_I, CLK_I, SER_I, A_I, B_I, C_I, D_I, E_I, F_I, G_I, H_I; // Inputs
+		var SH_LDBAR, CLK_INH, CLK, SER, A, B, C, D, E, F, G, H, SA, SB, SC, SD, SE, SF, SG, SH, RA, RB, RC, RD, RE, RF, RG, RH, CK; // Outputs
+		SH_LDBAR_I = this.ULS165LOG.pins.SH_LDBAR_I.GetValue();
+		CLK_INH_I = this.ULS165LOG.pins.CLK_INH_I.GetValue();
+		CLK_I = this.ULS165LOG.pins.CLK_I.GetValue();
+		SER_I = this.ULS165LOG.pins.SER_I.GetValue();
+		A_I = this.ULS165LOG.pins.A_I.GetValue();
+		B_I = this.ULS165LOG.pins.B_I.GetValue();
+		C_I = this.ULS165LOG.pins.C_I.GetValue();
+		D_I = this.ULS165LOG.pins.D_I.GetValue();
+		E_I = this.ULS165LOG.pins.E_I.GetValue();
+		F_I = this.ULS165LOG.pins.F_I.GetValue();
+		G_I = this.ULS165LOG.pins.G_I.GetValue();
+		H_I = this.ULS165LOG.pins.H_I.GetValue();
+		   SH_LDBAR =  SH_LDBAR_I ;
+		   CLK_INH =  CLK_INH_I ;
+		   CLK =  CLK_I ;
+		   SER =  SER_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   E =  E_I ;
+		   F =  F_I ;
+		   G =  G_I ;
+		   H =  H_I ;
+		   LOAD =  !SH_LDBAR ;
+		   SA =  !(LOAD & A) ;
+		   SB =  !(LOAD & B) ;
+		   SC =  !(LOAD & C) ;
+		   SD =  !(LOAD & D) ;
+		   SE =  !(LOAD & E) ;
+		   SF =  !(LOAD & F) ;
+		   SG =  !(LOAD & G) ;
+		   SH =  !(LOAD & H) ;
+		   RA =  !(LOAD & SA) ;
+		   RB =  !(LOAD & SB) ;
+		   RC =  !(LOAD & SC) ;
+		   RD =  !(LOAD & SD) ;
+		   RE =  !(LOAD & SE) ;
+		   RF =  !(LOAD & SF) ;
+		   RG =  !(LOAD & SG) ;
+		   RH =  !(LOAD & SH) ;
+		   CK =  CLK_INH | CLK ;
+		
+		this.ULS165LOG.pins.SH_LDBAR.SetValue(SH_LDBAR);
+		this.ULS165LOG.pins.CLK_INH.SetValue(CLK_INH);
+		this.ULS165LOG.pins.CLK.SetValue(CLK);
+		this.ULS165LOG.pins.SER.SetValue(SER);
+		this.ULS165LOG.pins.A.SetValue(A);
+		this.ULS165LOG.pins.B.SetValue(B);
+		this.ULS165LOG.pins.C.SetValue(C);
+		this.ULS165LOG.pins.D.SetValue(D);
+		this.ULS165LOG.pins.E.SetValue(E);
+		this.ULS165LOG.pins.F.SetValue(F);
+		this.ULS165LOG.pins.G.SetValue(G);
+		this.ULS165LOG.pins.H.SetValue(H);
+		this.ULS165LOG.pins.SA.SetValue(SA);
+		this.ULS165LOG.pins.SB.SetValue(SB);
+		this.ULS165LOG.pins.SC.SetValue(SC);
+		this.ULS165LOG.pins.SD.SetValue(SD);
+		this.ULS165LOG.pins.SE.SetValue(SE);
+		this.ULS165LOG.pins.SF.SetValue(SF);
+		this.ULS165LOG.pins.SG.SetValue(SG);
+		this.ULS165LOG.pins.SH.SetValue(SH);
+		this.ULS165LOG.pins.RA.SetValue(RA);
+		this.ULS165LOG.pins.RB.SetValue(RB);
+		this.ULS165LOG.pins.RC.SetValue(RC);
+		this.ULS165LOG.pins.RD.SetValue(RD);
+		this.ULS165LOG.pins.RE.SetValue(RE);
+		this.ULS165LOG.pins.RF.SetValue(RF);
+		this.ULS165LOG.pins.RG.SetValue(RG);
+		this.ULS165LOG.pins.RH.SetValue(RH);
+		this.ULS165LOG.pins.CK.SetValue(CK);
+	}
 }
 /**
  * PARALLEL LOAD 8-BIT SHIFT REGISTERS
@@ -4170,7 +5556,7 @@ class SN74LS166A extends Component {
 			H_I: new Pin(),
 			QH_O: new Pin(),
 		}
-		this.ULS166LOG = new logicexp(['CLRBAR_I','SH_LDBAR_I','CLK_INH_I','CLK_I','SER_I','A_I','B_I','C_I','D_I','E_I','F_I','G_I','H_I','QA','QB','QC','QD','QE','QF','QG'], ['CLRBAR','SH_LDBAR','CLK_INH','CLK','SER','A','B','C','D','E','F','G','H','DA','DB','DC','DD','DE','DF','DG','DH','CK'], ['LOAD']).Logic('   CLRBAR    =  CLRBAR_I ;   SH_LDBAR  =  SH_LDBAR_I ;   CLK_INH   =  CLK_INH_I ;   CLK       =  CLK_I ;   SER       =  SER_I ;   A         =  A_I ;   B         =  B_I ;   C         =  C_I ;   D         =  D_I ;   E         =  E_I ;   F         =  F_I ;   G         =  G_I ;   H         =  H_I ;   LOAD =  !SH_LDBAR ;   DA =  (SH_LDBAR & SER) | (LOAD & A) ;   DB =  (SH_LDBAR & QA)  | (LOAD & B) ;   DC =  (SH_LDBAR & QB)  | (LOAD & C) ;   DD =  (SH_LDBAR & QC)  | (LOAD & D) ;   DE =  (SH_LDBAR & QD)  | (LOAD & E) ;   DF =  (SH_LDBAR & QE)  | (LOAD & F) ;   DG =  (SH_LDBAR & QF)  | (LOAD & G) ;   DH =  (SH_LDBAR & QG)  | (LOAD & H) ;   CK =  CLK | CLK_INH ;');
+		this.ULS166LOG = new logicexp(['CLRBAR_I','SH_LDBAR_I','CLK_INH_I','CLK_I','SER_I','A_I','B_I','C_I','D_I','E_I','F_I','G_I','H_I','QA','QB','QC','QD','QE','QF','QG'], ['CLRBAR','SH_LDBAR','CLK_INH','CLK','SER','A','B','C','D','E','F','G','H','DA','DB','DC','DD','DE','DF','DG','DH','CK']).Callback(this.$exe_ULS166LOG);
 		Connect(this.ULS166LOG.pins.CLRBAR_I, this.pins.CLRBAR_I);
 		Connect(this.ULS166LOG.pins.SH_LDBAR_I, this.pins.SH_LDBAR_I);
 		Connect(this.ULS166LOG.pins.CLK_INH_I, this.pins.CLK_INH_I);
@@ -4273,6 +5659,77 @@ class SN74LS166A extends Component {
 		Connect(this.U1.pins.QBAR7, _D_NC);
 		Connect(QH, this.pins.QH_O);
 	}
+	$exe_ULS166LOG() {
+		var LOAD; // Temps
+		var CLRBAR_I, SH_LDBAR_I, CLK_INH_I, CLK_I, SER_I, A_I, B_I, C_I, D_I, E_I, F_I, G_I, H_I, QA, QB, QC, QD, QE, QF, QG; // Inputs
+		var CLRBAR, SH_LDBAR, CLK_INH, CLK, SER, A, B, C, D, E, F, G, H, DA, DB, DC, DD, DE, DF, DG, DH, CK; // Outputs
+		CLRBAR_I = this.ULS166LOG.pins.CLRBAR_I.GetValue();
+		SH_LDBAR_I = this.ULS166LOG.pins.SH_LDBAR_I.GetValue();
+		CLK_INH_I = this.ULS166LOG.pins.CLK_INH_I.GetValue();
+		CLK_I = this.ULS166LOG.pins.CLK_I.GetValue();
+		SER_I = this.ULS166LOG.pins.SER_I.GetValue();
+		A_I = this.ULS166LOG.pins.A_I.GetValue();
+		B_I = this.ULS166LOG.pins.B_I.GetValue();
+		C_I = this.ULS166LOG.pins.C_I.GetValue();
+		D_I = this.ULS166LOG.pins.D_I.GetValue();
+		E_I = this.ULS166LOG.pins.E_I.GetValue();
+		F_I = this.ULS166LOG.pins.F_I.GetValue();
+		G_I = this.ULS166LOG.pins.G_I.GetValue();
+		H_I = this.ULS166LOG.pins.H_I.GetValue();
+		QA = this.ULS166LOG.pins.QA.GetValue();
+		QB = this.ULS166LOG.pins.QB.GetValue();
+		QC = this.ULS166LOG.pins.QC.GetValue();
+		QD = this.ULS166LOG.pins.QD.GetValue();
+		QE = this.ULS166LOG.pins.QE.GetValue();
+		QF = this.ULS166LOG.pins.QF.GetValue();
+		QG = this.ULS166LOG.pins.QG.GetValue();
+		   CLRBAR    =  CLRBAR_I ;
+		   SH_LDBAR  =  SH_LDBAR_I ;
+		   CLK_INH   =  CLK_INH_I ;
+		   CLK       =  CLK_I ;
+		   SER       =  SER_I ;
+		   A         =  A_I ;
+		   B         =  B_I ;
+		   C         =  C_I ;
+		   D         =  D_I ;
+		   E         =  E_I ;
+		   F         =  F_I ;
+		   G         =  G_I ;
+		   H         =  H_I ;
+		   LOAD =  !SH_LDBAR ;
+		   DA =  (SH_LDBAR & SER) | (LOAD & A) ;
+		   DB =  (SH_LDBAR & QA)  | (LOAD & B) ;
+		   DC =  (SH_LDBAR & QB)  | (LOAD & C) ;
+		   DD =  (SH_LDBAR & QC)  | (LOAD & D) ;
+		   DE =  (SH_LDBAR & QD)  | (LOAD & E) ;
+		   DF =  (SH_LDBAR & QE)  | (LOAD & F) ;
+		   DG =  (SH_LDBAR & QF)  | (LOAD & G) ;
+		   DH =  (SH_LDBAR & QG)  | (LOAD & H) ;
+		   CK =  CLK | CLK_INH ;
+		
+		this.ULS166LOG.pins.CLRBAR.SetValue(CLRBAR);
+		this.ULS166LOG.pins.SH_LDBAR.SetValue(SH_LDBAR);
+		this.ULS166LOG.pins.CLK_INH.SetValue(CLK_INH);
+		this.ULS166LOG.pins.CLK.SetValue(CLK);
+		this.ULS166LOG.pins.SER.SetValue(SER);
+		this.ULS166LOG.pins.A.SetValue(A);
+		this.ULS166LOG.pins.B.SetValue(B);
+		this.ULS166LOG.pins.C.SetValue(C);
+		this.ULS166LOG.pins.D.SetValue(D);
+		this.ULS166LOG.pins.E.SetValue(E);
+		this.ULS166LOG.pins.F.SetValue(F);
+		this.ULS166LOG.pins.G.SetValue(G);
+		this.ULS166LOG.pins.H.SetValue(H);
+		this.ULS166LOG.pins.DA.SetValue(DA);
+		this.ULS166LOG.pins.DB.SetValue(DB);
+		this.ULS166LOG.pins.DC.SetValue(DC);
+		this.ULS166LOG.pins.DD.SetValue(DD);
+		this.ULS166LOG.pins.DE.SetValue(DE);
+		this.ULS166LOG.pins.DF.SetValue(DF);
+		this.ULS166LOG.pins.DG.SetValue(DG);
+		this.ULS166LOG.pins.DH.SetValue(DH);
+		this.ULS166LOG.pins.CK.SetValue(CK);
+	}
 }
 class SN74LS169B extends Component {
 	constructor() {
@@ -4322,7 +5779,7 @@ class SN74LS169B extends Component {
 		Connect(this.U1.pins.QBAR2, QCBAR);
 		let QDBAR = new Pin();
 		Connect(this.U1.pins.QBAR3, QDBAR);
-		this.ULS169BLOG = new logicexp(['CLK_I','U_DBAR_I','ENPBAR_I','ENTBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['CLK','U_DBAR','ENPBAR','ENTBAR','LOADBAR','A','B','C','D','DA','DB','DC','DD','RCOBAR','IEN'], ['UP','DN','IA1','IA2','IA3','IB1','IB2','IB3','IC1','IC2','IC3','ID1','ID2','ID3']).Logic('   CLK =  CLK_I ;   U_DBAR =  U_DBAR_I ;   ENPBAR =  ENPBAR_I ;   ENTBAR =  ENTBAR_I ;   LOADBAR =  LOADBAR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   IEN =  !(ENPBAR | ENTBAR | !LOADBAR) ;     UP =  U_DBAR ;   DN =  !U_DBAR ;   IA1 =  QA & IEN ;   IA2 =  !IEN & LOADBAR & QABAR ;   IA3 =  (QA & UP) | (DN & QABAR) ;   IB1 =  QB & IEN & IA3 ;   IB2 =  !(IEN & IA3) & LOADBAR & QBBAR ;   IB3 =  (QB & UP) | (DN & QBBAR) ;   IC1 =  QC & IEN & IA3 & IB3 ;   IC2 =  !(IEN & IA3 & IB3) & LOADBAR & QCBAR ;   IC3 =  (QC & UP) | (DN & QCBAR) ;   ID1 =  QD & IEN & IA3 & IB3 & IC3 ;   ID2 =  !(IEN & IA3 & IB3 & IC3) & LOADBAR & QDBAR ;   ID3 =  (QD & UP) | (DN & QDBAR) ;   DA =  !(IA1 | IA2 | !(LOADBAR | A)) ;   DB =  !(IB1 | IB2 | !(LOADBAR | B)) ;   DC =  !(IC1 | IC2 | !(LOADBAR | C)) ;   DD =  !(ID1 | ID2 | !(LOADBAR | D)) ;   RCOBAR =  !(IA3 & IB3 & IC3 & ID3 & !ENTBAR) ;');
+		this.ULS169BLOG = new logicexp(['CLK_I','U_DBAR_I','ENPBAR_I','ENTBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['CLK','U_DBAR','ENPBAR','ENTBAR','LOADBAR','A','B','C','D','DA','DB','DC','DD','RCOBAR','IEN']).Callback(this.$exe_ULS169BLOG);
 		Connect(this.ULS169BLOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.ULS169BLOG.pins.U_DBAR_I, this.pins.U_DBAR_I);
 		Connect(this.ULS169BLOG.pins.ENPBAR_I, this.pins.ENPBAR_I);
@@ -4370,6 +5827,73 @@ class SN74LS169B extends Component {
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
 		Connect(RCOBAR, this.pins.RCOBAR_O);
+	}
+	$exe_ULS169BLOG() {
+		var UP, DN, IA1, IA2, IA3, IB1, IB2, IB3, IC1, IC2, IC3, ID1, ID2, ID3; // Temps
+		var CLK_I, U_DBAR_I, ENPBAR_I, ENTBAR_I, LOADBAR_I, A_I, B_I, C_I, D_I, QA, QB, QC, QD, QABAR, QBBAR, QCBAR, QDBAR; // Inputs
+		var CLK, U_DBAR, ENPBAR, ENTBAR, LOADBAR, A, B, C, D, DA, DB, DC, DD, RCOBAR, IEN; // Outputs
+		CLK_I = this.ULS169BLOG.pins.CLK_I.GetValue();
+		U_DBAR_I = this.ULS169BLOG.pins.U_DBAR_I.GetValue();
+		ENPBAR_I = this.ULS169BLOG.pins.ENPBAR_I.GetValue();
+		ENTBAR_I = this.ULS169BLOG.pins.ENTBAR_I.GetValue();
+		LOADBAR_I = this.ULS169BLOG.pins.LOADBAR_I.GetValue();
+		A_I = this.ULS169BLOG.pins.A_I.GetValue();
+		B_I = this.ULS169BLOG.pins.B_I.GetValue();
+		C_I = this.ULS169BLOG.pins.C_I.GetValue();
+		D_I = this.ULS169BLOG.pins.D_I.GetValue();
+		QA = this.ULS169BLOG.pins.QA.GetValue();
+		QB = this.ULS169BLOG.pins.QB.GetValue();
+		QC = this.ULS169BLOG.pins.QC.GetValue();
+		QD = this.ULS169BLOG.pins.QD.GetValue();
+		QABAR = this.ULS169BLOG.pins.QABAR.GetValue();
+		QBBAR = this.ULS169BLOG.pins.QBBAR.GetValue();
+		QCBAR = this.ULS169BLOG.pins.QCBAR.GetValue();
+		QDBAR = this.ULS169BLOG.pins.QDBAR.GetValue();
+		   CLK =  CLK_I ;
+		   U_DBAR =  U_DBAR_I ;
+		   ENPBAR =  ENPBAR_I ;
+		   ENTBAR =  ENTBAR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   IEN =  !(ENPBAR | ENTBAR | !LOADBAR) ;
+		     UP =  U_DBAR ;
+		   DN =  !U_DBAR ;
+		   IA1 =  QA & IEN ;
+		   IA2 =  !IEN & LOADBAR & QABAR ;
+		   IA3 =  (QA & UP) | (DN & QABAR) ;
+		   IB1 =  QB & IEN & IA3 ;
+		   IB2 =  !(IEN & IA3) & LOADBAR & QBBAR ;
+		   IB3 =  (QB & UP) | (DN & QBBAR) ;
+		   IC1 =  QC & IEN & IA3 & IB3 ;
+		   IC2 =  !(IEN & IA3 & IB3) & LOADBAR & QCBAR ;
+		   IC3 =  (QC & UP) | (DN & QCBAR) ;
+		   ID1 =  QD & IEN & IA3 & IB3 & IC3 ;
+		   ID2 =  !(IEN & IA3 & IB3 & IC3) & LOADBAR & QDBAR ;
+		   ID3 =  (QD & UP) | (DN & QDBAR) ;
+		   DA =  !(IA1 | IA2 | !(LOADBAR | A)) ;
+		   DB =  !(IB1 | IB2 | !(LOADBAR | B)) ;
+		   DC =  !(IC1 | IC2 | !(LOADBAR | C)) ;
+		   DD =  !(ID1 | ID2 | !(LOADBAR | D)) ;
+		   RCOBAR =  !(IA3 & IB3 & IC3 & ID3 & !ENTBAR) ;
+		
+		this.ULS169BLOG.pins.CLK.SetValue(CLK);
+		this.ULS169BLOG.pins.U_DBAR.SetValue(U_DBAR);
+		this.ULS169BLOG.pins.ENPBAR.SetValue(ENPBAR);
+		this.ULS169BLOG.pins.ENTBAR.SetValue(ENTBAR);
+		this.ULS169BLOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS169BLOG.pins.A.SetValue(A);
+		this.ULS169BLOG.pins.B.SetValue(B);
+		this.ULS169BLOG.pins.C.SetValue(C);
+		this.ULS169BLOG.pins.D.SetValue(D);
+		this.ULS169BLOG.pins.DA.SetValue(DA);
+		this.ULS169BLOG.pins.DB.SetValue(DB);
+		this.ULS169BLOG.pins.DC.SetValue(DC);
+		this.ULS169BLOG.pins.DD.SetValue(DD);
+		this.ULS169BLOG.pins.RCOBAR.SetValue(RCOBAR);
+		this.ULS169BLOG.pins.IEN.SetValue(IEN);
 	}
 }
 /**
@@ -4482,7 +6006,7 @@ class SN74LS170 extends Component {
 		Connect(this.UD.pins.QBAR1, _D_NC);
 		Connect(this.UD.pins.QBAR2, _D_NC);
 		Connect(this.UD.pins.QBAR3, _D_NC);
-		this.ULS170LOG = new logicexp(['GWBAR_I','WA_I','WB_I','GRBAR_I','RA_I','RB_I','D1_I','D2_I','D3_I','D4_I','AQ1','AQ2','AQ3','AQ4','BQ1','BQ2','BQ3','BQ4','CQ1','CQ2','CQ3','CQ4','DQ1','DQ2','DQ3','DQ4'], ['GWBAR','WA','WB','GRBAR','RA','RB','D1','D2','D3','D4','GATEA','GATEB','GATEC','GATED','Q1','Q2','Q3','Q4'], ['ENABLE2','ENABLE1']).Logic('   GWBAR   =  GWBAR_I ;   WA      =  WA_I ;   WB      =  WB_I ;   GRBAR   =  GRBAR_I ;   RA      =  RA_I ;   RB      =  RB_I ;   D1      =  D1_I ;   D2      =  D2_I ;   D3      =  D3_I ;   D4      =  D4_I ;   ENABLE2 =  !(GWBAR | WB) ;   ENABLE1 =  !(GWBAR | ENABLE2) ;   GATEA   =  ENABLE2 & !WA ;   GATEB   =  ENABLE2 &  WA ;   GATEC   =  ENABLE1 & !WA ;   GATED   =  ENABLE1 &  WA ;   Q1      =  (AQ1 & !RA & !RB) |               (BQ1 &  RA & !RB) |               (CQ1 & !RA &  RB) |               (DQ1 &  RA &  RB) |                GRBAR             ;   Q2      =  (AQ2 & !RA & !RB) |               (BQ2 &  RA & !RB) |               (CQ2 & !RA &  RB) |               (DQ2 &  RA &  RB) |                GRBAR             ;   Q3      =  (AQ3 & !RA & !RB) |               (BQ3 &  RA & !RB) |               (CQ3 & !RA &  RB) |               (DQ3 &  RA &  RB) |                GRBAR             ;   Q4      =  (AQ4 & !RA & !RB) |               (BQ4 &  RA & !RB) |               (CQ4 & !RA &  RB) |               (DQ4 &  RA &  RB) |                GRBAR             ;');
+		this.ULS170LOG = new logicexp(['GWBAR_I','WA_I','WB_I','GRBAR_I','RA_I','RB_I','D1_I','D2_I','D3_I','D4_I','AQ1','AQ2','AQ3','AQ4','BQ1','BQ2','BQ3','BQ4','CQ1','CQ2','CQ3','CQ4','DQ1','DQ2','DQ3','DQ4'], ['GWBAR','WA','WB','GRBAR','RA','RB','D1','D2','D3','D4','GATEA','GATEB','GATEC','GATED','Q1','Q2','Q3','Q4']).Callback(this.$exe_ULS170LOG);
 		Connect(this.ULS170LOG.pins.GWBAR_I, this.pins.GWBAR_I);
 		Connect(this.ULS170LOG.pins.WA_I, this.pins.WA_I);
 		Connect(this.ULS170LOG.pins.WB_I, this.pins.WB_I);
@@ -4541,6 +6065,76 @@ class SN74LS170 extends Component {
 		Connect(Q2, this.pins.Q2_O);
 		Connect(Q3, this.pins.Q3_O);
 		Connect(Q4, this.pins.Q4_O);
+	}
+	$exe_ULS170LOG() {
+		var ENABLE2, ENABLE1; // Temps
+		var GWBAR_I, WA_I, WB_I, GRBAR_I, RA_I, RB_I, D1_I, D2_I, D3_I, D4_I, AQ1, AQ2, AQ3, AQ4, BQ1, BQ2, BQ3, BQ4, CQ1, CQ2, CQ3, CQ4, DQ1, DQ2, DQ3, DQ4; // Inputs
+		var GWBAR, WA, WB, GRBAR, RA, RB, D1, D2, D3, D4, GATEA, GATEB, GATEC, GATED, Q1, Q2, Q3, Q4; // Outputs
+		GWBAR_I = this.ULS170LOG.pins.GWBAR_I.GetValue();
+		WA_I = this.ULS170LOG.pins.WA_I.GetValue();
+		WB_I = this.ULS170LOG.pins.WB_I.GetValue();
+		GRBAR_I = this.ULS170LOG.pins.GRBAR_I.GetValue();
+		RA_I = this.ULS170LOG.pins.RA_I.GetValue();
+		RB_I = this.ULS170LOG.pins.RB_I.GetValue();
+		D1_I = this.ULS170LOG.pins.D1_I.GetValue();
+		D2_I = this.ULS170LOG.pins.D2_I.GetValue();
+		D3_I = this.ULS170LOG.pins.D3_I.GetValue();
+		D4_I = this.ULS170LOG.pins.D4_I.GetValue();
+		AQ1 = this.ULS170LOG.pins.AQ1.GetValue();
+		AQ2 = this.ULS170LOG.pins.AQ2.GetValue();
+		AQ3 = this.ULS170LOG.pins.AQ3.GetValue();
+		AQ4 = this.ULS170LOG.pins.AQ4.GetValue();
+		BQ1 = this.ULS170LOG.pins.BQ1.GetValue();
+		BQ2 = this.ULS170LOG.pins.BQ2.GetValue();
+		BQ3 = this.ULS170LOG.pins.BQ3.GetValue();
+		BQ4 = this.ULS170LOG.pins.BQ4.GetValue();
+		CQ1 = this.ULS170LOG.pins.CQ1.GetValue();
+		CQ2 = this.ULS170LOG.pins.CQ2.GetValue();
+		CQ3 = this.ULS170LOG.pins.CQ3.GetValue();
+		CQ4 = this.ULS170LOG.pins.CQ4.GetValue();
+		DQ1 = this.ULS170LOG.pins.DQ1.GetValue();
+		DQ2 = this.ULS170LOG.pins.DQ2.GetValue();
+		DQ3 = this.ULS170LOG.pins.DQ3.GetValue();
+		DQ4 = this.ULS170LOG.pins.DQ4.GetValue();
+		   GWBAR   =  GWBAR_I ;
+		   WA      =  WA_I ;
+		   WB      =  WB_I ;
+		   GRBAR   =  GRBAR_I ;
+		   RA      =  RA_I ;
+		   RB      =  RB_I ;
+		   D1      =  D1_I ;
+		   D2      =  D2_I ;
+		   D3      =  D3_I ;
+		   D4      =  D4_I ;
+		   ENABLE2 =  !(GWBAR | WB) ;
+		   ENABLE1 =  !(GWBAR | ENABLE2) ;
+		   GATEA   =  ENABLE2 & !WA ;
+		   GATEB   =  ENABLE2 &  WA ;
+		   GATEC   =  ENABLE1 & !WA ;
+		   GATED   =  ENABLE1 &  WA ;
+		   Q1      =  (AQ1 & !RA & !RB) |               (BQ1 &  RA & !RB) |               (CQ1 & !RA &  RB) |               (DQ1 &  RA &  RB) |                GRBAR             ;
+		   Q2      =  (AQ2 & !RA & !RB) |               (BQ2 &  RA & !RB) |               (CQ2 & !RA &  RB) |               (DQ2 &  RA &  RB) |                GRBAR             ;
+		   Q3      =  (AQ3 & !RA & !RB) |               (BQ3 &  RA & !RB) |               (CQ3 & !RA &  RB) |               (DQ3 &  RA &  RB) |                GRBAR             ;
+		   Q4      =  (AQ4 & !RA & !RB) |               (BQ4 &  RA & !RB) |               (CQ4 & !RA &  RB) |               (DQ4 &  RA &  RB) |                GRBAR             ;
+		
+		this.ULS170LOG.pins.GWBAR.SetValue(GWBAR);
+		this.ULS170LOG.pins.WA.SetValue(WA);
+		this.ULS170LOG.pins.WB.SetValue(WB);
+		this.ULS170LOG.pins.GRBAR.SetValue(GRBAR);
+		this.ULS170LOG.pins.RA.SetValue(RA);
+		this.ULS170LOG.pins.RB.SetValue(RB);
+		this.ULS170LOG.pins.D1.SetValue(D1);
+		this.ULS170LOG.pins.D2.SetValue(D2);
+		this.ULS170LOG.pins.D3.SetValue(D3);
+		this.ULS170LOG.pins.D4.SetValue(D4);
+		this.ULS170LOG.pins.GATEA.SetValue(GATEA);
+		this.ULS170LOG.pins.GATEB.SetValue(GATEB);
+		this.ULS170LOG.pins.GATEC.SetValue(GATEC);
+		this.ULS170LOG.pins.GATED.SetValue(GATED);
+		this.ULS170LOG.pins.Q1.SetValue(Q1);
+		this.ULS170LOG.pins.Q2.SetValue(Q2);
+		this.ULS170LOG.pins.Q3.SetValue(Q3);
+		this.ULS170LOG.pins.Q4.SetValue(Q4);
 	}
 }
 /**
@@ -4631,7 +6225,7 @@ class SN74LS173A extends Component {
 		Connect(this.U1.pins.QBAR1, _D_NC);
 		Connect(this.U1.pins.QBAR2, _D_NC);
 		Connect(this.U1.pins.QBAR3, _D_NC);
-		this.ULS173ALOG = new logicexp(['CLR_I','CLK_I','G1BAR_I','G2BAR_I','M_I','N_I','_1D_I','_2D_I','_3D_I','_4D_I','_1Q','_2Q','_3Q','_4Q'], ['CLR','CLRBAR','CLK','DATEN','OE','_1D','_2D','_3D','_4D','DFF1','DFF2','DFF3','DFF4'], ['G1BAR','G2BAR','M','N','DATENBAR']).Logic('   CLR      =  CLR_I ;   CLRBAR   =  !CLR ;   CLK      =  CLK_I ;   G1BAR    =  G1BAR_I ;   G2BAR    =  G2BAR_I ;   M        =  M_I ;   N        =  N_I ;   _1D       =  _1D_I ;   _2D       =  _2D_I ;   _3D       =  _3D_I ;   _4D       =  _4D_I ;   DATENBAR =  G1BAR | G2BAR ;   DATEN    =  !DATENBAR ;   OE       =  !(M | N) ;   DFF1     =  (_1D & DATEN) | (1Q & DATENBAR) ;   DFF2     =  (_2D & DATEN) | (2Q & DATENBAR) ;   DFF3     =  (_3D & DATEN) | (3Q & DATENBAR) ;   DFF4     =  (_4D & DATEN) | (4Q & DATENBAR) ;');
+		this.ULS173ALOG = new logicexp(['CLR_I','CLK_I','G1BAR_I','G2BAR_I','M_I','N_I','_1D_I','_2D_I','_3D_I','_4D_I','_1Q','_2Q','_3Q','_4Q'], ['CLR','CLRBAR','CLK','DATEN','OE','_1D','_2D','_3D','_4D','DFF1','DFF2','DFF3','DFF4']).Callback(this.$exe_ULS173ALOG);
 		Connect(this.ULS173ALOG.pins.CLR_I, this.pins.CLR_I);
 		Connect(this.ULS173ALOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.ULS173ALOG.pins.G1BAR_I, this.pins.G1BAR_I);
@@ -4670,6 +6264,57 @@ class SN74LS173A extends Component {
 		Connect(_2Q, this.pins._2Q_O);
 		Connect(_3Q, this.pins._3Q_O);
 		Connect(_4Q, this.pins._4Q_O);
+	}
+	$exe_ULS173ALOG() {
+		var G1BAR, G2BAR, M, N, __1D, __2D, __3D, __4D, DATENBAR; // Temps
+		var CLR_I, CLK_I, G1BAR_I, G2BAR_I, M_I, N_I, _1D_I, _2D_I, _3D_I, _4D_I, _1Q, _2Q, _3Q, _4Q; // Inputs
+		var CLR, CLRBAR, CLK, DATEN, OE, _1D, _2D, _3D, _4D, DFF1, DFF2, DFF3, DFF4; // Outputs
+		CLR_I = this.ULS173ALOG.pins.CLR_I.GetValue();
+		CLK_I = this.ULS173ALOG.pins.CLK_I.GetValue();
+		G1BAR_I = this.ULS173ALOG.pins.G1BAR_I.GetValue();
+		G2BAR_I = this.ULS173ALOG.pins.G2BAR_I.GetValue();
+		M_I = this.ULS173ALOG.pins.M_I.GetValue();
+		N_I = this.ULS173ALOG.pins.N_I.GetValue();
+		_1D_I = this.ULS173ALOG.pins._1D_I.GetValue();
+		_2D_I = this.ULS173ALOG.pins._2D_I.GetValue();
+		_3D_I = this.ULS173ALOG.pins._3D_I.GetValue();
+		_4D_I = this.ULS173ALOG.pins._4D_I.GetValue();
+		_1Q = this.ULS173ALOG.pins._1Q.GetValue();
+		_2Q = this.ULS173ALOG.pins._2Q.GetValue();
+		_3Q = this.ULS173ALOG.pins._3Q.GetValue();
+		_4Q = this.ULS173ALOG.pins._4Q.GetValue();
+		   CLR      =  CLR_I ;
+		   CLRBAR   =  !CLR ;
+		   CLK      =  CLK_I ;
+		   G1BAR    =  G1BAR_I ;
+		   G2BAR    =  G2BAR_I ;
+		   M        =  M_I ;
+		   N        =  N_I ;
+		   __1D       =  ___1D_I ;
+		   __2D       =  ___2D_I ;
+		   __3D       =  ___3D_I ;
+		   __4D       =  ___4D_I ;
+		   DATENBAR =  G1BAR | G2BAR ;
+		   DATEN    =  !DATENBAR ;
+		   OE       =  !(M | N) ;
+		   DFF1     =  (__1D & DATEN) | (_1Q & DATENBAR) ;
+		   DFF2     =  (__2D & DATEN) | (_2Q & DATENBAR) ;
+		   DFF3     =  (__3D & DATEN) | (_3Q & DATENBAR) ;
+		   DFF4     =  (__4D & DATEN) | (_4Q & DATENBAR) ;
+		
+		this.ULS173ALOG.pins.CLR.SetValue(CLR);
+		this.ULS173ALOG.pins.CLRBAR.SetValue(CLRBAR);
+		this.ULS173ALOG.pins.CLK.SetValue(CLK);
+		this.ULS173ALOG.pins.DATEN.SetValue(DATEN);
+		this.ULS173ALOG.pins.OE.SetValue(OE);
+		this.ULS173ALOG.pins._1D.SetValue(_1D);
+		this.ULS173ALOG.pins._2D.SetValue(_2D);
+		this.ULS173ALOG.pins._3D.SetValue(_3D);
+		this.ULS173ALOG.pins._4D.SetValue(_4D);
+		this.ULS173ALOG.pins.DFF1.SetValue(DFF1);
+		this.ULS173ALOG.pins.DFF2.SetValue(DFF2);
+		this.ULS173ALOG.pins.DFF3.SetValue(DFF3);
+		this.ULS173ALOG.pins.DFF4.SetValue(DFF4);
 	}
 }
 /**
@@ -4788,7 +6433,7 @@ class SN74LS181 extends Component {
 			GBAR_O: new Pin(),
 			CN_4_O: new Pin(),
 		}
-		this.ULS181LOG = new logicexp(['A0BAR_I','A1BAR_I','A2BAR_I','A3BAR_I','B0BAR_I','B1BAR_I','B2BAR_I','B3BAR_I','S0_I','S1_I','S2_I','S3_I','M_I','CN_I'], ['A0BAR','A1BAR','A2BAR','A3BAR','B0BAR','B1BAR','B2BAR','B3BAR','S0','S1','S2','S3','M','CN','F0BAR','F1BAR','F2BAR','F3BAR','AEQUALB','PBAR','GBAR','CN_4'], ['TOP3','BOT3','TOP2','BOT2','TOP1','BOT1','TOP0','BOT0','MBAR']).Logic('   A0BAR   =  A0BAR_I ;   A1BAR   =  A1BAR_I ;   A2BAR   =  A2BAR_I ;   A3BAR   =  A3BAR_I ;   B0BAR   =  B0BAR_I ;   B1BAR   =  B1BAR_I ;   B2BAR   =  B2BAR_I ;   B3BAR   =  B3BAR_I ;   S0      =  S0_I ;   S1      =  S1_I ;   S2      =  S2_I ;   S3      =  S3_I ;   M       =  M_I ;   CN      =  CN_I ;   TOP3    =  !( (A3BAR & B3BAR & S3) | (A3BAR & !B3BAR & S2) ) ;   BOT3    =  !(        (!B3BAR & S1) |  A3BAR | (B3BAR & S0) ) ;   TOP2    =  !( (A2BAR & B2BAR & S3) | (A2BAR & !B2BAR & S2) ) ;   BOT2    =  !(        (!B2BAR & S1) |  A2BAR | (B2BAR & S0) ) ;   TOP1    =  !( (A1BAR & B1BAR & S3) | (A1BAR & !B1BAR & S2) ) ;   BOT1    =  !(        (!B1BAR & S1) |  A1BAR | (B1BAR & S0) ) ;   TOP0    =  !( (A0BAR & B0BAR & S3) | (A0BAR & !B0BAR & S2) ) ;   BOT0    =  !(        (!B0BAR & S1) |  A0BAR | (B0BAR & S0) ) ;   MBAR    =  !M ;   F3BAR   =  (TOP3 ^ BOT3) ^ !( (  CN & MBAR & TOP2 & TOP1 & TOP0) |                                  (BOT0 & MBAR & TOP2 & TOP1) |                                  (BOT1 & MBAR & TOP2) |                                  (BOT2 & MBAR) ) ;   F2BAR   =  (TOP2 ^ BOT2) ^ !( (  CN & MBAR & TOP1 & TOP0) |                                  (BOT0 & MBAR & TOP1) |                                  (BOT1 & MBAR) ) ;   F1BAR   =  (TOP1 ^ BOT1) ^ !( (  CN & MBAR & TOP0) |                                  (BOT0 & MBAR) ) ;   F0BAR   =  (TOP0 ^ BOT0) ^ !(    CN & MBAR) ;   AEQUALB =  F3BAR & F2BAR & F1BAR & F0BAR ;   PBAR    =  !(         TOP3 & TOP2 & TOP1 & TOP0) ;   GBAR    =  !( (BOT0 & TOP3 & TOP2 & TOP1) |                  (BOT1 & TOP3 & TOP2) |                  (BOT2 & TOP3) |                    BOT3 ) ;   CN_4    =  !GBAR | (!PBAR & CN) ;');
+		this.ULS181LOG = new logicexp(['A0BAR_I','A1BAR_I','A2BAR_I','A3BAR_I','B0BAR_I','B1BAR_I','B2BAR_I','B3BAR_I','S0_I','S1_I','S2_I','S3_I','M_I','CN_I'], ['A0BAR','A1BAR','A2BAR','A3BAR','B0BAR','B1BAR','B2BAR','B3BAR','S0','S1','S2','S3','M','CN','F0BAR','F1BAR','F2BAR','F3BAR','AEQUALB','PBAR','GBAR','CN_4']).Callback(this.$exe_ULS181LOG);
 		Connect(this.ULS181LOG.pins.A0BAR_I, this.pins.A0BAR_I);
 		Connect(this.ULS181LOG.pins.A1BAR_I, this.pins.A1BAR_I);
 		Connect(this.ULS181LOG.pins.A2BAR_I, this.pins.A2BAR_I);
@@ -4856,6 +6501,79 @@ class SN74LS181 extends Component {
 		Connect(CN_4, this.pins.CN_4_O);
 		Connect(AEQUALB, this.pins.AEQUALB_O);
 	}
+	$exe_ULS181LOG() {
+		var TOP3, BOT3, TOP2, BOT2, TOP1, BOT1, TOP0, BOT0, MBAR; // Temps
+		var A0BAR_I, A1BAR_I, A2BAR_I, A3BAR_I, B0BAR_I, B1BAR_I, B2BAR_I, B3BAR_I, S0_I, S1_I, S2_I, S3_I, M_I, CN_I; // Inputs
+		var A0BAR, A1BAR, A2BAR, A3BAR, B0BAR, B1BAR, B2BAR, B3BAR, S0, S1, S2, S3, M, CN, F0BAR, F1BAR, F2BAR, F3BAR, AEQUALB, PBAR, GBAR, CN_4; // Outputs
+		A0BAR_I = this.ULS181LOG.pins.A0BAR_I.GetValue();
+		A1BAR_I = this.ULS181LOG.pins.A1BAR_I.GetValue();
+		A2BAR_I = this.ULS181LOG.pins.A2BAR_I.GetValue();
+		A3BAR_I = this.ULS181LOG.pins.A3BAR_I.GetValue();
+		B0BAR_I = this.ULS181LOG.pins.B0BAR_I.GetValue();
+		B1BAR_I = this.ULS181LOG.pins.B1BAR_I.GetValue();
+		B2BAR_I = this.ULS181LOG.pins.B2BAR_I.GetValue();
+		B3BAR_I = this.ULS181LOG.pins.B3BAR_I.GetValue();
+		S0_I = this.ULS181LOG.pins.S0_I.GetValue();
+		S1_I = this.ULS181LOG.pins.S1_I.GetValue();
+		S2_I = this.ULS181LOG.pins.S2_I.GetValue();
+		S3_I = this.ULS181LOG.pins.S3_I.GetValue();
+		M_I = this.ULS181LOG.pins.M_I.GetValue();
+		CN_I = this.ULS181LOG.pins.CN_I.GetValue();
+		   A0BAR   =  A0BAR_I ;
+		   A1BAR   =  A1BAR_I ;
+		   A2BAR   =  A2BAR_I ;
+		   A3BAR   =  A3BAR_I ;
+		   B0BAR   =  B0BAR_I ;
+		   B1BAR   =  B1BAR_I ;
+		   B2BAR   =  B2BAR_I ;
+		   B3BAR   =  B3BAR_I ;
+		   S0      =  S0_I ;
+		   S1      =  S1_I ;
+		   S2      =  S2_I ;
+		   S3      =  S3_I ;
+		   M       =  M_I ;
+		   CN      =  CN_I ;
+		   TOP3    =  !( (A3BAR & B3BAR & S3) | (A3BAR & !B3BAR & S2) ) ;
+		   BOT3    =  !(        (!B3BAR & S1) |  A3BAR | (B3BAR & S0) ) ;
+		   TOP2    =  !( (A2BAR & B2BAR & S3) | (A2BAR & !B2BAR & S2) ) ;
+		   BOT2    =  !(        (!B2BAR & S1) |  A2BAR | (B2BAR & S0) ) ;
+		   TOP1    =  !( (A1BAR & B1BAR & S3) | (A1BAR & !B1BAR & S2) ) ;
+		   BOT1    =  !(        (!B1BAR & S1) |  A1BAR | (B1BAR & S0) ) ;
+		   TOP0    =  !( (A0BAR & B0BAR & S3) | (A0BAR & !B0BAR & S2) ) ;
+		   BOT0    =  !(        (!B0BAR & S1) |  A0BAR | (B0BAR & S0) ) ;
+		   MBAR    =  !M ;
+		   F3BAR   =  (TOP3 ^ BOT3) ^ !( (  CN & MBAR & TOP2 & TOP1 & TOP0) |                                  (BOT0 & MBAR & TOP2 & TOP1) |                                  (BOT1 & MBAR & TOP2) |                                  (BOT2 & MBAR) ) ;
+		   F2BAR   =  (TOP2 ^ BOT2) ^ !( (  CN & MBAR & TOP1 & TOP0) |                                  (BOT0 & MBAR & TOP1) |                                  (BOT1 & MBAR) ) ;
+		   F1BAR   =  (TOP1 ^ BOT1) ^ !( (  CN & MBAR & TOP0) |                                  (BOT0 & MBAR) ) ;
+		   F0BAR   =  (TOP0 ^ BOT0) ^ !(    CN & MBAR) ;
+		   AEQUALB =  F3BAR & F2BAR & F1BAR & F0BAR ;
+		   PBAR    =  !(         TOP3 & TOP2 & TOP1 & TOP0) ;
+		   GBAR    =  !( (BOT0 & TOP3 & TOP2 & TOP1) |                  (BOT1 & TOP3 & TOP2) |                  (BOT2 & TOP3) |                    BOT3 ) ;
+		   CN_4    =  !GBAR | (!PBAR & CN) ;
+		
+		this.ULS181LOG.pins.A0BAR.SetValue(A0BAR);
+		this.ULS181LOG.pins.A1BAR.SetValue(A1BAR);
+		this.ULS181LOG.pins.A2BAR.SetValue(A2BAR);
+		this.ULS181LOG.pins.A3BAR.SetValue(A3BAR);
+		this.ULS181LOG.pins.B0BAR.SetValue(B0BAR);
+		this.ULS181LOG.pins.B1BAR.SetValue(B1BAR);
+		this.ULS181LOG.pins.B2BAR.SetValue(B2BAR);
+		this.ULS181LOG.pins.B3BAR.SetValue(B3BAR);
+		this.ULS181LOG.pins.S0.SetValue(S0);
+		this.ULS181LOG.pins.S1.SetValue(S1);
+		this.ULS181LOG.pins.S2.SetValue(S2);
+		this.ULS181LOG.pins.S3.SetValue(S3);
+		this.ULS181LOG.pins.M.SetValue(M);
+		this.ULS181LOG.pins.CN.SetValue(CN);
+		this.ULS181LOG.pins.F0BAR.SetValue(F0BAR);
+		this.ULS181LOG.pins.F1BAR.SetValue(F1BAR);
+		this.ULS181LOG.pins.F2BAR.SetValue(F2BAR);
+		this.ULS181LOG.pins.F3BAR.SetValue(F3BAR);
+		this.ULS181LOG.pins.AEQUALB.SetValue(AEQUALB);
+		this.ULS181LOG.pins.PBAR.SetValue(PBAR);
+		this.ULS181LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS181LOG.pins.CN_4.SetValue(CN_4);
+	}
 }
 /**
  * DUAL CARRY-SAVE FULL ADDERS
@@ -4870,7 +6588,7 @@ class SN74LS183 extends Component {
 			SUM_O: new Pin(),
 			CN_1_O: new Pin(),
 		}
-		this.ULS183LOG = new logicexp(['CN_I','B_I','A_I'], ['CN','B','A','SUM','CN_1'], ['CNBAR','BBAR','ABAR']).Logic('   CN =  CN_I ;   B =  B_I ;   A =  A_I ;   CNBAR =  !CN ;   BBAR =  !B ;   ABAR =  !A ;   CN_1 =  !((CNBAR & BBAR) | (BBAR & ABAR) | (CNBAR & ABAR)) ;   SUM =  !((CN & BBAR & A) | (CNBAR & B & A) | (CNBAR & BBAR & ABAR) |             (CN & B & ABAR)) ;');
+		this.ULS183LOG = new logicexp(['CN_I','B_I','A_I'], ['CN','B','A','SUM','CN_1']).Callback(this.$exe_ULS183LOG);
 		Connect(this.ULS183LOG.pins.CN_I, this.pins.CN_I);
 		Connect(this.ULS183LOG.pins.B_I, this.pins.B_I);
 		Connect(this.ULS183LOG.pins.A_I, this.pins.A_I);
@@ -4886,6 +6604,28 @@ class SN74LS183 extends Component {
 		Connect(this.ULS183LOG.pins.CN_1, CN_1);
 		Connect(SUM, this.pins.SUM_O);
 		Connect(CN_1, this.pins.CN_1_O);
+	}
+	$exe_ULS183LOG() {
+		var CNBAR, BBAR, ABAR; // Temps
+		var CN_I, B_I, A_I; // Inputs
+		var CN, B, A, SUM, CN_1; // Outputs
+		CN_I = this.ULS183LOG.pins.CN_I.GetValue();
+		B_I = this.ULS183LOG.pins.B_I.GetValue();
+		A_I = this.ULS183LOG.pins.A_I.GetValue();
+		   CN =  CN_I ;
+		   B =  B_I ;
+		   A =  A_I ;
+		   CNBAR =  !CN ;
+		   BBAR =  !B ;
+		   ABAR =  !A ;
+		   CN_1 =  !((CNBAR & BBAR) | (BBAR & ABAR) | (CNBAR & ABAR)) ;
+		   SUM =  !((CN & BBAR & A) | (CNBAR & B & A) | (CNBAR & BBAR & ABAR) |             (CN & B & ABAR)) ;
+		
+		this.ULS183LOG.pins.CN.SetValue(CN);
+		this.ULS183LOG.pins.B.SetValue(B);
+		this.ULS183LOG.pins.A.SetValue(A);
+		this.ULS183LOG.pins.SUM.SetValue(SUM);
+		this.ULS183LOG.pins.CN_1.SetValue(CN_1);
 	}
 }
 /**
@@ -4910,7 +6650,7 @@ class SN74LS190 extends Component {
 			QC_O: new Pin(),
 			QD_O: new Pin(),
 		}
-		this.ULS190 = new logicexp(['CLK_I','DUBAR_I','CTENBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['CLK','CLKBAR','DUBAR','CTENBAR','LOADBAR','A','B','C','D','MXMNOUT','RCOBAR','SA','RA','JKA','SB','RB','JKB','SC','RC','JKC','SD','RD','JKD'], ['DU','LOAD','CTEN','CTD','CTU','IB']).Logic('   CLK =  CLK_I ;   CLKBAR =  !CLK_I ;   DUBAR =  DUBAR_I ;   CTENBAR =  CTENBAR_I ;   LOADBAR =  LOADBAR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   DU =  !DUBAR ;   LOAD =  !LOADBAR ;   CTEN =  !CTENBAR ;   CTD =  DUBAR & CTEN ;   CTU =  DU & CTEN ;   MXMNOUT =  (QA & QD & DU) | (QABAR & QBBAR & QCBAR &    QDBAR & DUBAR) ;     RCOBAR =  !(MXMNOUT & CTEN & CLKBAR) ;   SA =  !(A & LOAD) ;   RA =  !(SA & LOAD) ;   JKA =  CTEN ;   SB =  !(B & LOAD) ;   RB =  !(SB & LOAD) ;   IB =  !(QBBAR & QCBAR & QDBAR) ;   JKB =  (CTD & QABAR & IB) | (QA & QDBAR & CTU) ;   SC =  !(C & LOAD) ;   RC =  !(SC & LOAD) ;   JKC =  (CTD & QABAR & QBBAR & IB) | (CTU & QB & QA) ;   SD =  !(D & LOAD) ;   RD =  !(SD & LOAD) ;   JKD =  (CTD & QABAR & QBBAR & QCBAR) | (CTU & QD & QA) |     (CTU & QC & QB & QA) ;');
+		this.ULS190 = new logicexp(['CLK_I','DUBAR_I','CTENBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['CLK','CLKBAR','DUBAR','CTENBAR','LOADBAR','A','B','C','D','MXMNOUT','RCOBAR','SA','RA','JKA','SB','RB','JKB','SC','RC','JKC','SD','RD','JKD']).Callback(this.$exe_ULS190);
 		Connect(this.ULS190.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.ULS190.pins.DUBAR_I, this.pins.DUBAR_I);
 		Connect(this.ULS190.pins.CTENBAR_I, this.pins.CTENBAR_I);
@@ -5020,6 +6760,80 @@ class SN74LS190 extends Component {
 		Connect(RCOBAR, this.pins.RCOBAR_O);
 		Connect(MXMNOUT, this.pins.MXMNOUT_O);
 	}
+	$exe_ULS190() {
+		var DU, LOAD, CTEN, CTD, CTU, IB; // Temps
+		var CLK_I, DUBAR_I, CTENBAR_I, LOADBAR_I, A_I, B_I, C_I, D_I, QA, QB, QC, QD, QABAR, QBBAR, QCBAR, QDBAR; // Inputs
+		var CLK, CLKBAR, DUBAR, CTENBAR, LOADBAR, A, B, C, D, MXMNOUT, RCOBAR, SA, RA, JKA, SB, RB, JKB, SC, RC, JKC, SD, RD, JKD; // Outputs
+		CLK_I = this.ULS190.pins.CLK_I.GetValue();
+		DUBAR_I = this.ULS190.pins.DUBAR_I.GetValue();
+		CTENBAR_I = this.ULS190.pins.CTENBAR_I.GetValue();
+		LOADBAR_I = this.ULS190.pins.LOADBAR_I.GetValue();
+		A_I = this.ULS190.pins.A_I.GetValue();
+		B_I = this.ULS190.pins.B_I.GetValue();
+		C_I = this.ULS190.pins.C_I.GetValue();
+		D_I = this.ULS190.pins.D_I.GetValue();
+		QA = this.ULS190.pins.QA.GetValue();
+		QB = this.ULS190.pins.QB.GetValue();
+		QC = this.ULS190.pins.QC.GetValue();
+		QD = this.ULS190.pins.QD.GetValue();
+		QABAR = this.ULS190.pins.QABAR.GetValue();
+		QBBAR = this.ULS190.pins.QBBAR.GetValue();
+		QCBAR = this.ULS190.pins.QCBAR.GetValue();
+		QDBAR = this.ULS190.pins.QDBAR.GetValue();
+		   CLK =  CLK_I ;
+		   CLKBAR =  !CLK_I ;
+		   DUBAR =  DUBAR_I ;
+		   CTENBAR =  CTENBAR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   DU =  !DUBAR ;
+		   LOAD =  !LOADBAR ;
+		   CTEN =  !CTENBAR ;
+		   CTD =  DUBAR & CTEN ;
+		   CTU =  DU & CTEN ;
+		   MXMNOUT =  (QA & QD & DU) | (QABAR & QBBAR & QCBAR &    QDBAR & DUBAR) ;
+		     RCOBAR =  !(MXMNOUT & CTEN & CLKBAR) ;
+		   SA =  !(A & LOAD) ;
+		   RA =  !(SA & LOAD) ;
+		   JKA =  CTEN ;
+		   SB =  !(B & LOAD) ;
+		   RB =  !(SB & LOAD) ;
+		   IB =  !(QBBAR & QCBAR & QDBAR) ;
+		   JKB =  (CTD & QABAR & IB) | (QA & QDBAR & CTU) ;
+		   SC =  !(C & LOAD) ;
+		   RC =  !(SC & LOAD) ;
+		   JKC =  (CTD & QABAR & QBBAR & IB) | (CTU & QB & QA) ;
+		   SD =  !(D & LOAD) ;
+		   RD =  !(SD & LOAD) ;
+		   JKD =  (CTD & QABAR & QBBAR & QCBAR) | (CTU & QD & QA) |     (CTU & QC & QB & QA) ;
+		
+		this.ULS190.pins.CLK.SetValue(CLK);
+		this.ULS190.pins.CLKBAR.SetValue(CLKBAR);
+		this.ULS190.pins.DUBAR.SetValue(DUBAR);
+		this.ULS190.pins.CTENBAR.SetValue(CTENBAR);
+		this.ULS190.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS190.pins.A.SetValue(A);
+		this.ULS190.pins.B.SetValue(B);
+		this.ULS190.pins.C.SetValue(C);
+		this.ULS190.pins.D.SetValue(D);
+		this.ULS190.pins.MXMNOUT.SetValue(MXMNOUT);
+		this.ULS190.pins.RCOBAR.SetValue(RCOBAR);
+		this.ULS190.pins.SA.SetValue(SA);
+		this.ULS190.pins.RA.SetValue(RA);
+		this.ULS190.pins.JKA.SetValue(JKA);
+		this.ULS190.pins.SB.SetValue(SB);
+		this.ULS190.pins.RB.SetValue(RB);
+		this.ULS190.pins.JKB.SetValue(JKB);
+		this.ULS190.pins.SC.SetValue(SC);
+		this.ULS190.pins.RC.SetValue(RC);
+		this.ULS190.pins.JKC.SetValue(JKC);
+		this.ULS190.pins.SD.SetValue(SD);
+		this.ULS190.pins.RD.SetValue(RD);
+		this.ULS190.pins.JKD.SetValue(JKD);
+	}
 }
 class SN74LS191 extends Component {
 	constructor() {
@@ -5093,7 +6907,7 @@ class SN74LS191 extends Component {
 		Connect(this.U4.pins.Q0, QD);
 		let QDBAR = new Pin();
 		Connect(this.U4.pins.QBAR0, QDBAR);
-		this.ULS191LOG = new logicexp(['CLK_I','DUBAR_I','CTENBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['CLK','DUBAR','CTENBAR','LOADBAR','A','B','C','D','MXMNOUT','RCOBAR','MCLK','SA','RA','JKA','SB','RB','JKB','SC','RC','JKC','SD','RD','JKD'], ['IEN1','IEN2','ILD','IM1','IM2','IC1','IC2','ID1','ID2']).Logic('   CLK =  CLK_I ;   DUBAR =  DUBAR_I ;   CTENBAR =  CTENBAR_I ;   LOADBAR =  LOADBAR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   IEN1 =  !(DUBAR | CTENBAR) ;   IEN2 =  !(CTENBAR | !DUBAR) ;   ILD =  !LOADBAR ;   IM1 =  !DUBAR & QA & QB & QC & QD ;   IM2 =  DUBAR & QABAR & QBBAR & QCBAR & QDBAR ;   IC1 =  IEN2 & QABAR & QBBAR ;   IC2 =  IEN1 & QA & QB ;   ID1 =  IEN2 & QABAR & QBBAR & QCBAR ;   ID2 =  IEN1 & QA & QB & QC ;   MCLK =  !CLK ;   SA =  !(A & ILD) ;   RA =  !(SA & ILD) ;   SB =  !(B & ILD) ;   RB =  !(SB & ILD) ;   SC =  !(C & ILD) ;   RC =  !(SC & ILD) ;   SD =  !(D & ILD) ;   RD =  !(SD & ILD) ;   JKA =  !CTENBAR ;   JKB =  (IEN2 & QABAR) | (QA & IEN1) ;   JKC =  IC1 | IC2 ;   JKD =  ID1 | ID2 ;   MXMNOUT =  IM1 | IM2 ;   RCOBAR =  !(MCLK & JKA & MXMNOUT) ;');
+		this.ULS191LOG = new logicexp(['CLK_I','DUBAR_I','CTENBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['CLK','DUBAR','CTENBAR','LOADBAR','A','B','C','D','MXMNOUT','RCOBAR','MCLK','SA','RA','JKA','SB','RB','JKB','SC','RC','JKC','SD','RD','JKD']).Callback(this.$exe_ULS191LOG);
 		Connect(this.ULS191LOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.ULS191LOG.pins.DUBAR_I, this.pins.DUBAR_I);
 		Connect(this.ULS191LOG.pins.CTENBAR_I, this.pins.CTENBAR_I);
@@ -5149,6 +6963,83 @@ class SN74LS191 extends Component {
 		Connect(QD, this.pins.QD_O);
 		Connect(RCOBAR, this.pins.RCOBAR_O);
 		Connect(MXMNOUT, this.pins.MXMNOUT_O);
+	}
+	$exe_ULS191LOG() {
+		var IEN1, IEN2, ILD, IM1, IM2, IC1, IC2, ID1, ID2; // Temps
+		var CLK_I, DUBAR_I, CTENBAR_I, LOADBAR_I, A_I, B_I, C_I, D_I, QA, QB, QC, QD, QABAR, QBBAR, QCBAR, QDBAR; // Inputs
+		var CLK, DUBAR, CTENBAR, LOADBAR, A, B, C, D, MXMNOUT, RCOBAR, MCLK, SA, RA, JKA, SB, RB, JKB, SC, RC, JKC, SD, RD, JKD; // Outputs
+		CLK_I = this.ULS191LOG.pins.CLK_I.GetValue();
+		DUBAR_I = this.ULS191LOG.pins.DUBAR_I.GetValue();
+		CTENBAR_I = this.ULS191LOG.pins.CTENBAR_I.GetValue();
+		LOADBAR_I = this.ULS191LOG.pins.LOADBAR_I.GetValue();
+		A_I = this.ULS191LOG.pins.A_I.GetValue();
+		B_I = this.ULS191LOG.pins.B_I.GetValue();
+		C_I = this.ULS191LOG.pins.C_I.GetValue();
+		D_I = this.ULS191LOG.pins.D_I.GetValue();
+		QA = this.ULS191LOG.pins.QA.GetValue();
+		QB = this.ULS191LOG.pins.QB.GetValue();
+		QC = this.ULS191LOG.pins.QC.GetValue();
+		QD = this.ULS191LOG.pins.QD.GetValue();
+		QABAR = this.ULS191LOG.pins.QABAR.GetValue();
+		QBBAR = this.ULS191LOG.pins.QBBAR.GetValue();
+		QCBAR = this.ULS191LOG.pins.QCBAR.GetValue();
+		QDBAR = this.ULS191LOG.pins.QDBAR.GetValue();
+		   CLK =  CLK_I ;
+		   DUBAR =  DUBAR_I ;
+		   CTENBAR =  CTENBAR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   IEN1 =  !(DUBAR | CTENBAR) ;
+		   IEN2 =  !(CTENBAR | !DUBAR) ;
+		   ILD =  !LOADBAR ;
+		   IM1 =  !DUBAR & QA & QB & QC & QD ;
+		   IM2 =  DUBAR & QABAR & QBBAR & QCBAR & QDBAR ;
+		   IC1 =  IEN2 & QABAR & QBBAR ;
+		   IC2 =  IEN1 & QA & QB ;
+		   ID1 =  IEN2 & QABAR & QBBAR & QCBAR ;
+		   ID2 =  IEN1 & QA & QB & QC ;
+		   MCLK =  !CLK ;
+		   SA =  !(A & ILD) ;
+		   RA =  !(SA & ILD) ;
+		   SB =  !(B & ILD) ;
+		   RB =  !(SB & ILD) ;
+		   SC =  !(C & ILD) ;
+		   RC =  !(SC & ILD) ;
+		   SD =  !(D & ILD) ;
+		   RD =  !(SD & ILD) ;
+		   JKA =  !CTENBAR ;
+		   JKB =  (IEN2 & QABAR) | (QA & IEN1) ;
+		   JKC =  IC1 | IC2 ;
+		   JKD =  ID1 | ID2 ;
+		   MXMNOUT =  IM1 | IM2 ;
+		   RCOBAR =  !(MCLK & JKA & MXMNOUT) ;
+		
+		this.ULS191LOG.pins.CLK.SetValue(CLK);
+		this.ULS191LOG.pins.DUBAR.SetValue(DUBAR);
+		this.ULS191LOG.pins.CTENBAR.SetValue(CTENBAR);
+		this.ULS191LOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS191LOG.pins.A.SetValue(A);
+		this.ULS191LOG.pins.B.SetValue(B);
+		this.ULS191LOG.pins.C.SetValue(C);
+		this.ULS191LOG.pins.D.SetValue(D);
+		this.ULS191LOG.pins.MXMNOUT.SetValue(MXMNOUT);
+		this.ULS191LOG.pins.RCOBAR.SetValue(RCOBAR);
+		this.ULS191LOG.pins.MCLK.SetValue(MCLK);
+		this.ULS191LOG.pins.SA.SetValue(SA);
+		this.ULS191LOG.pins.RA.SetValue(RA);
+		this.ULS191LOG.pins.JKA.SetValue(JKA);
+		this.ULS191LOG.pins.SB.SetValue(SB);
+		this.ULS191LOG.pins.RB.SetValue(RB);
+		this.ULS191LOG.pins.JKB.SetValue(JKB);
+		this.ULS191LOG.pins.SC.SetValue(SC);
+		this.ULS191LOG.pins.RC.SetValue(RC);
+		this.ULS191LOG.pins.JKC.SetValue(JKC);
+		this.ULS191LOG.pins.SD.SetValue(SD);
+		this.ULS191LOG.pins.RD.SetValue(RD);
+		this.ULS191LOG.pins.JKD.SetValue(JKD);
 	}
 }
 class SN74LS192 extends Component {
@@ -5222,7 +7113,7 @@ class SN74LS192 extends Component {
 		Connect(this.U4.pins.Q0, QD);
 		let QDBAR = new Pin();
 		Connect(this.U4.pins.QBAR0, QDBAR);
-		this.ULS192LOG = new logicexp(['UP_I','DOWN_I','CLR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['UP','DOWN','CLR','LOADBAR','A','B','C','D','TA','TB','TC','TD','BOBAR','COBAR','MCLR','SA','RA','SB','RB','SC','RC','SD','RD'], ['ID','IU','ILD','IN1']).Logic('   UP =  UP_I ;   DOWN =  DOWN_I ;   CLR =  CLR_I ;   LOADBAR =  LOADBAR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   ID =  !DOWN ;   IU =  !UP ;   ILD =  !LOADBAR ;   MCLR =  !CLR ;   IN1 =  !(QBBAR & QCBAR & QDBAR) ;   TA =  ID | IU ;   TB =  (ID & QABAR & IN1) | (IU & QA & QDBAR) ;   TC =  (ID & QABAR & QBBAR & IN1) | (IU & QA & QB) ;   TD =  (ID & QABAR & QBBAR & QCBAR) | (IU & QD & QA ) |      (IU & QA & QB & QC) ;   SA =  !(A & ILD & MCLR) ;   RA =  MCLR & !(SA & ILD) ;   SB =  !(B & ILD & MCLR) ;   RB =  MCLR & !(SB & ILD) ;   SC =  !(C & ILD & MCLR) ;   RC =  MCLR & !(SC & ILD) ;   SD =  !(D & ILD & MCLR) ;   RD =  MCLR & !(SD & ILD) ;   BOBAR =  !(ID & QABAR & QBBAR & QCBAR & QDBAR) ;   COBAR =  !(IU & QA & QD) ;');
+		this.ULS192LOG = new logicexp(['UP_I','DOWN_I','CLR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['UP','DOWN','CLR','LOADBAR','A','B','C','D','TA','TB','TC','TD','BOBAR','COBAR','MCLR','SA','RA','SB','RB','SC','RC','SD','RD']).Callback(this.$exe_ULS192LOG);
 		Connect(this.ULS192LOG.pins.UP_I, this.pins.UP_I);
 		Connect(this.ULS192LOG.pins.DOWN_I, this.pins.DOWN_I);
 		Connect(this.ULS192LOG.pins.CLR_I, this.pins.CLR_I);
@@ -5279,6 +7170,78 @@ class SN74LS192 extends Component {
 		Connect(QD, this.pins.QD_O);
 		Connect(BOBAR, this.pins.BOBAR_O);
 		Connect(COBAR, this.pins.COBAR_O);
+	}
+	$exe_ULS192LOG() {
+		var ID, IU, ILD, IN1; // Temps
+		var UP_I, DOWN_I, CLR_I, LOADBAR_I, A_I, B_I, C_I, D_I, QA, QB, QC, QD, QABAR, QBBAR, QCBAR, QDBAR; // Inputs
+		var UP, DOWN, CLR, LOADBAR, A, B, C, D, TA, TB, TC, TD, BOBAR, COBAR, MCLR, SA, RA, SB, RB, SC, RC, SD, RD; // Outputs
+		UP_I = this.ULS192LOG.pins.UP_I.GetValue();
+		DOWN_I = this.ULS192LOG.pins.DOWN_I.GetValue();
+		CLR_I = this.ULS192LOG.pins.CLR_I.GetValue();
+		LOADBAR_I = this.ULS192LOG.pins.LOADBAR_I.GetValue();
+		A_I = this.ULS192LOG.pins.A_I.GetValue();
+		B_I = this.ULS192LOG.pins.B_I.GetValue();
+		C_I = this.ULS192LOG.pins.C_I.GetValue();
+		D_I = this.ULS192LOG.pins.D_I.GetValue();
+		QA = this.ULS192LOG.pins.QA.GetValue();
+		QB = this.ULS192LOG.pins.QB.GetValue();
+		QC = this.ULS192LOG.pins.QC.GetValue();
+		QD = this.ULS192LOG.pins.QD.GetValue();
+		QABAR = this.ULS192LOG.pins.QABAR.GetValue();
+		QBBAR = this.ULS192LOG.pins.QBBAR.GetValue();
+		QCBAR = this.ULS192LOG.pins.QCBAR.GetValue();
+		QDBAR = this.ULS192LOG.pins.QDBAR.GetValue();
+		   UP =  UP_I ;
+		   DOWN =  DOWN_I ;
+		   CLR =  CLR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   ID =  !DOWN ;
+		   IU =  !UP ;
+		   ILD =  !LOADBAR ;
+		   MCLR =  !CLR ;
+		   IN1 =  !(QBBAR & QCBAR & QDBAR) ;
+		   TA =  ID | IU ;
+		   TB =  (ID & QABAR & IN1) | (IU & QA & QDBAR) ;
+		   TC =  (ID & QABAR & QBBAR & IN1) | (IU & QA & QB) ;
+		   TD =  (ID & QABAR & QBBAR & QCBAR) | (IU & QD & QA ) |      (IU & QA & QB & QC) ;
+		   SA =  !(A & ILD & MCLR) ;
+		   RA =  MCLR & !(SA & ILD) ;
+		   SB =  !(B & ILD & MCLR) ;
+		   RB =  MCLR & !(SB & ILD) ;
+		   SC =  !(C & ILD & MCLR) ;
+		   RC =  MCLR & !(SC & ILD) ;
+		   SD =  !(D & ILD & MCLR) ;
+		   RD =  MCLR & !(SD & ILD) ;
+		   BOBAR =  !(ID & QABAR & QBBAR & QCBAR & QDBAR) ;
+		   COBAR =  !(IU & QA & QD) ;
+		
+		this.ULS192LOG.pins.UP.SetValue(UP);
+		this.ULS192LOG.pins.DOWN.SetValue(DOWN);
+		this.ULS192LOG.pins.CLR.SetValue(CLR);
+		this.ULS192LOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS192LOG.pins.A.SetValue(A);
+		this.ULS192LOG.pins.B.SetValue(B);
+		this.ULS192LOG.pins.C.SetValue(C);
+		this.ULS192LOG.pins.D.SetValue(D);
+		this.ULS192LOG.pins.TA.SetValue(TA);
+		this.ULS192LOG.pins.TB.SetValue(TB);
+		this.ULS192LOG.pins.TC.SetValue(TC);
+		this.ULS192LOG.pins.TD.SetValue(TD);
+		this.ULS192LOG.pins.BOBAR.SetValue(BOBAR);
+		this.ULS192LOG.pins.COBAR.SetValue(COBAR);
+		this.ULS192LOG.pins.MCLR.SetValue(MCLR);
+		this.ULS192LOG.pins.SA.SetValue(SA);
+		this.ULS192LOG.pins.RA.SetValue(RA);
+		this.ULS192LOG.pins.SB.SetValue(SB);
+		this.ULS192LOG.pins.RB.SetValue(RB);
+		this.ULS192LOG.pins.SC.SetValue(SC);
+		this.ULS192LOG.pins.RC.SetValue(RC);
+		this.ULS192LOG.pins.SD.SetValue(SD);
+		this.ULS192LOG.pins.RD.SetValue(RD);
 	}
 }
 class SN74LS193 extends Component {
@@ -5352,7 +7315,7 @@ class SN74LS193 extends Component {
 		Connect(this.U4.pins.Q0, QD);
 		let QDBAR = new Pin();
 		Connect(this.U4.pins.QBAR0, QDBAR);
-		this.ULS193LOG = new logicexp(['UP_I','DOWN_I','CLR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['UP','DOWN','CLR','LOADBAR','A','B','C','D','TA','TB','TC','TD','BOBAR','COBAR','MCLR','SA','RA','SB','RB','SC','RC','SD','RD'], ['ID','IU','ILD']).Logic('   UP =  UP_I ;   DOWN =  DOWN_I ;   CLR =  CLR_I ;   LOADBAR =  LOADBAR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   ID =  !DOWN ;   IU =  !UP ;   ILD =  !LOADBAR ;   MCLR =  !CLR ;   TA =  ID | IU ;   TB =  (ID & QABAR) | (IU & QA) ;   TC =  (ID & QABAR & QBBAR) | (IU & QA & QB) ;   TD =  (ID & QABAR & QBBAR & QCBAR) | (IU & QA & QB & QC) ;   SA =  !(A & ILD & MCLR) ;   RA =  MCLR & !(SA & ILD) ;   SB =  !(B & ILD & MCLR) ;   RB =  MCLR & !(SB & ILD) ;   SC =  !(C & ILD & MCLR) ;   RC =  MCLR & !(SC & ILD) ;   SD =  !(D & ILD & MCLR) ;   RD =  MCLR & !(SD & ILD) ;   BOBAR =  !(ID & QABAR & QBBAR & QCBAR & QDBAR) ;   COBAR =  !(IU & QA & QB & QC & QD) ;');
+		this.ULS193LOG = new logicexp(['UP_I','DOWN_I','CLR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['UP','DOWN','CLR','LOADBAR','A','B','C','D','TA','TB','TC','TD','BOBAR','COBAR','MCLR','SA','RA','SB','RB','SC','RC','SD','RD']).Callback(this.$exe_ULS193LOG);
 		Connect(this.ULS193LOG.pins.UP_I, this.pins.UP_I);
 		Connect(this.ULS193LOG.pins.DOWN_I, this.pins.DOWN_I);
 		Connect(this.ULS193LOG.pins.CLR_I, this.pins.CLR_I);
@@ -5410,6 +7373,77 @@ class SN74LS193 extends Component {
 		Connect(BOBAR, this.pins.BOBAR_O);
 		Connect(COBAR, this.pins.COBAR_O);
 	}
+	$exe_ULS193LOG() {
+		var ID, IU, ILD; // Temps
+		var UP_I, DOWN_I, CLR_I, LOADBAR_I, A_I, B_I, C_I, D_I, QA, QB, QC, QD, QABAR, QBBAR, QCBAR, QDBAR; // Inputs
+		var UP, DOWN, CLR, LOADBAR, A, B, C, D, TA, TB, TC, TD, BOBAR, COBAR, MCLR, SA, RA, SB, RB, SC, RC, SD, RD; // Outputs
+		UP_I = this.ULS193LOG.pins.UP_I.GetValue();
+		DOWN_I = this.ULS193LOG.pins.DOWN_I.GetValue();
+		CLR_I = this.ULS193LOG.pins.CLR_I.GetValue();
+		LOADBAR_I = this.ULS193LOG.pins.LOADBAR_I.GetValue();
+		A_I = this.ULS193LOG.pins.A_I.GetValue();
+		B_I = this.ULS193LOG.pins.B_I.GetValue();
+		C_I = this.ULS193LOG.pins.C_I.GetValue();
+		D_I = this.ULS193LOG.pins.D_I.GetValue();
+		QA = this.ULS193LOG.pins.QA.GetValue();
+		QB = this.ULS193LOG.pins.QB.GetValue();
+		QC = this.ULS193LOG.pins.QC.GetValue();
+		QD = this.ULS193LOG.pins.QD.GetValue();
+		QABAR = this.ULS193LOG.pins.QABAR.GetValue();
+		QBBAR = this.ULS193LOG.pins.QBBAR.GetValue();
+		QCBAR = this.ULS193LOG.pins.QCBAR.GetValue();
+		QDBAR = this.ULS193LOG.pins.QDBAR.GetValue();
+		   UP =  UP_I ;
+		   DOWN =  DOWN_I ;
+		   CLR =  CLR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   ID =  !DOWN ;
+		   IU =  !UP ;
+		   ILD =  !LOADBAR ;
+		   MCLR =  !CLR ;
+		   TA =  ID | IU ;
+		   TB =  (ID & QABAR) | (IU & QA) ;
+		   TC =  (ID & QABAR & QBBAR) | (IU & QA & QB) ;
+		   TD =  (ID & QABAR & QBBAR & QCBAR) | (IU & QA & QB & QC) ;
+		   SA =  !(A & ILD & MCLR) ;
+		   RA =  MCLR & !(SA & ILD) ;
+		   SB =  !(B & ILD & MCLR) ;
+		   RB =  MCLR & !(SB & ILD) ;
+		   SC =  !(C & ILD & MCLR) ;
+		   RC =  MCLR & !(SC & ILD) ;
+		   SD =  !(D & ILD & MCLR) ;
+		   RD =  MCLR & !(SD & ILD) ;
+		   BOBAR =  !(ID & QABAR & QBBAR & QCBAR & QDBAR) ;
+		   COBAR =  !(IU & QA & QB & QC & QD) ;
+		
+		this.ULS193LOG.pins.UP.SetValue(UP);
+		this.ULS193LOG.pins.DOWN.SetValue(DOWN);
+		this.ULS193LOG.pins.CLR.SetValue(CLR);
+		this.ULS193LOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS193LOG.pins.A.SetValue(A);
+		this.ULS193LOG.pins.B.SetValue(B);
+		this.ULS193LOG.pins.C.SetValue(C);
+		this.ULS193LOG.pins.D.SetValue(D);
+		this.ULS193LOG.pins.TA.SetValue(TA);
+		this.ULS193LOG.pins.TB.SetValue(TB);
+		this.ULS193LOG.pins.TC.SetValue(TC);
+		this.ULS193LOG.pins.TD.SetValue(TD);
+		this.ULS193LOG.pins.BOBAR.SetValue(BOBAR);
+		this.ULS193LOG.pins.COBAR.SetValue(COBAR);
+		this.ULS193LOG.pins.MCLR.SetValue(MCLR);
+		this.ULS193LOG.pins.SA.SetValue(SA);
+		this.ULS193LOG.pins.RA.SetValue(RA);
+		this.ULS193LOG.pins.SB.SetValue(SB);
+		this.ULS193LOG.pins.RB.SetValue(RB);
+		this.ULS193LOG.pins.SC.SetValue(SC);
+		this.ULS193LOG.pins.RC.SetValue(RC);
+		this.ULS193LOG.pins.SD.SetValue(SD);
+		this.ULS193LOG.pins.RD.SetValue(RD);
+	}
 }
 /**
  * 4-BIT BIDIRECTIONAL UNIVERSAL SHIFT REGISTERS
@@ -5433,7 +7467,7 @@ class SN74LS194A extends Component {
 			QC_O: new Pin(),
 			QD_O: new Pin(),
 		}
-		this.ULS194LOG = new logicexp(['CLK_I','CLRBAR_I','S1_I','S0_I','SL_I','SR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD'], ['CLK','CLRBAR','S1','S0','SL','SR','A','B','C','D','KA','KB','KC','KD','JA','JB','JC','JD','CLOCK'], ['LOAD','SRIGHT','SLEFT','HOLD']).Logic('   LOAD   =  S1_I & S0_I ;   SRIGHT =  !S1_I & S0_I ;   SLEFT  =  S1_I & !S0_I ;   HOLD   =  !S1_I & !S0_I ;   CLK =  CLK_I ;   CLRBAR =  CLRBAR_I ;   S1 =  S1_I ;   S0 =  S0_I ;   SL =  SL_I ;   SR =  SR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   KA =  !( (SR & SRIGHT) | (LOAD & A) | (SLEFT & QB) | (HOLD & QA) ) ;   KB =  !( (QA & SRIGHT) | (LOAD & B) | (SLEFT & QC) | (HOLD & QB) ) ;   KC =  !( (QB & SRIGHT) | (LOAD & C) | (SLEFT & QD) | (HOLD & QC) ) ;   KD =  !( (QC & SRIGHT) | (LOAD & D) | (SLEFT & SL) | (HOLD & QD) ) ;   JA =  !KA ;   JB =  !KB ;   JC =  !KC ;   JD =  !KD ;   CLOCK =  !CLK ;');
+		this.ULS194LOG = new logicexp(['CLK_I','CLRBAR_I','S1_I','S0_I','SL_I','SR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD'], ['CLK','CLRBAR','S1','S0','SL','SR','A','B','C','D','KA','KB','KC','KD','JA','JB','JC','JD','CLOCK']).Callback(this.$exe_ULS194LOG);
 		Connect(this.ULS194LOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.ULS194LOG.pins.CLRBAR_I, this.pins.CLRBAR_I);
 		Connect(this.ULS194LOG.pins.S1_I, this.pins.S1_I);
@@ -5515,6 +7549,68 @@ class SN74LS194A extends Component {
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
 	}
+	$exe_ULS194LOG() {
+		var LOAD, SRIGHT, SLEFT, HOLD; // Temps
+		var CLK_I, CLRBAR_I, S1_I, S0_I, SL_I, SR_I, A_I, B_I, C_I, D_I, QA, QB, QC, QD; // Inputs
+		var CLK, CLRBAR, S1, S0, SL, SR, A, B, C, D, KA, KB, KC, KD, JA, JB, JC, JD, CLOCK; // Outputs
+		CLK_I = this.ULS194LOG.pins.CLK_I.GetValue();
+		CLRBAR_I = this.ULS194LOG.pins.CLRBAR_I.GetValue();
+		S1_I = this.ULS194LOG.pins.S1_I.GetValue();
+		S0_I = this.ULS194LOG.pins.S0_I.GetValue();
+		SL_I = this.ULS194LOG.pins.SL_I.GetValue();
+		SR_I = this.ULS194LOG.pins.SR_I.GetValue();
+		A_I = this.ULS194LOG.pins.A_I.GetValue();
+		B_I = this.ULS194LOG.pins.B_I.GetValue();
+		C_I = this.ULS194LOG.pins.C_I.GetValue();
+		D_I = this.ULS194LOG.pins.D_I.GetValue();
+		QA = this.ULS194LOG.pins.QA.GetValue();
+		QB = this.ULS194LOG.pins.QB.GetValue();
+		QC = this.ULS194LOG.pins.QC.GetValue();
+		QD = this.ULS194LOG.pins.QD.GetValue();
+		   LOAD   =  S1_I & S0_I ;
+		   SRIGHT =  !S1_I & S0_I ;
+		   SLEFT  =  S1_I & !S0_I ;
+		   HOLD   =  !S1_I & !S0_I ;
+		   CLK =  CLK_I ;
+		   CLRBAR =  CLRBAR_I ;
+		   S1 =  S1_I ;
+		   S0 =  S0_I ;
+		   SL =  SL_I ;
+		   SR =  SR_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   KA =  !( (SR & SRIGHT) | (LOAD & A) | (SLEFT & QB) | (HOLD & QA) ) ;
+		   KB =  !( (QA & SRIGHT) | (LOAD & B) | (SLEFT & QC) | (HOLD & QB) ) ;
+		   KC =  !( (QB & SRIGHT) | (LOAD & C) | (SLEFT & QD) | (HOLD & QC) ) ;
+		   KD =  !( (QC & SRIGHT) | (LOAD & D) | (SLEFT & SL) | (HOLD & QD) ) ;
+		   JA =  !KA ;
+		   JB =  !KB ;
+		   JC =  !KC ;
+		   JD =  !KD ;
+		   CLOCK =  !CLK ;
+		
+		this.ULS194LOG.pins.CLK.SetValue(CLK);
+		this.ULS194LOG.pins.CLRBAR.SetValue(CLRBAR);
+		this.ULS194LOG.pins.S1.SetValue(S1);
+		this.ULS194LOG.pins.S0.SetValue(S0);
+		this.ULS194LOG.pins.SL.SetValue(SL);
+		this.ULS194LOG.pins.SR.SetValue(SR);
+		this.ULS194LOG.pins.A.SetValue(A);
+		this.ULS194LOG.pins.B.SetValue(B);
+		this.ULS194LOG.pins.C.SetValue(C);
+		this.ULS194LOG.pins.D.SetValue(D);
+		this.ULS194LOG.pins.KA.SetValue(KA);
+		this.ULS194LOG.pins.KB.SetValue(KB);
+		this.ULS194LOG.pins.KC.SetValue(KC);
+		this.ULS194LOG.pins.KD.SetValue(KD);
+		this.ULS194LOG.pins.JA.SetValue(JA);
+		this.ULS194LOG.pins.JB.SetValue(JB);
+		this.ULS194LOG.pins.JC.SetValue(JC);
+		this.ULS194LOG.pins.JD.SetValue(JD);
+		this.ULS194LOG.pins.CLOCK.SetValue(CLOCK);
+	}
 }
 /**
  * 4-BIT PARALLEL-ACCESS SHIFT REGISTERS
@@ -5538,7 +7634,7 @@ class SN74LS195A extends Component {
 			QD_O: new Pin(),
 			QDBAR_O: new Pin(),
 		}
-		this.ULS195LOG = new logicexp(['CLK_I','SH_LDBAR_I','CLRBAR_I','J_I','KBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QABAR'], ['CLK','SH_LDBAR','CLRBAR','J','KBAR','A','B','C','D','KA','KB','KC','KD','JA','JB','JC','JD','CLKBAR'], ['LOAD']).Logic('   CLK =  CLK_I ;   SH_LDBAR =  SH_LDBAR_I ;   CLRBAR =  CLRBAR_I ;   J =  J_I ;   KBAR =  KBAR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   LOAD =  !SH_LDBAR ;   KA =  !((QABAR & J & SH_LDBAR) | (SH_LDBAR & KBAR & QA) | (LOAD & A)) ;   KB =  !( (QA & SH_LDBAR) | (LOAD & B) ) ;   KC =  !( (QB & SH_LDBAR) | (LOAD & C) ) ;   KD =  !( (QC & SH_LDBAR) | (LOAD & D) ) ;   JA =  !KA ;   JB =  !KB ;   JC =  !KC ;   JD =  !KD ;   CLKBAR =  !CLK ;');
+		this.ULS195LOG = new logicexp(['CLK_I','SH_LDBAR_I','CLRBAR_I','J_I','KBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QABAR'], ['CLK','SH_LDBAR','CLRBAR','J','KBAR','A','B','C','D','KA','KB','KC','KD','JA','JB','JC','JD','CLKBAR']).Callback(this.$exe_ULS195LOG);
 		Connect(this.ULS195LOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.ULS195LOG.pins.SH_LDBAR_I, this.pins.SH_LDBAR_I);
 		Connect(this.ULS195LOG.pins.CLRBAR_I, this.pins.CLRBAR_I);
@@ -5620,6 +7716,62 @@ class SN74LS195A extends Component {
 		Connect(QD, this.pins.QD_O);
 		Connect(QDBAR, this.pins.QDBAR_O);
 	}
+	$exe_ULS195LOG() {
+		var LOAD; // Temps
+		var CLK_I, SH_LDBAR_I, CLRBAR_I, J_I, KBAR_I, A_I, B_I, C_I, D_I, QA, QB, QC, QABAR; // Inputs
+		var CLK, SH_LDBAR, CLRBAR, J, KBAR, A, B, C, D, KA, KB, KC, KD, JA, JB, JC, JD, CLKBAR; // Outputs
+		CLK_I = this.ULS195LOG.pins.CLK_I.GetValue();
+		SH_LDBAR_I = this.ULS195LOG.pins.SH_LDBAR_I.GetValue();
+		CLRBAR_I = this.ULS195LOG.pins.CLRBAR_I.GetValue();
+		J_I = this.ULS195LOG.pins.J_I.GetValue();
+		KBAR_I = this.ULS195LOG.pins.KBAR_I.GetValue();
+		A_I = this.ULS195LOG.pins.A_I.GetValue();
+		B_I = this.ULS195LOG.pins.B_I.GetValue();
+		C_I = this.ULS195LOG.pins.C_I.GetValue();
+		D_I = this.ULS195LOG.pins.D_I.GetValue();
+		QA = this.ULS195LOG.pins.QA.GetValue();
+		QB = this.ULS195LOG.pins.QB.GetValue();
+		QC = this.ULS195LOG.pins.QC.GetValue();
+		QABAR = this.ULS195LOG.pins.QABAR.GetValue();
+		   CLK =  CLK_I ;
+		   SH_LDBAR =  SH_LDBAR_I ;
+		   CLRBAR =  CLRBAR_I ;
+		   J =  J_I ;
+		   KBAR =  KBAR_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   LOAD =  !SH_LDBAR ;
+		   KA =  !((QABAR & J & SH_LDBAR) | (SH_LDBAR & KBAR & QA) | (LOAD & A)) ;
+		   KB =  !( (QA & SH_LDBAR) | (LOAD & B) ) ;
+		   KC =  !( (QB & SH_LDBAR) | (LOAD & C) ) ;
+		   KD =  !( (QC & SH_LDBAR) | (LOAD & D) ) ;
+		   JA =  !KA ;
+		   JB =  !KB ;
+		   JC =  !KC ;
+		   JD =  !KD ;
+		   CLKBAR =  !CLK ;
+		
+		this.ULS195LOG.pins.CLK.SetValue(CLK);
+		this.ULS195LOG.pins.SH_LDBAR.SetValue(SH_LDBAR);
+		this.ULS195LOG.pins.CLRBAR.SetValue(CLRBAR);
+		this.ULS195LOG.pins.J.SetValue(J);
+		this.ULS195LOG.pins.KBAR.SetValue(KBAR);
+		this.ULS195LOG.pins.A.SetValue(A);
+		this.ULS195LOG.pins.B.SetValue(B);
+		this.ULS195LOG.pins.C.SetValue(C);
+		this.ULS195LOG.pins.D.SetValue(D);
+		this.ULS195LOG.pins.KA.SetValue(KA);
+		this.ULS195LOG.pins.KB.SetValue(KB);
+		this.ULS195LOG.pins.KC.SetValue(KC);
+		this.ULS195LOG.pins.KD.SetValue(KD);
+		this.ULS195LOG.pins.JA.SetValue(JA);
+		this.ULS195LOG.pins.JB.SetValue(JB);
+		this.ULS195LOG.pins.JC.SetValue(JC);
+		this.ULS195LOG.pins.JD.SetValue(JD);
+		this.ULS195LOG.pins.CLKBAR.SetValue(CLKBAR);
+	}
 }
 /**
  * 4-Bit Presettable Decade Counter_Latch
@@ -5641,7 +7793,7 @@ class SN74LS196 extends Component {
 			QC_O: new Pin(),
 			QD_O: new Pin(),
 		}
-		this.ULS196LOG = new logicexp(['LOADBAR_I','CLRBAR_I','CLK1_I','CLK2_I','A_I','B_I','C_I','D_I','QB','QC'], ['LOADBAR','CLRBAR','CLK1','CLK2','A','B','C','D','JD','SA','SB','SC','SD','RA','RB','RC','RD'], ['LOAD']).Logic('   LOADBAR =  LOADBAR_I ;   CLRBAR =  CLRBAR_I ;   CLK1 =  CLK1_I ;   CLK2 =  CLK2_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   LOAD =  !CLRBAR | !LOADBAR ;   SA =  !(A & LOAD & CLRBAR) ;   SB =  !(B & LOAD & CLRBAR) ;   SC =  !(C & LOAD & CLRBAR) ;   SD =  !(D & LOAD & CLRBAR) ;   RA =  !(SA & LOAD) ;   RB =  !(SB & LOAD) ;   RC =  !(SC & LOAD) ;   RD =  !(SD & LOAD) ;   JD =  QB & QC ;');
+		this.ULS196LOG = new logicexp(['LOADBAR_I','CLRBAR_I','CLK1_I','CLK2_I','A_I','B_I','C_I','D_I','QB','QC'], ['LOADBAR','CLRBAR','CLK1','CLK2','A','B','C','D','JD','SA','SB','SC','SD','RA','RB','RC','RD']).Callback(this.$exe_ULS196LOG);
 		Connect(this.ULS196LOG.pins.LOADBAR_I, this.pins.LOADBAR_I);
 		Connect(this.ULS196LOG.pins.CLRBAR_I, this.pins.CLRBAR_I);
 		Connect(this.ULS196LOG.pins.CLK1_I, this.pins.CLK1_I);
@@ -5728,6 +7880,57 @@ class SN74LS196 extends Component {
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
 	}
+	$exe_ULS196LOG() {
+		var LOAD; // Temps
+		var LOADBAR_I, CLRBAR_I, CLK1_I, CLK2_I, A_I, B_I, C_I, D_I, QB, QC; // Inputs
+		var LOADBAR, CLRBAR, CLK1, CLK2, A, B, C, D, JD, SA, SB, SC, SD, RA, RB, RC, RD; // Outputs
+		LOADBAR_I = this.ULS196LOG.pins.LOADBAR_I.GetValue();
+		CLRBAR_I = this.ULS196LOG.pins.CLRBAR_I.GetValue();
+		CLK1_I = this.ULS196LOG.pins.CLK1_I.GetValue();
+		CLK2_I = this.ULS196LOG.pins.CLK2_I.GetValue();
+		A_I = this.ULS196LOG.pins.A_I.GetValue();
+		B_I = this.ULS196LOG.pins.B_I.GetValue();
+		C_I = this.ULS196LOG.pins.C_I.GetValue();
+		D_I = this.ULS196LOG.pins.D_I.GetValue();
+		QB = this.ULS196LOG.pins.QB.GetValue();
+		QC = this.ULS196LOG.pins.QC.GetValue();
+		   LOADBAR =  LOADBAR_I ;
+		   CLRBAR =  CLRBAR_I ;
+		   CLK1 =  CLK1_I ;
+		   CLK2 =  CLK2_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   LOAD =  !CLRBAR | !LOADBAR ;
+		   SA =  !(A & LOAD & CLRBAR) ;
+		   SB =  !(B & LOAD & CLRBAR) ;
+		   SC =  !(C & LOAD & CLRBAR) ;
+		   SD =  !(D & LOAD & CLRBAR) ;
+		   RA =  !(SA & LOAD) ;
+		   RB =  !(SB & LOAD) ;
+		   RC =  !(SC & LOAD) ;
+		   RD =  !(SD & LOAD) ;
+		   JD =  QB & QC ;
+		
+		this.ULS196LOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS196LOG.pins.CLRBAR.SetValue(CLRBAR);
+		this.ULS196LOG.pins.CLK1.SetValue(CLK1);
+		this.ULS196LOG.pins.CLK2.SetValue(CLK2);
+		this.ULS196LOG.pins.A.SetValue(A);
+		this.ULS196LOG.pins.B.SetValue(B);
+		this.ULS196LOG.pins.C.SetValue(C);
+		this.ULS196LOG.pins.D.SetValue(D);
+		this.ULS196LOG.pins.JD.SetValue(JD);
+		this.ULS196LOG.pins.SA.SetValue(SA);
+		this.ULS196LOG.pins.SB.SetValue(SB);
+		this.ULS196LOG.pins.SC.SetValue(SC);
+		this.ULS196LOG.pins.SD.SetValue(SD);
+		this.ULS196LOG.pins.RA.SetValue(RA);
+		this.ULS196LOG.pins.RB.SetValue(RB);
+		this.ULS196LOG.pins.RC.SetValue(RC);
+		this.ULS196LOG.pins.RD.SetValue(RD);
+	}
 }
 /**
  * 4-Bit Presettable Binary Counter_Latch
@@ -5749,7 +7952,7 @@ class SN74LS197 extends Component {
 			QC_O: new Pin(),
 			QD_O: new Pin(),
 		}
-		this.ULS197LOG = new logicexp(['LOADBAR_I','CLRBAR_I','CLK1_I','CLK2_I','A_I','B_I','C_I','D_I'], ['LOADBAR','CLRBAR','CLK1','CLK2','A','B','C','D','SA','SB','SC','SD','RA','RB','RC','RD'], ['LOAD']).Logic('   LOADBAR =  LOADBAR_I ;   CLRBAR =  CLRBAR_I ;   CLK1 =  CLK1_I ;   CLK2 =  CLK2_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   LOAD =  !CLRBAR | !LOADBAR ;   SA =  !(A & LOAD & CLRBAR) ;   SB =  !(B & LOAD & CLRBAR) ;   SC =  !(C & LOAD & CLRBAR) ;   SD =  !(D & LOAD & CLRBAR) ;   RA =  !(SA & LOAD) ;   RB =  !(SB & LOAD) ;   RC =  !(SC & LOAD) ;   RD =  !(SD & LOAD) ;');
+		this.ULS197LOG = new logicexp(['LOADBAR_I','CLRBAR_I','CLK1_I','CLK2_I','A_I','B_I','C_I','D_I'], ['LOADBAR','CLRBAR','CLK1','CLK2','A','B','C','D','SA','SB','SC','SD','RA','RB','RC','RD']).Callback(this.$exe_ULS197LOG);
 		Connect(this.ULS197LOG.pins.LOADBAR_I, this.pins.LOADBAR_I);
 		Connect(this.ULS197LOG.pins.CLRBAR_I, this.pins.CLRBAR_I);
 		Connect(this.ULS197LOG.pins.CLK1_I, this.pins.CLK1_I);
@@ -5830,6 +8033,53 @@ class SN74LS197 extends Component {
 		Connect(QB, this.pins.QB_O);
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
+	}
+	$exe_ULS197LOG() {
+		var LOAD; // Temps
+		var LOADBAR_I, CLRBAR_I, CLK1_I, CLK2_I, A_I, B_I, C_I, D_I; // Inputs
+		var LOADBAR, CLRBAR, CLK1, CLK2, A, B, C, D, SA, SB, SC, SD, RA, RB, RC, RD; // Outputs
+		LOADBAR_I = this.ULS197LOG.pins.LOADBAR_I.GetValue();
+		CLRBAR_I = this.ULS197LOG.pins.CLRBAR_I.GetValue();
+		CLK1_I = this.ULS197LOG.pins.CLK1_I.GetValue();
+		CLK2_I = this.ULS197LOG.pins.CLK2_I.GetValue();
+		A_I = this.ULS197LOG.pins.A_I.GetValue();
+		B_I = this.ULS197LOG.pins.B_I.GetValue();
+		C_I = this.ULS197LOG.pins.C_I.GetValue();
+		D_I = this.ULS197LOG.pins.D_I.GetValue();
+		   LOADBAR =  LOADBAR_I ;
+		   CLRBAR =  CLRBAR_I ;
+		   CLK1 =  CLK1_I ;
+		   CLK2 =  CLK2_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   LOAD =  !CLRBAR | !LOADBAR ;
+		   SA =  !(A & LOAD & CLRBAR) ;
+		   SB =  !(B & LOAD & CLRBAR) ;
+		   SC =  !(C & LOAD & CLRBAR) ;
+		   SD =  !(D & LOAD & CLRBAR) ;
+		   RA =  !(SA & LOAD) ;
+		   RB =  !(SB & LOAD) ;
+		   RC =  !(SC & LOAD) ;
+		   RD =  !(SD & LOAD) ;
+		
+		this.ULS197LOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS197LOG.pins.CLRBAR.SetValue(CLRBAR);
+		this.ULS197LOG.pins.CLK1.SetValue(CLK1);
+		this.ULS197LOG.pins.CLK2.SetValue(CLK2);
+		this.ULS197LOG.pins.A.SetValue(A);
+		this.ULS197LOG.pins.B.SetValue(B);
+		this.ULS197LOG.pins.C.SetValue(C);
+		this.ULS197LOG.pins.D.SetValue(D);
+		this.ULS197LOG.pins.SA.SetValue(SA);
+		this.ULS197LOG.pins.SB.SetValue(SB);
+		this.ULS197LOG.pins.SC.SetValue(SC);
+		this.ULS197LOG.pins.SD.SetValue(SD);
+		this.ULS197LOG.pins.RA.SetValue(RA);
+		this.ULS197LOG.pins.RB.SetValue(RB);
+		this.ULS197LOG.pins.RC.SetValue(RC);
+		this.ULS197LOG.pins.RD.SetValue(RD);
 	}
 }
 /**
@@ -6202,7 +8452,7 @@ class SN74LS247 extends Component {
 		let IND = new Pin();
 		Connect(this.U1.pins.IN5, IND);
 		Connect(this.U1.pins.OUT, this.pins.BIBAR_RBOBAR_B);
-		this.ULS247LOG = new logicexp(['INA_I','INB_I','INC_I','IND_I','RBIBAR_I','LTBAR_I','BIBAR_RBOBAR_B'], ['INA','INB','INC','IND','RBIBAR','LT','OUTA','OUTB','OUTC','OUTD','OUTE','OUTF','OUTG'], ['LTBAR','BIBAR_RBOBAR','ALT','BLT','CLT','DLT','ABI','BBI','CBI','DBI']).Logic('   INA    =  INA_I ;   INB    =  INB_I ;   INC    =  INC_I ;   IND    =  IND_I ;   RBIBAR =  RBIBAR_I ;   LTBAR  =  LTBAR_I ;   BIBAR_RBOBAR  =  BIBAR_RBOBAR_B ;   LT     =  !LTBAR ;   ALT    =  !(INA & LTBAR) ;   BLT    =  !(INB & LTBAR) ;   CLT    =  !(INC & LTBAR) ;   DLT    =  !IND ;   ABI    =  !(ALT & BIBAR_RBOBAR) ;   BBI    =  !(BLT & BIBAR_RBOBAR) ;   CBI    =  !(CLT & BIBAR_RBOBAR) ;   DBI    =  !(DLT & BIBAR_RBOBAR) ;   OUTA   =  (BBI & DBI) | (ALT & BLT & CBI) | (ABI & BLT & CLT & DLT) ;   OUTB   =  (BBI & DBI) | (ABI & BLT & CBI) | (ALT & BBI & CBI) ;   OUTC   =  (CBI & DBI) | (ALT & BBI & CLT) ;   OUTD   =  (ABI & BLT & CLT & DLT) | (ALT & BLT & CBI) |              (ABI & BBI & CBI) ;   OUTE   =   ABI | (BLT & CBI) ;   OUTF   =  (ABI & BBI) | (BBI & CLT) | (ABI & CLT & DLT) ;   OUTG   =  (ABI & BBI & CBI) | (BLT & CLT & DLT & LTBAR) ;');
+		this.ULS247LOG = new logicexp(['INA_I','INB_I','INC_I','IND_I','RBIBAR_I','LTBAR_I','BIBAR_RBOBAR_B'], ['INA','INB','INC','IND','RBIBAR','LT','OUTA','OUTB','OUTC','OUTD','OUTE','OUTF','OUTG']).Callback(this.$exe_ULS247LOG);
 		Connect(this.ULS247LOG.pins.INA_I, this.pins.INA_I);
 		Connect(this.ULS247LOG.pins.INB_I, this.pins.INB_I);
 		Connect(this.ULS247LOG.pins.INC_I, this.pins.INC_I);
@@ -6237,6 +8487,55 @@ class SN74LS247 extends Component {
 		Connect(OUTE, this.pins.OUTE_O);
 		Connect(OUTF, this.pins.OUTF_O);
 		Connect(OUTG, this.pins.OUTG_O);
+	}
+	$exe_ULS247LOG() {
+		var LTBAR, BIBAR_RBOBAR, ALT, BLT, CLT, DLT, ABI, BBI, CBI, DBI; // Temps
+		var INA_I, INB_I, INC_I, IND_I, RBIBAR_I, LTBAR_I, BIBAR_RBOBAR_B; // Inputs
+		var INA, INB, INC, IND, RBIBAR, LT, OUTA, OUTB, OUTC, OUTD, OUTE, OUTF, OUTG; // Outputs
+		INA_I = this.ULS247LOG.pins.INA_I.GetValue();
+		INB_I = this.ULS247LOG.pins.INB_I.GetValue();
+		INC_I = this.ULS247LOG.pins.INC_I.GetValue();
+		IND_I = this.ULS247LOG.pins.IND_I.GetValue();
+		RBIBAR_I = this.ULS247LOG.pins.RBIBAR_I.GetValue();
+		LTBAR_I = this.ULS247LOG.pins.LTBAR_I.GetValue();
+		BIBAR_RBOBAR_B = this.ULS247LOG.pins.BIBAR_RBOBAR_B.GetValue();
+		   INA    =  INA_I ;
+		   INB    =  INB_I ;
+		   INC    =  INC_I ;
+		   IND    =  IND_I ;
+		   RBIBAR =  RBIBAR_I ;
+		   LTBAR  =  LTBAR_I ;
+		   BIBAR_RBOBAR  =  BIBAR_RBOBAR_B ;
+		   LT     =  !LTBAR ;
+		   ALT    =  !(INA & LTBAR) ;
+		   BLT    =  !(INB & LTBAR) ;
+		   CLT    =  !(INC & LTBAR) ;
+		   DLT    =  !IND ;
+		   ABI    =  !(ALT & BIBAR_RBOBAR) ;
+		   BBI    =  !(BLT & BIBAR_RBOBAR) ;
+		   CBI    =  !(CLT & BIBAR_RBOBAR) ;
+		   DBI    =  !(DLT & BIBAR_RBOBAR) ;
+		   OUTA   =  (BBI & DBI) | (ALT & BLT & CBI) | (ABI & BLT & CLT & DLT) ;
+		   OUTB   =  (BBI & DBI) | (ABI & BLT & CBI) | (ALT & BBI & CBI) ;
+		   OUTC   =  (CBI & DBI) | (ALT & BBI & CLT) ;
+		   OUTD   =  (ABI & BLT & CLT & DLT) | (ALT & BLT & CBI) |              (ABI & BBI & CBI) ;
+		   OUTE   =   ABI | (BLT & CBI) ;
+		   OUTF   =  (ABI & BBI) | (BBI & CLT) | (ABI & CLT & DLT) ;
+		   OUTG   =  (ABI & BBI & CBI) | (BLT & CLT & DLT & LTBAR) ;
+		
+		this.ULS247LOG.pins.INA.SetValue(INA);
+		this.ULS247LOG.pins.INB.SetValue(INB);
+		this.ULS247LOG.pins.INC.SetValue(INC);
+		this.ULS247LOG.pins.IND.SetValue(IND);
+		this.ULS247LOG.pins.RBIBAR.SetValue(RBIBAR);
+		this.ULS247LOG.pins.LT.SetValue(LT);
+		this.ULS247LOG.pins.OUTA.SetValue(OUTA);
+		this.ULS247LOG.pins.OUTB.SetValue(OUTB);
+		this.ULS247LOG.pins.OUTC.SetValue(OUTC);
+		this.ULS247LOG.pins.OUTD.SetValue(OUTD);
+		this.ULS247LOG.pins.OUTE.SetValue(OUTE);
+		this.ULS247LOG.pins.OUTF.SetValue(OUTF);
+		this.ULS247LOG.pins.OUTG.SetValue(OUTG);
 	}
 }
 /**
@@ -6275,7 +8574,7 @@ class SN74LS248 extends Component {
 		let IND = new Pin();
 		Connect(this.U1.pins.IN5, IND);
 		Connect(this.U1.pins.OUT, this.pins.BIBAR_RBOBAR_B);
-		this.ULS248LOG = new logicexp(['INA_I','INB_I','INC_I','IND_I','RBIBAR_I','LTBAR_I','BIBAR_RBOBAR_B'], ['INA','INB','INC','IND','RBIBAR','LT','OUTA','OUTB','OUTC','OUTD','OUTE','OUTF','OUTG'], ['LTBAR','BIBAR_RBOBAR','ALT','BLT','CLT','DLT','ABI','BBI','CBI','DBI']).Logic('   INA    =  INA_I ;   INB    =  INB_I ;   INC    =  INC_I ;   IND    =  IND_I ;   RBIBAR =  RBIBAR_I ;   LTBAR  =  LTBAR_I ;   BIBAR_RBOBAR  =  BIBAR_RBOBAR_B ;   LT     =  !LTBAR ;   ALT    =  !(INA & LTBAR) ;   BLT    =  !(INB & LTBAR) ;   CLT    =  !(INC & LTBAR) ;   DLT    =  !IND ;   ABI    =  !(ALT & BIBAR_RBOBAR) ;   BBI    =  !(BLT & BIBAR_RBOBAR) ;   CBI    =  !(CLT & BIBAR_RBOBAR) ;   DBI    =  !(DLT & BIBAR_RBOBAR) ;   OUTA   =  !((BBI & DBI) | (ALT & BLT & CBI) | (ABI & BLT & CLT & DLT)) ;   OUTB   =  !((BBI & DBI) | (ABI & BLT & CBI) | (ALT & BBI & CBI)) ;   OUTC   =  !((CBI & DBI) | (ALT & BBI & CLT)) ;   OUTD   =  !((ABI & BLT & CLT & DLT) | (ALT & BLT & CBI) |                (ABI & BBI & CBI)) ;   OUTE   =  !( ABI | (BLT & CBI)) ;   OUTF   =  !((ABI & BBI) | (BBI & CLT) | (ABI & CLT & DLT)) ;   OUTG   =  !((ABI & BBI & CBI) | (BLT & CLT & DLT & LTBAR)) ;');
+		this.ULS248LOG = new logicexp(['INA_I','INB_I','INC_I','IND_I','RBIBAR_I','LTBAR_I','BIBAR_RBOBAR_B'], ['INA','INB','INC','IND','RBIBAR','LT','OUTA','OUTB','OUTC','OUTD','OUTE','OUTF','OUTG']).Callback(this.$exe_ULS248LOG);
 		Connect(this.ULS248LOG.pins.INA_I, this.pins.INA_I);
 		Connect(this.ULS248LOG.pins.INB_I, this.pins.INB_I);
 		Connect(this.ULS248LOG.pins.INC_I, this.pins.INC_I);
@@ -6310,6 +8609,55 @@ class SN74LS248 extends Component {
 		Connect(OUTE, this.pins.OUTE_O);
 		Connect(OUTF, this.pins.OUTF_O);
 		Connect(OUTG, this.pins.OUTG_O);
+	}
+	$exe_ULS248LOG() {
+		var LTBAR, BIBAR_RBOBAR, ALT, BLT, CLT, DLT, ABI, BBI, CBI, DBI; // Temps
+		var INA_I, INB_I, INC_I, IND_I, RBIBAR_I, LTBAR_I, BIBAR_RBOBAR_B; // Inputs
+		var INA, INB, INC, IND, RBIBAR, LT, OUTA, OUTB, OUTC, OUTD, OUTE, OUTF, OUTG; // Outputs
+		INA_I = this.ULS248LOG.pins.INA_I.GetValue();
+		INB_I = this.ULS248LOG.pins.INB_I.GetValue();
+		INC_I = this.ULS248LOG.pins.INC_I.GetValue();
+		IND_I = this.ULS248LOG.pins.IND_I.GetValue();
+		RBIBAR_I = this.ULS248LOG.pins.RBIBAR_I.GetValue();
+		LTBAR_I = this.ULS248LOG.pins.LTBAR_I.GetValue();
+		BIBAR_RBOBAR_B = this.ULS248LOG.pins.BIBAR_RBOBAR_B.GetValue();
+		   INA    =  INA_I ;
+		   INB    =  INB_I ;
+		   INC    =  INC_I ;
+		   IND    =  IND_I ;
+		   RBIBAR =  RBIBAR_I ;
+		   LTBAR  =  LTBAR_I ;
+		   BIBAR_RBOBAR  =  BIBAR_RBOBAR_B ;
+		   LT     =  !LTBAR ;
+		   ALT    =  !(INA & LTBAR) ;
+		   BLT    =  !(INB & LTBAR) ;
+		   CLT    =  !(INC & LTBAR) ;
+		   DLT    =  !IND ;
+		   ABI    =  !(ALT & BIBAR_RBOBAR) ;
+		   BBI    =  !(BLT & BIBAR_RBOBAR) ;
+		   CBI    =  !(CLT & BIBAR_RBOBAR) ;
+		   DBI    =  !(DLT & BIBAR_RBOBAR) ;
+		   OUTA   =  !((BBI & DBI) | (ALT & BLT & CBI) | (ABI & BLT & CLT & DLT)) ;
+		   OUTB   =  !((BBI & DBI) | (ABI & BLT & CBI) | (ALT & BBI & CBI)) ;
+		   OUTC   =  !((CBI & DBI) | (ALT & BBI & CLT)) ;
+		   OUTD   =  !((ABI & BLT & CLT & DLT) | (ALT & BLT & CBI) |                (ABI & BBI & CBI)) ;
+		   OUTE   =  !( ABI | (BLT & CBI)) ;
+		   OUTF   =  !((ABI & BBI) | (BBI & CLT) | (ABI & CLT & DLT)) ;
+		   OUTG   =  !((ABI & BBI & CBI) | (BLT & CLT & DLT & LTBAR)) ;
+		
+		this.ULS248LOG.pins.INA.SetValue(INA);
+		this.ULS248LOG.pins.INB.SetValue(INB);
+		this.ULS248LOG.pins.INC.SetValue(INC);
+		this.ULS248LOG.pins.IND.SetValue(IND);
+		this.ULS248LOG.pins.RBIBAR.SetValue(RBIBAR);
+		this.ULS248LOG.pins.LT.SetValue(LT);
+		this.ULS248LOG.pins.OUTA.SetValue(OUTA);
+		this.ULS248LOG.pins.OUTB.SetValue(OUTB);
+		this.ULS248LOG.pins.OUTC.SetValue(OUTC);
+		this.ULS248LOG.pins.OUTD.SetValue(OUTD);
+		this.ULS248LOG.pins.OUTE.SetValue(OUTE);
+		this.ULS248LOG.pins.OUTF.SetValue(OUTF);
+		this.ULS248LOG.pins.OUTG.SetValue(OUTG);
 	}
 }
 /**
@@ -6348,7 +8696,7 @@ class SN74LS249 extends Component {
 		let IND = new Pin();
 		Connect(this.U1.pins.IN5, IND);
 		Connect(this.U1.pins.OUT, this.pins.BIBAR_RBOBAR_B);
-		this.ULS249LOG = new logicexp(['INA_I','INB_I','INC_I','IND_I','RBIBAR_I','LTBAR_I','BIBAR_RBOBAR_B'], ['INA','INB','INC','IND','RBIBAR','LT','OUTA','OUTB','OUTC','OUTD','OUTE','OUTF','OUTG'], ['LTBAR','BIBAR_RBOBAR','ALT','BLT','CLT','DLT','ABI','BBI','CBI','DBI']).Logic('   INA    =  INA_I ;   INB    =  INB_I ;   INC    =  INC_I ;   IND    =  IND_I ;   RBIBAR =  RBIBAR_I ;   LTBAR  =  LTBAR_I ;   BIBAR_RBOBAR  =  BIBAR_RBOBAR_B ;   LT     =  !LTBAR ;   ALT    =  !(INA & LTBAR) ;   BLT    =  !(INB & LTBAR) ;   CLT    =  !(INC & LTBAR) ;   DLT    =  !IND ;   ABI    =  !(ALT & BIBAR_RBOBAR) ;   BBI    =  !(BLT & BIBAR_RBOBAR) ;   CBI    =  !(CLT & BIBAR_RBOBAR) ;   DBI    =  !(DLT & BIBAR_RBOBAR) ;   OUTA   =  !((BBI & DBI) | (ALT & BLT & CBI) | (ABI & BLT & CLT & DLT)) ;   OUTB   =  !((BBI & DBI) | (ABI & BLT & CBI) | (ALT & BBI & CBI)) ;   OUTC   =  !((CBI & DBI) | (ALT & BBI & CLT)) ;   OUTD   =  !((ABI & BLT & CLT & DLT) | (ALT & BLT & CBI) |                (ABI & BBI & CBI)) ;   OUTE   =  !( ABI | (BLT & CBI)) ;   OUTF   =  !((ABI & BBI) | (BBI & CLT) | (ABI & CLT & DLT)) ;   OUTG   =  !((ABI & BBI & CBI) | (BLT & CLT & DLT & LTBAR)) ;');
+		this.ULS249LOG = new logicexp(['INA_I','INB_I','INC_I','IND_I','RBIBAR_I','LTBAR_I','BIBAR_RBOBAR_B'], ['INA','INB','INC','IND','RBIBAR','LT','OUTA','OUTB','OUTC','OUTD','OUTE','OUTF','OUTG']).Callback(this.$exe_ULS249LOG);
 		Connect(this.ULS249LOG.pins.INA_I, this.pins.INA_I);
 		Connect(this.ULS249LOG.pins.INB_I, this.pins.INB_I);
 		Connect(this.ULS249LOG.pins.INC_I, this.pins.INC_I);
@@ -6384,6 +8732,55 @@ class SN74LS249 extends Component {
 		Connect(OUTF, this.pins.OUTF_O);
 		Connect(OUTG, this.pins.OUTG_O);
 	}
+	$exe_ULS249LOG() {
+		var LTBAR, BIBAR_RBOBAR, ALT, BLT, CLT, DLT, ABI, BBI, CBI, DBI; // Temps
+		var INA_I, INB_I, INC_I, IND_I, RBIBAR_I, LTBAR_I, BIBAR_RBOBAR_B; // Inputs
+		var INA, INB, INC, IND, RBIBAR, LT, OUTA, OUTB, OUTC, OUTD, OUTE, OUTF, OUTG; // Outputs
+		INA_I = this.ULS249LOG.pins.INA_I.GetValue();
+		INB_I = this.ULS249LOG.pins.INB_I.GetValue();
+		INC_I = this.ULS249LOG.pins.INC_I.GetValue();
+		IND_I = this.ULS249LOG.pins.IND_I.GetValue();
+		RBIBAR_I = this.ULS249LOG.pins.RBIBAR_I.GetValue();
+		LTBAR_I = this.ULS249LOG.pins.LTBAR_I.GetValue();
+		BIBAR_RBOBAR_B = this.ULS249LOG.pins.BIBAR_RBOBAR_B.GetValue();
+		   INA    =  INA_I ;
+		   INB    =  INB_I ;
+		   INC    =  INC_I ;
+		   IND    =  IND_I ;
+		   RBIBAR =  RBIBAR_I ;
+		   LTBAR  =  LTBAR_I ;
+		   BIBAR_RBOBAR  =  BIBAR_RBOBAR_B ;
+		   LT     =  !LTBAR ;
+		   ALT    =  !(INA & LTBAR) ;
+		   BLT    =  !(INB & LTBAR) ;
+		   CLT    =  !(INC & LTBAR) ;
+		   DLT    =  !IND ;
+		   ABI    =  !(ALT & BIBAR_RBOBAR) ;
+		   BBI    =  !(BLT & BIBAR_RBOBAR) ;
+		   CBI    =  !(CLT & BIBAR_RBOBAR) ;
+		   DBI    =  !(DLT & BIBAR_RBOBAR) ;
+		   OUTA   =  !((BBI & DBI) | (ALT & BLT & CBI) | (ABI & BLT & CLT & DLT)) ;
+		   OUTB   =  !((BBI & DBI) | (ABI & BLT & CBI) | (ALT & BBI & CBI)) ;
+		   OUTC   =  !((CBI & DBI) | (ALT & BBI & CLT)) ;
+		   OUTD   =  !((ABI & BLT & CLT & DLT) | (ALT & BLT & CBI) |                (ABI & BBI & CBI)) ;
+		   OUTE   =  !( ABI | (BLT & CBI)) ;
+		   OUTF   =  !((ABI & BBI) | (BBI & CLT) | (ABI & CLT & DLT)) ;
+		   OUTG   =  !((ABI & BBI & CBI) | (BLT & CLT & DLT & LTBAR)) ;
+		
+		this.ULS249LOG.pins.INA.SetValue(INA);
+		this.ULS249LOG.pins.INB.SetValue(INB);
+		this.ULS249LOG.pins.INC.SetValue(INC);
+		this.ULS249LOG.pins.IND.SetValue(IND);
+		this.ULS249LOG.pins.RBIBAR.SetValue(RBIBAR);
+		this.ULS249LOG.pins.LT.SetValue(LT);
+		this.ULS249LOG.pins.OUTA.SetValue(OUTA);
+		this.ULS249LOG.pins.OUTB.SetValue(OUTB);
+		this.ULS249LOG.pins.OUTC.SetValue(OUTC);
+		this.ULS249LOG.pins.OUTD.SetValue(OUTD);
+		this.ULS249LOG.pins.OUTE.SetValue(OUTE);
+		this.ULS249LOG.pins.OUTF.SetValue(OUTF);
+		this.ULS249LOG.pins.OUTG.SetValue(OUTG);
+	}
 }
 /**
  * MULTIPLEXER_DATA SELECTOR 8-1 LINE WITH 3-STATE OUTPUTS
@@ -6407,7 +8804,7 @@ class SN74LS251 extends Component {
 			Y_O: new Pin(),
 			W_O: new Pin(),
 		}
-		this.ULS251LOG = new logicexp(['GBAR_I','A_I','B_I','C_I','D0_I','D1_I','D2_I','D3_I','D4_I','D5_I','D6_I','D7_I'], ['GBAR','A','B','C','D0','D1','D2','D3','D4','D5','D6','D7','W','Y'], ['IA','IB','IC','IG','ID0','ID1','ID2','ID3','ID4','ID5','ID6','ID7']).Logic('   GBAR =  GBAR_I ;   A =  A_I ;     B =  B_I ;     C =  C_I ;     D0 =  D0_I ;   D1 =  D1_I ;   D2 =  D2_I ;   D3 =  D3_I ;   D4 =  D4_I ;   D5 =  D5_I ;   D6 =  D6_I ;   D7 =  D7_I ;   IA =  !A ;   IB =  !B ;   IC =  !C ;   IG =  !GBAR ;   ID0 =  D0 & IA & IB & IC & IG ;   ID1 =  D1 & A & IB & IC & IG ;   ID2 =  D2 & IA & B & IC & IG ;   ID3 =  D3 & A & B & IC & IG ;   ID4 =  D4 & IA & IB & C & IG ;   ID5 =  D5 & A & IB & C & IG ;   ID6 =  D6 & IA & B & C & IG ;   ID7 =  D7 & A & B & C & IG ;   W =  !(ID0 | ID1 | ID2 | ID3 | ID4 | ID5 | ID6 | ID7) ;   Y =  !W ;');
+		this.ULS251LOG = new logicexp(['GBAR_I','A_I','B_I','C_I','D0_I','D1_I','D2_I','D3_I','D4_I','D5_I','D6_I','D7_I'], ['GBAR','A','B','C','D0','D1','D2','D3','D4','D5','D6','D7','W','Y']).Callback(this.$exe_ULS251LOG);
 		Connect(this.ULS251LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS251LOG.pins.A_I, this.pins.A_I);
 		Connect(this.ULS251LOG.pins.B_I, this.pins.B_I);
@@ -6451,6 +8848,64 @@ class SN74LS251 extends Component {
 		Connect(W, this.pins.W_O);
 		Connect(Y, this.pins.Y_O);
 	}
+	$exe_ULS251LOG() {
+		var IA, IB, IC, IG, ID0, ID1, ID2, ID3, ID4, ID5, ID6, ID7; // Temps
+		var GBAR_I, A_I, B_I, C_I, D0_I, D1_I, D2_I, D3_I, D4_I, D5_I, D6_I, D7_I; // Inputs
+		var GBAR, A, B, C, D0, D1, D2, D3, D4, D5, D6, D7, W, Y; // Outputs
+		GBAR_I = this.ULS251LOG.pins.GBAR_I.GetValue();
+		A_I = this.ULS251LOG.pins.A_I.GetValue();
+		B_I = this.ULS251LOG.pins.B_I.GetValue();
+		C_I = this.ULS251LOG.pins.C_I.GetValue();
+		D0_I = this.ULS251LOG.pins.D0_I.GetValue();
+		D1_I = this.ULS251LOG.pins.D1_I.GetValue();
+		D2_I = this.ULS251LOG.pins.D2_I.GetValue();
+		D3_I = this.ULS251LOG.pins.D3_I.GetValue();
+		D4_I = this.ULS251LOG.pins.D4_I.GetValue();
+		D5_I = this.ULS251LOG.pins.D5_I.GetValue();
+		D6_I = this.ULS251LOG.pins.D6_I.GetValue();
+		D7_I = this.ULS251LOG.pins.D7_I.GetValue();
+		   GBAR =  GBAR_I ;
+		   A =  A_I ;
+		     B =  B_I ;
+		     C =  C_I ;
+		     D0 =  D0_I ;
+		   D1 =  D1_I ;
+		   D2 =  D2_I ;
+		   D3 =  D3_I ;
+		   D4 =  D4_I ;
+		   D5 =  D5_I ;
+		   D6 =  D6_I ;
+		   D7 =  D7_I ;
+		   IA =  !A ;
+		   IB =  !B ;
+		   IC =  !C ;
+		   IG =  !GBAR ;
+		   ID0 =  D0 & IA & IB & IC & IG ;
+		   ID1 =  D1 & A & IB & IC & IG ;
+		   ID2 =  D2 & IA & B & IC & IG ;
+		   ID3 =  D3 & A & B & IC & IG ;
+		   ID4 =  D4 & IA & IB & C & IG ;
+		   ID5 =  D5 & A & IB & C & IG ;
+		   ID6 =  D6 & IA & B & C & IG ;
+		   ID7 =  D7 & A & B & C & IG ;
+		   W =  !(ID0 | ID1 | ID2 | ID3 | ID4 | ID5 | ID6 | ID7) ;
+		   Y =  !W ;
+		
+		this.ULS251LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS251LOG.pins.A.SetValue(A);
+		this.ULS251LOG.pins.B.SetValue(B);
+		this.ULS251LOG.pins.C.SetValue(C);
+		this.ULS251LOG.pins.D0.SetValue(D0);
+		this.ULS251LOG.pins.D1.SetValue(D1);
+		this.ULS251LOG.pins.D2.SetValue(D2);
+		this.ULS251LOG.pins.D3.SetValue(D3);
+		this.ULS251LOG.pins.D4.SetValue(D4);
+		this.ULS251LOG.pins.D5.SetValue(D5);
+		this.ULS251LOG.pins.D6.SetValue(D6);
+		this.ULS251LOG.pins.D7.SetValue(D7);
+		this.ULS251LOG.pins.W.SetValue(W);
+		this.ULS251LOG.pins.Y.SetValue(Y);
+	}
 }
 /**
  * DUAL 1-OF-4 DATA SELECTORS_MULTIPLEXERS WITH 3-STATE OUTPUTS
@@ -6474,7 +8929,7 @@ class SN74LS253 extends Component {
 			Y1_O: new Pin(),
 			Y2_O: new Pin(),
 		}
-		this.ULS253LOG = new logicexp(['G1BAR_I','G2BAR_I','A_I','B_I','_1C0_I','_1C1_I','_1C2_I','_1C3_I','_2C0_I','_2C1_I','_2C2_I','_2C3_I'], ['G1BAR','G2BAR','A','B','_1C0','_1C1','_1C2','_1C3','_2C0','_2C1','_2C2','_2C3','Y1','Y2'], ['G1','G2','ABAR','BBAR','I0','I1','I2','I3','I4','I5','I6','I7']).Logic('   G1BAR =  G1BAR_I ;   G2BAR =  G2BAR_I ;   A =  A_I ;   B =  B_I ;   _1C0 =  _1C0_I ;   _1C1 =  _1C1_I ;   _1C2 =  _1C2_I ;   _1C3 =  _1C3_I ;   _2C0 =  _2C0_I ;   _2C1 =  _2C1_I ;   _2C2 =  _2C2_I ;   _2C3 =  _2C3_I ;   G1 =  !G1BAR ;   G2 =  !G2BAR ;   ABAR =  !A ;   BBAR =  !B ;   I0 =  G1 & BBAR & ABAR & _1C0 ;   I1 =  G1 & BBAR & A    & _1C1 ;   I2 =  G1 & B    & ABAR & _1C2 ;   I3 =  G1 & B    & A    & _1C3 ;   I4 =  G2 & BBAR & ABAR & _2C0 ;   I5 =  G2 & BBAR & A    & _2C1 ;   I6 =  G2 & B    & ABAR & _2C2 ;   I7 =  G2 & B    & A    & _2C3 ;   Y1 =  I0 | I1 | I2 | I3 ;   Y2 =  I4 | I5 | I6 | I7 ;');
+		this.ULS253LOG = new logicexp(['G1BAR_I','G2BAR_I','A_I','B_I','_1C0_I','_1C1_I','_1C2_I','_1C3_I','_2C0_I','_2C1_I','_2C2_I','_2C3_I'], ['G1BAR','G2BAR','A','B','_1C0','_1C1','_1C2','_1C3','_2C0','_2C1','_2C2','_2C3','Y1','Y2']).Callback(this.$exe_ULS253LOG);
 		Connect(this.ULS253LOG.pins.G1BAR_I, this.pins.G1BAR_I);
 		Connect(this.ULS253LOG.pins.G2BAR_I, this.pins.G2BAR_I);
 		Connect(this.ULS253LOG.pins.A_I, this.pins.A_I);
@@ -6518,6 +8973,64 @@ class SN74LS253 extends Component {
 		Connect(Y1, this.pins.Y1_O);
 		Connect(Y2, this.pins.Y2_O);
 	}
+	$exe_ULS253LOG() {
+		var __1C0, __1C1, __1C2, __1C3, __2C0, __2C1, __2C2, __2C3, G1, G2, ABAR, BBAR, I0, I1, I2, I3, I4, I5, I6, I7; // Temps
+		var G1BAR_I, G2BAR_I, A_I, B_I, _1C0_I, _1C1_I, _1C2_I, _1C3_I, _2C0_I, _2C1_I, _2C2_I, _2C3_I; // Inputs
+		var G1BAR, G2BAR, A, B, _1C0, _1C1, _1C2, _1C3, _2C0, _2C1, _2C2, _2C3, Y1, Y2; // Outputs
+		G1BAR_I = this.ULS253LOG.pins.G1BAR_I.GetValue();
+		G2BAR_I = this.ULS253LOG.pins.G2BAR_I.GetValue();
+		A_I = this.ULS253LOG.pins.A_I.GetValue();
+		B_I = this.ULS253LOG.pins.B_I.GetValue();
+		_1C0_I = this.ULS253LOG.pins._1C0_I.GetValue();
+		_1C1_I = this.ULS253LOG.pins._1C1_I.GetValue();
+		_1C2_I = this.ULS253LOG.pins._1C2_I.GetValue();
+		_1C3_I = this.ULS253LOG.pins._1C3_I.GetValue();
+		_2C0_I = this.ULS253LOG.pins._2C0_I.GetValue();
+		_2C1_I = this.ULS253LOG.pins._2C1_I.GetValue();
+		_2C2_I = this.ULS253LOG.pins._2C2_I.GetValue();
+		_2C3_I = this.ULS253LOG.pins._2C3_I.GetValue();
+		   G1BAR =  G1BAR_I ;
+		   G2BAR =  G2BAR_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   __1C0 =  ___1C0_I ;
+		   __1C1 =  ___1C1_I ;
+		   __1C2 =  ___1C2_I ;
+		   __1C3 =  ___1C3_I ;
+		   __2C0 =  ___2C0_I ;
+		   __2C1 =  ___2C1_I ;
+		   __2C2 =  ___2C2_I ;
+		   __2C3 =  ___2C3_I ;
+		   G1 =  !G1BAR ;
+		   G2 =  !G2BAR ;
+		   ABAR =  !A ;
+		   BBAR =  !B ;
+		   I0 =  G1 & BBAR & ABAR & __1C0 ;
+		   I1 =  G1 & BBAR & A    & __1C1 ;
+		   I2 =  G1 & B    & ABAR & __1C2 ;
+		   I3 =  G1 & B    & A    & __1C3 ;
+		   I4 =  G2 & BBAR & ABAR & __2C0 ;
+		   I5 =  G2 & BBAR & A    & __2C1 ;
+		   I6 =  G2 & B    & ABAR & __2C2 ;
+		   I7 =  G2 & B    & A    & __2C3 ;
+		   Y1 =  I0 | I1 | I2 | I3 ;
+		   Y2 =  I4 | I5 | I6 | I7 ;
+		
+		this.ULS253LOG.pins.G1BAR.SetValue(G1BAR);
+		this.ULS253LOG.pins.G2BAR.SetValue(G2BAR);
+		this.ULS253LOG.pins.A.SetValue(A);
+		this.ULS253LOG.pins.B.SetValue(B);
+		this.ULS253LOG.pins._1C0.SetValue(_1C0);
+		this.ULS253LOG.pins._1C1.SetValue(_1C1);
+		this.ULS253LOG.pins._1C2.SetValue(_1C2);
+		this.ULS253LOG.pins._1C3.SetValue(_1C3);
+		this.ULS253LOG.pins._2C0.SetValue(_2C0);
+		this.ULS253LOG.pins._2C1.SetValue(_2C1);
+		this.ULS253LOG.pins._2C2.SetValue(_2C2);
+		this.ULS253LOG.pins._2C3.SetValue(_2C3);
+		this.ULS253LOG.pins.Y1.SetValue(Y1);
+		this.ULS253LOG.pins.Y2.SetValue(Y2);
+	}
 }
 /**
  * QUADRUPLE 2-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS
@@ -6541,7 +9054,7 @@ class SN74LS257B extends Component {
 			Y3_O: new Pin(),
 			Y4_O: new Pin(),
 		}
-		this.ULS257BLOG = new logicexp(['GBAR_I','_1A_I','_1B_I','_2A_I','_2B_I','_3A_I','_3B_I','_4A_I','_4B_I','SEL_I'], ['GBAR','_1A','_1B','_2A','_2B','_3A','_3B','_4A','_4B','SEL','Y1','Y2','Y3','Y4'], ['SELBAR']).Logic('   GBAR =  GBAR_I ;   _1A =  _1A_I ;   _1B =  _1B_I ;   _2A =  _2A_I ;   _2B =  _2B_I ;   _3A =  _3A_I ;   _3B =  _3B_I ;   _4A =  _4A_I ;   _4B =  _4B_I ;   SEL =  SEL_I ;   SELBAR =  !SEL ;   Y1 =  (_1A & SELBAR) | (_1B & SEL) ;   Y2 =  (_2A & SELBAR) | (_2B & SEL) ;   Y3 =  (_3A & SELBAR) | (_3B & SEL) ;   Y4 =  (_4A & SELBAR) | (_4B & SEL) ;');
+		this.ULS257BLOG = new logicexp(['GBAR_I','_1A_I','_1B_I','_2A_I','_2B_I','_3A_I','_3B_I','_4A_I','_4B_I','SEL_I'], ['GBAR','_1A','_1B','_2A','_2B','_3A','_3B','_4A','_4B','SEL','Y1','Y2','Y3','Y4']).Callback(this.$exe_ULS257BLOG);
 		Connect(this.ULS257BLOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS257BLOG.pins._1A_I, this.pins._1A_I);
 		Connect(this.ULS257BLOG.pins._1B_I, this.pins._1B_I);
@@ -6585,6 +9098,51 @@ class SN74LS257B extends Component {
 		Connect(Y3, this.pins.Y3_O);
 		Connect(Y4, this.pins.Y4_O);
 	}
+	$exe_ULS257BLOG() {
+		var __1A, __1B, __2A, __2B, __3A, __3B, __4A, __4B, SELBAR; // Temps
+		var GBAR_I, _1A_I, _1B_I, _2A_I, _2B_I, _3A_I, _3B_I, _4A_I, _4B_I, SEL_I; // Inputs
+		var GBAR, _1A, _1B, _2A, _2B, _3A, _3B, _4A, _4B, SEL, Y1, Y2, Y3, Y4; // Outputs
+		GBAR_I = this.ULS257BLOG.pins.GBAR_I.GetValue();
+		_1A_I = this.ULS257BLOG.pins._1A_I.GetValue();
+		_1B_I = this.ULS257BLOG.pins._1B_I.GetValue();
+		_2A_I = this.ULS257BLOG.pins._2A_I.GetValue();
+		_2B_I = this.ULS257BLOG.pins._2B_I.GetValue();
+		_3A_I = this.ULS257BLOG.pins._3A_I.GetValue();
+		_3B_I = this.ULS257BLOG.pins._3B_I.GetValue();
+		_4A_I = this.ULS257BLOG.pins._4A_I.GetValue();
+		_4B_I = this.ULS257BLOG.pins._4B_I.GetValue();
+		SEL_I = this.ULS257BLOG.pins.SEL_I.GetValue();
+		   GBAR =  GBAR_I ;
+		   __1A =  ___1A_I ;
+		   __1B =  ___1B_I ;
+		   __2A =  ___2A_I ;
+		   __2B =  ___2B_I ;
+		   __3A =  ___3A_I ;
+		   __3B =  ___3B_I ;
+		   __4A =  ___4A_I ;
+		   __4B =  ___4B_I ;
+		   SEL =  SEL_I ;
+		   SELBAR =  !SEL ;
+		   Y1 =  (__1A & SELBAR) | (__1B & SEL) ;
+		   Y2 =  (__2A & SELBAR) | (__2B & SEL) ;
+		   Y3 =  (__3A & SELBAR) | (__3B & SEL) ;
+		   Y4 =  (__4A & SELBAR) | (__4B & SEL) ;
+		
+		this.ULS257BLOG.pins.GBAR.SetValue(GBAR);
+		this.ULS257BLOG.pins._1A.SetValue(_1A);
+		this.ULS257BLOG.pins._1B.SetValue(_1B);
+		this.ULS257BLOG.pins._2A.SetValue(_2A);
+		this.ULS257BLOG.pins._2B.SetValue(_2B);
+		this.ULS257BLOG.pins._3A.SetValue(_3A);
+		this.ULS257BLOG.pins._3B.SetValue(_3B);
+		this.ULS257BLOG.pins._4A.SetValue(_4A);
+		this.ULS257BLOG.pins._4B.SetValue(_4B);
+		this.ULS257BLOG.pins.SEL.SetValue(SEL);
+		this.ULS257BLOG.pins.Y1.SetValue(Y1);
+		this.ULS257BLOG.pins.Y2.SetValue(Y2);
+		this.ULS257BLOG.pins.Y3.SetValue(Y3);
+		this.ULS257BLOG.pins.Y4.SetValue(Y4);
+	}
 }
 /**
  * QUADRUPLE 2-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS
@@ -6608,7 +9166,7 @@ class SN74LS258B extends Component {
 			Y3_O: new Pin(),
 			Y4_O: new Pin(),
 		}
-		this.ULS258BLOG = new logicexp(['GBAR_I','_1A_I','_1B_I','_2A_I','_2B_I','_3A_I','_3B_I','_4A_I','_4B_I','SEL_I'], ['GBAR','_1A','_1B','_2A','_2B','_3A','_3B','_4A','_4B','SEL','Y1','Y2','Y3','Y4'], ['SELBAR']).Logic('   GBAR =  GBAR_I ;   _1A =  _1A_I ;   _1B =  _1B_I ;   _2A =  _2A_I ;   _2B =  _2B_I ;   _3A =  _3A_I ;   _3B =  _3B_I ;   _4A =  _4A_I ;   _4B =  _4B_I ;   SEL =  SEL_I ;   SELBAR =  !SEL ;   Y1 =  !((_1A & SELBAR) | (_1B & SEL)) ;   Y2 =  !((_2A & SELBAR) | (_2B & SEL)) ;   Y3 =  !((_3A & SELBAR) | (_3B & SEL)) ;   Y4 =  !((_4A & SELBAR) | (_4B & SEL)) ;');
+		this.ULS258BLOG = new logicexp(['GBAR_I','_1A_I','_1B_I','_2A_I','_2B_I','_3A_I','_3B_I','_4A_I','_4B_I','SEL_I'], ['GBAR','_1A','_1B','_2A','_2B','_3A','_3B','_4A','_4B','SEL','Y1','Y2','Y3','Y4']).Callback(this.$exe_ULS258BLOG);
 		Connect(this.ULS258BLOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS258BLOG.pins._1A_I, this.pins._1A_I);
 		Connect(this.ULS258BLOG.pins._1B_I, this.pins._1B_I);
@@ -6651,6 +9209,51 @@ class SN74LS258B extends Component {
 		Connect(Y2, this.pins.Y2_O);
 		Connect(Y3, this.pins.Y3_O);
 		Connect(Y4, this.pins.Y4_O);
+	}
+	$exe_ULS258BLOG() {
+		var __1A, __1B, __2A, __2B, __3A, __3B, __4A, __4B, SELBAR; // Temps
+		var GBAR_I, _1A_I, _1B_I, _2A_I, _2B_I, _3A_I, _3B_I, _4A_I, _4B_I, SEL_I; // Inputs
+		var GBAR, _1A, _1B, _2A, _2B, _3A, _3B, _4A, _4B, SEL, Y1, Y2, Y3, Y4; // Outputs
+		GBAR_I = this.ULS258BLOG.pins.GBAR_I.GetValue();
+		_1A_I = this.ULS258BLOG.pins._1A_I.GetValue();
+		_1B_I = this.ULS258BLOG.pins._1B_I.GetValue();
+		_2A_I = this.ULS258BLOG.pins._2A_I.GetValue();
+		_2B_I = this.ULS258BLOG.pins._2B_I.GetValue();
+		_3A_I = this.ULS258BLOG.pins._3A_I.GetValue();
+		_3B_I = this.ULS258BLOG.pins._3B_I.GetValue();
+		_4A_I = this.ULS258BLOG.pins._4A_I.GetValue();
+		_4B_I = this.ULS258BLOG.pins._4B_I.GetValue();
+		SEL_I = this.ULS258BLOG.pins.SEL_I.GetValue();
+		   GBAR =  GBAR_I ;
+		   __1A =  ___1A_I ;
+		   __1B =  ___1B_I ;
+		   __2A =  ___2A_I ;
+		   __2B =  ___2B_I ;
+		   __3A =  ___3A_I ;
+		   __3B =  ___3B_I ;
+		   __4A =  ___4A_I ;
+		   __4B =  ___4B_I ;
+		   SEL =  SEL_I ;
+		   SELBAR =  !SEL ;
+		   Y1 =  !((__1A & SELBAR) | (__1B & SEL)) ;
+		   Y2 =  !((__2A & SELBAR) | (__2B & SEL)) ;
+		   Y3 =  !((__3A & SELBAR) | (__3B & SEL)) ;
+		   Y4 =  !((__4A & SELBAR) | (__4B & SEL)) ;
+		
+		this.ULS258BLOG.pins.GBAR.SetValue(GBAR);
+		this.ULS258BLOG.pins._1A.SetValue(_1A);
+		this.ULS258BLOG.pins._1B.SetValue(_1B);
+		this.ULS258BLOG.pins._2A.SetValue(_2A);
+		this.ULS258BLOG.pins._2B.SetValue(_2B);
+		this.ULS258BLOG.pins._3A.SetValue(_3A);
+		this.ULS258BLOG.pins._3B.SetValue(_3B);
+		this.ULS258BLOG.pins._4A.SetValue(_4A);
+		this.ULS258BLOG.pins._4B.SetValue(_4B);
+		this.ULS258BLOG.pins.SEL.SetValue(SEL);
+		this.ULS258BLOG.pins.Y1.SetValue(Y1);
+		this.ULS258BLOG.pins.Y2.SetValue(Y2);
+		this.ULS258BLOG.pins.Y3.SetValue(Y3);
+		this.ULS258BLOG.pins.Y4.SetValue(Y4);
 	}
 }
 /**
@@ -6892,7 +9495,7 @@ class SN74LS261 extends Component {
 			Q3_O: new Pin(),
 			Q4BAR_O: new Pin(),
 		}
-		this.ULS261LOG = new logicexp(['C_I','M2_I','M1_I','M0_I','B0_I','B1_I','B2_I','B3_I','B4_I','Q0','Q1','Q2','Q3','Q4BAR'], ['C','M2','M1','M0','B0','B1','B2','B3','B4','Q0','Q1','Q2','Q3','Q4BAR'], ['IB1','IB2','IB3','IB4','IM1','IM2','IM3','IC1','IC2','IC3']).Logic('   C =  C_I ;   M2 =  M2_I ;   M1 =  M1_I ;   M0 =  M0_I ;   B0 =  B0_I ;   B1 =  B1_I ;   B2 =  B2_I ;   B3 =  B3_I ;   B4 =  B4_I ;   IB1 =  !B1 ;   IB2 =  !B2 ;   IB3 =  !B3 ;   IB4 =  !B4 ;   IM1 =  M0 & M1 ;   IM2 =  !(M0 | M1) ;   IM3 =  !(IM1 | IM2) ;   IC1 =  !C ;   IC2 =  !(M2 | IC1) ;   IC3 =  !(IC1 | IC2) ;   Q0 =  (B0 & IM1 & IC2) | (!B0 & IM2 & IC3) | (B1 & IM3 & IC2) |     (IB1 & IM3 & IC3) | (IC1 & Q0) ;   Q1 =  (B1 & IM1 & IC2) | (IB1 & IM2 & IC3) | (B2 & IM3 & IC2) |     (IB2 & IM3 & IC3) | (IC1 & Q1) ;   Q2 =  (B2 & IM1 & IC2) | (IB2 & IM2 & IC3) | (B3 & IM3 & IC2) |     (IB3 & IM3 & IC3) | (IC1 & Q2) ;   Q3 =  (B3 & IM1 & IC2) | (IB3 & IM2 & IC3) | (B4 & IM3 & IC2) |     (IB4 & IM3 & IC3) | (IC1 & Q3) ;   Q4BAR =  !((B4 & IM1 & IC2) | (IB4 & IM2 & IC3) | (B4 & IM3 & IC2) |     (IB4 & IM3 & IC3) | (IC1 & !Q4BAR)) ;');
+		this.ULS261LOG = new logicexp(['C_I','M2_I','M1_I','M0_I','B0_I','B1_I','B2_I','B3_I','B4_I','Q0','Q1','Q2','Q3','Q4BAR'], ['C','M2','M1','M0','B0','B1','B2','B3','B4','Q0','Q1','Q2','Q3','Q4BAR']).Callback(this.$exe_ULS261LOG);
 		Connect(this.ULS261LOG.pins.C_I, this.pins.C_I);
 		Connect(this.ULS261LOG.pins.M2_I, this.pins.M2_I);
 		Connect(this.ULS261LOG.pins.M1_I, this.pins.M1_I);
@@ -6935,6 +9538,64 @@ class SN74LS261 extends Component {
 		Connect(Q2, this.pins.Q2_O);
 		Connect(Q3, this.pins.Q3_O);
 		Connect(Q4BAR, this.pins.Q4BAR_O);
+	}
+	$exe_ULS261LOG() {
+		var IB1, IB2, IB3, IB4, IM1, IM2, IM3, IC1, IC2, IC3; // Temps
+		var C_I, M2_I, M1_I, M0_I, B0_I, B1_I, B2_I, B3_I, B4_I, Q0, Q1, Q2, Q3, Q4BAR; // Inputs
+		var C, M2, M1, M0, B0, B1, B2, B3, B4, Q0, Q1, Q2, Q3, Q4BAR; // Outputs
+		C_I = this.ULS261LOG.pins.C_I.GetValue();
+		M2_I = this.ULS261LOG.pins.M2_I.GetValue();
+		M1_I = this.ULS261LOG.pins.M1_I.GetValue();
+		M0_I = this.ULS261LOG.pins.M0_I.GetValue();
+		B0_I = this.ULS261LOG.pins.B0_I.GetValue();
+		B1_I = this.ULS261LOG.pins.B1_I.GetValue();
+		B2_I = this.ULS261LOG.pins.B2_I.GetValue();
+		B3_I = this.ULS261LOG.pins.B3_I.GetValue();
+		B4_I = this.ULS261LOG.pins.B4_I.GetValue();
+		Q0 = this.ULS261LOG.pins.Q0.GetValue();
+		Q1 = this.ULS261LOG.pins.Q1.GetValue();
+		Q2 = this.ULS261LOG.pins.Q2.GetValue();
+		Q3 = this.ULS261LOG.pins.Q3.GetValue();
+		Q4BAR = this.ULS261LOG.pins.Q4BAR.GetValue();
+		   C =  C_I ;
+		   M2 =  M2_I ;
+		   M1 =  M1_I ;
+		   M0 =  M0_I ;
+		   B0 =  B0_I ;
+		   B1 =  B1_I ;
+		   B2 =  B2_I ;
+		   B3 =  B3_I ;
+		   B4 =  B4_I ;
+		   IB1 =  !B1 ;
+		   IB2 =  !B2 ;
+		   IB3 =  !B3 ;
+		   IB4 =  !B4 ;
+		   IM1 =  M0 & M1 ;
+		   IM2 =  !(M0 | M1) ;
+		   IM3 =  !(IM1 | IM2) ;
+		   IC1 =  !C ;
+		   IC2 =  !(M2 | IC1) ;
+		   IC3 =  !(IC1 | IC2) ;
+		   Q0 =  (B0 & IM1 & IC2) | (!B0 & IM2 & IC3) | (B1 & IM3 & IC2) |     (IB1 & IM3 & IC3) | (IC1 & Q0) ;
+		   Q1 =  (B1 & IM1 & IC2) | (IB1 & IM2 & IC3) | (B2 & IM3 & IC2) |     (IB2 & IM3 & IC3) | (IC1 & Q1) ;
+		   Q2 =  (B2 & IM1 & IC2) | (IB2 & IM2 & IC3) | (B3 & IM3 & IC2) |     (IB3 & IM3 & IC3) | (IC1 & Q2) ;
+		   Q3 =  (B3 & IM1 & IC2) | (IB3 & IM2 & IC3) | (B4 & IM3 & IC2) |     (IB4 & IM3 & IC3) | (IC1 & Q3) ;
+		   Q4BAR =  !((B4 & IM1 & IC2) | (IB4 & IM2 & IC3) | (B4 & IM3 & IC2) |     (IB4 & IM3 & IC3) | (IC1 & !Q4BAR)) ;
+		
+		this.ULS261LOG.pins.C.SetValue(C);
+		this.ULS261LOG.pins.M2.SetValue(M2);
+		this.ULS261LOG.pins.M1.SetValue(M1);
+		this.ULS261LOG.pins.M0.SetValue(M0);
+		this.ULS261LOG.pins.B0.SetValue(B0);
+		this.ULS261LOG.pins.B1.SetValue(B1);
+		this.ULS261LOG.pins.B2.SetValue(B2);
+		this.ULS261LOG.pins.B3.SetValue(B3);
+		this.ULS261LOG.pins.B4.SetValue(B4);
+		this.ULS261LOG.pins.Q0.SetValue(Q0);
+		this.ULS261LOG.pins.Q1.SetValue(Q1);
+		this.ULS261LOG.pins.Q2.SetValue(Q2);
+		this.ULS261LOG.pins.Q3.SetValue(Q3);
+		this.ULS261LOG.pins.Q4BAR.SetValue(Q4BAR);
 	}
 }
 /**
@@ -7114,7 +9775,7 @@ class SN74LS280 extends Component {
 			EOUT_O: new Pin(),
 			OOUT_O: new Pin(),
 		}
-		this.ULS280LOG = new logicexp(['A_I','B_I','C_I','D_I','E_I','F_I','G_I','H_I','I_I'], ['EOUT','OOUT'], ['A','B','C','D','E','F','G','H','I','ABC','DEF','GHI']).Logic('   A    =  A_I ;   B    =  B_I ;   C    =  C_I ;   D    =  D_I ;   E    =  E_I ;   F    =  F_I ;   G    =  G_I ;   H    =  H_I ;   I    =  I_I ;   ABC  =  (A & !B & !C) | (!A & B & !C) | (!A & !B & C) | (A & B & C) ;   DEF  =  (D & !E & !F) | (!D & E & !F) | (!D & !E & F) | (D & E & F) ;   GHI  =  (G & !H & !I) | (!G & H & !I) | (!G & !H & I) | (G & H & I) ;   EOUT =  (!ABC &  DEF &  GHI) | (ABC & !DEF & GHI) | (ABC & DEF & !GHI) |            (!ABC & !DEF & !GHI) ;   OOUT =  !EOUT ;');
+		this.ULS280LOG = new logicexp(['A_I','B_I','C_I','D_I','E_I','F_I','G_I','H_I','I_I'], ['EOUT','OOUT']).Callback(this.$exe_ULS280LOG);
 		Connect(this.ULS280LOG.pins.A_I, this.pins.A_I);
 		Connect(this.ULS280LOG.pins.B_I, this.pins.B_I);
 		Connect(this.ULS280LOG.pins.C_I, this.pins.C_I);
@@ -7130,6 +9791,37 @@ class SN74LS280 extends Component {
 		Connect(this.ULS280LOG.pins.OOUT, OOUT);
 		Connect(EOUT, this.pins.EOUT_O);
 		Connect(OOUT, this.pins.OOUT_O);
+	}
+	$exe_ULS280LOG() {
+		var A, B, C, D, E, F, G, H, I, ABC, DEF, GHI; // Temps
+		var A_I, B_I, C_I, D_I, E_I, F_I, G_I, H_I, I_I; // Inputs
+		var EOUT, OOUT; // Outputs
+		A_I = this.ULS280LOG.pins.A_I.GetValue();
+		B_I = this.ULS280LOG.pins.B_I.GetValue();
+		C_I = this.ULS280LOG.pins.C_I.GetValue();
+		D_I = this.ULS280LOG.pins.D_I.GetValue();
+		E_I = this.ULS280LOG.pins.E_I.GetValue();
+		F_I = this.ULS280LOG.pins.F_I.GetValue();
+		G_I = this.ULS280LOG.pins.G_I.GetValue();
+		H_I = this.ULS280LOG.pins.H_I.GetValue();
+		I_I = this.ULS280LOG.pins.I_I.GetValue();
+		   A    =  A_I ;
+		   B    =  B_I ;
+		   C    =  C_I ;
+		   D    =  D_I ;
+		   E    =  E_I ;
+		   F    =  F_I ;
+		   G    =  G_I ;
+		   H    =  H_I ;
+		   I    =  I_I ;
+		   ABC  =  (A & !B & !C) | (!A & B & !C) | (!A & !B & C) | (A & B & C) ;
+		   DEF  =  (D & !E & !F) | (!D & E & !F) | (!D & !E & F) | (D & E & F) ;
+		   GHI  =  (G & !H & !I) | (!G & H & !I) | (!G & !H & I) | (G & H & I) ;
+		   EOUT =  (!ABC &  DEF &  GHI) | (ABC & !DEF & GHI) | (ABC & DEF & !GHI) |            (!ABC & !DEF & !GHI) ;
+		   OOUT =  !EOUT ;
+		
+		this.ULS280LOG.pins.EOUT.SetValue(EOUT);
+		this.ULS280LOG.pins.OOUT.SetValue(OOUT);
 	}
 }
 /**
@@ -7154,7 +9846,7 @@ class SN74LS283 extends Component {
 			SUM3_O: new Pin(),
 			SUM4_O: new Pin(),
 		}
-		this.ULS283LOG = new logicexp(['C0_I','A1_I','A2_I','A3_I','A4_I','B1_I','B2_I','B3_I','B4_I'], ['C0','A1','A2','A3','A4','B1','B2','B3','B4','C4','SUM1','SUM2','SUM3','SUM4'], ['NAND4','NAND3','NAND2','NAND1','NOR4','NOR3','NOR2','NOR1','C0BAR']).Logic('   C0 =  C0_I ;   A1 =  A1_I ;   A2 =  A2_I ;   A3 =  A3_I ;   A4 =  A4_I ;   B1 =  B1_I ;   B2 =  B2_I ;   B3 =  B3_I ;   B4 =  B4_I ;   NAND4 =  !(A4 & B4) ;   NAND3 =  !(A3 & B3) ;   NAND2 =  !(A2 & B2) ;   NAND1 =  !(A1 & B1) ;   NOR4 =  !(A4 | B4) ;   NOR3 =  !(A3 | B3) ;   NOR2 =  !(A2 | B2) ;   NOR1 =  !(A1 | B1) ;   C0BAR =  !C0 ;   SUM1 =  (NAND1 & !NOR1) ^ C0 ;   SUM2 =  (NAND2 & !NOR2) ^ (!(NOR1 | (NAND1 & C0BAR))) ;   SUM3 =  (NAND3 & !NOR3) ^ (!(NOR2 | (NOR1 & NAND2) |            (NAND2 & NAND1 & C0BAR))) ;   SUM4 =  (NAND4 & !NOR4) ^ (!(NOR3 | (NOR2 & NAND3) |            (NOR1 & NAND3 & NAND2) | (NAND3 & NAND2 & NAND1 & C0BAR))) ;   C4 =  !( NOR4 | (NOR3 & NAND4) | (NOR2 & NAND4 & NAND3) |             (NOR1 & NAND4 & NAND3 & NAND2) |             (NAND4 & NAND3 & NAND2 & NAND1 & C0BAR) ) ;');
+		this.ULS283LOG = new logicexp(['C0_I','A1_I','A2_I','A3_I','A4_I','B1_I','B2_I','B3_I','B4_I'], ['C0','A1','A2','A3','A4','B1','B2','B3','B4','C4','SUM1','SUM2','SUM3','SUM4']).Callback(this.$exe_ULS283LOG);
 		Connect(this.ULS283LOG.pins.C0_I, this.pins.C0_I);
 		Connect(this.ULS283LOG.pins.A1_I, this.pins.A1_I);
 		Connect(this.ULS283LOG.pins.A2_I, this.pins.A2_I);
@@ -7197,6 +9889,58 @@ class SN74LS283 extends Component {
 		Connect(SUM3, this.pins.SUM3_O);
 		Connect(SUM4, this.pins.SUM4_O);
 		Connect(C4, this.pins.C4_O);
+	}
+	$exe_ULS283LOG() {
+		var NAND4, NAND3, NAND2, NAND1, NOR4, NOR3, NOR2, NOR1, C0BAR; // Temps
+		var C0_I, A1_I, A2_I, A3_I, A4_I, B1_I, B2_I, B3_I, B4_I; // Inputs
+		var C0, A1, A2, A3, A4, B1, B2, B3, B4, C4, SUM1, SUM2, SUM3, SUM4; // Outputs
+		C0_I = this.ULS283LOG.pins.C0_I.GetValue();
+		A1_I = this.ULS283LOG.pins.A1_I.GetValue();
+		A2_I = this.ULS283LOG.pins.A2_I.GetValue();
+		A3_I = this.ULS283LOG.pins.A3_I.GetValue();
+		A4_I = this.ULS283LOG.pins.A4_I.GetValue();
+		B1_I = this.ULS283LOG.pins.B1_I.GetValue();
+		B2_I = this.ULS283LOG.pins.B2_I.GetValue();
+		B3_I = this.ULS283LOG.pins.B3_I.GetValue();
+		B4_I = this.ULS283LOG.pins.B4_I.GetValue();
+		   C0 =  C0_I ;
+		   A1 =  A1_I ;
+		   A2 =  A2_I ;
+		   A3 =  A3_I ;
+		   A4 =  A4_I ;
+		   B1 =  B1_I ;
+		   B2 =  B2_I ;
+		   B3 =  B3_I ;
+		   B4 =  B4_I ;
+		   NAND4 =  !(A4 & B4) ;
+		   NAND3 =  !(A3 & B3) ;
+		   NAND2 =  !(A2 & B2) ;
+		   NAND1 =  !(A1 & B1) ;
+		   NOR4 =  !(A4 | B4) ;
+		   NOR3 =  !(A3 | B3) ;
+		   NOR2 =  !(A2 | B2) ;
+		   NOR1 =  !(A1 | B1) ;
+		   C0BAR =  !C0 ;
+		   SUM1 =  (NAND1 & !NOR1) ^ C0 ;
+		   SUM2 =  (NAND2 & !NOR2) ^ (!(NOR1 | (NAND1 & C0BAR))) ;
+		   SUM3 =  (NAND3 & !NOR3) ^ (!(NOR2 | (NOR1 & NAND2) |            (NAND2 & NAND1 & C0BAR))) ;
+		   SUM4 =  (NAND4 & !NOR4) ^ (!(NOR3 | (NOR2 & NAND3) |            (NOR1 & NAND3 & NAND2) | (NAND3 & NAND2 & NAND1 & C0BAR))) ;
+		   C4 =  !( NOR4 | (NOR3 & NAND4) | (NOR2 & NAND4 & NAND3) |             (NOR1 & NAND4 & NAND3 & NAND2) |             (NAND4 & NAND3 & NAND2 & NAND1 & C0BAR) ) ;
+		
+		this.ULS283LOG.pins.C0.SetValue(C0);
+		this.ULS283LOG.pins.A1.SetValue(A1);
+		this.ULS283LOG.pins.A2.SetValue(A2);
+		this.ULS283LOG.pins.A3.SetValue(A3);
+		this.ULS283LOG.pins.A4.SetValue(A4);
+		this.ULS283LOG.pins.B1.SetValue(B1);
+		this.ULS283LOG.pins.B2.SetValue(B2);
+		this.ULS283LOG.pins.B3.SetValue(B3);
+		this.ULS283LOG.pins.B4.SetValue(B4);
+		this.ULS283LOG.pins.C4.SetValue(C4);
+		this.ULS283LOG.pins.SUM1.SetValue(SUM1);
+		this.ULS283LOG.pins.SUM2.SetValue(SUM2);
+		this.ULS283LOG.pins.SUM3.SetValue(SUM3);
+		this.ULS283LOG.pins.SUM4.SetValue(SUM4);
 	}
 }
 /**
@@ -7257,7 +10001,7 @@ class SN74LS295B extends Component {
 			QC_O: new Pin(),
 			QD_O: new Pin(),
 		}
-		this.U295BLOG = new logicexp(['CLK_I','LD_SHBAR_I','OC_I','SER_I','A_I','B_I','C_I','D_I','QA','QB','QC'], ['CLK','LD_SHBAR','OC','SER','A','B','C','D','JA','JB','JC','JD','KA','KB','KC','KD'], ['SHIFT']).Logic('   CLK =  CLK_I ;   LD_SHBAR =  LD_SHBAR_I ;   OC =  OC_I ;   SER =  SER_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   SHIFT =  !LD_SHBAR ;   KA =  !((SER & SHIFT) | (LD_SHBAR & A)) ;   KB =  !((QA & SHIFT) | (LD_SHBAR & B)) ;   KC =  !((QB & SHIFT) | (LD_SHBAR & C)) ;   KD =  !((QC & SHIFT) | (LD_SHBAR & D)) ;   JA =  !KA ;   JB =  !KB ;   JC =  !KC ;   JD =  !KD ;');
+		this.U295BLOG = new logicexp(['CLK_I','LD_SHBAR_I','OC_I','SER_I','A_I','B_I','C_I','D_I','QA','QB','QC'], ['CLK','LD_SHBAR','OC','SER','A','B','C','D','JA','JB','JC','JD','KA','KB','KC','KD']).Callback(this.$exe_U295BLOG);
 		Connect(this.U295BLOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.U295BLOG.pins.LD_SHBAR_I, this.pins.LD_SHBAR_I);
 		Connect(this.U295BLOG.pins.OC_I, this.pins.OC_I);
@@ -7330,6 +10074,56 @@ class SN74LS295B extends Component {
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
 	}
+	$exe_U295BLOG() {
+		var SHIFT; // Temps
+		var CLK_I, LD_SHBAR_I, OC_I, SER_I, A_I, B_I, C_I, D_I, QA, QB, QC; // Inputs
+		var CLK, LD_SHBAR, OC, SER, A, B, C, D, JA, JB, JC, JD, KA, KB, KC, KD; // Outputs
+		CLK_I = this.U295BLOG.pins.CLK_I.GetValue();
+		LD_SHBAR_I = this.U295BLOG.pins.LD_SHBAR_I.GetValue();
+		OC_I = this.U295BLOG.pins.OC_I.GetValue();
+		SER_I = this.U295BLOG.pins.SER_I.GetValue();
+		A_I = this.U295BLOG.pins.A_I.GetValue();
+		B_I = this.U295BLOG.pins.B_I.GetValue();
+		C_I = this.U295BLOG.pins.C_I.GetValue();
+		D_I = this.U295BLOG.pins.D_I.GetValue();
+		QA = this.U295BLOG.pins.QA.GetValue();
+		QB = this.U295BLOG.pins.QB.GetValue();
+		QC = this.U295BLOG.pins.QC.GetValue();
+		   CLK =  CLK_I ;
+		   LD_SHBAR =  LD_SHBAR_I ;
+		   OC =  OC_I ;
+		   SER =  SER_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   SHIFT =  !LD_SHBAR ;
+		   KA =  !((SER & SHIFT) | (LD_SHBAR & A)) ;
+		   KB =  !((QA & SHIFT) | (LD_SHBAR & B)) ;
+		   KC =  !((QB & SHIFT) | (LD_SHBAR & C)) ;
+		   KD =  !((QC & SHIFT) | (LD_SHBAR & D)) ;
+		   JA =  !KA ;
+		   JB =  !KB ;
+		   JC =  !KC ;
+		   JD =  !KD ;
+		
+		this.U295BLOG.pins.CLK.SetValue(CLK);
+		this.U295BLOG.pins.LD_SHBAR.SetValue(LD_SHBAR);
+		this.U295BLOG.pins.OC.SetValue(OC);
+		this.U295BLOG.pins.SER.SetValue(SER);
+		this.U295BLOG.pins.A.SetValue(A);
+		this.U295BLOG.pins.B.SetValue(B);
+		this.U295BLOG.pins.C.SetValue(C);
+		this.U295BLOG.pins.D.SetValue(D);
+		this.U295BLOG.pins.JA.SetValue(JA);
+		this.U295BLOG.pins.JB.SetValue(JB);
+		this.U295BLOG.pins.JC.SetValue(JC);
+		this.U295BLOG.pins.JD.SetValue(JD);
+		this.U295BLOG.pins.KA.SetValue(KA);
+		this.U295BLOG.pins.KB.SetValue(KB);
+		this.U295BLOG.pins.KC.SetValue(KC);
+		this.U295BLOG.pins.KD.SetValue(KD);
+	}
 }
 /**
  * MULTIPLEXERS QUAD 2-INPUT WITH STORAGE
@@ -7386,7 +10180,7 @@ class SN74LS298 extends Component {
 		Connect(this.U1.pins.QBAR1, _D_NC);
 		Connect(this.U1.pins.QBAR2, _D_NC);
 		Connect(this.U1.pins.QBAR3, _D_NC);
-		this.ULS298LOG = new logicexp(['WS_I','CLK_I','A1_I','A2_I','B1_I','B2_I','C1_I','C2_I','D1_I','D2_I'], ['WS','CLK','A1','A2','B1','B2','C1','C2','D1','D2','JA','JB','JC','JD','KA','KB','KC','KD'], ['IWS']).Logic('   WS =  WS_I ;   CLK =  CLK_I ;   A1 =  A1_I ;   A2 =  A2_I ;   B1 =  B1_I ;   B2 =  B2_I ;   C1 =  C1_I ;   C2 =  C2_I ;   D1 =  D1_I ;   D2 =  D2_I ;   IWS =  !WS ;   KA =  !((A1 & IWS) | (WS & A2)) ;   KB =  !((B1 & IWS) | (WS & B2)) ;   KC =  !((C1 & IWS) | (WS & C2)) ;   KD =  !((D1 & IWS) | (WS & D2)) ;   JA =  !KA ;   JB =  !KB ;   JC =  !KC ;   JD =  !KD ;');
+		this.ULS298LOG = new logicexp(['WS_I','CLK_I','A1_I','A2_I','B1_I','B2_I','C1_I','C2_I','D1_I','D2_I'], ['WS','CLK','A1','A2','B1','B2','C1','C2','D1','D2','JA','JB','JC','JD','KA','KB','KC','KD']).Callback(this.$exe_ULS298LOG);
 		Connect(this.ULS298LOG.pins.WS_I, this.pins.WS_I);
 		Connect(this.ULS298LOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.ULS298LOG.pins.A1_I, this.pins.A1_I);
@@ -7429,6 +10223,59 @@ class SN74LS298 extends Component {
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
 	}
+	$exe_ULS298LOG() {
+		var IWS; // Temps
+		var WS_I, CLK_I, A1_I, A2_I, B1_I, B2_I, C1_I, C2_I, D1_I, D2_I; // Inputs
+		var WS, CLK, A1, A2, B1, B2, C1, C2, D1, D2, JA, JB, JC, JD, KA, KB, KC, KD; // Outputs
+		WS_I = this.ULS298LOG.pins.WS_I.GetValue();
+		CLK_I = this.ULS298LOG.pins.CLK_I.GetValue();
+		A1_I = this.ULS298LOG.pins.A1_I.GetValue();
+		A2_I = this.ULS298LOG.pins.A2_I.GetValue();
+		B1_I = this.ULS298LOG.pins.B1_I.GetValue();
+		B2_I = this.ULS298LOG.pins.B2_I.GetValue();
+		C1_I = this.ULS298LOG.pins.C1_I.GetValue();
+		C2_I = this.ULS298LOG.pins.C2_I.GetValue();
+		D1_I = this.ULS298LOG.pins.D1_I.GetValue();
+		D2_I = this.ULS298LOG.pins.D2_I.GetValue();
+		   WS =  WS_I ;
+		   CLK =  CLK_I ;
+		   A1 =  A1_I ;
+		   A2 =  A2_I ;
+		   B1 =  B1_I ;
+		   B2 =  B2_I ;
+		   C1 =  C1_I ;
+		   C2 =  C2_I ;
+		   D1 =  D1_I ;
+		   D2 =  D2_I ;
+		   IWS =  !WS ;
+		   KA =  !((A1 & IWS) | (WS & A2)) ;
+		   KB =  !((B1 & IWS) | (WS & B2)) ;
+		   KC =  !((C1 & IWS) | (WS & C2)) ;
+		   KD =  !((D1 & IWS) | (WS & D2)) ;
+		   JA =  !KA ;
+		   JB =  !KB ;
+		   JC =  !KC ;
+		   JD =  !KD ;
+		
+		this.ULS298LOG.pins.WS.SetValue(WS);
+		this.ULS298LOG.pins.CLK.SetValue(CLK);
+		this.ULS298LOG.pins.A1.SetValue(A1);
+		this.ULS298LOG.pins.A2.SetValue(A2);
+		this.ULS298LOG.pins.B1.SetValue(B1);
+		this.ULS298LOG.pins.B2.SetValue(B2);
+		this.ULS298LOG.pins.C1.SetValue(C1);
+		this.ULS298LOG.pins.C2.SetValue(C2);
+		this.ULS298LOG.pins.D1.SetValue(D1);
+		this.ULS298LOG.pins.D2.SetValue(D2);
+		this.ULS298LOG.pins.JA.SetValue(JA);
+		this.ULS298LOG.pins.JB.SetValue(JB);
+		this.ULS298LOG.pins.JC.SetValue(JC);
+		this.ULS298LOG.pins.JD.SetValue(JD);
+		this.ULS298LOG.pins.KA.SetValue(KA);
+		this.ULS298LOG.pins.KB.SetValue(KB);
+		this.ULS298LOG.pins.KC.SetValue(KC);
+		this.ULS298LOG.pins.KD.SetValue(KD);
+	}
 }
 /**
  * 8-BIT UNIVERSAL SHIFT_STORAGE REGISTERS
@@ -7456,7 +10303,7 @@ class SN74LS299 extends Component {
 			QAP_O: new Pin(),
 			QHP_O: new Pin(),
 		}
-		this.ULS299LOG = new logicexp(['CLK_I','CLRBAR_I','S1_I','S0_I','G1BAR_I','G2BAR_I','SL_I','SR_I','A_QA_B','B_QB_B','C_QC_B','D_QD_B','E_QE_B','F_QF_B','G_QG_B','H_QH_B','LA_QA','LB_QB','LC_QC','LD_QD','LE_QE','LF_QF','LG_QG','LH_QH','A_QA','B_QB','C_QC','D_QD','E_QE','F_QF','G_QG','H_QH'], ['CLK','CLRBAR','S1','S0','G1BAR','G2BAR','SL','SR','A_QA','B_QB','C_QC','D_QD','E_QE','F_QF','G_QG','H_QH','D1A','D1B','D1C','D1D','D1E','D1F','D1G','D1H','OE'], ['S0S1','S0_S1','_S0S1','_S0_S1']).Logic('   CLK      =  CLK_I ;   CLRBAR   =  CLRBAR_I ;   S1       =  S1_I ;   S0       =  S0_I ;   G1BAR    =  G1BAR_I ;   G2BAR    =  G2BAR_I ;   SL       =  SL_I ;   SR       =  SR_I ;   A_QA     =  A_QA_B ;   B_QB     =  B_QB_B ;   C_QC     =  C_QC_B ;   D_QD     =  D_QD_B ;   E_QE     =  E_QE_B ;   F_QF     =  F_QF_B ;   G_QG     =  G_QG_B ;   H_QH     =  H_QH_B ;   S0S1   =  S0  & S1 ;   S0_S1  =  S0  & !S1 ;   _S0S1  =  !S0 & S1 ;   _S0_S1 =  !S0 & !S1 ;   D1A =  (S0_S1 & SR )   | (_S0S1 & LB_QB)  |           (S0S1 & A_QA)   | (_S0_S1 & LA_QA) ;   D1B =  (S0_S1 & LA_QA) | (_S0S1 & LC_QC)  |           (S0S1 & B_QB)   | (_S0_S1 & LB_QB) ;   D1C =  (S0_S1 & LB_QB) | (_S0S1 & LD_QD)  |           (S0S1 & C_QC)   | (_S0_S1 & LC_QC) ;   D1D =  (S0_S1 & LC_QC) | (_S0S1 & LE_QE)  |           (S0S1 & D_QD)   | (_S0_S1 & LD_QD) ;   D1E =  (S0_S1 & LD_QD) | (_S0S1 & LF_QF)  |           (S0S1 & E_QE)   | (_S0_S1 & LE_QE) ;   D1F =  (S0_S1 & LE_QE) | (_S0S1 & LG_QG)  |           (S0S1 & F_QF)   | (_S0_S1 & LF_QF) ;   D1G =  (S0_S1 & LF_QF) | (_S0S1 & LH_QH)  |           (S0S1 & G_QG)   | (_S0_S1 & LG_QG) ;   D1H =  (S0_S1 & LG_QG) | (_S0S1 & SL )    |           (S0S1 & H_QH)   | (_S0_S1 & LH_QH) ;   OE  =  G1BAR | G2BAR | (S1 & S0) ;');
+		this.ULS299LOG = new logicexp(['CLK_I','CLRBAR_I','S1_I','S0_I','G1BAR_I','G2BAR_I','SL_I','SR_I','A_QA_B','B_QB_B','C_QC_B','D_QD_B','E_QE_B','F_QF_B','G_QG_B','H_QH_B','LA_QA','LB_QB','LC_QC','LD_QD','LE_QE','LF_QF','LG_QG','LH_QH','A_QA','B_QB','C_QC','D_QD','E_QE','F_QF','G_QG','H_QH'], ['CLK','CLRBAR','S1','S0','G1BAR','G2BAR','SL','SR','A_QA','B_QB','C_QC','D_QD','E_QE','F_QF','G_QG','H_QH','D1A','D1B','D1C','D1D','D1E','D1F','D1G','D1H','OE']).Callback(this.$exe_ULS299LOG);
 		Connect(this.ULS299LOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.ULS299LOG.pins.CLRBAR_I, this.pins.CLRBAR_I);
 		Connect(this.ULS299LOG.pins.S1_I, this.pins.S1_I);
@@ -7578,6 +10425,98 @@ class SN74LS299 extends Component {
 		Connect(LA_QA, this.pins.QAP_O);
 		Connect(LH_QH, this.pins.QHP_O);
 	}
+	$exe_ULS299LOG() {
+		var S0S1, S0_S1, _S0S1, _S0_S1; // Temps
+		var CLK_I, CLRBAR_I, S1_I, S0_I, G1BAR_I, G2BAR_I, SL_I, SR_I, A_QA_B, B_QB_B, C_QC_B, D_QD_B, E_QE_B, F_QF_B, G_QG_B, H_QH_B, LA_QA, LB_QB, LC_QC, LD_QD, LE_QE, LF_QF, LG_QG, LH_QH, A_QA, B_QB, C_QC, D_QD, E_QE, F_QF, G_QG, H_QH; // Inputs
+		var CLK, CLRBAR, S1, S0, G1BAR, G2BAR, SL, SR, A_QA, B_QB, C_QC, D_QD, E_QE, F_QF, G_QG, H_QH, D1A, D1B, D1C, D1D, D1E, D1F, D1G, D1H, OE; // Outputs
+		CLK_I = this.ULS299LOG.pins.CLK_I.GetValue();
+		CLRBAR_I = this.ULS299LOG.pins.CLRBAR_I.GetValue();
+		S1_I = this.ULS299LOG.pins.S1_I.GetValue();
+		S0_I = this.ULS299LOG.pins.S0_I.GetValue();
+		G1BAR_I = this.ULS299LOG.pins.G1BAR_I.GetValue();
+		G2BAR_I = this.ULS299LOG.pins.G2BAR_I.GetValue();
+		SL_I = this.ULS299LOG.pins.SL_I.GetValue();
+		SR_I = this.ULS299LOG.pins.SR_I.GetValue();
+		A_QA_B = this.ULS299LOG.pins.A_QA_B.GetValue();
+		B_QB_B = this.ULS299LOG.pins.B_QB_B.GetValue();
+		C_QC_B = this.ULS299LOG.pins.C_QC_B.GetValue();
+		D_QD_B = this.ULS299LOG.pins.D_QD_B.GetValue();
+		E_QE_B = this.ULS299LOG.pins.E_QE_B.GetValue();
+		F_QF_B = this.ULS299LOG.pins.F_QF_B.GetValue();
+		G_QG_B = this.ULS299LOG.pins.G_QG_B.GetValue();
+		H_QH_B = this.ULS299LOG.pins.H_QH_B.GetValue();
+		LA_QA = this.ULS299LOG.pins.LA_QA.GetValue();
+		LB_QB = this.ULS299LOG.pins.LB_QB.GetValue();
+		LC_QC = this.ULS299LOG.pins.LC_QC.GetValue();
+		LD_QD = this.ULS299LOG.pins.LD_QD.GetValue();
+		LE_QE = this.ULS299LOG.pins.LE_QE.GetValue();
+		LF_QF = this.ULS299LOG.pins.LF_QF.GetValue();
+		LG_QG = this.ULS299LOG.pins.LG_QG.GetValue();
+		LH_QH = this.ULS299LOG.pins.LH_QH.GetValue();
+		A_QA = this.ULS299LOG.pins.A_QA.GetValue();
+		B_QB = this.ULS299LOG.pins.B_QB.GetValue();
+		C_QC = this.ULS299LOG.pins.C_QC.GetValue();
+		D_QD = this.ULS299LOG.pins.D_QD.GetValue();
+		E_QE = this.ULS299LOG.pins.E_QE.GetValue();
+		F_QF = this.ULS299LOG.pins.F_QF.GetValue();
+		G_QG = this.ULS299LOG.pins.G_QG.GetValue();
+		H_QH = this.ULS299LOG.pins.H_QH.GetValue();
+		   CLK      =  CLK_I ;
+		   CLRBAR   =  CLRBAR_I ;
+		   S1       =  S1_I ;
+		   S0       =  S0_I ;
+		   G1BAR    =  G1BAR_I ;
+		   G2BAR    =  G2BAR_I ;
+		   SL       =  SL_I ;
+		   SR       =  SR_I ;
+		   A_QA     =  A_QA_B ;
+		   B_QB     =  B_QB_B ;
+		   C_QC     =  C_QC_B ;
+		   D_QD     =  D_QD_B ;
+		   E_QE     =  E_QE_B ;
+		   F_QF     =  F_QF_B ;
+		   G_QG     =  G_QG_B ;
+		   H_QH     =  H_QH_B ;
+		   S0S1   =  S0  & S1 ;
+		   S0_S1  =  S0  & !S1 ;
+		   _S0S1  =  !S0 & S1 ;
+		   _S0_S1 =  !S0 & !S1 ;
+		   D1A =  (S0_S1 & SR )   | (_S0S1 & LB_QB)  |           (S0S1 & A_QA)   | (_S0_S1 & LA_QA) ;
+		   D1B =  (S0_S1 & LA_QA) | (_S0S1 & LC_QC)  |           (S0S1 & B_QB)   | (_S0_S1 & LB_QB) ;
+		   D1C =  (S0_S1 & LB_QB) | (_S0S1 & LD_QD)  |           (S0S1 & C_QC)   | (_S0_S1 & LC_QC) ;
+		   D1D =  (S0_S1 & LC_QC) | (_S0S1 & LE_QE)  |           (S0S1 & D_QD)   | (_S0_S1 & LD_QD) ;
+		   D1E =  (S0_S1 & LD_QD) | (_S0S1 & LF_QF)  |           (S0S1 & E_QE)   | (_S0_S1 & LE_QE) ;
+		   D1F =  (S0_S1 & LE_QE) | (_S0S1 & LG_QG)  |           (S0S1 & F_QF)   | (_S0_S1 & LF_QF) ;
+		   D1G =  (S0_S1 & LF_QF) | (_S0S1 & LH_QH)  |           (S0S1 & G_QG)   | (_S0_S1 & LG_QG) ;
+		   D1H =  (S0_S1 & LG_QG) | (_S0S1 & SL )    |           (S0S1 & H_QH)   | (_S0_S1 & LH_QH) ;
+		   OE  =  G1BAR | G2BAR | (S1 & S0) ;
+		
+		this.ULS299LOG.pins.CLK.SetValue(CLK);
+		this.ULS299LOG.pins.CLRBAR.SetValue(CLRBAR);
+		this.ULS299LOG.pins.S1.SetValue(S1);
+		this.ULS299LOG.pins.S0.SetValue(S0);
+		this.ULS299LOG.pins.G1BAR.SetValue(G1BAR);
+		this.ULS299LOG.pins.G2BAR.SetValue(G2BAR);
+		this.ULS299LOG.pins.SL.SetValue(SL);
+		this.ULS299LOG.pins.SR.SetValue(SR);
+		this.ULS299LOG.pins.A_QA.SetValue(A_QA);
+		this.ULS299LOG.pins.B_QB.SetValue(B_QB);
+		this.ULS299LOG.pins.C_QC.SetValue(C_QC);
+		this.ULS299LOG.pins.D_QD.SetValue(D_QD);
+		this.ULS299LOG.pins.E_QE.SetValue(E_QE);
+		this.ULS299LOG.pins.F_QF.SetValue(F_QF);
+		this.ULS299LOG.pins.G_QG.SetValue(G_QG);
+		this.ULS299LOG.pins.H_QH.SetValue(H_QH);
+		this.ULS299LOG.pins.D1A.SetValue(D1A);
+		this.ULS299LOG.pins.D1B.SetValue(D1B);
+		this.ULS299LOG.pins.D1C.SetValue(D1C);
+		this.ULS299LOG.pins.D1D.SetValue(D1D);
+		this.ULS299LOG.pins.D1E.SetValue(D1E);
+		this.ULS299LOG.pins.D1F.SetValue(D1F);
+		this.ULS299LOG.pins.D1G.SetValue(D1G);
+		this.ULS299LOG.pins.D1H.SetValue(D1H);
+		this.ULS299LOG.pins.OE.SetValue(OE);
+	}
 }
 /**
  * 8-BIT SHIFT REGISTERS WITH SIGN EXTEND
@@ -7605,7 +10544,7 @@ class SN74LS322A extends Component {
 			H_QH_B: new Pin(),
 			QHP_O: new Pin(),
 		}
-		this.U322LOG = new logicexp(['OEBAR_I','GBAR_I','CLK_I','S_PBAR_I','SEBAR_I','CLRBAR_I','DS_I','D0_I','D1_I','A_QA_B','B_QB_B','C_QC_B','D_QD_B','E_QE_B','F_QF_B','G_QG_B','H_QH_B','LA_QA','LB_QB','LC_QC','LD_QD','LE_QE','LF_QF','LG_QG','LH_QH','A_QA','B_QB','C_QC','D_QD','E_QE','F_QF','G_QG','H_QH'], ['OEBAR','GBAR','CLK','S_PBAR','SEBAR','CLRBAR','DS','D0','D1','A_QA','B_QB','C_QC','D_QD','E_QE','F_QF','G_QG','H_QH','D1A','D1B','D1C','D1D','D1E','D1F','D1G','D1H','OE'], ['GP','GS']).Logic('   OEBAR    =  OEBAR_I ;   CLRBAR   =  CLRBAR_I ;   CLK      =  CLK_I ;   GBAR     =  GBAR_I ;   S_PBAR   =  S_PBAR_I ;   SEBAR    =  SEBAR_I ;   DS       =  DS_I ;   D1       =  D1_I ;   D0       =  D0_I ;   A_QA     =  A_QA_B ;   B_QB     =  B_QB_B ;   C_QC     =  C_QC_B ;   D_QD     =  D_QD_B ;   E_QE     =  E_QE_B ;   F_QF     =  F_QF_B ;   G_QG     =  G_QG_B ;   H_QH     =  H_QH_B ;   GP    =  !(GBAR | S_PBAR) ;   GS    =  !(GBAR | !(GBAR | S_PBAR)) ;   OE    =  OEBAR | GP ;   D1A   =  (!DS & GS & SEBAR & D0) | (DS & GS & SEBAR & D1) |            (GP & A_QA) | (!SEBAR & GS & LA_QA) | (LA_QA & GBAR) ;   D1B   =  (GS & LA_QA) | (GP & B_QB) | (GBAR & LB_QB) ;   D1C   =  (GS & LB_QB) | (GP & C_QC) | (GBAR & LC_QC) ;   D1D   =  (GS & LC_QC) | (GP & D_QD) | (GBAR & LD_QD) ;   D1E   =  (GS & LD_QD) | (GP & E_QE) | (GBAR & LE_QE) ;   D1F   =  (GS & LE_QE) | (GP & F_QF) | (GBAR & LF_QF) ;   D1G   =  (GS & LF_QF) | (GP & G_QG) | (GBAR & LG_QG) ;   D1H   =  (GS & LG_QG) | (GP & H_QH) | (GBAR & LH_QH) ;');
+		this.U322LOG = new logicexp(['OEBAR_I','GBAR_I','CLK_I','S_PBAR_I','SEBAR_I','CLRBAR_I','DS_I','D0_I','D1_I','A_QA_B','B_QB_B','C_QC_B','D_QD_B','E_QE_B','F_QF_B','G_QG_B','H_QH_B','LA_QA','LB_QB','LC_QC','LD_QD','LE_QE','LF_QF','LG_QG','LH_QH','A_QA','B_QB','C_QC','D_QD','E_QE','F_QF','G_QG','H_QH'], ['OEBAR','GBAR','CLK','S_PBAR','SEBAR','CLRBAR','DS','D0','D1','A_QA','B_QB','C_QC','D_QD','E_QE','F_QF','G_QG','H_QH','D1A','D1B','D1C','D1D','D1E','D1F','D1G','D1H','OE']).Callback(this.$exe_U322LOG);
 		Connect(this.U322LOG.pins.OEBAR_I, this.pins.OEBAR_I);
 		Connect(this.U322LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.U322LOG.pins.CLK_I, this.pins.CLK_I);
@@ -7729,6 +10668,99 @@ class SN74LS322A extends Component {
 		Connect(LH_QH, this.pins.H_QH_B);
 		Connect(LH_QH, this.pins.QHP_O);
 	}
+	$exe_U322LOG() {
+		var GP, GS; // Temps
+		var OEBAR_I, GBAR_I, CLK_I, S_PBAR_I, SEBAR_I, CLRBAR_I, DS_I, D0_I, D1_I, A_QA_B, B_QB_B, C_QC_B, D_QD_B, E_QE_B, F_QF_B, G_QG_B, H_QH_B, LA_QA, LB_QB, LC_QC, LD_QD, LE_QE, LF_QF, LG_QG, LH_QH, A_QA, B_QB, C_QC, D_QD, E_QE, F_QF, G_QG, H_QH; // Inputs
+		var OEBAR, GBAR, CLK, S_PBAR, SEBAR, CLRBAR, DS, D0, D1, A_QA, B_QB, C_QC, D_QD, E_QE, F_QF, G_QG, H_QH, D1A, D1B, D1C, D1D, D1E, D1F, D1G, D1H, OE; // Outputs
+		OEBAR_I = this.U322LOG.pins.OEBAR_I.GetValue();
+		GBAR_I = this.U322LOG.pins.GBAR_I.GetValue();
+		CLK_I = this.U322LOG.pins.CLK_I.GetValue();
+		S_PBAR_I = this.U322LOG.pins.S_PBAR_I.GetValue();
+		SEBAR_I = this.U322LOG.pins.SEBAR_I.GetValue();
+		CLRBAR_I = this.U322LOG.pins.CLRBAR_I.GetValue();
+		DS_I = this.U322LOG.pins.DS_I.GetValue();
+		D0_I = this.U322LOG.pins.D0_I.GetValue();
+		D1_I = this.U322LOG.pins.D1_I.GetValue();
+		A_QA_B = this.U322LOG.pins.A_QA_B.GetValue();
+		B_QB_B = this.U322LOG.pins.B_QB_B.GetValue();
+		C_QC_B = this.U322LOG.pins.C_QC_B.GetValue();
+		D_QD_B = this.U322LOG.pins.D_QD_B.GetValue();
+		E_QE_B = this.U322LOG.pins.E_QE_B.GetValue();
+		F_QF_B = this.U322LOG.pins.F_QF_B.GetValue();
+		G_QG_B = this.U322LOG.pins.G_QG_B.GetValue();
+		H_QH_B = this.U322LOG.pins.H_QH_B.GetValue();
+		LA_QA = this.U322LOG.pins.LA_QA.GetValue();
+		LB_QB = this.U322LOG.pins.LB_QB.GetValue();
+		LC_QC = this.U322LOG.pins.LC_QC.GetValue();
+		LD_QD = this.U322LOG.pins.LD_QD.GetValue();
+		LE_QE = this.U322LOG.pins.LE_QE.GetValue();
+		LF_QF = this.U322LOG.pins.LF_QF.GetValue();
+		LG_QG = this.U322LOG.pins.LG_QG.GetValue();
+		LH_QH = this.U322LOG.pins.LH_QH.GetValue();
+		A_QA = this.U322LOG.pins.A_QA.GetValue();
+		B_QB = this.U322LOG.pins.B_QB.GetValue();
+		C_QC = this.U322LOG.pins.C_QC.GetValue();
+		D_QD = this.U322LOG.pins.D_QD.GetValue();
+		E_QE = this.U322LOG.pins.E_QE.GetValue();
+		F_QF = this.U322LOG.pins.F_QF.GetValue();
+		G_QG = this.U322LOG.pins.G_QG.GetValue();
+		H_QH = this.U322LOG.pins.H_QH.GetValue();
+		   OEBAR    =  OEBAR_I ;
+		   CLRBAR   =  CLRBAR_I ;
+		   CLK      =  CLK_I ;
+		   GBAR     =  GBAR_I ;
+		   S_PBAR   =  S_PBAR_I ;
+		   SEBAR    =  SEBAR_I ;
+		   DS       =  DS_I ;
+		   D1       =  D1_I ;
+		   D0       =  D0_I ;
+		   A_QA     =  A_QA_B ;
+		   B_QB     =  B_QB_B ;
+		   C_QC     =  C_QC_B ;
+		   D_QD     =  D_QD_B ;
+		   E_QE     =  E_QE_B ;
+		   F_QF     =  F_QF_B ;
+		   G_QG     =  G_QG_B ;
+		   H_QH     =  H_QH_B ;
+		   GP    =  !(GBAR | S_PBAR) ;
+		   GS    =  !(GBAR | !(GBAR | S_PBAR)) ;
+		   OE    =  OEBAR | GP ;
+		   D1A   =  (!DS & GS & SEBAR & D0) | (DS & GS & SEBAR & D1) |            (GP & A_QA) | (!SEBAR & GS & LA_QA) | (LA_QA & GBAR) ;
+		   D1B   =  (GS & LA_QA) | (GP & B_QB) | (GBAR & LB_QB) ;
+		   D1C   =  (GS & LB_QB) | (GP & C_QC) | (GBAR & LC_QC) ;
+		   D1D   =  (GS & LC_QC) | (GP & D_QD) | (GBAR & LD_QD) ;
+		   D1E   =  (GS & LD_QD) | (GP & E_QE) | (GBAR & LE_QE) ;
+		   D1F   =  (GS & LE_QE) | (GP & F_QF) | (GBAR & LF_QF) ;
+		   D1G   =  (GS & LF_QF) | (GP & G_QG) | (GBAR & LG_QG) ;
+		   D1H   =  (GS & LG_QG) | (GP & H_QH) | (GBAR & LH_QH) ;
+		
+		this.U322LOG.pins.OEBAR.SetValue(OEBAR);
+		this.U322LOG.pins.GBAR.SetValue(GBAR);
+		this.U322LOG.pins.CLK.SetValue(CLK);
+		this.U322LOG.pins.S_PBAR.SetValue(S_PBAR);
+		this.U322LOG.pins.SEBAR.SetValue(SEBAR);
+		this.U322LOG.pins.CLRBAR.SetValue(CLRBAR);
+		this.U322LOG.pins.DS.SetValue(DS);
+		this.U322LOG.pins.D0.SetValue(D0);
+		this.U322LOG.pins.D1.SetValue(D1);
+		this.U322LOG.pins.A_QA.SetValue(A_QA);
+		this.U322LOG.pins.B_QB.SetValue(B_QB);
+		this.U322LOG.pins.C_QC.SetValue(C_QC);
+		this.U322LOG.pins.D_QD.SetValue(D_QD);
+		this.U322LOG.pins.E_QE.SetValue(E_QE);
+		this.U322LOG.pins.F_QF.SetValue(F_QF);
+		this.U322LOG.pins.G_QG.SetValue(G_QG);
+		this.U322LOG.pins.H_QH.SetValue(H_QH);
+		this.U322LOG.pins.D1A.SetValue(D1A);
+		this.U322LOG.pins.D1B.SetValue(D1B);
+		this.U322LOG.pins.D1C.SetValue(D1C);
+		this.U322LOG.pins.D1D.SetValue(D1D);
+		this.U322LOG.pins.D1E.SetValue(D1E);
+		this.U322LOG.pins.D1F.SetValue(D1F);
+		this.U322LOG.pins.D1G.SetValue(D1G);
+		this.U322LOG.pins.D1H.SetValue(D1H);
+		this.U322LOG.pins.OE.SetValue(OE);
+	}
 }
 /**
  * 8-BIT UNIVERSAL SHIFT_STORAGE REGISTERS
@@ -7756,7 +10788,7 @@ class SN74LS323 extends Component {
 			QAP_O: new Pin(),
 			QHP_O: new Pin(),
 		}
-		this.ULS323LOG = new logicexp(['CLK_I','CLRBAR_I','S1_I','S0_I','G1BAR_I','G2BAR_I','SL_I','SR_I','A_QA_B','B_QB_B','C_QC_B','D_QD_B','E_QE_B','F_QF_B','G_QG_B','H_QH_B','LA_QA','LB_QB','LC_QC','LD_QD','LE_QE','LF_QF','LG_QG','LH_QH','A_QA','B_QB','C_QC','D_QD','E_QE','F_QF','G_QG','H_QH'], ['CLK','CLRBAR','S1','S0','G1BAR','G2BAR','SL','SR','A_QA','B_QB','C_QC','D_QD','E_QE','F_QF','G_QG','H_QH','D1A','D1B','D1C','D1D','D1E','D1F','D1G','D1H','OE'], ['SA','SB','S0S1','S0_S1','_S0S1','_S0_S1']).Logic('   CLK      =  CLK_I ;   CLRBAR   =  CLRBAR_I ;   S1       =  S1_I ;   S0       =  S0_I ;   G1BAR    =  G1BAR_I ;   G2BAR    =  G2BAR_I ;   SL       =  SL_I ;   SR       =  SR_I ;   A_QA     =  A_QA_B ;   B_QB     =  B_QB_B ;   C_QC     =  C_QC_B ;   D_QD     =  D_QD_B ;   E_QE     =  E_QE_B ;   F_QF     =  F_QF_B ;   G_QG     =  G_QG_B ;   H_QH     =  H_QH_B ;   SA     =  !(S0 | !CLRBAR) ;   SB     =  !(SA   | !CLRBAR) ;   S0S1   =  SB  & S1 ;   S0_S1  =  SB  & !S1 ;   _S0S1  =  SA  & S1 ;   _S0_S1 =  SA  & !S1 ;   D1A =  (S0_S1 & SR ) | (_S0S1 & LB_QB) | (S0S1 & A_QA) | (_S0_S1 & LA_QA) ;   D1B =  (S0_S1 & LA_QA) | (_S0S1 & LC_QC) | (S0S1 & B_QB)         | (_S0_S1 & LB_QB) ;   D1C =  (S0_S1 & LB_QB) | (_S0S1 & LD_QD) | (S0S1 & C_QC)         | (_S0_S1 & LC_QC) ;   D1D =  (S0_S1 & LC_QC) | (_S0S1 & LE_QE) | (S0S1 & D_QD)         | (_S0_S1 & LD_QD) ;   D1E =  (S0_S1 & LD_QD) | (_S0S1 & LF_QF) | (S0S1 & E_QE)         | (_S0_S1 & LE_QE) ;   D1F =  (S0_S1 & LE_QE) | (_S0S1 & LG_QG) | (S0S1 & F_QF)         | (_S0_S1 & LF_QF) ;   D1G =  (S0_S1 & LF_QF) | (_S0S1 & LH_QH) | (S0S1 & G_QG)         | (_S0_S1 & LG_QG) ;   D1H =  (S0_S1 & LG_QG) | (_S0S1 & SL ) | (S0S1 & H_QH)         | (_S0_S1 & LH_QH) ;   OE  =  G1BAR | G2BAR | (S1 & S0) ;');
+		this.ULS323LOG = new logicexp(['CLK_I','CLRBAR_I','S1_I','S0_I','G1BAR_I','G2BAR_I','SL_I','SR_I','A_QA_B','B_QB_B','C_QC_B','D_QD_B','E_QE_B','F_QF_B','G_QG_B','H_QH_B','LA_QA','LB_QB','LC_QC','LD_QD','LE_QE','LF_QF','LG_QG','LH_QH','A_QA','B_QB','C_QC','D_QD','E_QE','F_QF','G_QG','H_QH'], ['CLK','CLRBAR','S1','S0','G1BAR','G2BAR','SL','SR','A_QA','B_QB','C_QC','D_QD','E_QE','F_QF','G_QG','H_QH','D1A','D1B','D1C','D1D','D1E','D1F','D1G','D1H','OE']).Callback(this.$exe_ULS323LOG);
 		Connect(this.ULS323LOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.ULS323LOG.pins.CLRBAR_I, this.pins.CLRBAR_I);
 		Connect(this.ULS323LOG.pins.S1_I, this.pins.S1_I);
@@ -7878,6 +10910,100 @@ class SN74LS323 extends Component {
 		Connect(LA_QA, this.pins.QAP_O);
 		Connect(LH_QH, this.pins.QHP_O);
 	}
+	$exe_ULS323LOG() {
+		var SA, SB, S0S1, S0_S1, _S0S1, _S0_S1; // Temps
+		var CLK_I, CLRBAR_I, S1_I, S0_I, G1BAR_I, G2BAR_I, SL_I, SR_I, A_QA_B, B_QB_B, C_QC_B, D_QD_B, E_QE_B, F_QF_B, G_QG_B, H_QH_B, LA_QA, LB_QB, LC_QC, LD_QD, LE_QE, LF_QF, LG_QG, LH_QH, A_QA, B_QB, C_QC, D_QD, E_QE, F_QF, G_QG, H_QH; // Inputs
+		var CLK, CLRBAR, S1, S0, G1BAR, G2BAR, SL, SR, A_QA, B_QB, C_QC, D_QD, E_QE, F_QF, G_QG, H_QH, D1A, D1B, D1C, D1D, D1E, D1F, D1G, D1H, OE; // Outputs
+		CLK_I = this.ULS323LOG.pins.CLK_I.GetValue();
+		CLRBAR_I = this.ULS323LOG.pins.CLRBAR_I.GetValue();
+		S1_I = this.ULS323LOG.pins.S1_I.GetValue();
+		S0_I = this.ULS323LOG.pins.S0_I.GetValue();
+		G1BAR_I = this.ULS323LOG.pins.G1BAR_I.GetValue();
+		G2BAR_I = this.ULS323LOG.pins.G2BAR_I.GetValue();
+		SL_I = this.ULS323LOG.pins.SL_I.GetValue();
+		SR_I = this.ULS323LOG.pins.SR_I.GetValue();
+		A_QA_B = this.ULS323LOG.pins.A_QA_B.GetValue();
+		B_QB_B = this.ULS323LOG.pins.B_QB_B.GetValue();
+		C_QC_B = this.ULS323LOG.pins.C_QC_B.GetValue();
+		D_QD_B = this.ULS323LOG.pins.D_QD_B.GetValue();
+		E_QE_B = this.ULS323LOG.pins.E_QE_B.GetValue();
+		F_QF_B = this.ULS323LOG.pins.F_QF_B.GetValue();
+		G_QG_B = this.ULS323LOG.pins.G_QG_B.GetValue();
+		H_QH_B = this.ULS323LOG.pins.H_QH_B.GetValue();
+		LA_QA = this.ULS323LOG.pins.LA_QA.GetValue();
+		LB_QB = this.ULS323LOG.pins.LB_QB.GetValue();
+		LC_QC = this.ULS323LOG.pins.LC_QC.GetValue();
+		LD_QD = this.ULS323LOG.pins.LD_QD.GetValue();
+		LE_QE = this.ULS323LOG.pins.LE_QE.GetValue();
+		LF_QF = this.ULS323LOG.pins.LF_QF.GetValue();
+		LG_QG = this.ULS323LOG.pins.LG_QG.GetValue();
+		LH_QH = this.ULS323LOG.pins.LH_QH.GetValue();
+		A_QA = this.ULS323LOG.pins.A_QA.GetValue();
+		B_QB = this.ULS323LOG.pins.B_QB.GetValue();
+		C_QC = this.ULS323LOG.pins.C_QC.GetValue();
+		D_QD = this.ULS323LOG.pins.D_QD.GetValue();
+		E_QE = this.ULS323LOG.pins.E_QE.GetValue();
+		F_QF = this.ULS323LOG.pins.F_QF.GetValue();
+		G_QG = this.ULS323LOG.pins.G_QG.GetValue();
+		H_QH = this.ULS323LOG.pins.H_QH.GetValue();
+		   CLK      =  CLK_I ;
+		   CLRBAR   =  CLRBAR_I ;
+		   S1       =  S1_I ;
+		   S0       =  S0_I ;
+		   G1BAR    =  G1BAR_I ;
+		   G2BAR    =  G2BAR_I ;
+		   SL       =  SL_I ;
+		   SR       =  SR_I ;
+		   A_QA     =  A_QA_B ;
+		   B_QB     =  B_QB_B ;
+		   C_QC     =  C_QC_B ;
+		   D_QD     =  D_QD_B ;
+		   E_QE     =  E_QE_B ;
+		   F_QF     =  F_QF_B ;
+		   G_QG     =  G_QG_B ;
+		   H_QH     =  H_QH_B ;
+		   SA     =  !(S0 | !CLRBAR) ;
+		   SB     =  !(SA   | !CLRBAR) ;
+		   S0S1   =  SB  & S1 ;
+		   S0_S1  =  SB  & !S1 ;
+		   _S0S1  =  SA  & S1 ;
+		   _S0_S1 =  SA  & !S1 ;
+		   D1A =  (S0_S1 & SR ) | (_S0S1 & LB_QB) | (S0S1 & A_QA) | (_S0_S1 & LA_QA) ;
+		   D1B =  (S0_S1 & LA_QA) | (_S0S1 & LC_QC) | (S0S1 & B_QB)         | (_S0_S1 & LB_QB) ;
+		   D1C =  (S0_S1 & LB_QB) | (_S0S1 & LD_QD) | (S0S1 & C_QC)         | (_S0_S1 & LC_QC) ;
+		   D1D =  (S0_S1 & LC_QC) | (_S0S1 & LE_QE) | (S0S1 & D_QD)         | (_S0_S1 & LD_QD) ;
+		   D1E =  (S0_S1 & LD_QD) | (_S0S1 & LF_QF) | (S0S1 & E_QE)         | (_S0_S1 & LE_QE) ;
+		   D1F =  (S0_S1 & LE_QE) | (_S0S1 & LG_QG) | (S0S1 & F_QF)         | (_S0_S1 & LF_QF) ;
+		   D1G =  (S0_S1 & LF_QF) | (_S0S1 & LH_QH) | (S0S1 & G_QG)         | (_S0_S1 & LG_QG) ;
+		   D1H =  (S0_S1 & LG_QG) | (_S0S1 & SL ) | (S0S1 & H_QH)         | (_S0_S1 & LH_QH) ;
+		   OE  =  G1BAR | G2BAR | (S1 & S0) ;
+		
+		this.ULS323LOG.pins.CLK.SetValue(CLK);
+		this.ULS323LOG.pins.CLRBAR.SetValue(CLRBAR);
+		this.ULS323LOG.pins.S1.SetValue(S1);
+		this.ULS323LOG.pins.S0.SetValue(S0);
+		this.ULS323LOG.pins.G1BAR.SetValue(G1BAR);
+		this.ULS323LOG.pins.G2BAR.SetValue(G2BAR);
+		this.ULS323LOG.pins.SL.SetValue(SL);
+		this.ULS323LOG.pins.SR.SetValue(SR);
+		this.ULS323LOG.pins.A_QA.SetValue(A_QA);
+		this.ULS323LOG.pins.B_QB.SetValue(B_QB);
+		this.ULS323LOG.pins.C_QC.SetValue(C_QC);
+		this.ULS323LOG.pins.D_QD.SetValue(D_QD);
+		this.ULS323LOG.pins.E_QE.SetValue(E_QE);
+		this.ULS323LOG.pins.F_QF.SetValue(F_QF);
+		this.ULS323LOG.pins.G_QG.SetValue(G_QG);
+		this.ULS323LOG.pins.H_QH.SetValue(H_QH);
+		this.ULS323LOG.pins.D1A.SetValue(D1A);
+		this.ULS323LOG.pins.D1B.SetValue(D1B);
+		this.ULS323LOG.pins.D1C.SetValue(D1C);
+		this.ULS323LOG.pins.D1D.SetValue(D1D);
+		this.ULS323LOG.pins.D1E.SetValue(D1E);
+		this.ULS323LOG.pins.D1F.SetValue(D1F);
+		this.ULS323LOG.pins.D1G.SetValue(D1G);
+		this.ULS323LOG.pins.D1H.SetValue(D1H);
+		this.ULS323LOG.pins.OE.SetValue(OE);
+	}
 }
 /**
  * DECODER_DRIVER BCD-7 SEGMENT WITH OPEN COLLECTOR OUTPUTS
@@ -7925,7 +11051,7 @@ class SN74LS348 extends Component {
 			EO_O: new Pin(),
 			GS_O: new Pin(),
 		}
-		this.ULS348LOG = new logicexp(['EI_I','IN0_I','IN1_I','IN2_I','IN3_I','IN4_I','IN5_I','IN6_I','IN7_I'], ['EI','IN0','IN1','IN2','IN3','IN4','IN5','IN6','IN7','A0','A1','A2','EO','GS','EIEO'], ['EIBAR','IN0BAR','IN1BAR','IN2BAR','IN3BAR','IN4BAR','IN5BAR','IN6BAR','IN7BAR']).Logic(' EI     =  EI_I ; IN0    =  IN0_I ; IN1    =  IN1_I ; IN2    =  IN2_I ; IN3    =  IN3_I ; IN4    =  IN4_I ; IN5    =  IN5_I ; IN6    =  IN6_I ; IN7    =  IN7_I ; EIBAR  =  !EI ; IN0BAR =  !IN0 ; IN1BAR =  !IN1 ; IN2BAR =  !IN2 ; IN3BAR =  !IN3 ; IN4BAR =  !IN4 ; IN5BAR =  !IN5 ; IN6BAR =  !IN6 ; IN7BAR =  !IN7 ; EO     =  !(IN0 & IN1 & IN2 & IN3 & IN4 & IN5 & IN6 & IN7 & EIBAR) ; EIEO   =  EO & EIBAR ; GS     =  !EIEO ; A0     =  !(EIEO & ((IN1BAR & IN2 & IN4 & IN6) |                       (IN3BAR & IN4 & IN6) | (IN5BAR & IN6) | IN7BAR)) ; A1     =  !(EIEO & ((IN2BAR & IN4 & IN5) |                       (IN3BAR & IN4 & IN5) | IN6BAR | IN7BAR)) ; A2     =  !(EIEO & (IN4BAR | IN5BAR | IN6BAR | IN7BAR)) ;');
+		this.ULS348LOG = new logicexp(['EI_I','IN0_I','IN1_I','IN2_I','IN3_I','IN4_I','IN5_I','IN6_I','IN7_I'], ['EI','IN0','IN1','IN2','IN3','IN4','IN5','IN6','IN7','A0','A1','A2','EO','GS','EIEO']).Callback(this.$exe_ULS348LOG);
 		Connect(this.ULS348LOG.pins.EI_I, this.pins.EI_I);
 		Connect(this.ULS348LOG.pins.IN0_I, this.pins.IN0_I);
 		Connect(this.ULS348LOG.pins.IN1_I, this.pins.IN1_I);
@@ -7971,6 +11097,60 @@ class SN74LS348 extends Component {
 		Connect(GS, this.pins.GS_O);
 		Connect(EO, this.pins.EO_O);
 	}
+	$exe_ULS348LOG() {
+		var EIBAR, IN0BAR, IN1BAR, IN2BAR, IN3BAR, IN4BAR, IN5BAR, IN6BAR, IN7BAR; // Temps
+		var EI_I, IN0_I, IN1_I, IN2_I, IN3_I, IN4_I, IN5_I, IN6_I, IN7_I; // Inputs
+		var EI, IN0, IN1, IN2, IN3, IN4, IN5, IN6, IN7, A0, A1, A2, EO, GS, EIEO; // Outputs
+		EI_I = this.ULS348LOG.pins.EI_I.GetValue();
+		IN0_I = this.ULS348LOG.pins.IN0_I.GetValue();
+		IN1_I = this.ULS348LOG.pins.IN1_I.GetValue();
+		IN2_I = this.ULS348LOG.pins.IN2_I.GetValue();
+		IN3_I = this.ULS348LOG.pins.IN3_I.GetValue();
+		IN4_I = this.ULS348LOG.pins.IN4_I.GetValue();
+		IN5_I = this.ULS348LOG.pins.IN5_I.GetValue();
+		IN6_I = this.ULS348LOG.pins.IN6_I.GetValue();
+		IN7_I = this.ULS348LOG.pins.IN7_I.GetValue();
+		 EI     =  EI_I ;
+		 IN0    =  IN0_I ;
+		 IN1    =  IN1_I ;
+		 IN2    =  IN2_I ;
+		 IN3    =  IN3_I ;
+		 IN4    =  IN4_I ;
+		 IN5    =  IN5_I ;
+		 IN6    =  IN6_I ;
+		 IN7    =  IN7_I ;
+		 EIBAR  =  !EI ;
+		 IN0BAR =  !IN0 ;
+		 IN1BAR =  !IN1 ;
+		 IN2BAR =  !IN2 ;
+		 IN3BAR =  !IN3 ;
+		 IN4BAR =  !IN4 ;
+		 IN5BAR =  !IN5 ;
+		 IN6BAR =  !IN6 ;
+		 IN7BAR =  !IN7 ;
+		 EO     =  !(IN0 & IN1 & IN2 & IN3 & IN4 & IN5 & IN6 & IN7 & EIBAR) ;
+		 EIEO   =  EO & EIBAR ;
+		 GS     =  !EIEO ;
+		 A0     =  !(EIEO & ((IN1BAR & IN2 & IN4 & IN6) |                       (IN3BAR & IN4 & IN6) | (IN5BAR & IN6) | IN7BAR)) ;
+		 A1     =  !(EIEO & ((IN2BAR & IN4 & IN5) |                       (IN3BAR & IN4 & IN5) | IN6BAR | IN7BAR)) ;
+		 A2     =  !(EIEO & (IN4BAR | IN5BAR | IN6BAR | IN7BAR)) ;
+		
+		this.ULS348LOG.pins.EI.SetValue(EI);
+		this.ULS348LOG.pins.IN0.SetValue(IN0);
+		this.ULS348LOG.pins.IN1.SetValue(IN1);
+		this.ULS348LOG.pins.IN2.SetValue(IN2);
+		this.ULS348LOG.pins.IN3.SetValue(IN3);
+		this.ULS348LOG.pins.IN4.SetValue(IN4);
+		this.ULS348LOG.pins.IN5.SetValue(IN5);
+		this.ULS348LOG.pins.IN6.SetValue(IN6);
+		this.ULS348LOG.pins.IN7.SetValue(IN7);
+		this.ULS348LOG.pins.A0.SetValue(A0);
+		this.ULS348LOG.pins.A1.SetValue(A1);
+		this.ULS348LOG.pins.A2.SetValue(A2);
+		this.ULS348LOG.pins.EO.SetValue(EO);
+		this.ULS348LOG.pins.GS.SetValue(GS);
+		this.ULS348LOG.pins.EIEO.SetValue(EIEO);
+	}
 }
 /**
  * DUAL 4-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS
@@ -7994,7 +11174,7 @@ class SN74LS352 extends Component {
 			Y1_O: new Pin(),
 			Y2_O: new Pin(),
 		}
-		this.ULS352LOG = new logicexp(['G1BAR_I','G2BAR_I','A_I','B_I','_1C0_I','_1C1_I','_1C2_I','_1C3_I','_2C0_I','_2C1_I','_2C2_I','_2C3_I'], ['G1BAR','G2BAR','A','B','_1C0','_1C1','_1C2','_1C3','_2C0','_2C1','_2C2','_2C3','Y1','Y2'], ['G1','G2','ABAR','BBAR','I0','I1','I2','I3','I4','I5','I6','I7']).Logic('   G1BAR =  G1BAR_I ;   G2BAR =  G2BAR_I ;   A =  A_I ;   B =  B_I ;   _1C0 =  _1C0_I ;   _1C1 =  _1C1_I ;   _1C2 =  _1C2_I ;   _1C3 =  _1C3_I ;   _2C0 =  _2C0_I ;   _2C1 =  _2C1_I ;   _2C2 =  _2C2_I ;   _2C3 =  _2C3_I ;   G1 =  !G1BAR ;   G2 =  !G2BAR ;   ABAR =  !A ;   BBAR =  !B ;   I0 =  G1 & BBAR & ABAR & _1C0 ;   I1 =  G1 & BBAR & A    & _1C1 ;   I2 =  G1 & B    & ABAR & _1C2 ;   I3 =  G1 & B    & A    & _1C3 ;   I4 =  G2 & BBAR & ABAR & _2C0 ;   I5 =  G2 & BBAR & A    & _2C1 ;   I6 =  G2 & B    & ABAR & _2C2 ;   I7 =  G2 & B    & A    & _2C3 ;   Y1 =  !(I0 | I1 | I2 | I3) ;   Y2 =  !(I4 | I5 | I6 | I7) ;');
+		this.ULS352LOG = new logicexp(['G1BAR_I','G2BAR_I','A_I','B_I','_1C0_I','_1C1_I','_1C2_I','_1C3_I','_2C0_I','_2C1_I','_2C2_I','_2C3_I'], ['G1BAR','G2BAR','A','B','_1C0','_1C1','_1C2','_1C3','_2C0','_2C1','_2C2','_2C3','Y1','Y2']).Callback(this.$exe_ULS352LOG);
 		Connect(this.ULS352LOG.pins.G1BAR_I, this.pins.G1BAR_I);
 		Connect(this.ULS352LOG.pins.G2BAR_I, this.pins.G2BAR_I);
 		Connect(this.ULS352LOG.pins.A_I, this.pins.A_I);
@@ -8038,6 +11218,64 @@ class SN74LS352 extends Component {
 		Connect(Y1, this.pins.Y1_O);
 		Connect(Y2, this.pins.Y2_O);
 	}
+	$exe_ULS352LOG() {
+		var __1C0, __1C1, __1C2, __1C3, __2C0, __2C1, __2C2, __2C3, G1, G2, ABAR, BBAR, I0, I1, I2, I3, I4, I5, I6, I7; // Temps
+		var G1BAR_I, G2BAR_I, A_I, B_I, _1C0_I, _1C1_I, _1C2_I, _1C3_I, _2C0_I, _2C1_I, _2C2_I, _2C3_I; // Inputs
+		var G1BAR, G2BAR, A, B, _1C0, _1C1, _1C2, _1C3, _2C0, _2C1, _2C2, _2C3, Y1, Y2; // Outputs
+		G1BAR_I = this.ULS352LOG.pins.G1BAR_I.GetValue();
+		G2BAR_I = this.ULS352LOG.pins.G2BAR_I.GetValue();
+		A_I = this.ULS352LOG.pins.A_I.GetValue();
+		B_I = this.ULS352LOG.pins.B_I.GetValue();
+		_1C0_I = this.ULS352LOG.pins._1C0_I.GetValue();
+		_1C1_I = this.ULS352LOG.pins._1C1_I.GetValue();
+		_1C2_I = this.ULS352LOG.pins._1C2_I.GetValue();
+		_1C3_I = this.ULS352LOG.pins._1C3_I.GetValue();
+		_2C0_I = this.ULS352LOG.pins._2C0_I.GetValue();
+		_2C1_I = this.ULS352LOG.pins._2C1_I.GetValue();
+		_2C2_I = this.ULS352LOG.pins._2C2_I.GetValue();
+		_2C3_I = this.ULS352LOG.pins._2C3_I.GetValue();
+		   G1BAR =  G1BAR_I ;
+		   G2BAR =  G2BAR_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   __1C0 =  ___1C0_I ;
+		   __1C1 =  ___1C1_I ;
+		   __1C2 =  ___1C2_I ;
+		   __1C3 =  ___1C3_I ;
+		   __2C0 =  ___2C0_I ;
+		   __2C1 =  ___2C1_I ;
+		   __2C2 =  ___2C2_I ;
+		   __2C3 =  ___2C3_I ;
+		   G1 =  !G1BAR ;
+		   G2 =  !G2BAR ;
+		   ABAR =  !A ;
+		   BBAR =  !B ;
+		   I0 =  G1 & BBAR & ABAR & __1C0 ;
+		   I1 =  G1 & BBAR & A    & __1C1 ;
+		   I2 =  G1 & B    & ABAR & __1C2 ;
+		   I3 =  G1 & B    & A    & __1C3 ;
+		   I4 =  G2 & BBAR & ABAR & __2C0 ;
+		   I5 =  G2 & BBAR & A    & __2C1 ;
+		   I6 =  G2 & B    & ABAR & __2C2 ;
+		   I7 =  G2 & B    & A    & __2C3 ;
+		   Y1 =  !(I0 | I1 | I2 | I3) ;
+		   Y2 =  !(I4 | I5 | I6 | I7) ;
+		
+		this.ULS352LOG.pins.G1BAR.SetValue(G1BAR);
+		this.ULS352LOG.pins.G2BAR.SetValue(G2BAR);
+		this.ULS352LOG.pins.A.SetValue(A);
+		this.ULS352LOG.pins.B.SetValue(B);
+		this.ULS352LOG.pins._1C0.SetValue(_1C0);
+		this.ULS352LOG.pins._1C1.SetValue(_1C1);
+		this.ULS352LOG.pins._1C2.SetValue(_1C2);
+		this.ULS352LOG.pins._1C3.SetValue(_1C3);
+		this.ULS352LOG.pins._2C0.SetValue(_2C0);
+		this.ULS352LOG.pins._2C1.SetValue(_2C1);
+		this.ULS352LOG.pins._2C2.SetValue(_2C2);
+		this.ULS352LOG.pins._2C3.SetValue(_2C3);
+		this.ULS352LOG.pins.Y1.SetValue(Y1);
+		this.ULS352LOG.pins.Y2.SetValue(Y2);
+	}
 }
 /**
  * DUAL 1-OF-4 DATA SELECTORS_MULTIPLEXERS WITH 3-STATE OUTPUTS
@@ -8061,7 +11299,7 @@ class SN74LS353 extends Component {
 			Y1_O: new Pin(),
 			Y2_O: new Pin(),
 		}
-		this.ULS353LOG = new logicexp(['G1BAR_I','G2BAR_I','A_I','B_I','_1C0_I','_1C1_I','_1C2_I','_1C3_I','_2C0_I','_2C1_I','_2C2_I','_2C3_I'], ['G1BAR','G2BAR','A','B','_1C0','_1C1','_1C2','_1C3','_2C0','_2C1','_2C2','_2C3','Y1','Y2'], ['G1','G2','ABAR','BBAR','I0','I1','I2','I3','I4','I5','I6','I7']).Logic('   G1BAR =  G1BAR_I ;   G2BAR =  G2BAR_I ;   A =  A_I ;   B =  B_I ;   _1C0 =  _1C0_I ;   _1C1 =  _1C1_I ;   _1C2 =  _1C2_I ;   _1C3 =  _1C3_I ;   _2C0 =  _2C0_I ;   _2C1 =  _2C1_I ;   _2C2 =  _2C2_I ;   _2C3 =  _2C3_I ;   G1 =  !G1BAR ;   G2 =  !G2BAR ;   ABAR =  !A ;   BBAR =  !B ;   I0 =  G1 & BBAR & ABAR & _1C0 ;   I1 =  G1 & BBAR & A    & _1C1 ;   I2 =  G1 & B    & ABAR & _1C2 ;   I3 =  G1 & B    & A    & _1C3 ;   I4 =  G2 & BBAR & ABAR & _2C0 ;   I5 =  G2 & BBAR & A    & _2C1 ;   I6 =  G2 & B    & ABAR & _2C2 ;   I7 =  G2 & B    & A    & _2C3 ;   Y1 =  !(I0 | I1 | I2 | I3) ;   Y2 =  !(I4 | I5 | I6 | I7) ;');
+		this.ULS353LOG = new logicexp(['G1BAR_I','G2BAR_I','A_I','B_I','_1C0_I','_1C1_I','_1C2_I','_1C3_I','_2C0_I','_2C1_I','_2C2_I','_2C3_I'], ['G1BAR','G2BAR','A','B','_1C0','_1C1','_1C2','_1C3','_2C0','_2C1','_2C2','_2C3','Y1','Y2']).Callback(this.$exe_ULS353LOG);
 		Connect(this.ULS353LOG.pins.G1BAR_I, this.pins.G1BAR_I);
 		Connect(this.ULS353LOG.pins.G2BAR_I, this.pins.G2BAR_I);
 		Connect(this.ULS353LOG.pins.A_I, this.pins.A_I);
@@ -8105,6 +11343,64 @@ class SN74LS353 extends Component {
 		Connect(Y1, this.pins.Y1_O);
 		Connect(Y2, this.pins.Y2_O);
 	}
+	$exe_ULS353LOG() {
+		var __1C0, __1C1, __1C2, __1C3, __2C0, __2C1, __2C2, __2C3, G1, G2, ABAR, BBAR, I0, I1, I2, I3, I4, I5, I6, I7; // Temps
+		var G1BAR_I, G2BAR_I, A_I, B_I, _1C0_I, _1C1_I, _1C2_I, _1C3_I, _2C0_I, _2C1_I, _2C2_I, _2C3_I; // Inputs
+		var G1BAR, G2BAR, A, B, _1C0, _1C1, _1C2, _1C3, _2C0, _2C1, _2C2, _2C3, Y1, Y2; // Outputs
+		G1BAR_I = this.ULS353LOG.pins.G1BAR_I.GetValue();
+		G2BAR_I = this.ULS353LOG.pins.G2BAR_I.GetValue();
+		A_I = this.ULS353LOG.pins.A_I.GetValue();
+		B_I = this.ULS353LOG.pins.B_I.GetValue();
+		_1C0_I = this.ULS353LOG.pins._1C0_I.GetValue();
+		_1C1_I = this.ULS353LOG.pins._1C1_I.GetValue();
+		_1C2_I = this.ULS353LOG.pins._1C2_I.GetValue();
+		_1C3_I = this.ULS353LOG.pins._1C3_I.GetValue();
+		_2C0_I = this.ULS353LOG.pins._2C0_I.GetValue();
+		_2C1_I = this.ULS353LOG.pins._2C1_I.GetValue();
+		_2C2_I = this.ULS353LOG.pins._2C2_I.GetValue();
+		_2C3_I = this.ULS353LOG.pins._2C3_I.GetValue();
+		   G1BAR =  G1BAR_I ;
+		   G2BAR =  G2BAR_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   __1C0 =  ___1C0_I ;
+		   __1C1 =  ___1C1_I ;
+		   __1C2 =  ___1C2_I ;
+		   __1C3 =  ___1C3_I ;
+		   __2C0 =  ___2C0_I ;
+		   __2C1 =  ___2C1_I ;
+		   __2C2 =  ___2C2_I ;
+		   __2C3 =  ___2C3_I ;
+		   G1 =  !G1BAR ;
+		   G2 =  !G2BAR ;
+		   ABAR =  !A ;
+		   BBAR =  !B ;
+		   I0 =  G1 & BBAR & ABAR & __1C0 ;
+		   I1 =  G1 & BBAR & A    & __1C1 ;
+		   I2 =  G1 & B    & ABAR & __1C2 ;
+		   I3 =  G1 & B    & A    & __1C3 ;
+		   I4 =  G2 & BBAR & ABAR & __2C0 ;
+		   I5 =  G2 & BBAR & A    & __2C1 ;
+		   I6 =  G2 & B    & ABAR & __2C2 ;
+		   I7 =  G2 & B    & A    & __2C3 ;
+		   Y1 =  !(I0 | I1 | I2 | I3) ;
+		   Y2 =  !(I4 | I5 | I6 | I7) ;
+		
+		this.ULS353LOG.pins.G1BAR.SetValue(G1BAR);
+		this.ULS353LOG.pins.G2BAR.SetValue(G2BAR);
+		this.ULS353LOG.pins.A.SetValue(A);
+		this.ULS353LOG.pins.B.SetValue(B);
+		this.ULS353LOG.pins._1C0.SetValue(_1C0);
+		this.ULS353LOG.pins._1C1.SetValue(_1C1);
+		this.ULS353LOG.pins._1C2.SetValue(_1C2);
+		this.ULS353LOG.pins._1C3.SetValue(_1C3);
+		this.ULS353LOG.pins._2C0.SetValue(_2C0);
+		this.ULS353LOG.pins._2C1.SetValue(_2C1);
+		this.ULS353LOG.pins._2C2.SetValue(_2C2);
+		this.ULS353LOG.pins._2C3.SetValue(_2C3);
+		this.ULS353LOG.pins.Y1.SetValue(Y1);
+		this.ULS353LOG.pins.Y2.SetValue(Y2);
+	}
 }
 /**
  * 4-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS_REGISTERS
@@ -8132,7 +11428,7 @@ class SN74LS354 extends Component {
 			Y_O: new Pin(),
 			W_O: new Pin(),
 		}
-		this.ULS354LOG = new logicexp(['G1BAR_I','G2BAR_I','G3_I','SCBAR_I','S0_I','S1_I','S2_I','DCBAR_I','D0_I','D1_I','D2_I','D3_I','D4_I','D5_I','D6_I','D7_I','QS2','QS2BAR','QS1','QS1BAR','QS0','QS0BAR','Q0','Q1','Q2','Q3','Q4','Q5','Q6','Q7'], ['G1BAR','G2BAR','G3','SCBAR','S0','S1','S2','DCBAR','D0','D1','D2','D3','D4','D5','D6','D7','Y','W','ENABLE13','DC','SC'], []).Logic('   D0     =  D0_I ;   D1     =  D1_I ;   D2     =  D2_I ;   D3     =  D3_I ;   D4     =  D4_I ;   D5     =  D5_I ;   D6     =  D6_I ;   D7     =  D7_I ;   G1BAR  =  G1BAR_I ;   G2BAR  =  G2BAR_I ;   G3     =  G3_I ;   SCBAR  =  SCBAR_I ;   SC     =  !SCBAR ;   S0     =  S0_I ;   S1     =  S1_I ;   S2     =  S2_I ;   DCBAR  =  DCBAR_I ;   DC     =  !DCBAR ;   ENABLE13 =  !G1BAR & !G2BAR & G3 ;   Y      =  (QS2BAR & QS1BAR & QS0BAR & Q0) |              (QS2BAR & QS1BAR & QS0    & Q1) |              (QS2BAR & QS1    & QS0BAR & Q2) |              (QS2BAR & QS1    & QS0    & Q3) |              (QS2    & QS1BAR & QS0BAR & Q4) |              (QS2    & QS1BAR & QS0    & Q5) |              (QS2    & QS1    & QS0BAR & Q6) |              (QS2    & QS1    & QS0    & Q7) ;   W      =  !Y ;');
+		this.ULS354LOG = new logicexp(['G1BAR_I','G2BAR_I','G3_I','SCBAR_I','S0_I','S1_I','S2_I','DCBAR_I','D0_I','D1_I','D2_I','D3_I','D4_I','D5_I','D6_I','D7_I','QS2','QS2BAR','QS1','QS1BAR','QS0','QS0BAR','Q0','Q1','Q2','Q3','Q4','Q5','Q6','Q7'], ['G1BAR','G2BAR','G3','SCBAR','S0','S1','S2','DCBAR','D0','D1','D2','D3','D4','D5','D6','D7','Y','W','ENABLE13','DC','SC']).Callback(this.$exe_ULS354LOG);
 		Connect(this.ULS354LOG.pins.G1BAR_I, this.pins.G1BAR_I);
 		Connect(this.ULS354LOG.pins.G2BAR_I, this.pins.G2BAR_I);
 		Connect(this.ULS354LOG.pins.G3_I, this.pins.G3_I);
@@ -8263,6 +11559,83 @@ class SN74LS354 extends Component {
 		Connect(Y, this.pins.Y_O);
 		Connect(W, this.pins.W_O);
 	}
+	$exe_ULS354LOG() {
+		var G1BAR_I, G2BAR_I, G3_I, SCBAR_I, S0_I, S1_I, S2_I, DCBAR_I, D0_I, D1_I, D2_I, D3_I, D4_I, D5_I, D6_I, D7_I, QS2, QS2BAR, QS1, QS1BAR, QS0, QS0BAR, Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7; // Inputs
+		var G1BAR, G2BAR, G3, SCBAR, S0, S1, S2, DCBAR, D0, D1, D2, D3, D4, D5, D6, D7, Y, W, ENABLE13, DC, SC; // Outputs
+		G1BAR_I = this.ULS354LOG.pins.G1BAR_I.GetValue();
+		G2BAR_I = this.ULS354LOG.pins.G2BAR_I.GetValue();
+		G3_I = this.ULS354LOG.pins.G3_I.GetValue();
+		SCBAR_I = this.ULS354LOG.pins.SCBAR_I.GetValue();
+		S0_I = this.ULS354LOG.pins.S0_I.GetValue();
+		S1_I = this.ULS354LOG.pins.S1_I.GetValue();
+		S2_I = this.ULS354LOG.pins.S2_I.GetValue();
+		DCBAR_I = this.ULS354LOG.pins.DCBAR_I.GetValue();
+		D0_I = this.ULS354LOG.pins.D0_I.GetValue();
+		D1_I = this.ULS354LOG.pins.D1_I.GetValue();
+		D2_I = this.ULS354LOG.pins.D2_I.GetValue();
+		D3_I = this.ULS354LOG.pins.D3_I.GetValue();
+		D4_I = this.ULS354LOG.pins.D4_I.GetValue();
+		D5_I = this.ULS354LOG.pins.D5_I.GetValue();
+		D6_I = this.ULS354LOG.pins.D6_I.GetValue();
+		D7_I = this.ULS354LOG.pins.D7_I.GetValue();
+		QS2 = this.ULS354LOG.pins.QS2.GetValue();
+		QS2BAR = this.ULS354LOG.pins.QS2BAR.GetValue();
+		QS1 = this.ULS354LOG.pins.QS1.GetValue();
+		QS1BAR = this.ULS354LOG.pins.QS1BAR.GetValue();
+		QS0 = this.ULS354LOG.pins.QS0.GetValue();
+		QS0BAR = this.ULS354LOG.pins.QS0BAR.GetValue();
+		Q0 = this.ULS354LOG.pins.Q0.GetValue();
+		Q1 = this.ULS354LOG.pins.Q1.GetValue();
+		Q2 = this.ULS354LOG.pins.Q2.GetValue();
+		Q3 = this.ULS354LOG.pins.Q3.GetValue();
+		Q4 = this.ULS354LOG.pins.Q4.GetValue();
+		Q5 = this.ULS354LOG.pins.Q5.GetValue();
+		Q6 = this.ULS354LOG.pins.Q6.GetValue();
+		Q7 = this.ULS354LOG.pins.Q7.GetValue();
+		   D0     =  D0_I ;
+		   D1     =  D1_I ;
+		   D2     =  D2_I ;
+		   D3     =  D3_I ;
+		   D4     =  D4_I ;
+		   D5     =  D5_I ;
+		   D6     =  D6_I ;
+		   D7     =  D7_I ;
+		   G1BAR  =  G1BAR_I ;
+		   G2BAR  =  G2BAR_I ;
+		   G3     =  G3_I ;
+		   SCBAR  =  SCBAR_I ;
+		   SC     =  !SCBAR ;
+		   S0     =  S0_I ;
+		   S1     =  S1_I ;
+		   S2     =  S2_I ;
+		   DCBAR  =  DCBAR_I ;
+		   DC     =  !DCBAR ;
+		   ENABLE13 =  !G1BAR & !G2BAR & G3 ;
+		   Y      =  (QS2BAR & QS1BAR & QS0BAR & Q0) |              (QS2BAR & QS1BAR & QS0    & Q1) |              (QS2BAR & QS1    & QS0BAR & Q2) |              (QS2BAR & QS1    & QS0    & Q3) |              (QS2    & QS1BAR & QS0BAR & Q4) |              (QS2    & QS1BAR & QS0    & Q5) |              (QS2    & QS1    & QS0BAR & Q6) |              (QS2    & QS1    & QS0    & Q7) ;
+		   W      =  !Y ;
+		
+		this.ULS354LOG.pins.G1BAR.SetValue(G1BAR);
+		this.ULS354LOG.pins.G2BAR.SetValue(G2BAR);
+		this.ULS354LOG.pins.G3.SetValue(G3);
+		this.ULS354LOG.pins.SCBAR.SetValue(SCBAR);
+		this.ULS354LOG.pins.S0.SetValue(S0);
+		this.ULS354LOG.pins.S1.SetValue(S1);
+		this.ULS354LOG.pins.S2.SetValue(S2);
+		this.ULS354LOG.pins.DCBAR.SetValue(DCBAR);
+		this.ULS354LOG.pins.D0.SetValue(D0);
+		this.ULS354LOG.pins.D1.SetValue(D1);
+		this.ULS354LOG.pins.D2.SetValue(D2);
+		this.ULS354LOG.pins.D3.SetValue(D3);
+		this.ULS354LOG.pins.D4.SetValue(D4);
+		this.ULS354LOG.pins.D5.SetValue(D5);
+		this.ULS354LOG.pins.D6.SetValue(D6);
+		this.ULS354LOG.pins.D7.SetValue(D7);
+		this.ULS354LOG.pins.Y.SetValue(Y);
+		this.ULS354LOG.pins.W.SetValue(W);
+		this.ULS354LOG.pins.ENABLE13.SetValue(ENABLE13);
+		this.ULS354LOG.pins.DC.SetValue(DC);
+		this.ULS354LOG.pins.SC.SetValue(SC);
+	}
 }
 /**
  * 8-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS_REGISTERS WITH
@@ -8290,7 +11663,7 @@ class SN74LS355 extends Component {
 			Y_O: new Pin(),
 			W_O: new Pin(),
 		}
-		this.ULS355LOG = new logicexp(['G1BAR_I','G2BAR_I','G3_I','SCBAR_I','S0_I','S1_I','S2_I','DCBAR_I','D0_I','D1_I','D2_I','D3_I','D4_I','D5_I','D6_I','D7_I','QS2','QS2BAR','QS1','QS1BAR','QS0','QS0BAR','Q0','Q1','Q2','Q3','Q4','Q5','Q6','Q7'], ['G1BAR','G2BAR','G3','SCBAR','S0','S1','S2','DCBAR','D0','D1','D2','D3','D4','D5','D6','D7','Y','W','DC','SC'], ['Y_INTERNAL','W_INTERNAL','ENABLEBAR']).Logic('   D0     =  D0_I ;   D1     =  D1_I ;   D2     =  D2_I ;   D3     =  D3_I ;   D4     =  D4_I ;   D5     =  D5_I ;   D6     =  D6_I ;   D7     =  D7_I ;   G1BAR  =  G1BAR_I ;   G2BAR  =  G2BAR_I ;   G3     =  G3_I ;   SCBAR  =  SCBAR_I ;   SC     =  !SCBAR ;   S0     =  S0_I ;   S1     =  S1_I ;   S2     =  S2_I ;   DCBAR  =  DCBAR_I ;   DC     =  !DCBAR ;   Y_INTERNAL =  (QS2BAR & QS1BAR & QS0BAR & Q0) |                  (QS2BAR & QS1BAR & QS0    & Q1) |                  (QS2BAR & QS1    & QS0BAR & Q2) |                  (QS2BAR & QS1    & QS0    & Q3) |                  (QS2    & QS1BAR & QS0BAR & Q4) |                  (QS2    & QS1BAR & QS0    & Q5) |                  (QS2    & QS1    & QS0BAR & Q6) |                  (QS2    & QS1    & QS0    & Q7) ;   W_INTERNAL  =  !Y_INTERNAL ;   ENABLEBAR =  G1BAR | G2BAR | !G3 ;   Y =  Y_INTERNAL | ENABLEBAR ;   W =  W_INTERNAL | ENABLEBAR ;');
+		this.ULS355LOG = new logicexp(['G1BAR_I','G2BAR_I','G3_I','SCBAR_I','S0_I','S1_I','S2_I','DCBAR_I','D0_I','D1_I','D2_I','D3_I','D4_I','D5_I','D6_I','D7_I','QS2','QS2BAR','QS1','QS1BAR','QS0','QS0BAR','Q0','Q1','Q2','Q3','Q4','Q5','Q6','Q7'], ['G1BAR','G2BAR','G3','SCBAR','S0','S1','S2','DCBAR','D0','D1','D2','D3','D4','D5','D6','D7','Y','W','DC','SC']).Callback(this.$exe_ULS355LOG);
 		Connect(this.ULS355LOG.pins.G1BAR_I, this.pins.G1BAR_I);
 		Connect(this.ULS355LOG.pins.G2BAR_I, this.pins.G2BAR_I);
 		Connect(this.ULS355LOG.pins.G3_I, this.pins.G3_I);
@@ -8419,6 +11792,85 @@ class SN74LS355 extends Component {
 		Connect(Y, this.pins.Y_O);
 		Connect(W, this.pins.W_O);
 	}
+	$exe_ULS355LOG() {
+		var Y_INTERNAL, W_INTERNAL, ENABLEBAR; // Temps
+		var G1BAR_I, G2BAR_I, G3_I, SCBAR_I, S0_I, S1_I, S2_I, DCBAR_I, D0_I, D1_I, D2_I, D3_I, D4_I, D5_I, D6_I, D7_I, QS2, QS2BAR, QS1, QS1BAR, QS0, QS0BAR, Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7; // Inputs
+		var G1BAR, G2BAR, G3, SCBAR, S0, S1, S2, DCBAR, D0, D1, D2, D3, D4, D5, D6, D7, Y, W, DC, SC; // Outputs
+		G1BAR_I = this.ULS355LOG.pins.G1BAR_I.GetValue();
+		G2BAR_I = this.ULS355LOG.pins.G2BAR_I.GetValue();
+		G3_I = this.ULS355LOG.pins.G3_I.GetValue();
+		SCBAR_I = this.ULS355LOG.pins.SCBAR_I.GetValue();
+		S0_I = this.ULS355LOG.pins.S0_I.GetValue();
+		S1_I = this.ULS355LOG.pins.S1_I.GetValue();
+		S2_I = this.ULS355LOG.pins.S2_I.GetValue();
+		DCBAR_I = this.ULS355LOG.pins.DCBAR_I.GetValue();
+		D0_I = this.ULS355LOG.pins.D0_I.GetValue();
+		D1_I = this.ULS355LOG.pins.D1_I.GetValue();
+		D2_I = this.ULS355LOG.pins.D2_I.GetValue();
+		D3_I = this.ULS355LOG.pins.D3_I.GetValue();
+		D4_I = this.ULS355LOG.pins.D4_I.GetValue();
+		D5_I = this.ULS355LOG.pins.D5_I.GetValue();
+		D6_I = this.ULS355LOG.pins.D6_I.GetValue();
+		D7_I = this.ULS355LOG.pins.D7_I.GetValue();
+		QS2 = this.ULS355LOG.pins.QS2.GetValue();
+		QS2BAR = this.ULS355LOG.pins.QS2BAR.GetValue();
+		QS1 = this.ULS355LOG.pins.QS1.GetValue();
+		QS1BAR = this.ULS355LOG.pins.QS1BAR.GetValue();
+		QS0 = this.ULS355LOG.pins.QS0.GetValue();
+		QS0BAR = this.ULS355LOG.pins.QS0BAR.GetValue();
+		Q0 = this.ULS355LOG.pins.Q0.GetValue();
+		Q1 = this.ULS355LOG.pins.Q1.GetValue();
+		Q2 = this.ULS355LOG.pins.Q2.GetValue();
+		Q3 = this.ULS355LOG.pins.Q3.GetValue();
+		Q4 = this.ULS355LOG.pins.Q4.GetValue();
+		Q5 = this.ULS355LOG.pins.Q5.GetValue();
+		Q6 = this.ULS355LOG.pins.Q6.GetValue();
+		Q7 = this.ULS355LOG.pins.Q7.GetValue();
+		   D0     =  D0_I ;
+		   D1     =  D1_I ;
+		   D2     =  D2_I ;
+		   D3     =  D3_I ;
+		   D4     =  D4_I ;
+		   D5     =  D5_I ;
+		   D6     =  D6_I ;
+		   D7     =  D7_I ;
+		   G1BAR  =  G1BAR_I ;
+		   G2BAR  =  G2BAR_I ;
+		   G3     =  G3_I ;
+		   SCBAR  =  SCBAR_I ;
+		   SC     =  !SCBAR ;
+		   S0     =  S0_I ;
+		   S1     =  S1_I ;
+		   S2     =  S2_I ;
+		   DCBAR  =  DCBAR_I ;
+		   DC     =  !DCBAR ;
+		   Y_INTERNAL =  (QS2BAR & QS1BAR & QS0BAR & Q0) |                  (QS2BAR & QS1BAR & QS0    & Q1) |                  (QS2BAR & QS1    & QS0BAR & Q2) |                  (QS2BAR & QS1    & QS0    & Q3) |                  (QS2    & QS1BAR & QS0BAR & Q4) |                  (QS2    & QS1BAR & QS0    & Q5) |                  (QS2    & QS1    & QS0BAR & Q6) |                  (QS2    & QS1    & QS0    & Q7) ;
+		   W_INTERNAL  =  !Y_INTERNAL ;
+		   ENABLEBAR =  G1BAR | G2BAR | !G3 ;
+		   Y =  Y_INTERNAL | ENABLEBAR ;
+		   W =  W_INTERNAL | ENABLEBAR ;
+		
+		this.ULS355LOG.pins.G1BAR.SetValue(G1BAR);
+		this.ULS355LOG.pins.G2BAR.SetValue(G2BAR);
+		this.ULS355LOG.pins.G3.SetValue(G3);
+		this.ULS355LOG.pins.SCBAR.SetValue(SCBAR);
+		this.ULS355LOG.pins.S0.SetValue(S0);
+		this.ULS355LOG.pins.S1.SetValue(S1);
+		this.ULS355LOG.pins.S2.SetValue(S2);
+		this.ULS355LOG.pins.DCBAR.SetValue(DCBAR);
+		this.ULS355LOG.pins.D0.SetValue(D0);
+		this.ULS355LOG.pins.D1.SetValue(D1);
+		this.ULS355LOG.pins.D2.SetValue(D2);
+		this.ULS355LOG.pins.D3.SetValue(D3);
+		this.ULS355LOG.pins.D4.SetValue(D4);
+		this.ULS355LOG.pins.D5.SetValue(D5);
+		this.ULS355LOG.pins.D6.SetValue(D6);
+		this.ULS355LOG.pins.D7.SetValue(D7);
+		this.ULS355LOG.pins.Y.SetValue(Y);
+		this.ULS355LOG.pins.W.SetValue(W);
+		this.ULS355LOG.pins.DC.SetValue(DC);
+		this.ULS355LOG.pins.SC.SetValue(SC);
+	}
 }
 /**
  * 4-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS_REGISTERS
@@ -8446,7 +11898,7 @@ class SN74LS356 extends Component {
 			Y_O: new Pin(),
 			W_O: new Pin(),
 		}
-		this.ULS356LOG = new logicexp(['G1BAR_I','G2BAR_I','G3_I','SCBAR_I','S0_I','S1_I','S2_I','CLK_I','D0_I','D1_I','D2_I','D3_I','D4_I','D5_I','D6_I','D7_I','QS2','QS2BAR','QS1','QS1BAR','QS0','QS0BAR','Q0','Q1','Q2','Q3','Q4','Q5','Q6','Q7'], ['G1BAR','G2BAR','G3','SCBAR','S0','S1','S2','CLK','D0','D1','D2','D3','D4','D5','D6','D7','Y','W','ENABLE13','SC'], []).Logic('   D0     =  D0_I ;   D1     =  D1_I ;   D2     =  D2_I ;   D3     =  D3_I ;   D4     =  D4_I ;   D5     =  D5_I ;   D6     =  D6_I ;   D7     =  D7_I ;   G1BAR  =  G1BAR_I ;   G2BAR  =  G2BAR_I ;   G3     =  G3_I ;   SCBAR  =  SCBAR_I ;   SC     =  !SCBAR ;   S0     =  S0_I ;   S1     =  S1_I ;   S2     =  S2_I ;   CLK  =  CLK_I ;   ENABLE13 =  !G1BAR & !G2BAR & G3 ;   Y      =  (QS2BAR & QS1BAR & QS0BAR & Q0) |              (QS2BAR & QS1BAR & QS0    & Q1) |              (QS2BAR & QS1    & QS0BAR & Q2) |              (QS2BAR & QS1    & QS0    & Q3) |              (QS2    & QS1BAR & QS0BAR & Q4) |              (QS2    & QS1BAR & QS0    & Q5) |              (QS2    & QS1    & QS0BAR & Q6) |              (QS2    & QS1    & QS0    & Q7) ;   W      =  !Y ;');
+		this.ULS356LOG = new logicexp(['G1BAR_I','G2BAR_I','G3_I','SCBAR_I','S0_I','S1_I','S2_I','CLK_I','D0_I','D1_I','D2_I','D3_I','D4_I','D5_I','D6_I','D7_I','QS2','QS2BAR','QS1','QS1BAR','QS0','QS0BAR','Q0','Q1','Q2','Q3','Q4','Q5','Q6','Q7'], ['G1BAR','G2BAR','G3','SCBAR','S0','S1','S2','CLK','D0','D1','D2','D3','D4','D5','D6','D7','Y','W','ENABLE13','SC']).Callback(this.$exe_ULS356LOG);
 		Connect(this.ULS356LOG.pins.G1BAR_I, this.pins.G1BAR_I);
 		Connect(this.ULS356LOG.pins.G2BAR_I, this.pins.G2BAR_I);
 		Connect(this.ULS356LOG.pins.G3_I, this.pins.G3_I);
@@ -8575,6 +12027,81 @@ class SN74LS356 extends Component {
 		Connect(Y, this.pins.Y_O);
 		Connect(W, this.pins.W_O);
 	}
+	$exe_ULS356LOG() {
+		var G1BAR_I, G2BAR_I, G3_I, SCBAR_I, S0_I, S1_I, S2_I, CLK_I, D0_I, D1_I, D2_I, D3_I, D4_I, D5_I, D6_I, D7_I, QS2, QS2BAR, QS1, QS1BAR, QS0, QS0BAR, Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7; // Inputs
+		var G1BAR, G2BAR, G3, SCBAR, S0, S1, S2, CLK, D0, D1, D2, D3, D4, D5, D6, D7, Y, W, ENABLE13, SC; // Outputs
+		G1BAR_I = this.ULS356LOG.pins.G1BAR_I.GetValue();
+		G2BAR_I = this.ULS356LOG.pins.G2BAR_I.GetValue();
+		G3_I = this.ULS356LOG.pins.G3_I.GetValue();
+		SCBAR_I = this.ULS356LOG.pins.SCBAR_I.GetValue();
+		S0_I = this.ULS356LOG.pins.S0_I.GetValue();
+		S1_I = this.ULS356LOG.pins.S1_I.GetValue();
+		S2_I = this.ULS356LOG.pins.S2_I.GetValue();
+		CLK_I = this.ULS356LOG.pins.CLK_I.GetValue();
+		D0_I = this.ULS356LOG.pins.D0_I.GetValue();
+		D1_I = this.ULS356LOG.pins.D1_I.GetValue();
+		D2_I = this.ULS356LOG.pins.D2_I.GetValue();
+		D3_I = this.ULS356LOG.pins.D3_I.GetValue();
+		D4_I = this.ULS356LOG.pins.D4_I.GetValue();
+		D5_I = this.ULS356LOG.pins.D5_I.GetValue();
+		D6_I = this.ULS356LOG.pins.D6_I.GetValue();
+		D7_I = this.ULS356LOG.pins.D7_I.GetValue();
+		QS2 = this.ULS356LOG.pins.QS2.GetValue();
+		QS2BAR = this.ULS356LOG.pins.QS2BAR.GetValue();
+		QS1 = this.ULS356LOG.pins.QS1.GetValue();
+		QS1BAR = this.ULS356LOG.pins.QS1BAR.GetValue();
+		QS0 = this.ULS356LOG.pins.QS0.GetValue();
+		QS0BAR = this.ULS356LOG.pins.QS0BAR.GetValue();
+		Q0 = this.ULS356LOG.pins.Q0.GetValue();
+		Q1 = this.ULS356LOG.pins.Q1.GetValue();
+		Q2 = this.ULS356LOG.pins.Q2.GetValue();
+		Q3 = this.ULS356LOG.pins.Q3.GetValue();
+		Q4 = this.ULS356LOG.pins.Q4.GetValue();
+		Q5 = this.ULS356LOG.pins.Q5.GetValue();
+		Q6 = this.ULS356LOG.pins.Q6.GetValue();
+		Q7 = this.ULS356LOG.pins.Q7.GetValue();
+		   D0     =  D0_I ;
+		   D1     =  D1_I ;
+		   D2     =  D2_I ;
+		   D3     =  D3_I ;
+		   D4     =  D4_I ;
+		   D5     =  D5_I ;
+		   D6     =  D6_I ;
+		   D7     =  D7_I ;
+		   G1BAR  =  G1BAR_I ;
+		   G2BAR  =  G2BAR_I ;
+		   G3     =  G3_I ;
+		   SCBAR  =  SCBAR_I ;
+		   SC     =  !SCBAR ;
+		   S0     =  S0_I ;
+		   S1     =  S1_I ;
+		   S2     =  S2_I ;
+		   CLK  =  CLK_I ;
+		   ENABLE13 =  !G1BAR & !G2BAR & G3 ;
+		   Y      =  (QS2BAR & QS1BAR & QS0BAR & Q0) |              (QS2BAR & QS1BAR & QS0    & Q1) |              (QS2BAR & QS1    & QS0BAR & Q2) |              (QS2BAR & QS1    & QS0    & Q3) |              (QS2    & QS1BAR & QS0BAR & Q4) |              (QS2    & QS1BAR & QS0    & Q5) |              (QS2    & QS1    & QS0BAR & Q6) |              (QS2    & QS1    & QS0    & Q7) ;
+		   W      =  !Y ;
+		
+		this.ULS356LOG.pins.G1BAR.SetValue(G1BAR);
+		this.ULS356LOG.pins.G2BAR.SetValue(G2BAR);
+		this.ULS356LOG.pins.G3.SetValue(G3);
+		this.ULS356LOG.pins.SCBAR.SetValue(SCBAR);
+		this.ULS356LOG.pins.S0.SetValue(S0);
+		this.ULS356LOG.pins.S1.SetValue(S1);
+		this.ULS356LOG.pins.S2.SetValue(S2);
+		this.ULS356LOG.pins.CLK.SetValue(CLK);
+		this.ULS356LOG.pins.D0.SetValue(D0);
+		this.ULS356LOG.pins.D1.SetValue(D1);
+		this.ULS356LOG.pins.D2.SetValue(D2);
+		this.ULS356LOG.pins.D3.SetValue(D3);
+		this.ULS356LOG.pins.D4.SetValue(D4);
+		this.ULS356LOG.pins.D5.SetValue(D5);
+		this.ULS356LOG.pins.D6.SetValue(D6);
+		this.ULS356LOG.pins.D7.SetValue(D7);
+		this.ULS356LOG.pins.Y.SetValue(Y);
+		this.ULS356LOG.pins.W.SetValue(W);
+		this.ULS356LOG.pins.ENABLE13.SetValue(ENABLE13);
+		this.ULS356LOG.pins.SC.SetValue(SC);
+	}
 }
 /**
  * 8-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS_REGISTERS
@@ -8602,7 +12129,7 @@ class SN74LS357 extends Component {
 			Y_O: new Pin(),
 			W_O: new Pin(),
 		}
-		this.ULS357LOG = new logicexp(['G1BAR_I','G2BAR_I','G3_I','SCBAR_I','S0_I','S1_I','S2_I','CLK_I','D0_I','D1_I','D2_I','D3_I','D4_I','D5_I','D6_I','D7_I','QS2','QS2BAR','QS1','QS1BAR','QS0','QS0BAR','Q0','Q1','Q2','Q3','Q4','Q5','Q6','Q7'], ['G1BAR','G2BAR','G3','SCBAR','S0','S1','S2','CLK','D0','D1','D2','D3','D4','D5','D6','D7','Y','W','SC'], ['Y_INTERNAL','W_INTERNAL','ENABLEBAR']).Logic('   D0     =  D0_I ;   D1     =  D1_I ;   D2     =  D2_I ;   D3     =  D3_I ;   D4     =  D4_I ;   D5     =  D5_I ;   D6     =  D6_I ;   D7     =  D7_I ;   G1BAR  =  G1BAR_I ;   G2BAR  =  G2BAR_I ;   G3     =  G3_I ;   SCBAR  =  SCBAR_I ;   SC     =  !SCBAR ;   S0     =  S0_I ;   S1     =  S1_I ;   S2     =  S2_I ;   CLK  =  CLK_I ;   Y_INTERNAL =  (QS2BAR & QS1BAR & QS0BAR & Q0) |                  (QS2BAR & QS1BAR & QS0    & Q1) |                  (QS2BAR & QS1    & QS0BAR & Q2) |                  (QS2BAR & QS1    & QS0    & Q3) |                  (QS2    & QS1BAR & QS0BAR & Q4) |                  (QS2    & QS1BAR & QS0    & Q5) |                  (QS2    & QS1    & QS0BAR & Q6) |                  (QS2    & QS1    & QS0    & Q7) ;   W_INTERNAL  =  !Y_INTERNAL ;   ENABLEBAR =  G1BAR | G2BAR | !G3 ;   Y =  Y_INTERNAL | ENABLEBAR ;   W =  W_INTERNAL | ENABLEBAR ;');
+		this.ULS357LOG = new logicexp(['G1BAR_I','G2BAR_I','G3_I','SCBAR_I','S0_I','S1_I','S2_I','CLK_I','D0_I','D1_I','D2_I','D3_I','D4_I','D5_I','D6_I','D7_I','QS2','QS2BAR','QS1','QS1BAR','QS0','QS0BAR','Q0','Q1','Q2','Q3','Q4','Q5','Q6','Q7'], ['G1BAR','G2BAR','G3','SCBAR','S0','S1','S2','CLK','D0','D1','D2','D3','D4','D5','D6','D7','Y','W','SC']).Callback(this.$exe_ULS357LOG);
 		Connect(this.ULS357LOG.pins.G1BAR_I, this.pins.G1BAR_I);
 		Connect(this.ULS357LOG.pins.G2BAR_I, this.pins.G2BAR_I);
 		Connect(this.ULS357LOG.pins.G3_I, this.pins.G3_I);
@@ -8728,6 +12255,83 @@ class SN74LS357 extends Component {
 		Connect(this.U2.pins.QBAR2, QS2BAR);
 		Connect(Y, this.pins.Y_O);
 		Connect(W, this.pins.W_O);
+	}
+	$exe_ULS357LOG() {
+		var Y_INTERNAL, W_INTERNAL, ENABLEBAR; // Temps
+		var G1BAR_I, G2BAR_I, G3_I, SCBAR_I, S0_I, S1_I, S2_I, CLK_I, D0_I, D1_I, D2_I, D3_I, D4_I, D5_I, D6_I, D7_I, QS2, QS2BAR, QS1, QS1BAR, QS0, QS0BAR, Q0, Q1, Q2, Q3, Q4, Q5, Q6, Q7; // Inputs
+		var G1BAR, G2BAR, G3, SCBAR, S0, S1, S2, CLK, D0, D1, D2, D3, D4, D5, D6, D7, Y, W, SC; // Outputs
+		G1BAR_I = this.ULS357LOG.pins.G1BAR_I.GetValue();
+		G2BAR_I = this.ULS357LOG.pins.G2BAR_I.GetValue();
+		G3_I = this.ULS357LOG.pins.G3_I.GetValue();
+		SCBAR_I = this.ULS357LOG.pins.SCBAR_I.GetValue();
+		S0_I = this.ULS357LOG.pins.S0_I.GetValue();
+		S1_I = this.ULS357LOG.pins.S1_I.GetValue();
+		S2_I = this.ULS357LOG.pins.S2_I.GetValue();
+		CLK_I = this.ULS357LOG.pins.CLK_I.GetValue();
+		D0_I = this.ULS357LOG.pins.D0_I.GetValue();
+		D1_I = this.ULS357LOG.pins.D1_I.GetValue();
+		D2_I = this.ULS357LOG.pins.D2_I.GetValue();
+		D3_I = this.ULS357LOG.pins.D3_I.GetValue();
+		D4_I = this.ULS357LOG.pins.D4_I.GetValue();
+		D5_I = this.ULS357LOG.pins.D5_I.GetValue();
+		D6_I = this.ULS357LOG.pins.D6_I.GetValue();
+		D7_I = this.ULS357LOG.pins.D7_I.GetValue();
+		QS2 = this.ULS357LOG.pins.QS2.GetValue();
+		QS2BAR = this.ULS357LOG.pins.QS2BAR.GetValue();
+		QS1 = this.ULS357LOG.pins.QS1.GetValue();
+		QS1BAR = this.ULS357LOG.pins.QS1BAR.GetValue();
+		QS0 = this.ULS357LOG.pins.QS0.GetValue();
+		QS0BAR = this.ULS357LOG.pins.QS0BAR.GetValue();
+		Q0 = this.ULS357LOG.pins.Q0.GetValue();
+		Q1 = this.ULS357LOG.pins.Q1.GetValue();
+		Q2 = this.ULS357LOG.pins.Q2.GetValue();
+		Q3 = this.ULS357LOG.pins.Q3.GetValue();
+		Q4 = this.ULS357LOG.pins.Q4.GetValue();
+		Q5 = this.ULS357LOG.pins.Q5.GetValue();
+		Q6 = this.ULS357LOG.pins.Q6.GetValue();
+		Q7 = this.ULS357LOG.pins.Q7.GetValue();
+		   D0     =  D0_I ;
+		   D1     =  D1_I ;
+		   D2     =  D2_I ;
+		   D3     =  D3_I ;
+		   D4     =  D4_I ;
+		   D5     =  D5_I ;
+		   D6     =  D6_I ;
+		   D7     =  D7_I ;
+		   G1BAR  =  G1BAR_I ;
+		   G2BAR  =  G2BAR_I ;
+		   G3     =  G3_I ;
+		   SCBAR  =  SCBAR_I ;
+		   SC     =  !SCBAR ;
+		   S0     =  S0_I ;
+		   S1     =  S1_I ;
+		   S2     =  S2_I ;
+		   CLK  =  CLK_I ;
+		   Y_INTERNAL =  (QS2BAR & QS1BAR & QS0BAR & Q0) |                  (QS2BAR & QS1BAR & QS0    & Q1) |                  (QS2BAR & QS1    & QS0BAR & Q2) |                  (QS2BAR & QS1    & QS0    & Q3) |                  (QS2    & QS1BAR & QS0BAR & Q4) |                  (QS2    & QS1BAR & QS0    & Q5) |                  (QS2    & QS1    & QS0BAR & Q6) |                  (QS2    & QS1    & QS0    & Q7) ;
+		   W_INTERNAL  =  !Y_INTERNAL ;
+		   ENABLEBAR =  G1BAR | G2BAR | !G3 ;
+		   Y =  Y_INTERNAL | ENABLEBAR ;
+		   W =  W_INTERNAL | ENABLEBAR ;
+		
+		this.ULS357LOG.pins.G1BAR.SetValue(G1BAR);
+		this.ULS357LOG.pins.G2BAR.SetValue(G2BAR);
+		this.ULS357LOG.pins.G3.SetValue(G3);
+		this.ULS357LOG.pins.SCBAR.SetValue(SCBAR);
+		this.ULS357LOG.pins.S0.SetValue(S0);
+		this.ULS357LOG.pins.S1.SetValue(S1);
+		this.ULS357LOG.pins.S2.SetValue(S2);
+		this.ULS357LOG.pins.CLK.SetValue(CLK);
+		this.ULS357LOG.pins.D0.SetValue(D0);
+		this.ULS357LOG.pins.D1.SetValue(D1);
+		this.ULS357LOG.pins.D2.SetValue(D2);
+		this.ULS357LOG.pins.D3.SetValue(D3);
+		this.ULS357LOG.pins.D4.SetValue(D4);
+		this.ULS357LOG.pins.D5.SetValue(D5);
+		this.ULS357LOG.pins.D6.SetValue(D6);
+		this.ULS357LOG.pins.D7.SetValue(D7);
+		this.ULS357LOG.pins.Y.SetValue(Y);
+		this.ULS357LOG.pins.W.SetValue(W);
+		this.ULS357LOG.pins.SC.SetValue(SC);
 	}
 }
 /**
@@ -9406,7 +13010,7 @@ class SN74LS381A extends Component {
 			PBAR_O: new Pin(),
 			GBAR_O: new Pin(),
 		}
-		this.ULS381LOG = new logicexp(['S2_I','S1_I','S0_I','CN_I','A3_I','A2_I','A1_I','A0_I','B3_I','B2_I','B1_I','B0_I'], ['S2','S1','S0','CN','A3','A2','A1','A0','B3','B2','B1','B0','F3','F2','F1','F0','PBAR','GBAR'], ['S2BAR','S1BAR','S0BAR','A3BAR','A2BAR','A1BAR','A0BAR','B3BAR','B2BAR','B1BAR','B0BAR','L6','L5','L4','L3','L2','L1','L0','TOP0','BOT0','TOP1','BOT1','TOP2','BOT2','TOP3','BOT3']).Logic('   S2    =  S2_I ;   S1    =  S1_I ;   S0    =  S0_I ;   CN    =  CN_I ;   A3    =  A3_I ;   A2    =  A2_I ;   A1    =  A1_I ;   A0    =  A0_I ;   B3    =  B3_I ;   B2    =  B2_I ;   B1    =  B1_I ;   B0    =  B0_I ;   S2BAR =  !S2 ;   S1BAR =  !S1 ;   S0BAR =  !S0 ;   A3BAR =  !A3 ;   A2BAR =  !A2 ;   A1BAR =  !A1 ;   A0BAR =  !A0 ;   B3BAR =  !B3 ;   B2BAR =  !B2 ;   B1BAR =  !B1 ;   B0BAR =  !B0 ;   L6   =  !( (S0 & S1BAR & S2BAR) | (S0BAR & S1 & S2BAR) | (S0 & S1 & S2) ) ;   L5   =  !( (S0 & S1BAR        ) | (S0BAR & S1        ) | (S0      & S2) ) ;   L4   =  !( (     S1BAR & S2   )                        | (S0 & S1     ) ) ;   L3   =  S0BAR | S1    | S2 ;   L2   =  S0BAR | S1BAR | S2 ;   L1   =  S0    | S1BAR | S2 ;   L0   =     (S0         & S2BAR) | (        S1 & S2BAR) ;   TOP0 =  !( (A0BAR & B0BAR & L6) | (A0 & B0BAR & L4) |               (A0BAR & B0    & L4) | (A0 & B0    & L5) ) ;   BOT0 =  !( (A0BAR & B0BAR     ) | (A0 & B0BAR & L1) |               (A0BAR & B0    & L3) | (A0 & B0    & L2) ) ;   TOP1 =  !( (A1BAR & B1BAR & L6) | (A1 & B1BAR & L4) |               (A1BAR & B1    & L4) | (A1 & B1    & L5) ) ;   BOT1 =  !( (A1BAR & B1BAR     ) | (A1 & B1BAR & L1) |               (A1BAR & B1    & L3) | (A1 & B1    & L2) ) ;   TOP2 =  !( (A2BAR & B2BAR & L6) | (A2 & B2BAR & L4) |               (A2BAR & B2    & L4) | (A2 & B2    & L5) ) ;   BOT2 =  !( (A2BAR & B2BAR     ) | (A2 & B2BAR & L1) |               (A2BAR & B2    & L3) | (A2 & B2    & L2) ) ;   TOP3 =  !( (A3BAR & B3BAR & L6) | (A3 & B3BAR & L4) |               (A3BAR & B3    & L4) | (A3 & B3    & L5) ) ;   BOT3 =  !( (A3BAR & B3BAR     ) | (A3 & B3BAR & L1) |               (A3BAR & B3    & L3) | (A3 & B3    & L2) ) ;   F0   =  !(TOP0 ^   !(  CN & L0) ) ;   F1   =  !(TOP1 ^ !( (  CN & L0 & TOP0) |                      (BOT0 & L0       ) ) ) ;   F2   =  !(TOP2 ^ !( (  CN & L0 & TOP0 & TOP1) |                      (BOT0 & L0        & TOP1) |                      (BOT1 & L0              ) ) ) ;   F3   =  !(TOP3 ^ !( (  CN & L0 & TOP0 & TOP1 & TOP2) |                      (BOT0 & L0        & TOP1 & TOP2) |                      (BOT1 & L0               & TOP2) |                      (BOT2 & L0                     ) ) ) ;   PBAR =  !(TOP0 & TOP1 & TOP2 & TOP3) ;   GBAR =  !(      (TOP1 & TOP2 & TOP3 & BOT0) |                           (TOP2 & TOP3 & BOT1) |                                  (TOP3 & BOT2) |                                         (BOT3) ) ;');
+		this.ULS381LOG = new logicexp(['S2_I','S1_I','S0_I','CN_I','A3_I','A2_I','A1_I','A0_I','B3_I','B2_I','B1_I','B0_I'], ['S2','S1','S0','CN','A3','A2','A1','A0','B3','B2','B1','B0','F3','F2','F1','F0','PBAR','GBAR']).Callback(this.$exe_ULS381LOG);
 		Connect(this.ULS381LOG.pins.S2_I, this.pins.S2_I);
 		Connect(this.ULS381LOG.pins.S1_I, this.pins.S1_I);
 		Connect(this.ULS381LOG.pins.S0_I, this.pins.S0_I);
@@ -9462,6 +13066,86 @@ class SN74LS381A extends Component {
 		Connect(PBAR, this.pins.PBAR_O);
 		Connect(GBAR, this.pins.GBAR_O);
 	}
+	$exe_ULS381LOG() {
+		var S2BAR, S1BAR, S0BAR, A3BAR, A2BAR, A1BAR, A0BAR, B3BAR, B2BAR, B1BAR, B0BAR, L6, L5, L4, L3, L2, L1, L0, TOP0, BOT0, TOP1, BOT1, TOP2, BOT2, TOP3, BOT3; // Temps
+		var S2_I, S1_I, S0_I, CN_I, A3_I, A2_I, A1_I, A0_I, B3_I, B2_I, B1_I, B0_I; // Inputs
+		var S2, S1, S0, CN, A3, A2, A1, A0, B3, B2, B1, B0, F3, F2, F1, F0, PBAR, GBAR; // Outputs
+		S2_I = this.ULS381LOG.pins.S2_I.GetValue();
+		S1_I = this.ULS381LOG.pins.S1_I.GetValue();
+		S0_I = this.ULS381LOG.pins.S0_I.GetValue();
+		CN_I = this.ULS381LOG.pins.CN_I.GetValue();
+		A3_I = this.ULS381LOG.pins.A3_I.GetValue();
+		A2_I = this.ULS381LOG.pins.A2_I.GetValue();
+		A1_I = this.ULS381LOG.pins.A1_I.GetValue();
+		A0_I = this.ULS381LOG.pins.A0_I.GetValue();
+		B3_I = this.ULS381LOG.pins.B3_I.GetValue();
+		B2_I = this.ULS381LOG.pins.B2_I.GetValue();
+		B1_I = this.ULS381LOG.pins.B1_I.GetValue();
+		B0_I = this.ULS381LOG.pins.B0_I.GetValue();
+		   S2    =  S2_I ;
+		   S1    =  S1_I ;
+		   S0    =  S0_I ;
+		   CN    =  CN_I ;
+		   A3    =  A3_I ;
+		   A2    =  A2_I ;
+		   A1    =  A1_I ;
+		   A0    =  A0_I ;
+		   B3    =  B3_I ;
+		   B2    =  B2_I ;
+		   B1    =  B1_I ;
+		   B0    =  B0_I ;
+		   S2BAR =  !S2 ;
+		   S1BAR =  !S1 ;
+		   S0BAR =  !S0 ;
+		   A3BAR =  !A3 ;
+		   A2BAR =  !A2 ;
+		   A1BAR =  !A1 ;
+		   A0BAR =  !A0 ;
+		   B3BAR =  !B3 ;
+		   B2BAR =  !B2 ;
+		   B1BAR =  !B1 ;
+		   B0BAR =  !B0 ;
+		   L6   =  !( (S0 & S1BAR & S2BAR) | (S0BAR & S1 & S2BAR) | (S0 & S1 & S2) ) ;
+		   L5   =  !( (S0 & S1BAR        ) | (S0BAR & S1        ) | (S0      & S2) ) ;
+		   L4   =  !( (     S1BAR & S2   )                        | (S0 & S1     ) ) ;
+		   L3   =  S0BAR | S1    | S2 ;
+		   L2   =  S0BAR | S1BAR | S2 ;
+		   L1   =  S0    | S1BAR | S2 ;
+		   L0   =     (S0         & S2BAR) | (        S1 & S2BAR) ;
+		   TOP0 =  !( (A0BAR & B0BAR & L6) | (A0 & B0BAR & L4) |               (A0BAR & B0    & L4) | (A0 & B0    & L5) ) ;
+		   BOT0 =  !( (A0BAR & B0BAR     ) | (A0 & B0BAR & L1) |               (A0BAR & B0    & L3) | (A0 & B0    & L2) ) ;
+		   TOP1 =  !( (A1BAR & B1BAR & L6) | (A1 & B1BAR & L4) |               (A1BAR & B1    & L4) | (A1 & B1    & L5) ) ;
+		   BOT1 =  !( (A1BAR & B1BAR     ) | (A1 & B1BAR & L1) |               (A1BAR & B1    & L3) | (A1 & B1    & L2) ) ;
+		   TOP2 =  !( (A2BAR & B2BAR & L6) | (A2 & B2BAR & L4) |               (A2BAR & B2    & L4) | (A2 & B2    & L5) ) ;
+		   BOT2 =  !( (A2BAR & B2BAR     ) | (A2 & B2BAR & L1) |               (A2BAR & B2    & L3) | (A2 & B2    & L2) ) ;
+		   TOP3 =  !( (A3BAR & B3BAR & L6) | (A3 & B3BAR & L4) |               (A3BAR & B3    & L4) | (A3 & B3    & L5) ) ;
+		   BOT3 =  !( (A3BAR & B3BAR     ) | (A3 & B3BAR & L1) |               (A3BAR & B3    & L3) | (A3 & B3    & L2) ) ;
+		   F0   =  !(TOP0 ^   !(  CN & L0) ) ;
+		   F1   =  !(TOP1 ^ !( (  CN & L0 & TOP0) |                      (BOT0 & L0       ) ) ) ;
+		   F2   =  !(TOP2 ^ !( (  CN & L0 & TOP0 & TOP1) |                      (BOT0 & L0        & TOP1) |                      (BOT1 & L0              ) ) ) ;
+		   F3   =  !(TOP3 ^ !( (  CN & L0 & TOP0 & TOP1 & TOP2) |                      (BOT0 & L0        & TOP1 & TOP2) |                      (BOT1 & L0               & TOP2) |                      (BOT2 & L0                     ) ) ) ;
+		   PBAR =  !(TOP0 & TOP1 & TOP2 & TOP3) ;
+		   GBAR =  !(      (TOP1 & TOP2 & TOP3 & BOT0) |                           (TOP2 & TOP3 & BOT1) |                                  (TOP3 & BOT2) |                                         (BOT3) ) ;
+		
+		this.ULS381LOG.pins.S2.SetValue(S2);
+		this.ULS381LOG.pins.S1.SetValue(S1);
+		this.ULS381LOG.pins.S0.SetValue(S0);
+		this.ULS381LOG.pins.CN.SetValue(CN);
+		this.ULS381LOG.pins.A3.SetValue(A3);
+		this.ULS381LOG.pins.A2.SetValue(A2);
+		this.ULS381LOG.pins.A1.SetValue(A1);
+		this.ULS381LOG.pins.A0.SetValue(A0);
+		this.ULS381LOG.pins.B3.SetValue(B3);
+		this.ULS381LOG.pins.B2.SetValue(B2);
+		this.ULS381LOG.pins.B1.SetValue(B1);
+		this.ULS381LOG.pins.B0.SetValue(B0);
+		this.ULS381LOG.pins.F3.SetValue(F3);
+		this.ULS381LOG.pins.F2.SetValue(F2);
+		this.ULS381LOG.pins.F1.SetValue(F1);
+		this.ULS381LOG.pins.F0.SetValue(F0);
+		this.ULS381LOG.pins.PBAR.SetValue(PBAR);
+		this.ULS381LOG.pins.GBAR.SetValue(GBAR);
+	}
 }
 /**
  * ALU _ FUNCTION GENERATOR
@@ -9489,7 +13173,7 @@ class SN74LS382 extends Component {
 			OVR_O: new Pin(),
 			CN_4_O: new Pin(),
 		}
-		this.ULS382ALOG = new logicexp(['S2_I','S1_I','S0_I','CN_I','A3_I','A2_I','A1_I','A0_I','B3_I','B2_I','B1_I','B0_I'], ['S2','S1','S0','CN','A3','A2','A1','A0','B3','B2','B1','B0','F3','F2','F1','F0','OVR','CN_4'], ['S2BAR','S1BAR','S0BAR','A3BAR','A2BAR','A1BAR','A0BAR','B3BAR','B2BAR','B1BAR','B0BAR','L6','L5','L4','L3','L2','L1','L0','TOP0','BOT0','TOP1','BOT1','TOP2','BOT2','TOP3','BOT3','PRE3']).Logic('   S2    =  S2_I ;   S1    =  S1_I ;   S0    =  S0_I ;   CN    =  CN_I ;   A3    =  A3_I ;   A2    =  A2_I ;   A1    =  A1_I ;   A0    =  A0_I ;   B3    =  B3_I ;   B2    =  B2_I ;   B1    =  B1_I ;   B0    =  B0_I ;   S2BAR =  !S2 ;   S1BAR =  !S1 ;   S0BAR =  !S0 ;   A3BAR =  !A3 ;   A2BAR =  !A2 ;   A1BAR =  !A1 ;   A0BAR =  !A0 ;   B3BAR =  !B3 ;   B2BAR =  !B2 ;   B1BAR =  !B1 ;   B0BAR =  !B0 ;   L6   =  !( (S0 & S1BAR & S2BAR) | (S0 & S1 & S2) |               (S0BAR & S1 & S2BAR) ) ;   L5   =  !( (S0 & S1BAR        ) | (S0      & S2) |               (S0BAR & S1        ) ) ;   L4   =  !( (     S1BAR & S2   ) | (S0 & S1     ) ) ;   L3   =  S0BAR | S1    | S2 ;   L2   =  S0BAR | S1BAR | S2 ;   L1   =  S0    | S1BAR | S2 ;   L0   =     (S0         & S2BAR) | (        S1 & S2BAR) ;   TOP0 =  !( (A0BAR & B0BAR & L6) | (A0 & B0BAR & L4) |               (A0BAR & B0    & L4) | (A0 & B0    & L5) ) ;   BOT0 =  !( (A0BAR & B0BAR     ) | (A0 & B0BAR & L1) |               (A0BAR & B0    & L3) | (A0 & B0    & L2) ) ;   TOP1 =  !( (A1BAR & B1BAR & L6) | (A1 & B1BAR & L4) |               (A1BAR & B1    & L4) | (A1 & B1    & L5) ) ;   BOT1 =  !( (A1BAR & B1BAR     ) | (A1 & B1BAR & L1) |               (A1BAR & B1    & L3) | (A1 & B1    & L2) ) ;   TOP2 =  !( (A2BAR & B2BAR & L6) | (A2 & B2BAR & L4) |               (A2BAR & B2    & L4) | (A2 & B2    & L5) ) ;   BOT2 =  !( (A2BAR & B2BAR     ) | (A2 & B2BAR & L1) |               (A2BAR & B2    & L3) | (A2 & B2    & L2) ) ;   TOP3 =  !( (A3BAR & B3BAR & L6) | (A3 & B3BAR & L4) |               (A3BAR & B3    & L4) | (A3 & B3    & L5) ) ;   BOT3 =  !( (A3BAR & B3BAR     ) | (A3 & B3BAR & L1) |               (A3BAR & B3    & L3) | (A3 & B3    & L2) ) ;   F0   =  !(TOP0 ^   !(  CN & L0) ) ;   F1   =  !(TOP1 ^ !( (  CN & L0 & TOP0) |                      (BOT0 & L0       ) ) ) ;   F2   =  !(TOP2 ^ !( (  CN & L0 & TOP0 & TOP1) |                      (BOT0 & L0        & TOP1) |                      (BOT1 & L0              ) ) ) ;   PRE3 =  !( (  CN & L0 & TOP0 & TOP1 & TOP2) |               (BOT0 & L0        & TOP1 & TOP2) |               (BOT1 & L0               & TOP2) |               (BOT2 & L0                     ) ) ;   F3   =  !(TOP3 ^ PRE3) ;   CN_4 =  (TOP0 & TOP1 & TOP2 & TOP3 &   CN) |                   (TOP1 & TOP2 & TOP3 & BOT0) |                          (TOP2 & TOP3 & BOT1) |                                 (TOP3 & BOT2) |                                        (BOT3) ;   OVR  =  !CN_4 ^ PRE3 ;');
+		this.ULS382ALOG = new logicexp(['S2_I','S1_I','S0_I','CN_I','A3_I','A2_I','A1_I','A0_I','B3_I','B2_I','B1_I','B0_I'], ['S2','S1','S0','CN','A3','A2','A1','A0','B3','B2','B1','B0','F3','F2','F1','F0','OVR','CN_4']).Callback(this.$exe_ULS382ALOG);
 		Connect(this.ULS382ALOG.pins.S2_I, this.pins.S2_I);
 		Connect(this.ULS382ALOG.pins.S1_I, this.pins.S1_I);
 		Connect(this.ULS382ALOG.pins.S0_I, this.pins.S0_I);
@@ -9544,6 +13228,87 @@ class SN74LS382 extends Component {
 		Connect(F0, this.pins.F0_O);
 		Connect(OVR, this.pins.OVR_O);
 		Connect(CN_4, this.pins.CN_4_O);
+	}
+	$exe_ULS382ALOG() {
+		var S2BAR, S1BAR, S0BAR, A3BAR, A2BAR, A1BAR, A0BAR, B3BAR, B2BAR, B1BAR, B0BAR, L6, L5, L4, L3, L2, L1, L0, TOP0, BOT0, TOP1, BOT1, TOP2, BOT2, TOP3, BOT3, PRE3; // Temps
+		var S2_I, S1_I, S0_I, CN_I, A3_I, A2_I, A1_I, A0_I, B3_I, B2_I, B1_I, B0_I; // Inputs
+		var S2, S1, S0, CN, A3, A2, A1, A0, B3, B2, B1, B0, F3, F2, F1, F0, OVR, CN_4; // Outputs
+		S2_I = this.ULS382ALOG.pins.S2_I.GetValue();
+		S1_I = this.ULS382ALOG.pins.S1_I.GetValue();
+		S0_I = this.ULS382ALOG.pins.S0_I.GetValue();
+		CN_I = this.ULS382ALOG.pins.CN_I.GetValue();
+		A3_I = this.ULS382ALOG.pins.A3_I.GetValue();
+		A2_I = this.ULS382ALOG.pins.A2_I.GetValue();
+		A1_I = this.ULS382ALOG.pins.A1_I.GetValue();
+		A0_I = this.ULS382ALOG.pins.A0_I.GetValue();
+		B3_I = this.ULS382ALOG.pins.B3_I.GetValue();
+		B2_I = this.ULS382ALOG.pins.B2_I.GetValue();
+		B1_I = this.ULS382ALOG.pins.B1_I.GetValue();
+		B0_I = this.ULS382ALOG.pins.B0_I.GetValue();
+		   S2    =  S2_I ;
+		   S1    =  S1_I ;
+		   S0    =  S0_I ;
+		   CN    =  CN_I ;
+		   A3    =  A3_I ;
+		   A2    =  A2_I ;
+		   A1    =  A1_I ;
+		   A0    =  A0_I ;
+		   B3    =  B3_I ;
+		   B2    =  B2_I ;
+		   B1    =  B1_I ;
+		   B0    =  B0_I ;
+		   S2BAR =  !S2 ;
+		   S1BAR =  !S1 ;
+		   S0BAR =  !S0 ;
+		   A3BAR =  !A3 ;
+		   A2BAR =  !A2 ;
+		   A1BAR =  !A1 ;
+		   A0BAR =  !A0 ;
+		   B3BAR =  !B3 ;
+		   B2BAR =  !B2 ;
+		   B1BAR =  !B1 ;
+		   B0BAR =  !B0 ;
+		   L6   =  !( (S0 & S1BAR & S2BAR) | (S0 & S1 & S2) |               (S0BAR & S1 & S2BAR) ) ;
+		   L5   =  !( (S0 & S1BAR        ) | (S0      & S2) |               (S0BAR & S1        ) ) ;
+		   L4   =  !( (     S1BAR & S2   ) | (S0 & S1     ) ) ;
+		   L3   =  S0BAR | S1    | S2 ;
+		   L2   =  S0BAR | S1BAR | S2 ;
+		   L1   =  S0    | S1BAR | S2 ;
+		   L0   =     (S0         & S2BAR) | (        S1 & S2BAR) ;
+		   TOP0 =  !( (A0BAR & B0BAR & L6) | (A0 & B0BAR & L4) |               (A0BAR & B0    & L4) | (A0 & B0    & L5) ) ;
+		   BOT0 =  !( (A0BAR & B0BAR     ) | (A0 & B0BAR & L1) |               (A0BAR & B0    & L3) | (A0 & B0    & L2) ) ;
+		   TOP1 =  !( (A1BAR & B1BAR & L6) | (A1 & B1BAR & L4) |               (A1BAR & B1    & L4) | (A1 & B1    & L5) ) ;
+		   BOT1 =  !( (A1BAR & B1BAR     ) | (A1 & B1BAR & L1) |               (A1BAR & B1    & L3) | (A1 & B1    & L2) ) ;
+		   TOP2 =  !( (A2BAR & B2BAR & L6) | (A2 & B2BAR & L4) |               (A2BAR & B2    & L4) | (A2 & B2    & L5) ) ;
+		   BOT2 =  !( (A2BAR & B2BAR     ) | (A2 & B2BAR & L1) |               (A2BAR & B2    & L3) | (A2 & B2    & L2) ) ;
+		   TOP3 =  !( (A3BAR & B3BAR & L6) | (A3 & B3BAR & L4) |               (A3BAR & B3    & L4) | (A3 & B3    & L5) ) ;
+		   BOT3 =  !( (A3BAR & B3BAR     ) | (A3 & B3BAR & L1) |               (A3BAR & B3    & L3) | (A3 & B3    & L2) ) ;
+		   F0   =  !(TOP0 ^   !(  CN & L0) ) ;
+		   F1   =  !(TOP1 ^ !( (  CN & L0 & TOP0) |                      (BOT0 & L0       ) ) ) ;
+		   F2   =  !(TOP2 ^ !( (  CN & L0 & TOP0 & TOP1) |                      (BOT0 & L0        & TOP1) |                      (BOT1 & L0              ) ) ) ;
+		   PRE3 =  !( (  CN & L0 & TOP0 & TOP1 & TOP2) |               (BOT0 & L0        & TOP1 & TOP2) |               (BOT1 & L0               & TOP2) |               (BOT2 & L0                     ) ) ;
+		   F3   =  !(TOP3 ^ PRE3) ;
+		   CN_4 =  (TOP0 & TOP1 & TOP2 & TOP3 &   CN) |                   (TOP1 & TOP2 & TOP3 & BOT0) |                          (TOP2 & TOP3 & BOT1) |                                 (TOP3 & BOT2) |                                        (BOT3) ;
+		   OVR  =  !CN_4 ^ PRE3 ;
+		
+		this.ULS382ALOG.pins.S2.SetValue(S2);
+		this.ULS382ALOG.pins.S1.SetValue(S1);
+		this.ULS382ALOG.pins.S0.SetValue(S0);
+		this.ULS382ALOG.pins.CN.SetValue(CN);
+		this.ULS382ALOG.pins.A3.SetValue(A3);
+		this.ULS382ALOG.pins.A2.SetValue(A2);
+		this.ULS382ALOG.pins.A1.SetValue(A1);
+		this.ULS382ALOG.pins.A0.SetValue(A0);
+		this.ULS382ALOG.pins.B3.SetValue(B3);
+		this.ULS382ALOG.pins.B2.SetValue(B2);
+		this.ULS382ALOG.pins.B1.SetValue(B1);
+		this.ULS382ALOG.pins.B0.SetValue(B0);
+		this.ULS382ALOG.pins.F3.SetValue(F3);
+		this.ULS382ALOG.pins.F2.SetValue(F2);
+		this.ULS382ALOG.pins.F1.SetValue(F1);
+		this.ULS382ALOG.pins.F0.SetValue(F0);
+		this.ULS382ALOG.pins.OVR.SetValue(OVR);
+		this.ULS382ALOG.pins.CN_4.SetValue(CN_4);
 	}
 }
 /**
@@ -9637,7 +13402,7 @@ class SN74LS390 extends Component {
 		Connect(this.U4.pins.Q0, QD);
 		let QDBAR = new Pin();
 		Connect(this.U4.pins.QBAR0, QDBAR);
-		this.ULS390LOG = new logicexp(['CKA_I','CKB_I','CLR_I','QBBAR','QCBAR','QDBAR'], ['CKA','CKB','CLR','CLRBAR','CLOCK2','CLOCK4'], []).Logic('   CKA    =  CKA_I ;   CKB    =  CKB_I ;   CLR    =  CLR_I ;   CLRBAR =  !CLR ;   CLOCK2 =  CKB & QDBAR ;   CLOCK4 =  !((QBBAR & QDBAR) | (QCBAR & QDBAR)) & CKB ;');
+		this.ULS390LOG = new logicexp(['CKA_I','CKB_I','CLR_I','QBBAR','QCBAR','QDBAR'], ['CKA','CKB','CLR','CLRBAR','CLOCK2','CLOCK4']).Callback(this.$exe_ULS390LOG);
 		Connect(this.ULS390LOG.pins.CKA_I, this.pins.CKA_I);
 		Connect(this.ULS390LOG.pins.CKB_I, this.pins.CKB_I);
 		Connect(this.ULS390LOG.pins.CLR_I, this.pins.CLR_I);
@@ -9656,6 +13421,29 @@ class SN74LS390 extends Component {
 		Connect(QB, this.pins.QB_O);
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
+	}
+	$exe_ULS390LOG() {
+		var CKA_I, CKB_I, CLR_I, QBBAR, QCBAR, QDBAR; // Inputs
+		var CKA, CKB, CLR, CLRBAR, CLOCK2, CLOCK4; // Outputs
+		CKA_I = this.ULS390LOG.pins.CKA_I.GetValue();
+		CKB_I = this.ULS390LOG.pins.CKB_I.GetValue();
+		CLR_I = this.ULS390LOG.pins.CLR_I.GetValue();
+		QBBAR = this.ULS390LOG.pins.QBBAR.GetValue();
+		QCBAR = this.ULS390LOG.pins.QCBAR.GetValue();
+		QDBAR = this.ULS390LOG.pins.QDBAR.GetValue();
+		   CKA    =  CKA_I ;
+		   CKB    =  CKB_I ;
+		   CLR    =  CLR_I ;
+		   CLRBAR =  !CLR ;
+		   CLOCK2 =  CKB & QDBAR ;
+		   CLOCK4 =  !((QBBAR & QDBAR) | (QCBAR & QDBAR)) & CKB ;
+		
+		this.ULS390LOG.pins.CKA.SetValue(CKA);
+		this.ULS390LOG.pins.CKB.SetValue(CKB);
+		this.ULS390LOG.pins.CLR.SetValue(CLR);
+		this.ULS390LOG.pins.CLRBAR.SetValue(CLRBAR);
+		this.ULS390LOG.pins.CLOCK2.SetValue(CLOCK2);
+		this.ULS390LOG.pins.CLOCK4.SetValue(CLOCK4);
 	}
 }
 /**
@@ -9747,7 +13535,7 @@ class SN74LS395A extends Component {
 			QD_O: new Pin(),
 			QD_P_O: new Pin(),
 		}
-		this.U395ALOG = new logicexp(['CLK_I','LD_SHBAR_I','CLRBAR_I','SER_I','OCBAR_I','A_I','B_I','C_I','D_I','QA0','QB0','QC0','QABAR','QBBAR','QCBAR','QDBAR'], ['KA','KB','KC','KD','JA','JB','JC','JD','CLK','LD_SHBAR','CLRBAR','SER','OCBAR','A','B','C','D','QA','QB','QC','QD'], ['SHBAR']).Logic('   SHBAR =  !LD_SHBAR_I ;   CLK =  CLK_I ;   LD_SHBAR =  LD_SHBAR_I ;   CLRBAR =  CLRBAR_I ;   SER =  SER_I ;   OCBAR =  OCBAR_I ;   A =  A_I;   B =  B_I ;   C =  C_I ;   D =  D_I ;   KA =  !((SER & SHBAR) | (LD_SHBAR & A)) ;   KB =  !((QA0 & SHBAR) | (LD_SHBAR & B)) ;   KC =  !((QB0 & SHBAR) | (LD_SHBAR & C)) ;   KD =  !((QC0 & SHBAR) | (LD_SHBAR & D)) ;   JA =  !KA ;   JB =  !KB ;   JC =  !KC ;   JD =  !KD ;   QA =  !QABAR ;   QB =  !QBBAR ;   QC =  !QCBAR ;   QD =  !QDBAR ;');
+		this.U395ALOG = new logicexp(['CLK_I','LD_SHBAR_I','CLRBAR_I','SER_I','OCBAR_I','A_I','B_I','C_I','D_I','QA0','QB0','QC0','QABAR','QBBAR','QCBAR','QDBAR'], ['KA','KB','KC','KD','JA','JB','JC','JD','CLK','LD_SHBAR','CLRBAR','SER','OCBAR','A','B','C','D','QA','QB','QC','QD']).Callback(this.$exe_U395ALOG);
 		Connect(this.U395ALOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.U395ALOG.pins.LD_SHBAR_I, this.pins.LD_SHBAR_I);
 		Connect(this.U395ALOG.pins.CLRBAR_I, this.pins.CLRBAR_I);
@@ -9839,6 +13627,71 @@ class SN74LS395A extends Component {
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
 		Connect(QD0, this.pins.QD_P_O);
+	}
+	$exe_U395ALOG() {
+		var SHBAR; // Temps
+		var CLK_I, LD_SHBAR_I, CLRBAR_I, SER_I, OCBAR_I, A_I, B_I, C_I, D_I, QA0, QB0, QC0, QABAR, QBBAR, QCBAR, QDBAR; // Inputs
+		var KA, KB, KC, KD, JA, JB, JC, JD, CLK, LD_SHBAR, CLRBAR, SER, OCBAR, A, B, C, D, QA, QB, QC, QD; // Outputs
+		CLK_I = this.U395ALOG.pins.CLK_I.GetValue();
+		LD_SHBAR_I = this.U395ALOG.pins.LD_SHBAR_I.GetValue();
+		CLRBAR_I = this.U395ALOG.pins.CLRBAR_I.GetValue();
+		SER_I = this.U395ALOG.pins.SER_I.GetValue();
+		OCBAR_I = this.U395ALOG.pins.OCBAR_I.GetValue();
+		A_I = this.U395ALOG.pins.A_I.GetValue();
+		B_I = this.U395ALOG.pins.B_I.GetValue();
+		C_I = this.U395ALOG.pins.C_I.GetValue();
+		D_I = this.U395ALOG.pins.D_I.GetValue();
+		QA0 = this.U395ALOG.pins.QA0.GetValue();
+		QB0 = this.U395ALOG.pins.QB0.GetValue();
+		QC0 = this.U395ALOG.pins.QC0.GetValue();
+		QABAR = this.U395ALOG.pins.QABAR.GetValue();
+		QBBAR = this.U395ALOG.pins.QBBAR.GetValue();
+		QCBAR = this.U395ALOG.pins.QCBAR.GetValue();
+		QDBAR = this.U395ALOG.pins.QDBAR.GetValue();
+		   SHBAR =  !LD_SHBAR_I ;
+		   CLK =  CLK_I ;
+		   LD_SHBAR =  LD_SHBAR_I ;
+		   CLRBAR =  CLRBAR_I ;
+		   SER =  SER_I ;
+		   OCBAR =  OCBAR_I ;
+		   A =  A_I;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   KA =  !((SER & SHBAR) | (LD_SHBAR & A)) ;
+		   KB =  !((QA0 & SHBAR) | (LD_SHBAR & B)) ;
+		   KC =  !((QB0 & SHBAR) | (LD_SHBAR & C)) ;
+		   KD =  !((QC0 & SHBAR) | (LD_SHBAR & D)) ;
+		   JA =  !KA ;
+		   JB =  !KB ;
+		   JC =  !KC ;
+		   JD =  !KD ;
+		   QA =  !QABAR ;
+		   QB =  !QBBAR ;
+		   QC =  !QCBAR ;
+		   QD =  !QDBAR ;
+		
+		this.U395ALOG.pins.KA.SetValue(KA);
+		this.U395ALOG.pins.KB.SetValue(KB);
+		this.U395ALOG.pins.KC.SetValue(KC);
+		this.U395ALOG.pins.KD.SetValue(KD);
+		this.U395ALOG.pins.JA.SetValue(JA);
+		this.U395ALOG.pins.JB.SetValue(JB);
+		this.U395ALOG.pins.JC.SetValue(JC);
+		this.U395ALOG.pins.JD.SetValue(JD);
+		this.U395ALOG.pins.CLK.SetValue(CLK);
+		this.U395ALOG.pins.LD_SHBAR.SetValue(LD_SHBAR);
+		this.U395ALOG.pins.CLRBAR.SetValue(CLRBAR);
+		this.U395ALOG.pins.SER.SetValue(SER);
+		this.U395ALOG.pins.OCBAR.SetValue(OCBAR);
+		this.U395ALOG.pins.A.SetValue(A);
+		this.U395ALOG.pins.B.SetValue(B);
+		this.U395ALOG.pins.C.SetValue(C);
+		this.U395ALOG.pins.D.SetValue(D);
+		this.U395ALOG.pins.QA.SetValue(QA);
+		this.U395ALOG.pins.QB.SetValue(QB);
+		this.U395ALOG.pins.QC.SetValue(QC);
+		this.U395ALOG.pins.QD.SetValue(QD);
 	}
 }
 /**
@@ -9974,7 +13827,7 @@ class SN74LS398 extends Component {
 		Connect(this.U1.pins.QBAR2, QCBAR);
 		let QDBAR = new Pin();
 		Connect(this.U1.pins.QBAR3, QDBAR);
-		this.ULS398LOG = new logicexp(['WS_I','CLK_I','A1_I','A2_I','B1_I','B2_I','C1_I','C2_I','D1_I','D2_I'], ['WS','CLK','A1','A2','B1','B2','C1','C2','D1','D2','JA','JB','JC','JD','KA','KB','KC','KD','MCLK'], ['IWS']).Logic('   WS =  WS_I ;   CLK =  CLK_I ;   A1 =  A1_I ;   A2 =  A2_I ;   B1 =  B1_I ;   B2 =  B2_I ;   C1 =  C1_I ;   C2 =  C2_I ;   D1 =  D1_I ;   D2 =  D2_I ;   IWS =  !WS ;   MCLK =  !CLK ;   KA =  !((A1 & IWS) | (WS & A2)) ;   KB =  !((B1 & IWS) | (WS & B2)) ;   KC =  !((C1 & IWS) | (WS & C2)) ;   KD =  !((D1 & IWS) | (WS & D2)) ;   JA =  !KA ;   JB =  !KB ;   JC =  !KC ;   JD =  !KD ;');
+		this.ULS398LOG = new logicexp(['WS_I','CLK_I','A1_I','A2_I','B1_I','B2_I','C1_I','C2_I','D1_I','D2_I'], ['WS','CLK','A1','A2','B1','B2','C1','C2','D1','D2','JA','JB','JC','JD','KA','KB','KC','KD','MCLK']).Callback(this.$exe_ULS398LOG);
 		Connect(this.ULS398LOG.pins.WS_I, this.pins.WS_I);
 		Connect(this.ULS398LOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.ULS398LOG.pins.A1_I, this.pins.A1_I);
@@ -10022,6 +13875,61 @@ class SN74LS398 extends Component {
 		Connect(QBBAR, this.pins.QBBAR_O);
 		Connect(QCBAR, this.pins.QCBAR_O);
 		Connect(QDBAR, this.pins.QDBAR_O);
+	}
+	$exe_ULS398LOG() {
+		var IWS; // Temps
+		var WS_I, CLK_I, A1_I, A2_I, B1_I, B2_I, C1_I, C2_I, D1_I, D2_I; // Inputs
+		var WS, CLK, A1, A2, B1, B2, C1, C2, D1, D2, JA, JB, JC, JD, KA, KB, KC, KD, MCLK; // Outputs
+		WS_I = this.ULS398LOG.pins.WS_I.GetValue();
+		CLK_I = this.ULS398LOG.pins.CLK_I.GetValue();
+		A1_I = this.ULS398LOG.pins.A1_I.GetValue();
+		A2_I = this.ULS398LOG.pins.A2_I.GetValue();
+		B1_I = this.ULS398LOG.pins.B1_I.GetValue();
+		B2_I = this.ULS398LOG.pins.B2_I.GetValue();
+		C1_I = this.ULS398LOG.pins.C1_I.GetValue();
+		C2_I = this.ULS398LOG.pins.C2_I.GetValue();
+		D1_I = this.ULS398LOG.pins.D1_I.GetValue();
+		D2_I = this.ULS398LOG.pins.D2_I.GetValue();
+		   WS =  WS_I ;
+		   CLK =  CLK_I ;
+		   A1 =  A1_I ;
+		   A2 =  A2_I ;
+		   B1 =  B1_I ;
+		   B2 =  B2_I ;
+		   C1 =  C1_I ;
+		   C2 =  C2_I ;
+		   D1 =  D1_I ;
+		   D2 =  D2_I ;
+		   IWS =  !WS ;
+		   MCLK =  !CLK ;
+		   KA =  !((A1 & IWS) | (WS & A2)) ;
+		   KB =  !((B1 & IWS) | (WS & B2)) ;
+		   KC =  !((C1 & IWS) | (WS & C2)) ;
+		   KD =  !((D1 & IWS) | (WS & D2)) ;
+		   JA =  !KA ;
+		   JB =  !KB ;
+		   JC =  !KC ;
+		   JD =  !KD ;
+		
+		this.ULS398LOG.pins.WS.SetValue(WS);
+		this.ULS398LOG.pins.CLK.SetValue(CLK);
+		this.ULS398LOG.pins.A1.SetValue(A1);
+		this.ULS398LOG.pins.A2.SetValue(A2);
+		this.ULS398LOG.pins.B1.SetValue(B1);
+		this.ULS398LOG.pins.B2.SetValue(B2);
+		this.ULS398LOG.pins.C1.SetValue(C1);
+		this.ULS398LOG.pins.C2.SetValue(C2);
+		this.ULS398LOG.pins.D1.SetValue(D1);
+		this.ULS398LOG.pins.D2.SetValue(D2);
+		this.ULS398LOG.pins.JA.SetValue(JA);
+		this.ULS398LOG.pins.JB.SetValue(JB);
+		this.ULS398LOG.pins.JC.SetValue(JC);
+		this.ULS398LOG.pins.JD.SetValue(JD);
+		this.ULS398LOG.pins.KA.SetValue(KA);
+		this.ULS398LOG.pins.KB.SetValue(KB);
+		this.ULS398LOG.pins.KC.SetValue(KC);
+		this.ULS398LOG.pins.KD.SetValue(KD);
+		this.ULS398LOG.pins.MCLK.SetValue(MCLK);
 	}
 }
 /**
@@ -10079,7 +13987,7 @@ class SN74LS399 extends Component {
 		Connect(this.U1.pins.QBAR1, _D_NC);
 		Connect(this.U1.pins.QBAR2, _D_NC);
 		Connect(this.U1.pins.QBAR3, _D_NC);
-		this.ULS399LOG = new logicexp(['WS_I','CLK_I','A1_I','A2_I','B1_I','B2_I','C1_I','C2_I','D1_I','D2_I'], ['WS','CLK','A1','A2','B1','B2','C1','C2','D1','D2','JA','JB','JC','JD','KA','KB','KC','KD','MCLK'], ['IWS']).Logic('   WS =  WS_I ;   CLK =  CLK_I ;   A1 =  A1_I ;   A2 =  A2_I ;   B1 =  B1_I ;   B2 =  B2_I ;   C1 =  C1_I ;   C2 =  C2_I ;   D1 =  D1_I ;   D2 =  D2_I ;   IWS =  !WS ;   MCLK =  !CLK ;   KA =  !((A1 & IWS) | (WS & A2)) ;   KB =  !((B1 & IWS) | (WS & B2)) ;   KC =  !((C1 & IWS) | (WS & C2)) ;   KD =  !((D1 & IWS) | (WS & D2)) ;   JA =  !KA ;   JB =  !KB ;   JC =  !KC ;   JD =  !KD ;');
+		this.ULS399LOG = new logicexp(['WS_I','CLK_I','A1_I','A2_I','B1_I','B2_I','C1_I','C2_I','D1_I','D2_I'], ['WS','CLK','A1','A2','B1','B2','C1','C2','D1','D2','JA','JB','JC','JD','KA','KB','KC','KD','MCLK']).Callback(this.$exe_ULS399LOG);
 		Connect(this.ULS399LOG.pins.WS_I, this.pins.WS_I);
 		Connect(this.ULS399LOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.ULS399LOG.pins.A1_I, this.pins.A1_I);
@@ -10123,6 +14031,61 @@ class SN74LS399 extends Component {
 		Connect(QB, this.pins.QB_O);
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
+	}
+	$exe_ULS399LOG() {
+		var IWS; // Temps
+		var WS_I, CLK_I, A1_I, A2_I, B1_I, B2_I, C1_I, C2_I, D1_I, D2_I; // Inputs
+		var WS, CLK, A1, A2, B1, B2, C1, C2, D1, D2, JA, JB, JC, JD, KA, KB, KC, KD, MCLK; // Outputs
+		WS_I = this.ULS399LOG.pins.WS_I.GetValue();
+		CLK_I = this.ULS399LOG.pins.CLK_I.GetValue();
+		A1_I = this.ULS399LOG.pins.A1_I.GetValue();
+		A2_I = this.ULS399LOG.pins.A2_I.GetValue();
+		B1_I = this.ULS399LOG.pins.B1_I.GetValue();
+		B2_I = this.ULS399LOG.pins.B2_I.GetValue();
+		C1_I = this.ULS399LOG.pins.C1_I.GetValue();
+		C2_I = this.ULS399LOG.pins.C2_I.GetValue();
+		D1_I = this.ULS399LOG.pins.D1_I.GetValue();
+		D2_I = this.ULS399LOG.pins.D2_I.GetValue();
+		   WS =  WS_I ;
+		   CLK =  CLK_I ;
+		   A1 =  A1_I ;
+		   A2 =  A2_I ;
+		   B1 =  B1_I ;
+		   B2 =  B2_I ;
+		   C1 =  C1_I ;
+		   C2 =  C2_I ;
+		   D1 =  D1_I ;
+		   D2 =  D2_I ;
+		   IWS =  !WS ;
+		   MCLK =  !CLK ;
+		   KA =  !((A1 & IWS) | (WS & A2)) ;
+		   KB =  !((B1 & IWS) | (WS & B2)) ;
+		   KC =  !((C1 & IWS) | (WS & C2)) ;
+		   KD =  !((D1 & IWS) | (WS & D2)) ;
+		   JA =  !KA ;
+		   JB =  !KB ;
+		   JC =  !KC ;
+		   JD =  !KD ;
+		
+		this.ULS399LOG.pins.WS.SetValue(WS);
+		this.ULS399LOG.pins.CLK.SetValue(CLK);
+		this.ULS399LOG.pins.A1.SetValue(A1);
+		this.ULS399LOG.pins.A2.SetValue(A2);
+		this.ULS399LOG.pins.B1.SetValue(B1);
+		this.ULS399LOG.pins.B2.SetValue(B2);
+		this.ULS399LOG.pins.C1.SetValue(C1);
+		this.ULS399LOG.pins.C2.SetValue(C2);
+		this.ULS399LOG.pins.D1.SetValue(D1);
+		this.ULS399LOG.pins.D2.SetValue(D2);
+		this.ULS399LOG.pins.JA.SetValue(JA);
+		this.ULS399LOG.pins.JB.SetValue(JB);
+		this.ULS399LOG.pins.JC.SetValue(JC);
+		this.ULS399LOG.pins.JD.SetValue(JD);
+		this.ULS399LOG.pins.KA.SetValue(KA);
+		this.ULS399LOG.pins.KB.SetValue(KB);
+		this.ULS399LOG.pins.KC.SetValue(KC);
+		this.ULS399LOG.pins.KD.SetValue(KD);
+		this.ULS399LOG.pins.MCLK.SetValue(MCLK);
 	}
 }
 /**
@@ -10188,7 +14151,7 @@ class SN74LS440 extends Component {
 		Connect(this.ULS440BUF.pins.OUT10, C3);
 		let C4 = new Pin();
 		Connect(this.ULS440BUF.pins.OUT11, C4);
-		this.ULS440LOG = new logicexp(['CSBAR_I','GBARA_I','GBARB_I','GBARC_I','S0_I','S1_I','A1','A2','A3','A4','B1','B2','B3','B4','C1','C2','C3','C4'], ['CSBAR','GBARA','GBARB','GBARC','S0','S1','A1O','A2O','A3O','A4O','B1O','B2O','B3O','B4O','C1O','C2O','C3O','C4O','ENA','ENB','ENC'], ['CS','S0BAR','S1BAR','_S1_S0','_S1S0','S1_S0']).Logic('   CSBAR =  CSBAR_I ;   GBARA =  GBARA_I ;   GBARB =  GBARB_I ;   GBARC =  GBARC_I ;   S0 =  S0_I ;   S1 =  S1_I ;   CS =  !CSBAR ;   S0BAR =  !S0 ;   S1BAR =  !S1 ;   _S1_S0 =  S0BAR & S1BAR ;   _S1S0 =  S1BAR & S0 ;   S1_S0 =  S1 & S0BAR ;   ENA =  ((S0 ^ S1) & !GBARA & CS) ;   ENB =  (S0BAR & !GBARB & CS) ;   ENC =  (S1BAR & !GBARC & CS) ;   A1O =  !((_S1S0  & !B1 & ENA) | (S1_S0 & !C1 & ENA )) ;   A2O =  !((_S1S0  & !B2 & ENA) | (S1_S0 & !C2 & ENA )) ;   A3O =  !((_S1S0  & !B3 & ENA) | (S1_S0 & !C3 & ENA )) ;   A4O =  !((_S1S0  & !B4 & ENA) | (S1_S0 & !C4 & ENA )) ;   B1O =  !((_S1_S0 & !A1 & ENB) | (S1_S0 & !C1 & ENB )) ;   B2O =  !((_S1_S0 & !A2 & ENB) | (S1_S0 & !C2 & ENB )) ;   B3O =  !((_S1_S0 & !A3 & ENB) | (S1_S0 & !C3 & ENB )) ;   B4O =  !((_S1_S0 & !A4 & ENB) | (S1_S0 & !C4 & ENB )) ;   C1O =  !((_S1_S0 & !A1 & ENC) | (_S1S0 & !B1 & ENC )) ;   C2O =  !((_S1_S0 & !A2 & ENC) | (_S1S0 & !B2 & ENC )) ;   C3O =  !((_S1_S0 & !A3 & ENC) | (_S1S0 & !B3 & ENC )) ;   C4O =  !((_S1_S0 & !A4 & ENC) | (_S1S0 & !B4 & ENC )) ;');
+		this.ULS440LOG = new logicexp(['CSBAR_I','GBARA_I','GBARB_I','GBARC_I','S0_I','S1_I','A1','A2','A3','A4','B1','B2','B3','B4','C1','C2','C3','C4'], ['CSBAR','GBARA','GBARB','GBARC','S0','S1','A1O','A2O','A3O','A4O','B1O','B2O','B3O','B4O','C1O','C2O','C3O','C4O','ENA','ENB','ENC']).Callback(this.$exe_ULS440LOG);
 		Connect(this.ULS440LOG.pins.CSBAR_I, this.pins.CSBAR_I);
 		Connect(this.ULS440LOG.pins.GBARA_I, this.pins.GBARA_I);
 		Connect(this.ULS440LOG.pins.GBARB_I, this.pins.GBARB_I);
@@ -10262,6 +14225,78 @@ class SN74LS440 extends Component {
 		Connect(C3O, this.pins.C3_T);
 		Connect(C4O, this.pins.C4_T);
 	}
+	$exe_ULS440LOG() {
+		var CS, S0BAR, S1BAR, _S1_S0, _S1S0, S1_S0; // Temps
+		var CSBAR_I, GBARA_I, GBARB_I, GBARC_I, S0_I, S1_I, A1, A2, A3, A4, B1, B2, B3, B4, C1, C2, C3, C4; // Inputs
+		var CSBAR, GBARA, GBARB, GBARC, S0, S1, A1O, A2O, A3O, A4O, B1O, B2O, B3O, B4O, C1O, C2O, C3O, C4O, ENA, ENB, ENC; // Outputs
+		CSBAR_I = this.ULS440LOG.pins.CSBAR_I.GetValue();
+		GBARA_I = this.ULS440LOG.pins.GBARA_I.GetValue();
+		GBARB_I = this.ULS440LOG.pins.GBARB_I.GetValue();
+		GBARC_I = this.ULS440LOG.pins.GBARC_I.GetValue();
+		S0_I = this.ULS440LOG.pins.S0_I.GetValue();
+		S1_I = this.ULS440LOG.pins.S1_I.GetValue();
+		A1 = this.ULS440LOG.pins.A1.GetValue();
+		A2 = this.ULS440LOG.pins.A2.GetValue();
+		A3 = this.ULS440LOG.pins.A3.GetValue();
+		A4 = this.ULS440LOG.pins.A4.GetValue();
+		B1 = this.ULS440LOG.pins.B1.GetValue();
+		B2 = this.ULS440LOG.pins.B2.GetValue();
+		B3 = this.ULS440LOG.pins.B3.GetValue();
+		B4 = this.ULS440LOG.pins.B4.GetValue();
+		C1 = this.ULS440LOG.pins.C1.GetValue();
+		C2 = this.ULS440LOG.pins.C2.GetValue();
+		C3 = this.ULS440LOG.pins.C3.GetValue();
+		C4 = this.ULS440LOG.pins.C4.GetValue();
+		   CSBAR =  CSBAR_I ;
+		   GBARA =  GBARA_I ;
+		   GBARB =  GBARB_I ;
+		   GBARC =  GBARC_I ;
+		   S0 =  S0_I ;
+		   S1 =  S1_I ;
+		   CS =  !CSBAR ;
+		   S0BAR =  !S0 ;
+		   S1BAR =  !S1 ;
+		   _S1_S0 =  S0BAR & S1BAR ;
+		   _S1S0 =  S1BAR & S0 ;
+		   S1_S0 =  S1 & S0BAR ;
+		   ENA =  ((S0 ^ S1) & !GBARA & CS) ;
+		   ENB =  (S0BAR & !GBARB & CS) ;
+		   ENC =  (S1BAR & !GBARC & CS) ;
+		   A1O =  !((_S1S0  & !B1 & ENA) | (S1_S0 & !C1 & ENA )) ;
+		   A2O =  !((_S1S0  & !B2 & ENA) | (S1_S0 & !C2 & ENA )) ;
+		   A3O =  !((_S1S0  & !B3 & ENA) | (S1_S0 & !C3 & ENA )) ;
+		   A4O =  !((_S1S0  & !B4 & ENA) | (S1_S0 & !C4 & ENA )) ;
+		   B1O =  !((_S1_S0 & !A1 & ENB) | (S1_S0 & !C1 & ENB )) ;
+		   B2O =  !((_S1_S0 & !A2 & ENB) | (S1_S0 & !C2 & ENB )) ;
+		   B3O =  !((_S1_S0 & !A3 & ENB) | (S1_S0 & !C3 & ENB )) ;
+		   B4O =  !((_S1_S0 & !A4 & ENB) | (S1_S0 & !C4 & ENB )) ;
+		   C1O =  !((_S1_S0 & !A1 & ENC) | (_S1S0 & !B1 & ENC )) ;
+		   C2O =  !((_S1_S0 & !A2 & ENC) | (_S1S0 & !B2 & ENC )) ;
+		   C3O =  !((_S1_S0 & !A3 & ENC) | (_S1S0 & !B3 & ENC )) ;
+		   C4O =  !((_S1_S0 & !A4 & ENC) | (_S1S0 & !B4 & ENC )) ;
+		
+		this.ULS440LOG.pins.CSBAR.SetValue(CSBAR);
+		this.ULS440LOG.pins.GBARA.SetValue(GBARA);
+		this.ULS440LOG.pins.GBARB.SetValue(GBARB);
+		this.ULS440LOG.pins.GBARC.SetValue(GBARC);
+		this.ULS440LOG.pins.S0.SetValue(S0);
+		this.ULS440LOG.pins.S1.SetValue(S1);
+		this.ULS440LOG.pins.A1O.SetValue(A1O);
+		this.ULS440LOG.pins.A2O.SetValue(A2O);
+		this.ULS440LOG.pins.A3O.SetValue(A3O);
+		this.ULS440LOG.pins.A4O.SetValue(A4O);
+		this.ULS440LOG.pins.B1O.SetValue(B1O);
+		this.ULS440LOG.pins.B2O.SetValue(B2O);
+		this.ULS440LOG.pins.B3O.SetValue(B3O);
+		this.ULS440LOG.pins.B4O.SetValue(B4O);
+		this.ULS440LOG.pins.C1O.SetValue(C1O);
+		this.ULS440LOG.pins.C2O.SetValue(C2O);
+		this.ULS440LOG.pins.C3O.SetValue(C3O);
+		this.ULS440LOG.pins.C4O.SetValue(C4O);
+		this.ULS440LOG.pins.ENA.SetValue(ENA);
+		this.ULS440LOG.pins.ENB.SetValue(ENB);
+		this.ULS440LOG.pins.ENC.SetValue(ENC);
+	}
 }
 /**
  * QUADRUPLE TRIDIRECTIONAL BUS TRANSCEIVERS WITH OPEN-COLLECTOR OUTPUTS
@@ -10326,7 +14361,7 @@ class SN74LS441 extends Component {
 		Connect(this.ULS441BUF.pins.OUT10, C3);
 		let C4 = new Pin();
 		Connect(this.ULS441BUF.pins.OUT11, C4);
-		this.ULS441LOG = new logicexp(['CSBAR_I','GBARA_I','GBARB_I','GBARC_I','S0_I','S1_I','A1','A2','A3','A4','B1','B2','B3','B4','C1','C2','C3','C4'], ['CSBAR','GBARA','GBARB','GBARC','S0','S1','A1O','A2O','A3O','A4O','B1O','B2O','B3O','B4O','C1O','C2O','C3O','C4O','ENA','ENB','ENC'], ['CS','S0BAR','S1BAR','_S1_S0','_S1S0','S1_S0']).Logic('   CSBAR =  CSBAR_I ;   GBARA =  GBARA_I ;   GBARB =  GBARB_I ;   GBARC =  GBARC_I ;   S0 =  S0_I ;   S1 =  S1_I ;   CS =  !CSBAR ;   S0BAR =  !S0 ;   S1BAR =  !S1 ;   _S1_S0 =  S0BAR & S1BAR ;   _S1S0 =  S1BAR & S0 ;   S1_S0 =  S1 & S0BAR ;   ENA =  ((S0 ^ S1) & !GBARA & CS) ;   ENB =  (S0BAR & !GBARB & CS) ;   ENC =  (S1BAR & !GBARC & CS) ;   A1O =  !((_S1S0 & B1  & ENA) | (S1_S0 & C1 & ENA )) ;   A2O =  !((_S1S0 & B2  & ENA) | (S1_S0 & C2 & ENA )) ;   A3O =  !((_S1S0 & B3  & ENA) | (S1_S0 & C3 & ENA )) ;   A4O =  !((_S1S0 & B4  & ENA) | (S1_S0 & C4 & ENA )) ;   B1O =  !((_S1_S0 & A1 & ENB) | (S1_S0 & C1 & ENB )) ;   B2O =  !((_S1_S0 & A2 & ENB) | (S1_S0 & C2 & ENB )) ;   B3O =  !((_S1_S0 & A3 & ENB) | (S1_S0 & C3 & ENB )) ;   B4O =  !((_S1_S0 & A4 & ENB) | (S1_S0 & C4 & ENB )) ;   C1O =  !((_S1_S0 & A1 & ENC) | (_S1S0 & B1 & ENC )) ;   C2O =  !((_S1_S0 & A2 & ENC) | (_S1S0 & B2 & ENC )) ;   C3O =  !((_S1_S0 & A3 & ENC) | (_S1S0 & B3 & ENC )) ;   C4O =  !((_S1_S0 & A4 & ENC) | (_S1S0 & B4 & ENC )) ;');
+		this.ULS441LOG = new logicexp(['CSBAR_I','GBARA_I','GBARB_I','GBARC_I','S0_I','S1_I','A1','A2','A3','A4','B1','B2','B3','B4','C1','C2','C3','C4'], ['CSBAR','GBARA','GBARB','GBARC','S0','S1','A1O','A2O','A3O','A4O','B1O','B2O','B3O','B4O','C1O','C2O','C3O','C4O','ENA','ENB','ENC']).Callback(this.$exe_ULS441LOG);
 		Connect(this.ULS441LOG.pins.CSBAR_I, this.pins.CSBAR_I);
 		Connect(this.ULS441LOG.pins.GBARA_I, this.pins.GBARA_I);
 		Connect(this.ULS441LOG.pins.GBARB_I, this.pins.GBARB_I);
@@ -10400,6 +14435,78 @@ class SN74LS441 extends Component {
 		Connect(C3O, this.pins.C3_T);
 		Connect(C4O, this.pins.C4_T);
 	}
+	$exe_ULS441LOG() {
+		var CS, S0BAR, S1BAR, _S1_S0, _S1S0, S1_S0; // Temps
+		var CSBAR_I, GBARA_I, GBARB_I, GBARC_I, S0_I, S1_I, A1, A2, A3, A4, B1, B2, B3, B4, C1, C2, C3, C4; // Inputs
+		var CSBAR, GBARA, GBARB, GBARC, S0, S1, A1O, A2O, A3O, A4O, B1O, B2O, B3O, B4O, C1O, C2O, C3O, C4O, ENA, ENB, ENC; // Outputs
+		CSBAR_I = this.ULS441LOG.pins.CSBAR_I.GetValue();
+		GBARA_I = this.ULS441LOG.pins.GBARA_I.GetValue();
+		GBARB_I = this.ULS441LOG.pins.GBARB_I.GetValue();
+		GBARC_I = this.ULS441LOG.pins.GBARC_I.GetValue();
+		S0_I = this.ULS441LOG.pins.S0_I.GetValue();
+		S1_I = this.ULS441LOG.pins.S1_I.GetValue();
+		A1 = this.ULS441LOG.pins.A1.GetValue();
+		A2 = this.ULS441LOG.pins.A2.GetValue();
+		A3 = this.ULS441LOG.pins.A3.GetValue();
+		A4 = this.ULS441LOG.pins.A4.GetValue();
+		B1 = this.ULS441LOG.pins.B1.GetValue();
+		B2 = this.ULS441LOG.pins.B2.GetValue();
+		B3 = this.ULS441LOG.pins.B3.GetValue();
+		B4 = this.ULS441LOG.pins.B4.GetValue();
+		C1 = this.ULS441LOG.pins.C1.GetValue();
+		C2 = this.ULS441LOG.pins.C2.GetValue();
+		C3 = this.ULS441LOG.pins.C3.GetValue();
+		C4 = this.ULS441LOG.pins.C4.GetValue();
+		   CSBAR =  CSBAR_I ;
+		   GBARA =  GBARA_I ;
+		   GBARB =  GBARB_I ;
+		   GBARC =  GBARC_I ;
+		   S0 =  S0_I ;
+		   S1 =  S1_I ;
+		   CS =  !CSBAR ;
+		   S0BAR =  !S0 ;
+		   S1BAR =  !S1 ;
+		   _S1_S0 =  S0BAR & S1BAR ;
+		   _S1S0 =  S1BAR & S0 ;
+		   S1_S0 =  S1 & S0BAR ;
+		   ENA =  ((S0 ^ S1) & !GBARA & CS) ;
+		   ENB =  (S0BAR & !GBARB & CS) ;
+		   ENC =  (S1BAR & !GBARC & CS) ;
+		   A1O =  !((_S1S0 & B1  & ENA) | (S1_S0 & C1 & ENA )) ;
+		   A2O =  !((_S1S0 & B2  & ENA) | (S1_S0 & C2 & ENA )) ;
+		   A3O =  !((_S1S0 & B3  & ENA) | (S1_S0 & C3 & ENA )) ;
+		   A4O =  !((_S1S0 & B4  & ENA) | (S1_S0 & C4 & ENA )) ;
+		   B1O =  !((_S1_S0 & A1 & ENB) | (S1_S0 & C1 & ENB )) ;
+		   B2O =  !((_S1_S0 & A2 & ENB) | (S1_S0 & C2 & ENB )) ;
+		   B3O =  !((_S1_S0 & A3 & ENB) | (S1_S0 & C3 & ENB )) ;
+		   B4O =  !((_S1_S0 & A4 & ENB) | (S1_S0 & C4 & ENB )) ;
+		   C1O =  !((_S1_S0 & A1 & ENC) | (_S1S0 & B1 & ENC )) ;
+		   C2O =  !((_S1_S0 & A2 & ENC) | (_S1S0 & B2 & ENC )) ;
+		   C3O =  !((_S1_S0 & A3 & ENC) | (_S1S0 & B3 & ENC )) ;
+		   C4O =  !((_S1_S0 & A4 & ENC) | (_S1S0 & B4 & ENC )) ;
+		
+		this.ULS441LOG.pins.CSBAR.SetValue(CSBAR);
+		this.ULS441LOG.pins.GBARA.SetValue(GBARA);
+		this.ULS441LOG.pins.GBARB.SetValue(GBARB);
+		this.ULS441LOG.pins.GBARC.SetValue(GBARC);
+		this.ULS441LOG.pins.S0.SetValue(S0);
+		this.ULS441LOG.pins.S1.SetValue(S1);
+		this.ULS441LOG.pins.A1O.SetValue(A1O);
+		this.ULS441LOG.pins.A2O.SetValue(A2O);
+		this.ULS441LOG.pins.A3O.SetValue(A3O);
+		this.ULS441LOG.pins.A4O.SetValue(A4O);
+		this.ULS441LOG.pins.B1O.SetValue(B1O);
+		this.ULS441LOG.pins.B2O.SetValue(B2O);
+		this.ULS441LOG.pins.B3O.SetValue(B3O);
+		this.ULS441LOG.pins.B4O.SetValue(B4O);
+		this.ULS441LOG.pins.C1O.SetValue(C1O);
+		this.ULS441LOG.pins.C2O.SetValue(C2O);
+		this.ULS441LOG.pins.C3O.SetValue(C3O);
+		this.ULS441LOG.pins.C4O.SetValue(C4O);
+		this.ULS441LOG.pins.ENA.SetValue(ENA);
+		this.ULS441LOG.pins.ENB.SetValue(ENB);
+		this.ULS441LOG.pins.ENC.SetValue(ENC);
+	}
 }
 /**
  * QUADRUPLE TRIDIRECTIONAL BUS TRANSCEIVERS WITH TRI-STATE OUTPUTS
@@ -10464,7 +14571,7 @@ class SN74LS442 extends Component {
 		Connect(this.ULS442BUF.pins.OUT10, C3);
 		let C4 = new Pin();
 		Connect(this.ULS442BUF.pins.OUT11, C4);
-		this.ULS442LOG = new logicexp(['CSBAR_I','GBARA_I','GBARB_I','GBARC_I','S0_I','S1_I','A1','A2','A3','A4','B1','B2','B3','B4','C1','C2','C3','C4'], ['CSBAR','GBARA','GBARB','GBARC','S0','S1','A1O','A2O','A3O','A4O','B1O','B2O','B3O','B4O','C1O','C2O','C3O','C4O','ENA','ENB','ENC'], ['CS','S0BAR','S1BAR','_S1_S0','_S1S0','S1_S0']).Logic('   CSBAR =  CSBAR_I ;   GBARA =  GBARA_I ;   GBARB =  GBARB_I ;   GBARC =  GBARC_I ;   S0 =  S0_I ;   S1 =  S1_I ;   CS =  !CSBAR ;   S0BAR =  !S0 ;   S1BAR =  !S1 ;   _S1_S0 =  S0BAR & S1BAR ;   _S1S0 =  S1BAR & S0 ;   S1_S0 =  S1 & S0BAR ;   ENA =  ((S0 ^ S1) & !GBARA & CS) ;   ENB =  (S0BAR & !GBARB & CS) ;   ENC =  (S1BAR & !GBARC & CS) ;   A1O =  !( (_S1S0  & !B1) | (S1_S0 & !C1) ) ;   A2O =  !( (_S1S0  & !B2) | (S1_S0 & !C2) ) ;   A3O =  !( (_S1S0  & !B3) | (S1_S0 & !C3) ) ;   A4O =  !( (_S1S0  & !B4) | (S1_S0 & !C4) ) ;   B1O =  !( (_S1_S0 & !A1) | (S1_S0 & !C1) ) ;   B2O =  !( (_S1_S0 & !A2) | (S1_S0 & !C2) ) ;   B3O =  !( (_S1_S0 & !A3) | (S1_S0 & !C3) ) ;   B4O =  !( (_S1_S0 & !A4) | (S1_S0 & !C4) ) ;   C1O =  !( (_S1_S0 & !A1) | (_S1S0 & !B1) ) ;   C2O =  !( (_S1_S0 & !A2) | (_S1S0 & !B2) ) ;   C3O =  !( (_S1_S0 & !A3) | (_S1S0 & !B3) ) ;   C4O =  !( (_S1_S0 & !A4) | (_S1S0 & !B4) ) ;');
+		this.ULS442LOG = new logicexp(['CSBAR_I','GBARA_I','GBARB_I','GBARC_I','S0_I','S1_I','A1','A2','A3','A4','B1','B2','B3','B4','C1','C2','C3','C4'], ['CSBAR','GBARA','GBARB','GBARC','S0','S1','A1O','A2O','A3O','A4O','B1O','B2O','B3O','B4O','C1O','C2O','C3O','C4O','ENA','ENB','ENC']).Callback(this.$exe_ULS442LOG);
 		Connect(this.ULS442LOG.pins.CSBAR_I, this.pins.CSBAR_I);
 		Connect(this.ULS442LOG.pins.GBARA_I, this.pins.GBARA_I);
 		Connect(this.ULS442LOG.pins.GBARB_I, this.pins.GBARB_I);
@@ -10538,6 +14645,78 @@ class SN74LS442 extends Component {
 		Connect(C3O, this.pins.C3_T);
 		Connect(C4O, this.pins.C4_T);
 	}
+	$exe_ULS442LOG() {
+		var CS, S0BAR, S1BAR, _S1_S0, _S1S0, S1_S0; // Temps
+		var CSBAR_I, GBARA_I, GBARB_I, GBARC_I, S0_I, S1_I, A1, A2, A3, A4, B1, B2, B3, B4, C1, C2, C3, C4; // Inputs
+		var CSBAR, GBARA, GBARB, GBARC, S0, S1, A1O, A2O, A3O, A4O, B1O, B2O, B3O, B4O, C1O, C2O, C3O, C4O, ENA, ENB, ENC; // Outputs
+		CSBAR_I = this.ULS442LOG.pins.CSBAR_I.GetValue();
+		GBARA_I = this.ULS442LOG.pins.GBARA_I.GetValue();
+		GBARB_I = this.ULS442LOG.pins.GBARB_I.GetValue();
+		GBARC_I = this.ULS442LOG.pins.GBARC_I.GetValue();
+		S0_I = this.ULS442LOG.pins.S0_I.GetValue();
+		S1_I = this.ULS442LOG.pins.S1_I.GetValue();
+		A1 = this.ULS442LOG.pins.A1.GetValue();
+		A2 = this.ULS442LOG.pins.A2.GetValue();
+		A3 = this.ULS442LOG.pins.A3.GetValue();
+		A4 = this.ULS442LOG.pins.A4.GetValue();
+		B1 = this.ULS442LOG.pins.B1.GetValue();
+		B2 = this.ULS442LOG.pins.B2.GetValue();
+		B3 = this.ULS442LOG.pins.B3.GetValue();
+		B4 = this.ULS442LOG.pins.B4.GetValue();
+		C1 = this.ULS442LOG.pins.C1.GetValue();
+		C2 = this.ULS442LOG.pins.C2.GetValue();
+		C3 = this.ULS442LOG.pins.C3.GetValue();
+		C4 = this.ULS442LOG.pins.C4.GetValue();
+		   CSBAR =  CSBAR_I ;
+		   GBARA =  GBARA_I ;
+		   GBARB =  GBARB_I ;
+		   GBARC =  GBARC_I ;
+		   S0 =  S0_I ;
+		   S1 =  S1_I ;
+		   CS =  !CSBAR ;
+		   S0BAR =  !S0 ;
+		   S1BAR =  !S1 ;
+		   _S1_S0 =  S0BAR & S1BAR ;
+		   _S1S0 =  S1BAR & S0 ;
+		   S1_S0 =  S1 & S0BAR ;
+		   ENA =  ((S0 ^ S1) & !GBARA & CS) ;
+		   ENB =  (S0BAR & !GBARB & CS) ;
+		   ENC =  (S1BAR & !GBARC & CS) ;
+		   A1O =  !( (_S1S0  & !B1) | (S1_S0 & !C1) ) ;
+		   A2O =  !( (_S1S0  & !B2) | (S1_S0 & !C2) ) ;
+		   A3O =  !( (_S1S0  & !B3) | (S1_S0 & !C3) ) ;
+		   A4O =  !( (_S1S0  & !B4) | (S1_S0 & !C4) ) ;
+		   B1O =  !( (_S1_S0 & !A1) | (S1_S0 & !C1) ) ;
+		   B2O =  !( (_S1_S0 & !A2) | (S1_S0 & !C2) ) ;
+		   B3O =  !( (_S1_S0 & !A3) | (S1_S0 & !C3) ) ;
+		   B4O =  !( (_S1_S0 & !A4) | (S1_S0 & !C4) ) ;
+		   C1O =  !( (_S1_S0 & !A1) | (_S1S0 & !B1) ) ;
+		   C2O =  !( (_S1_S0 & !A2) | (_S1S0 & !B2) ) ;
+		   C3O =  !( (_S1_S0 & !A3) | (_S1S0 & !B3) ) ;
+		   C4O =  !( (_S1_S0 & !A4) | (_S1S0 & !B4) ) ;
+		
+		this.ULS442LOG.pins.CSBAR.SetValue(CSBAR);
+		this.ULS442LOG.pins.GBARA.SetValue(GBARA);
+		this.ULS442LOG.pins.GBARB.SetValue(GBARB);
+		this.ULS442LOG.pins.GBARC.SetValue(GBARC);
+		this.ULS442LOG.pins.S0.SetValue(S0);
+		this.ULS442LOG.pins.S1.SetValue(S1);
+		this.ULS442LOG.pins.A1O.SetValue(A1O);
+		this.ULS442LOG.pins.A2O.SetValue(A2O);
+		this.ULS442LOG.pins.A3O.SetValue(A3O);
+		this.ULS442LOG.pins.A4O.SetValue(A4O);
+		this.ULS442LOG.pins.B1O.SetValue(B1O);
+		this.ULS442LOG.pins.B2O.SetValue(B2O);
+		this.ULS442LOG.pins.B3O.SetValue(B3O);
+		this.ULS442LOG.pins.B4O.SetValue(B4O);
+		this.ULS442LOG.pins.C1O.SetValue(C1O);
+		this.ULS442LOG.pins.C2O.SetValue(C2O);
+		this.ULS442LOG.pins.C3O.SetValue(C3O);
+		this.ULS442LOG.pins.C4O.SetValue(C4O);
+		this.ULS442LOG.pins.ENA.SetValue(ENA);
+		this.ULS442LOG.pins.ENB.SetValue(ENB);
+		this.ULS442LOG.pins.ENC.SetValue(ENC);
+	}
 }
 /**
  * QUADRUPLE TRIDIRECTIONAL BUS TRANSCEIVERS WITH TRI-STATE OUTPUTS
@@ -10602,7 +14781,7 @@ class SN74LS443 extends Component {
 		Connect(this.ULS443BUF.pins.OUT10, C3);
 		let C4 = new Pin();
 		Connect(this.ULS443BUF.pins.OUT11, C4);
-		this.ULS443LOG = new logicexp(['CSBAR_I','GBARA_I','GBARB_I','GBARC_I','S0_I','S1_I','A1','A2','A3','A4','B1','B2','B3','B4','C1','C2','C3','C4'], ['CSBAR','GBARA','GBARB','GBARC','S0','S1','A1O','A2O','A3O','A4O','B1O','B2O','B3O','B4O','C1O','C2O','C3O','C4O','ENA','ENB','ENC'], ['CS','S0BAR','S1BAR','_S1_S0','_S1S0','S1_S0']).Logic('   CSBAR =  CSBAR_I ;   GBARA =  GBARA_I ;   GBARB =  GBARB_I ;   GBARC =  GBARC_I ;   S0 =  S0_I ;   S1 =  S1_I ;   CS =  !CSBAR ;   S0BAR =  !S0 ;   S1BAR =  !S1 ;   _S1_S0 =  S0BAR & S1BAR ;   _S1S0 =  S1BAR & S0 ;   S1_S0 =  S1 & S0BAR ;   ENA =  ((S0 ^ S1) & !GBARA & CS) ;   ENB =  (S0BAR & !GBARB & CS) ;   ENC =  (S1BAR & !GBARC & CS) ;   A1O =  !( (_S1S0  & B1) | (S1_S0 & C1) ) ;   A2O =  !( (_S1S0  & B2) | (S1_S0 & C2) ) ;   A3O =  !( (_S1S0  & B3) | (S1_S0 & C3) ) ;   A4O =  !( (_S1S0  & B4) | (S1_S0 & C4) ) ;   B1O =  !( (_S1_S0 & A1) | (S1_S0 & C1) ) ;   B2O =  !( (_S1_S0 & A2) | (S1_S0 & C2) ) ;   B3O =  !( (_S1_S0 & A3) | (S1_S0 & C3) ) ;   B4O =  !( (_S1_S0 & A4) | (S1_S0 & C4) ) ;   C1O =  !( (_S1_S0 & A1) | (_S1S0 & B1) ) ;   C2O =  !( (_S1_S0 & A2) | (_S1S0 & B2) ) ;   C3O =  !( (_S1_S0 & A3) | (_S1S0 & B3) ) ;   C4O =  !( (_S1_S0 & A4) | (_S1S0 & B4) ) ;');
+		this.ULS443LOG = new logicexp(['CSBAR_I','GBARA_I','GBARB_I','GBARC_I','S0_I','S1_I','A1','A2','A3','A4','B1','B2','B3','B4','C1','C2','C3','C4'], ['CSBAR','GBARA','GBARB','GBARC','S0','S1','A1O','A2O','A3O','A4O','B1O','B2O','B3O','B4O','C1O','C2O','C3O','C4O','ENA','ENB','ENC']).Callback(this.$exe_ULS443LOG);
 		Connect(this.ULS443LOG.pins.CSBAR_I, this.pins.CSBAR_I);
 		Connect(this.ULS443LOG.pins.GBARA_I, this.pins.GBARA_I);
 		Connect(this.ULS443LOG.pins.GBARB_I, this.pins.GBARB_I);
@@ -10676,6 +14855,78 @@ class SN74LS443 extends Component {
 		Connect(C3O, this.pins.C3_T);
 		Connect(C4O, this.pins.C4_T);
 	}
+	$exe_ULS443LOG() {
+		var CS, S0BAR, S1BAR, _S1_S0, _S1S0, S1_S0; // Temps
+		var CSBAR_I, GBARA_I, GBARB_I, GBARC_I, S0_I, S1_I, A1, A2, A3, A4, B1, B2, B3, B4, C1, C2, C3, C4; // Inputs
+		var CSBAR, GBARA, GBARB, GBARC, S0, S1, A1O, A2O, A3O, A4O, B1O, B2O, B3O, B4O, C1O, C2O, C3O, C4O, ENA, ENB, ENC; // Outputs
+		CSBAR_I = this.ULS443LOG.pins.CSBAR_I.GetValue();
+		GBARA_I = this.ULS443LOG.pins.GBARA_I.GetValue();
+		GBARB_I = this.ULS443LOG.pins.GBARB_I.GetValue();
+		GBARC_I = this.ULS443LOG.pins.GBARC_I.GetValue();
+		S0_I = this.ULS443LOG.pins.S0_I.GetValue();
+		S1_I = this.ULS443LOG.pins.S1_I.GetValue();
+		A1 = this.ULS443LOG.pins.A1.GetValue();
+		A2 = this.ULS443LOG.pins.A2.GetValue();
+		A3 = this.ULS443LOG.pins.A3.GetValue();
+		A4 = this.ULS443LOG.pins.A4.GetValue();
+		B1 = this.ULS443LOG.pins.B1.GetValue();
+		B2 = this.ULS443LOG.pins.B2.GetValue();
+		B3 = this.ULS443LOG.pins.B3.GetValue();
+		B4 = this.ULS443LOG.pins.B4.GetValue();
+		C1 = this.ULS443LOG.pins.C1.GetValue();
+		C2 = this.ULS443LOG.pins.C2.GetValue();
+		C3 = this.ULS443LOG.pins.C3.GetValue();
+		C4 = this.ULS443LOG.pins.C4.GetValue();
+		   CSBAR =  CSBAR_I ;
+		   GBARA =  GBARA_I ;
+		   GBARB =  GBARB_I ;
+		   GBARC =  GBARC_I ;
+		   S0 =  S0_I ;
+		   S1 =  S1_I ;
+		   CS =  !CSBAR ;
+		   S0BAR =  !S0 ;
+		   S1BAR =  !S1 ;
+		   _S1_S0 =  S0BAR & S1BAR ;
+		   _S1S0 =  S1BAR & S0 ;
+		   S1_S0 =  S1 & S0BAR ;
+		   ENA =  ((S0 ^ S1) & !GBARA & CS) ;
+		   ENB =  (S0BAR & !GBARB & CS) ;
+		   ENC =  (S1BAR & !GBARC & CS) ;
+		   A1O =  !( (_S1S0  & B1) | (S1_S0 & C1) ) ;
+		   A2O =  !( (_S1S0  & B2) | (S1_S0 & C2) ) ;
+		   A3O =  !( (_S1S0  & B3) | (S1_S0 & C3) ) ;
+		   A4O =  !( (_S1S0  & B4) | (S1_S0 & C4) ) ;
+		   B1O =  !( (_S1_S0 & A1) | (S1_S0 & C1) ) ;
+		   B2O =  !( (_S1_S0 & A2) | (S1_S0 & C2) ) ;
+		   B3O =  !( (_S1_S0 & A3) | (S1_S0 & C3) ) ;
+		   B4O =  !( (_S1_S0 & A4) | (S1_S0 & C4) ) ;
+		   C1O =  !( (_S1_S0 & A1) | (_S1S0 & B1) ) ;
+		   C2O =  !( (_S1_S0 & A2) | (_S1S0 & B2) ) ;
+		   C3O =  !( (_S1_S0 & A3) | (_S1S0 & B3) ) ;
+		   C4O =  !( (_S1_S0 & A4) | (_S1S0 & B4) ) ;
+		
+		this.ULS443LOG.pins.CSBAR.SetValue(CSBAR);
+		this.ULS443LOG.pins.GBARA.SetValue(GBARA);
+		this.ULS443LOG.pins.GBARB.SetValue(GBARB);
+		this.ULS443LOG.pins.GBARC.SetValue(GBARC);
+		this.ULS443LOG.pins.S0.SetValue(S0);
+		this.ULS443LOG.pins.S1.SetValue(S1);
+		this.ULS443LOG.pins.A1O.SetValue(A1O);
+		this.ULS443LOG.pins.A2O.SetValue(A2O);
+		this.ULS443LOG.pins.A3O.SetValue(A3O);
+		this.ULS443LOG.pins.A4O.SetValue(A4O);
+		this.ULS443LOG.pins.B1O.SetValue(B1O);
+		this.ULS443LOG.pins.B2O.SetValue(B2O);
+		this.ULS443LOG.pins.B3O.SetValue(B3O);
+		this.ULS443LOG.pins.B4O.SetValue(B4O);
+		this.ULS443LOG.pins.C1O.SetValue(C1O);
+		this.ULS443LOG.pins.C2O.SetValue(C2O);
+		this.ULS443LOG.pins.C3O.SetValue(C3O);
+		this.ULS443LOG.pins.C4O.SetValue(C4O);
+		this.ULS443LOG.pins.ENA.SetValue(ENA);
+		this.ULS443LOG.pins.ENB.SetValue(ENB);
+		this.ULS443LOG.pins.ENC.SetValue(ENC);
+	}
 }
 /**
  * QUADRUPLE TRIDIRECTIONAL BUS TRANSCEIVERS WITH TRI-STATE OUTPUTS
@@ -10740,7 +14991,7 @@ class SN74LS444 extends Component {
 		Connect(this.ULS444BUF.pins.OUT10, C3);
 		let C4 = new Pin();
 		Connect(this.ULS444BUF.pins.OUT11, C4);
-		this.ULS444LOG = new logicexp(['CSBAR_I','GBARA_I','GBARB_I','GBARC_I','S0_I','S1_I','A1','A2','A3','A4','B1','B2','B3','B4','C1','C2','C3','C4'], ['CSBAR','GBARA','GBARB','GBARC','S0','S1','A1O','A2O','A3O','A4O','B1O','B2O','B3O','B4O','C1O','C2O','C3O','C4O','ENA','ENB','ENC'], ['CS','S0BAR','S1BAR','_S1_S0','_S1S0','S1_S0']).Logic('   CSBAR =  CSBAR_I ;   GBARA =  GBARA_I ;   GBARB =  GBARB_I ;   GBARC =  GBARC_I ;   S0 =  S0_I ;   S1 =  S1_I ;   CS =  !CSBAR ;   S0BAR =  !S0 ;   S1BAR =  !S1 ;   _S1_S0 =  S0BAR & S1BAR ;   _S1S0 =  S1BAR & S0 ;   S1_S0 =  S1 & S0BAR ;   ENA =  ((S0 ^ S1) & !GBARA & CS) ;   ENB =  (S0BAR & !GBARB & CS) ;   ENC =  (S1BAR & !GBARC & CS) ;   A1O =  !( (_S1S0  & B1) | (S1_S0 & C1) ) ;   A2O =  !( (_S1S0  & B2) | (S1_S0 & C2) ) ;   A3O =  !( (_S1S0  & B3) | (S1_S0 & C3) ) ;   A4O =  !( (_S1S0  & B4) | (S1_S0 & C4) ) ;   B1O =  !( (_S1_S0 & A1) | (S1_S0 & !C1) ) ;   B2O =  !( (_S1_S0 & A2) | (S1_S0 & !C2) ) ;   B3O =  !( (_S1_S0 & A3) | (S1_S0 & !C3) ) ;   B4O =  !( (_S1_S0 & A4) | (S1_S0 & !C4) ) ;   C1O =  !( (_S1_S0 & A1) | (_S1S0 & !B1) ) ;   C2O =  !( (_S1_S0 & A2) | (_S1S0 & !B2) ) ;   C3O =  !( (_S1_S0 & A3) | (_S1S0 & !B3) ) ;   C4O =  !( (_S1_S0 & A4) | (_S1S0 & !B4) ) ;');
+		this.ULS444LOG = new logicexp(['CSBAR_I','GBARA_I','GBARB_I','GBARC_I','S0_I','S1_I','A1','A2','A3','A4','B1','B2','B3','B4','C1','C2','C3','C4'], ['CSBAR','GBARA','GBARB','GBARC','S0','S1','A1O','A2O','A3O','A4O','B1O','B2O','B3O','B4O','C1O','C2O','C3O','C4O','ENA','ENB','ENC']).Callback(this.$exe_ULS444LOG);
 		Connect(this.ULS444LOG.pins.CSBAR_I, this.pins.CSBAR_I);
 		Connect(this.ULS444LOG.pins.GBARA_I, this.pins.GBARA_I);
 		Connect(this.ULS444LOG.pins.GBARB_I, this.pins.GBARB_I);
@@ -10814,6 +15065,78 @@ class SN74LS444 extends Component {
 		Connect(C3O, this.pins.C3_T);
 		Connect(C4O, this.pins.C4_T);
 	}
+	$exe_ULS444LOG() {
+		var CS, S0BAR, S1BAR, _S1_S0, _S1S0, S1_S0; // Temps
+		var CSBAR_I, GBARA_I, GBARB_I, GBARC_I, S0_I, S1_I, A1, A2, A3, A4, B1, B2, B3, B4, C1, C2, C3, C4; // Inputs
+		var CSBAR, GBARA, GBARB, GBARC, S0, S1, A1O, A2O, A3O, A4O, B1O, B2O, B3O, B4O, C1O, C2O, C3O, C4O, ENA, ENB, ENC; // Outputs
+		CSBAR_I = this.ULS444LOG.pins.CSBAR_I.GetValue();
+		GBARA_I = this.ULS444LOG.pins.GBARA_I.GetValue();
+		GBARB_I = this.ULS444LOG.pins.GBARB_I.GetValue();
+		GBARC_I = this.ULS444LOG.pins.GBARC_I.GetValue();
+		S0_I = this.ULS444LOG.pins.S0_I.GetValue();
+		S1_I = this.ULS444LOG.pins.S1_I.GetValue();
+		A1 = this.ULS444LOG.pins.A1.GetValue();
+		A2 = this.ULS444LOG.pins.A2.GetValue();
+		A3 = this.ULS444LOG.pins.A3.GetValue();
+		A4 = this.ULS444LOG.pins.A4.GetValue();
+		B1 = this.ULS444LOG.pins.B1.GetValue();
+		B2 = this.ULS444LOG.pins.B2.GetValue();
+		B3 = this.ULS444LOG.pins.B3.GetValue();
+		B4 = this.ULS444LOG.pins.B4.GetValue();
+		C1 = this.ULS444LOG.pins.C1.GetValue();
+		C2 = this.ULS444LOG.pins.C2.GetValue();
+		C3 = this.ULS444LOG.pins.C3.GetValue();
+		C4 = this.ULS444LOG.pins.C4.GetValue();
+		   CSBAR =  CSBAR_I ;
+		   GBARA =  GBARA_I ;
+		   GBARB =  GBARB_I ;
+		   GBARC =  GBARC_I ;
+		   S0 =  S0_I ;
+		   S1 =  S1_I ;
+		   CS =  !CSBAR ;
+		   S0BAR =  !S0 ;
+		   S1BAR =  !S1 ;
+		   _S1_S0 =  S0BAR & S1BAR ;
+		   _S1S0 =  S1BAR & S0 ;
+		   S1_S0 =  S1 & S0BAR ;
+		   ENA =  ((S0 ^ S1) & !GBARA & CS) ;
+		   ENB =  (S0BAR & !GBARB & CS) ;
+		   ENC =  (S1BAR & !GBARC & CS) ;
+		   A1O =  !( (_S1S0  & B1) | (S1_S0 & C1) ) ;
+		   A2O =  !( (_S1S0  & B2) | (S1_S0 & C2) ) ;
+		   A3O =  !( (_S1S0  & B3) | (S1_S0 & C3) ) ;
+		   A4O =  !( (_S1S0  & B4) | (S1_S0 & C4) ) ;
+		   B1O =  !( (_S1_S0 & A1) | (S1_S0 & !C1) ) ;
+		   B2O =  !( (_S1_S0 & A2) | (S1_S0 & !C2) ) ;
+		   B3O =  !( (_S1_S0 & A3) | (S1_S0 & !C3) ) ;
+		   B4O =  !( (_S1_S0 & A4) | (S1_S0 & !C4) ) ;
+		   C1O =  !( (_S1_S0 & A1) | (_S1S0 & !B1) ) ;
+		   C2O =  !( (_S1_S0 & A2) | (_S1S0 & !B2) ) ;
+		   C3O =  !( (_S1_S0 & A3) | (_S1S0 & !B3) ) ;
+		   C4O =  !( (_S1_S0 & A4) | (_S1S0 & !B4) ) ;
+		
+		this.ULS444LOG.pins.CSBAR.SetValue(CSBAR);
+		this.ULS444LOG.pins.GBARA.SetValue(GBARA);
+		this.ULS444LOG.pins.GBARB.SetValue(GBARB);
+		this.ULS444LOG.pins.GBARC.SetValue(GBARC);
+		this.ULS444LOG.pins.S0.SetValue(S0);
+		this.ULS444LOG.pins.S1.SetValue(S1);
+		this.ULS444LOG.pins.A1O.SetValue(A1O);
+		this.ULS444LOG.pins.A2O.SetValue(A2O);
+		this.ULS444LOG.pins.A3O.SetValue(A3O);
+		this.ULS444LOG.pins.A4O.SetValue(A4O);
+		this.ULS444LOG.pins.B1O.SetValue(B1O);
+		this.ULS444LOG.pins.B2O.SetValue(B2O);
+		this.ULS444LOG.pins.B3O.SetValue(B3O);
+		this.ULS444LOG.pins.B4O.SetValue(B4O);
+		this.ULS444LOG.pins.C1O.SetValue(C1O);
+		this.ULS444LOG.pins.C2O.SetValue(C2O);
+		this.ULS444LOG.pins.C3O.SetValue(C3O);
+		this.ULS444LOG.pins.C4O.SetValue(C4O);
+		this.ULS444LOG.pins.ENA.SetValue(ENA);
+		this.ULS444LOG.pins.ENB.SetValue(ENB);
+		this.ULS444LOG.pins.ENC.SetValue(ENC);
+	}
 }
 /**
  * DECODER_DRIVER BCD-DECIMAL WITH OPEN COLLECTOR OUTPUTS
@@ -10886,7 +15209,7 @@ class SN74LS446 extends Component {
 		Connect(this.U1.pins.OUT6, B3);
 		let B4 = new Pin();
 		Connect(this.U1.pins.OUT7, B4);
-		this.ULS446LOG = new logicexp(['A1','A2','A3','A4','B1','B2','B3','B4','GABBAR_I','GBABAR_I','DIR1_I','DIR2_I','DIR3_I','DIR4_I'], ['ATOB_1','ATOB_2','ATOB_3','ATOB_4','BTOA_1','BTOA_2','BTOA_3','BTOA_4','A1O','A2O','A3O','A4O','B1O','B2O','B3O','B4O'], ['GABBAR','GBABAR','GAB','GBA']).Logic('   GABBAR =  GABBAR_I ;   GBABAR =  GBABAR_I ;   GAB    =  !GABBAR ;   GBA    =  !GBABAR ;   ATOB_1 =   DIR1_I & GAB ;   BTOA_1 =  !DIR1_I & GBA ;   ATOB_2 =   DIR2_I & GAB ;   BTOA_2 =  !DIR2_I & GBA ;   ATOB_3 =   DIR3_I & GAB ;   BTOA_3 =  !DIR3_I & GBA ;   ATOB_4 =   DIR4_I & GAB ;   BTOA_4 =  !DIR4_I & GBA ;   A1O =  !B1 ;   A2O =  !B2 ;   A3O =  !B3 ;   A4O =  !B4 ;   B1O =  !A1 ;   B2O =  !A2 ;   B3O =  !A3 ;   B4O =  !A4 ;');
+		this.ULS446LOG = new logicexp(['A1','A2','A3','A4','B1','B2','B3','B4','GABBAR_I','GBABAR_I','DIR1_I','DIR2_I','DIR3_I','DIR4_I'], ['ATOB_1','ATOB_2','ATOB_3','ATOB_4','BTOA_1','BTOA_2','BTOA_3','BTOA_4','A1O','A2O','A3O','A4O','B1O','B2O','B3O','B4O']).Callback(this.$exe_ULS446LOG);
 		Connect(this.ULS446LOG.pins.A1, A1);
 		Connect(this.ULS446LOG.pins.A2, A2);
 		Connect(this.ULS446LOG.pins.A3, A3);
@@ -10941,6 +15264,62 @@ class SN74LS446 extends Component {
 		Connect(B2O, this.pins.B2_B);
 		Connect(B3O, this.pins.B3_B);
 		Connect(B4O, this.pins.B4_B);
+	}
+	$exe_ULS446LOG() {
+		var GABBAR, GBABAR, GAB, GBA; // Temps
+		var A1, A2, A3, A4, B1, B2, B3, B4, GABBAR_I, GBABAR_I, DIR1_I, DIR2_I, DIR3_I, DIR4_I; // Inputs
+		var ATOB_1, ATOB_2, ATOB_3, ATOB_4, BTOA_1, BTOA_2, BTOA_3, BTOA_4, A1O, A2O, A3O, A4O, B1O, B2O, B3O, B4O; // Outputs
+		A1 = this.ULS446LOG.pins.A1.GetValue();
+		A2 = this.ULS446LOG.pins.A2.GetValue();
+		A3 = this.ULS446LOG.pins.A3.GetValue();
+		A4 = this.ULS446LOG.pins.A4.GetValue();
+		B1 = this.ULS446LOG.pins.B1.GetValue();
+		B2 = this.ULS446LOG.pins.B2.GetValue();
+		B3 = this.ULS446LOG.pins.B3.GetValue();
+		B4 = this.ULS446LOG.pins.B4.GetValue();
+		GABBAR_I = this.ULS446LOG.pins.GABBAR_I.GetValue();
+		GBABAR_I = this.ULS446LOG.pins.GBABAR_I.GetValue();
+		DIR1_I = this.ULS446LOG.pins.DIR1_I.GetValue();
+		DIR2_I = this.ULS446LOG.pins.DIR2_I.GetValue();
+		DIR3_I = this.ULS446LOG.pins.DIR3_I.GetValue();
+		DIR4_I = this.ULS446LOG.pins.DIR4_I.GetValue();
+		   GABBAR =  GABBAR_I ;
+		   GBABAR =  GBABAR_I ;
+		   GAB    =  !GABBAR ;
+		   GBA    =  !GBABAR ;
+		   ATOB_1 =   DIR1_I & GAB ;
+		   BTOA_1 =  !DIR1_I & GBA ;
+		   ATOB_2 =   DIR2_I & GAB ;
+		   BTOA_2 =  !DIR2_I & GBA ;
+		   ATOB_3 =   DIR3_I & GAB ;
+		   BTOA_3 =  !DIR3_I & GBA ;
+		   ATOB_4 =   DIR4_I & GAB ;
+		   BTOA_4 =  !DIR4_I & GBA ;
+		   A1O =  !B1 ;
+		   A2O =  !B2 ;
+		   A3O =  !B3 ;
+		   A4O =  !B4 ;
+		   B1O =  !A1 ;
+		   B2O =  !A2 ;
+		   B3O =  !A3 ;
+		   B4O =  !A4 ;
+		
+		this.ULS446LOG.pins.ATOB_1.SetValue(ATOB_1);
+		this.ULS446LOG.pins.ATOB_2.SetValue(ATOB_2);
+		this.ULS446LOG.pins.ATOB_3.SetValue(ATOB_3);
+		this.ULS446LOG.pins.ATOB_4.SetValue(ATOB_4);
+		this.ULS446LOG.pins.BTOA_1.SetValue(BTOA_1);
+		this.ULS446LOG.pins.BTOA_2.SetValue(BTOA_2);
+		this.ULS446LOG.pins.BTOA_3.SetValue(BTOA_3);
+		this.ULS446LOG.pins.BTOA_4.SetValue(BTOA_4);
+		this.ULS446LOG.pins.A1O.SetValue(A1O);
+		this.ULS446LOG.pins.A2O.SetValue(A2O);
+		this.ULS446LOG.pins.A3O.SetValue(A3O);
+		this.ULS446LOG.pins.A4O.SetValue(A4O);
+		this.ULS446LOG.pins.B1O.SetValue(B1O);
+		this.ULS446LOG.pins.B2O.SetValue(B2O);
+		this.ULS446LOG.pins.B3O.SetValue(B3O);
+		this.ULS446LOG.pins.B4O.SetValue(B4O);
 	}
 }
 /**
@@ -11030,7 +15409,7 @@ class SN74LS448 extends Component {
 		Connect(this.ULS448BUF.pins.OUT10, C3);
 		let C4 = new Pin();
 		Connect(this.ULS448BUF.pins.OUT11, C4);
-		this.ULS448LOG = new logicexp(['CSBAR_I','GBARA_I','GBARB_I','GBARC_I','S0_I','S1_I','A1','A2','A3','A4','B1','B2','B3','B4','C1','C2','C3','C4'], ['CSBAR','GBARA','GBARB','GBARC','S0','S1','A1O','A2O','A3O','A4O','B1O','B2O','B3O','B4O','C1O','C2O','C3O','C4O','ENA','ENB','ENC'], ['CS','S0BAR','S1BAR','_S1_S0','_S1S0','S1_S0']).Logic('   CSBAR =  CSBAR_I ;   GBARA =  GBARA_I ;   GBARB =  GBARB_I ;   GBARC =  GBARC_I ;   S0 =  S0_I ;   S1 =  S1_I ;   CS =  !CSBAR ;   S0BAR =  !S0 ;   S1BAR =  !S1 ;   _S1_S0 =  S0BAR & S1BAR ;   _S1S0 =  S1BAR & S0 ;   S1_S0 =  S1 & S0BAR ;   ENA =  ((S0 ^ S1) & !GBARA & CS) ;   ENB =  (S0BAR & !GBARB & CS) ;   ENC =  (S1BAR & !GBARC & CS) ;   A1O =  !((_S1S0  & B1 & ENA) | (S1_S0 & C1 & ENA )) ;   A2O =  !((_S1S0  & B2 & ENA) | (S1_S0 & C2 & ENA )) ;   A3O =  !((_S1S0  & B3 & ENA) | (S1_S0 & C3 & ENA )) ;   A4O =  !((_S1S0  & B4 & ENA) | (S1_S0 & C4 & ENA )) ;   B1O =  !((_S1_S0 & A1 & ENB) | (S1_S0 & !C1 & ENB )) ;   B2O =  !((_S1_S0 & A2 & ENB) | (S1_S0 & !C2 & ENB )) ;   B3O =  !((_S1_S0 & A3 & ENB) | (S1_S0 & !C3 & ENB )) ;   B4O =  !((_S1_S0 & A4 & ENB) | (S1_S0 & !C4 & ENB )) ;   C1O =  !((_S1_S0 & A1 & ENC) | (_S1S0 & !B1 & ENC )) ;   C2O =  !((_S1_S0 & A2 & ENC) | (_S1S0 & !B2 & ENC )) ;   C3O =  !((_S1_S0 & A3 & ENC) | (_S1S0 & !B3 & ENC )) ;   C4O =  !((_S1_S0 & A4 & ENC) | (_S1S0 & !B4 & ENC )) ;');
+		this.ULS448LOG = new logicexp(['CSBAR_I','GBARA_I','GBARB_I','GBARC_I','S0_I','S1_I','A1','A2','A3','A4','B1','B2','B3','B4','C1','C2','C3','C4'], ['CSBAR','GBARA','GBARB','GBARC','S0','S1','A1O','A2O','A3O','A4O','B1O','B2O','B3O','B4O','C1O','C2O','C3O','C4O','ENA','ENB','ENC']).Callback(this.$exe_ULS448LOG);
 		Connect(this.ULS448LOG.pins.CSBAR_I, this.pins.CSBAR_I);
 		Connect(this.ULS448LOG.pins.GBARA_I, this.pins.GBARA_I);
 		Connect(this.ULS448LOG.pins.GBARB_I, this.pins.GBARB_I);
@@ -11104,6 +15483,78 @@ class SN74LS448 extends Component {
 		Connect(C3O, this.pins.C3_T);
 		Connect(C4O, this.pins.C4_T);
 	}
+	$exe_ULS448LOG() {
+		var CS, S0BAR, S1BAR, _S1_S0, _S1S0, S1_S0; // Temps
+		var CSBAR_I, GBARA_I, GBARB_I, GBARC_I, S0_I, S1_I, A1, A2, A3, A4, B1, B2, B3, B4, C1, C2, C3, C4; // Inputs
+		var CSBAR, GBARA, GBARB, GBARC, S0, S1, A1O, A2O, A3O, A4O, B1O, B2O, B3O, B4O, C1O, C2O, C3O, C4O, ENA, ENB, ENC; // Outputs
+		CSBAR_I = this.ULS448LOG.pins.CSBAR_I.GetValue();
+		GBARA_I = this.ULS448LOG.pins.GBARA_I.GetValue();
+		GBARB_I = this.ULS448LOG.pins.GBARB_I.GetValue();
+		GBARC_I = this.ULS448LOG.pins.GBARC_I.GetValue();
+		S0_I = this.ULS448LOG.pins.S0_I.GetValue();
+		S1_I = this.ULS448LOG.pins.S1_I.GetValue();
+		A1 = this.ULS448LOG.pins.A1.GetValue();
+		A2 = this.ULS448LOG.pins.A2.GetValue();
+		A3 = this.ULS448LOG.pins.A3.GetValue();
+		A4 = this.ULS448LOG.pins.A4.GetValue();
+		B1 = this.ULS448LOG.pins.B1.GetValue();
+		B2 = this.ULS448LOG.pins.B2.GetValue();
+		B3 = this.ULS448LOG.pins.B3.GetValue();
+		B4 = this.ULS448LOG.pins.B4.GetValue();
+		C1 = this.ULS448LOG.pins.C1.GetValue();
+		C2 = this.ULS448LOG.pins.C2.GetValue();
+		C3 = this.ULS448LOG.pins.C3.GetValue();
+		C4 = this.ULS448LOG.pins.C4.GetValue();
+		   CSBAR =  CSBAR_I ;
+		   GBARA =  GBARA_I ;
+		   GBARB =  GBARB_I ;
+		   GBARC =  GBARC_I ;
+		   S0 =  S0_I ;
+		   S1 =  S1_I ;
+		   CS =  !CSBAR ;
+		   S0BAR =  !S0 ;
+		   S1BAR =  !S1 ;
+		   _S1_S0 =  S0BAR & S1BAR ;
+		   _S1S0 =  S1BAR & S0 ;
+		   S1_S0 =  S1 & S0BAR ;
+		   ENA =  ((S0 ^ S1) & !GBARA & CS) ;
+		   ENB =  (S0BAR & !GBARB & CS) ;
+		   ENC =  (S1BAR & !GBARC & CS) ;
+		   A1O =  !((_S1S0  & B1 & ENA) | (S1_S0 & C1 & ENA )) ;
+		   A2O =  !((_S1S0  & B2 & ENA) | (S1_S0 & C2 & ENA )) ;
+		   A3O =  !((_S1S0  & B3 & ENA) | (S1_S0 & C3 & ENA )) ;
+		   A4O =  !((_S1S0  & B4 & ENA) | (S1_S0 & C4 & ENA )) ;
+		   B1O =  !((_S1_S0 & A1 & ENB) | (S1_S0 & !C1 & ENB )) ;
+		   B2O =  !((_S1_S0 & A2 & ENB) | (S1_S0 & !C2 & ENB )) ;
+		   B3O =  !((_S1_S0 & A3 & ENB) | (S1_S0 & !C3 & ENB )) ;
+		   B4O =  !((_S1_S0 & A4 & ENB) | (S1_S0 & !C4 & ENB )) ;
+		   C1O =  !((_S1_S0 & A1 & ENC) | (_S1S0 & !B1 & ENC )) ;
+		   C2O =  !((_S1_S0 & A2 & ENC) | (_S1S0 & !B2 & ENC )) ;
+		   C3O =  !((_S1_S0 & A3 & ENC) | (_S1S0 & !B3 & ENC )) ;
+		   C4O =  !((_S1_S0 & A4 & ENC) | (_S1S0 & !B4 & ENC )) ;
+		
+		this.ULS448LOG.pins.CSBAR.SetValue(CSBAR);
+		this.ULS448LOG.pins.GBARA.SetValue(GBARA);
+		this.ULS448LOG.pins.GBARB.SetValue(GBARB);
+		this.ULS448LOG.pins.GBARC.SetValue(GBARC);
+		this.ULS448LOG.pins.S0.SetValue(S0);
+		this.ULS448LOG.pins.S1.SetValue(S1);
+		this.ULS448LOG.pins.A1O.SetValue(A1O);
+		this.ULS448LOG.pins.A2O.SetValue(A2O);
+		this.ULS448LOG.pins.A3O.SetValue(A3O);
+		this.ULS448LOG.pins.A4O.SetValue(A4O);
+		this.ULS448LOG.pins.B1O.SetValue(B1O);
+		this.ULS448LOG.pins.B2O.SetValue(B2O);
+		this.ULS448LOG.pins.B3O.SetValue(B3O);
+		this.ULS448LOG.pins.B4O.SetValue(B4O);
+		this.ULS448LOG.pins.C1O.SetValue(C1O);
+		this.ULS448LOG.pins.C2O.SetValue(C2O);
+		this.ULS448LOG.pins.C3O.SetValue(C3O);
+		this.ULS448LOG.pins.C4O.SetValue(C4O);
+		this.ULS448LOG.pins.ENA.SetValue(ENA);
+		this.ULS448LOG.pins.ENB.SetValue(ENB);
+		this.ULS448LOG.pins.ENC.SetValue(ENC);
+	}
 }
 /**
  * QUADRUPLE BUS TRANSCEIVERS WITH INDIVIDUAL DIRECTION CONTROLS,
@@ -11152,7 +15603,7 @@ class SN74LS449 extends Component {
 		Connect(this.U1.pins.OUT6, B3);
 		let B4 = new Pin();
 		Connect(this.U1.pins.OUT7, B4);
-		this.ULS449LOG = new logicexp(['A1','A2','A3','A4','B1','B2','B3','B4','GABBAR_I','GBABAR_I','DIR1_I','DIR2_I','DIR3_I','DIR4_I'], ['ATOB_1','ATOB_2','ATOB_3','ATOB_4','BTOA_1','BTOA_2','BTOA_3','BTOA_4','A1O','A2O','A3O','A4O','B1O','B2O','B3O','B4O'], ['GABBAR','GBABAR','GAB','GBA']).Logic('   GABBAR =  GABBAR_I ;   GBABAR =  GBABAR_I ;   GAB    =  !GABBAR ;   GBA    =  !GBABAR ;   ATOB_1 =   DIR1_I & GAB ;   BTOA_1 =  !DIR1_I & GBA ;   ATOB_2 =   DIR2_I & GAB ;   BTOA_2 =  !DIR2_I & GBA ;   ATOB_3 =   DIR3_I & GAB ;   BTOA_3 =  !DIR3_I & GBA ;   ATOB_4 =   DIR4_I & GAB ;   BTOA_4 =  !DIR4_I & GBA ;   A1O =  B1 ;   A2O =  B2 ;   A3O =  B3 ;   A4O =  B4 ;   B1O =  A1 ;   B2O =  A2 ;   B3O =  A3 ;   B4O =  A4 ;');
+		this.ULS449LOG = new logicexp(['A1','A2','A3','A4','B1','B2','B3','B4','GABBAR_I','GBABAR_I','DIR1_I','DIR2_I','DIR3_I','DIR4_I'], ['ATOB_1','ATOB_2','ATOB_3','ATOB_4','BTOA_1','BTOA_2','BTOA_3','BTOA_4','A1O','A2O','A3O','A4O','B1O','B2O','B3O','B4O']).Callback(this.$exe_ULS449LOG);
 		Connect(this.ULS449LOG.pins.A1, A1);
 		Connect(this.ULS449LOG.pins.A2, A2);
 		Connect(this.ULS449LOG.pins.A3, A3);
@@ -11207,6 +15658,62 @@ class SN74LS449 extends Component {
 		Connect(B2O, this.pins.B2_B);
 		Connect(B3O, this.pins.B3_B);
 		Connect(B4O, this.pins.B4_B);
+	}
+	$exe_ULS449LOG() {
+		var GABBAR, GBABAR, GAB, GBA; // Temps
+		var A1, A2, A3, A4, B1, B2, B3, B4, GABBAR_I, GBABAR_I, DIR1_I, DIR2_I, DIR3_I, DIR4_I; // Inputs
+		var ATOB_1, ATOB_2, ATOB_3, ATOB_4, BTOA_1, BTOA_2, BTOA_3, BTOA_4, A1O, A2O, A3O, A4O, B1O, B2O, B3O, B4O; // Outputs
+		A1 = this.ULS449LOG.pins.A1.GetValue();
+		A2 = this.ULS449LOG.pins.A2.GetValue();
+		A3 = this.ULS449LOG.pins.A3.GetValue();
+		A4 = this.ULS449LOG.pins.A4.GetValue();
+		B1 = this.ULS449LOG.pins.B1.GetValue();
+		B2 = this.ULS449LOG.pins.B2.GetValue();
+		B3 = this.ULS449LOG.pins.B3.GetValue();
+		B4 = this.ULS449LOG.pins.B4.GetValue();
+		GABBAR_I = this.ULS449LOG.pins.GABBAR_I.GetValue();
+		GBABAR_I = this.ULS449LOG.pins.GBABAR_I.GetValue();
+		DIR1_I = this.ULS449LOG.pins.DIR1_I.GetValue();
+		DIR2_I = this.ULS449LOG.pins.DIR2_I.GetValue();
+		DIR3_I = this.ULS449LOG.pins.DIR3_I.GetValue();
+		DIR4_I = this.ULS449LOG.pins.DIR4_I.GetValue();
+		   GABBAR =  GABBAR_I ;
+		   GBABAR =  GBABAR_I ;
+		   GAB    =  !GABBAR ;
+		   GBA    =  !GBABAR ;
+		   ATOB_1 =   DIR1_I & GAB ;
+		   BTOA_1 =  !DIR1_I & GBA ;
+		   ATOB_2 =   DIR2_I & GAB ;
+		   BTOA_2 =  !DIR2_I & GBA ;
+		   ATOB_3 =   DIR3_I & GAB ;
+		   BTOA_3 =  !DIR3_I & GBA ;
+		   ATOB_4 =   DIR4_I & GAB ;
+		   BTOA_4 =  !DIR4_I & GBA ;
+		   A1O =  B1 ;
+		   A2O =  B2 ;
+		   A3O =  B3 ;
+		   A4O =  B4 ;
+		   B1O =  A1 ;
+		   B2O =  A2 ;
+		   B3O =  A3 ;
+		   B4O =  A4 ;
+		
+		this.ULS449LOG.pins.ATOB_1.SetValue(ATOB_1);
+		this.ULS449LOG.pins.ATOB_2.SetValue(ATOB_2);
+		this.ULS449LOG.pins.ATOB_3.SetValue(ATOB_3);
+		this.ULS449LOG.pins.ATOB_4.SetValue(ATOB_4);
+		this.ULS449LOG.pins.BTOA_1.SetValue(BTOA_1);
+		this.ULS449LOG.pins.BTOA_2.SetValue(BTOA_2);
+		this.ULS449LOG.pins.BTOA_3.SetValue(BTOA_3);
+		this.ULS449LOG.pins.BTOA_4.SetValue(BTOA_4);
+		this.ULS449LOG.pins.A1O.SetValue(A1O);
+		this.ULS449LOG.pins.A2O.SetValue(A2O);
+		this.ULS449LOG.pins.A3O.SetValue(A3O);
+		this.ULS449LOG.pins.A4O.SetValue(A4O);
+		this.ULS449LOG.pins.B1O.SetValue(B1O);
+		this.ULS449LOG.pins.B2O.SetValue(B2O);
+		this.ULS449LOG.pins.B3O.SetValue(B3O);
+		this.ULS449LOG.pins.B4O.SetValue(B4O);
 	}
 }
 /**
@@ -11478,7 +15985,7 @@ class SN74LS490 extends Component {
 		Connect(this.U4.pins.Q0, QD);
 		let QDBAR = new Pin();
 		Connect(this.U4.pins.QBAR0, QDBAR);
-		this.ULS490LOG = new logicexp(['CLR_I','SET9_I','CLK_I','QA','QBBAR','QCBAR','QDBAR'], ['CLR','SET9','CLK','CLRBAR23','CLOCK2','CLOCK4','CLRBAR','SET9BAR'], []).Logic('   CLR      =  CLR_I ;   CLRBAR   =  !CLR ;   SET9     =  SET9_I ;   SET9BAR  =  !SET9 ;   CLK      =  CLK_I ;   CLRBAR23 =  CLRBAR & SET9BAR ;   CLOCK2   =  QA & QDBAR ;   CLOCK4   =  !( (QBBAR & QDBAR) | (QCBAR & QDBAR) ) & QA ;');
+		this.ULS490LOG = new logicexp(['CLR_I','SET9_I','CLK_I','QA','QBBAR','QCBAR','QDBAR'], ['CLR','SET9','CLK','CLRBAR23','CLOCK2','CLOCK4','CLRBAR','SET9BAR']).Callback(this.$exe_ULS490LOG);
 		Connect(this.ULS490LOG.pins.CLR_I, this.pins.CLR_I);
 		Connect(this.ULS490LOG.pins.SET9_I, this.pins.SET9_I);
 		Connect(this.ULS490LOG.pins.CLK_I, this.pins.CLK_I);
@@ -11500,6 +16007,34 @@ class SN74LS490 extends Component {
 		Connect(QB, this.pins.QB_O);
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
+	}
+	$exe_ULS490LOG() {
+		var CLR_I, SET9_I, CLK_I, QA, QBBAR, QCBAR, QDBAR; // Inputs
+		var CLR, SET9, CLK, CLRBAR23, CLOCK2, CLOCK4, CLRBAR, SET9BAR; // Outputs
+		CLR_I = this.ULS490LOG.pins.CLR_I.GetValue();
+		SET9_I = this.ULS490LOG.pins.SET9_I.GetValue();
+		CLK_I = this.ULS490LOG.pins.CLK_I.GetValue();
+		QA = this.ULS490LOG.pins.QA.GetValue();
+		QBBAR = this.ULS490LOG.pins.QBBAR.GetValue();
+		QCBAR = this.ULS490LOG.pins.QCBAR.GetValue();
+		QDBAR = this.ULS490LOG.pins.QDBAR.GetValue();
+		   CLR      =  CLR_I ;
+		   CLRBAR   =  !CLR ;
+		   SET9     =  SET9_I ;
+		   SET9BAR  =  !SET9 ;
+		   CLK      =  CLK_I ;
+		   CLRBAR23 =  CLRBAR & SET9BAR ;
+		   CLOCK2   =  QA & QDBAR ;
+		   CLOCK4   =  !( (QBBAR & QDBAR) | (QCBAR & QDBAR) ) & QA ;
+		
+		this.ULS490LOG.pins.CLR.SetValue(CLR);
+		this.ULS490LOG.pins.SET9.SetValue(SET9);
+		this.ULS490LOG.pins.CLK.SetValue(CLK);
+		this.ULS490LOG.pins.CLRBAR23.SetValue(CLRBAR23);
+		this.ULS490LOG.pins.CLOCK2.SetValue(CLOCK2);
+		this.ULS490LOG.pins.CLOCK4.SetValue(CLOCK4);
+		this.ULS490LOG.pins.CLRBAR.SetValue(CLRBAR);
+		this.ULS490LOG.pins.SET9BAR.SetValue(SET9BAR);
 	}
 }
 /**
@@ -11627,7 +16162,7 @@ class SN74LS589 extends Component {
 			QHP_O: new Pin(),
 		}
 		this.USTIM1 = new stim(1,1);
-		this.U589LOG = new logicexp(['OCBAR_I','PWR_CLRBAR','SRCK_I','SRLOADBAR_I','RCK_I','SER_I','A_I','B_I','C_I','D_I','E_I','F_I','G_I','H_I','QA','QB','QC','QD','QE','QF','QG','QH','QABAR','QBBAR','QCBAR','QDBAR','QEBAR','QFBAR','QGBAR','QHBAR'], ['OCBAR','SRCK','SRLOADBAR','RCK','SER','A','B','C','D','E','F','G','H','SA','SB','SC','SD','SE','SF','SG','SH','RA','RB','RC','RD','RE','RF','RG','RH'], ['SRLOAD','PWR_CLR']).Logic('   OCBAR     =  OCBAR_I ;   SRCK      =  SRCK_I ;   SRLOADBAR =  SRLOADBAR_I ;   RCK       =  RCK_I ;   SER       =  SER_I ;   A         =  A_I ;   B         =  B_I ;   C         =  C_I ;   D         =  D_I ;   E         =  E_I ;   F         =  F_I ;   G         =  G_I ;   H         =  H_I ;   SRLOAD =  !SRLOADBAR ;   PWR_CLR =  !PWR_CLRBAR ;   SA =  !(SRLOAD & QA) ;   SB =  !(SRLOAD & QB) ;   SC =  !(SRLOAD & QC) ;   SD =  !(SRLOAD & QD) ;   SE =  !(SRLOAD & QE) ;   SF =  !(SRLOAD & QF) ;   SG =  !(SRLOAD & QG) ;   SH =  !(SRLOAD & QH) ;   RA =  !(PWR_CLR  | (SRLOAD & QABAR)) ;   RB =  !(PWR_CLR  | (SRLOAD & QBBAR)) ;   RC =  !(PWR_CLR  | (SRLOAD & QCBAR)) ;   RD =  !(PWR_CLR  | (SRLOAD & QDBAR)) ;   RE =  !(PWR_CLR  | (SRLOAD & QEBAR)) ;   RF =  !(PWR_CLR  | (SRLOAD & QFBAR)) ;   RG =  !(PWR_CLR  | (SRLOAD & QGBAR)) ;   RH =  !(PWR_CLR  | (SRLOAD & QHBAR)) ;');
+		this.U589LOG = new logicexp(['OCBAR_I','PWR_CLRBAR','SRCK_I','SRLOADBAR_I','RCK_I','SER_I','A_I','B_I','C_I','D_I','E_I','F_I','G_I','H_I','QA','QB','QC','QD','QE','QF','QG','QH','QABAR','QBBAR','QCBAR','QDBAR','QEBAR','QFBAR','QGBAR','QHBAR'], ['OCBAR','SRCK','SRLOADBAR','RCK','SER','A','B','C','D','E','F','G','H','SA','SB','SC','SD','SE','SF','SG','SH','RA','RB','RC','RD','RE','RF','RG','RH']).Callback(this.$exe_U589LOG);
 		Connect(this.U589LOG.pins.OCBAR_I, this.pins.OCBAR_I);
 		let PWR_CLRBAR = new Pin();
 		Connect(this.U589LOG.pins.PWR_CLRBAR, PWR_CLRBAR);
@@ -11827,6 +16362,102 @@ class SN74LS589 extends Component {
 		Connect(this.U9.pins.QBAR0, _D_NC);
 		Connect(QHP, this.pins.QHP_O);
 	}
+	$exe_U589LOG() {
+		var SRLOAD, PWR_CLR; // Temps
+		var OCBAR_I, PWR_CLRBAR, SRCK_I, SRLOADBAR_I, RCK_I, SER_I, A_I, B_I, C_I, D_I, E_I, F_I, G_I, H_I, QA, QB, QC, QD, QE, QF, QG, QH, QABAR, QBBAR, QCBAR, QDBAR, QEBAR, QFBAR, QGBAR, QHBAR; // Inputs
+		var OCBAR, SRCK, SRLOADBAR, RCK, SER, A, B, C, D, E, F, G, H, SA, SB, SC, SD, SE, SF, SG, SH, RA, RB, RC, RD, RE, RF, RG, RH; // Outputs
+		OCBAR_I = this.U589LOG.pins.OCBAR_I.GetValue();
+		PWR_CLRBAR = this.U589LOG.pins.PWR_CLRBAR.GetValue();
+		SRCK_I = this.U589LOG.pins.SRCK_I.GetValue();
+		SRLOADBAR_I = this.U589LOG.pins.SRLOADBAR_I.GetValue();
+		RCK_I = this.U589LOG.pins.RCK_I.GetValue();
+		SER_I = this.U589LOG.pins.SER_I.GetValue();
+		A_I = this.U589LOG.pins.A_I.GetValue();
+		B_I = this.U589LOG.pins.B_I.GetValue();
+		C_I = this.U589LOG.pins.C_I.GetValue();
+		D_I = this.U589LOG.pins.D_I.GetValue();
+		E_I = this.U589LOG.pins.E_I.GetValue();
+		F_I = this.U589LOG.pins.F_I.GetValue();
+		G_I = this.U589LOG.pins.G_I.GetValue();
+		H_I = this.U589LOG.pins.H_I.GetValue();
+		QA = this.U589LOG.pins.QA.GetValue();
+		QB = this.U589LOG.pins.QB.GetValue();
+		QC = this.U589LOG.pins.QC.GetValue();
+		QD = this.U589LOG.pins.QD.GetValue();
+		QE = this.U589LOG.pins.QE.GetValue();
+		QF = this.U589LOG.pins.QF.GetValue();
+		QG = this.U589LOG.pins.QG.GetValue();
+		QH = this.U589LOG.pins.QH.GetValue();
+		QABAR = this.U589LOG.pins.QABAR.GetValue();
+		QBBAR = this.U589LOG.pins.QBBAR.GetValue();
+		QCBAR = this.U589LOG.pins.QCBAR.GetValue();
+		QDBAR = this.U589LOG.pins.QDBAR.GetValue();
+		QEBAR = this.U589LOG.pins.QEBAR.GetValue();
+		QFBAR = this.U589LOG.pins.QFBAR.GetValue();
+		QGBAR = this.U589LOG.pins.QGBAR.GetValue();
+		QHBAR = this.U589LOG.pins.QHBAR.GetValue();
+		   OCBAR     =  OCBAR_I ;
+		   SRCK      =  SRCK_I ;
+		   SRLOADBAR =  SRLOADBAR_I ;
+		   RCK       =  RCK_I ;
+		   SER       =  SER_I ;
+		   A         =  A_I ;
+		   B         =  B_I ;
+		   C         =  C_I ;
+		   D         =  D_I ;
+		   E         =  E_I ;
+		   F         =  F_I ;
+		   G         =  G_I ;
+		   H         =  H_I ;
+		   SRLOAD =  !SRLOADBAR ;
+		   PWR_CLR =  !PWR_CLRBAR ;
+		   SA =  !(SRLOAD & QA) ;
+		   SB =  !(SRLOAD & QB) ;
+		   SC =  !(SRLOAD & QC) ;
+		   SD =  !(SRLOAD & QD) ;
+		   SE =  !(SRLOAD & QE) ;
+		   SF =  !(SRLOAD & QF) ;
+		   SG =  !(SRLOAD & QG) ;
+		   SH =  !(SRLOAD & QH) ;
+		   RA =  !(PWR_CLR  | (SRLOAD & QABAR)) ;
+		   RB =  !(PWR_CLR  | (SRLOAD & QBBAR)) ;
+		   RC =  !(PWR_CLR  | (SRLOAD & QCBAR)) ;
+		   RD =  !(PWR_CLR  | (SRLOAD & QDBAR)) ;
+		   RE =  !(PWR_CLR  | (SRLOAD & QEBAR)) ;
+		   RF =  !(PWR_CLR  | (SRLOAD & QFBAR)) ;
+		   RG =  !(PWR_CLR  | (SRLOAD & QGBAR)) ;
+		   RH =  !(PWR_CLR  | (SRLOAD & QHBAR)) ;
+		
+		this.U589LOG.pins.OCBAR.SetValue(OCBAR);
+		this.U589LOG.pins.SRCK.SetValue(SRCK);
+		this.U589LOG.pins.SRLOADBAR.SetValue(SRLOADBAR);
+		this.U589LOG.pins.RCK.SetValue(RCK);
+		this.U589LOG.pins.SER.SetValue(SER);
+		this.U589LOG.pins.A.SetValue(A);
+		this.U589LOG.pins.B.SetValue(B);
+		this.U589LOG.pins.C.SetValue(C);
+		this.U589LOG.pins.D.SetValue(D);
+		this.U589LOG.pins.E.SetValue(E);
+		this.U589LOG.pins.F.SetValue(F);
+		this.U589LOG.pins.G.SetValue(G);
+		this.U589LOG.pins.H.SetValue(H);
+		this.U589LOG.pins.SA.SetValue(SA);
+		this.U589LOG.pins.SB.SetValue(SB);
+		this.U589LOG.pins.SC.SetValue(SC);
+		this.U589LOG.pins.SD.SetValue(SD);
+		this.U589LOG.pins.SE.SetValue(SE);
+		this.U589LOG.pins.SF.SetValue(SF);
+		this.U589LOG.pins.SG.SetValue(SG);
+		this.U589LOG.pins.SH.SetValue(SH);
+		this.U589LOG.pins.RA.SetValue(RA);
+		this.U589LOG.pins.RB.SetValue(RB);
+		this.U589LOG.pins.RC.SetValue(RC);
+		this.U589LOG.pins.RD.SetValue(RD);
+		this.U589LOG.pins.RE.SetValue(RE);
+		this.U589LOG.pins.RF.SetValue(RF);
+		this.U589LOG.pins.RG.SetValue(RG);
+		this.U589LOG.pins.RH.SetValue(RH);
+	}
 }
 class SN74LS590 extends Component {
 	constructor() {
@@ -11981,7 +16612,7 @@ class SN74LS590 extends Component {
 		Connect(this.U9.pins.QBAR5, _D_NC);
 		Connect(this.U9.pins.QBAR6, _D_NC);
 		Connect(this.U9.pins.QBAR7, _D_NC);
-		this.ULS590LOG = new logicexp(['GBAR_I','RCK_I','CCKENBAR_I','CCK_I','CCLRBAR_I','JA','JB','JC','JD','JE','JF','JG','JH','CNTA'], ['GBAR','RCK','CCKENBAR','CCK','CCLRBAR','CNTA','CNTB','CNTC','CNTD','CNTE','CNTF','CNTG','CNTH','MCLK','RCOBAR'], []).Logic('   GBAR =  GBAR_I ;   RCK =  RCK_I ;   CCKENBAR =  CCKENBAR_I ;   CCK =  CCK_I ;   CCLRBAR =  CCLRBAR_I ;   CNTA =  !((!(CNTA & CCKENBAR) & CCK) & CCK) ;   CNTB =  JA & CNTA ;   CNTC =  JB & CNTB ;   CNTD =  JC & CNTC ;   CNTE =  JD & CNTD ;   CNTF =  JE & CNTE ;   CNTG =  JF & CNTF ;   CNTH =  JG & CNTG ;   MCLK =  !RCK ;   RCOBAR =  !(JH & JG & JF & JE & JD & JC & JB & JA) ;');
+		this.ULS590LOG = new logicexp(['GBAR_I','RCK_I','CCKENBAR_I','CCK_I','CCLRBAR_I','JA','JB','JC','JD','JE','JF','JG','JH','CNTA'], ['GBAR','RCK','CCKENBAR','CCK','CCLRBAR','CNTA','CNTB','CNTC','CNTD','CNTE','CNTF','CNTG','CNTH','MCLK','RCOBAR']).Callback(this.$exe_ULS590LOG);
 		Connect(this.ULS590LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS590LOG.pins.RCK_I, this.pins.RCK_I);
 		Connect(this.ULS590LOG.pins.CCKENBAR_I, this.pins.CCKENBAR_I);
@@ -12024,6 +16655,55 @@ class SN74LS590 extends Component {
 		Connect(QG, this.pins.QG_O);
 		Connect(QH, this.pins.QH_O);
 		Connect(RCOBAR, this.pins.RCOBAR_O);
+	}
+	$exe_ULS590LOG() {
+		var GBAR_I, RCK_I, CCKENBAR_I, CCK_I, CCLRBAR_I, JA, JB, JC, JD, JE, JF, JG, JH, CNTA; // Inputs
+		var GBAR, RCK, CCKENBAR, CCK, CCLRBAR, CNTA, CNTB, CNTC, CNTD, CNTE, CNTF, CNTG, CNTH, MCLK, RCOBAR; // Outputs
+		GBAR_I = this.ULS590LOG.pins.GBAR_I.GetValue();
+		RCK_I = this.ULS590LOG.pins.RCK_I.GetValue();
+		CCKENBAR_I = this.ULS590LOG.pins.CCKENBAR_I.GetValue();
+		CCK_I = this.ULS590LOG.pins.CCK_I.GetValue();
+		CCLRBAR_I = this.ULS590LOG.pins.CCLRBAR_I.GetValue();
+		JA = this.ULS590LOG.pins.JA.GetValue();
+		JB = this.ULS590LOG.pins.JB.GetValue();
+		JC = this.ULS590LOG.pins.JC.GetValue();
+		JD = this.ULS590LOG.pins.JD.GetValue();
+		JE = this.ULS590LOG.pins.JE.GetValue();
+		JF = this.ULS590LOG.pins.JF.GetValue();
+		JG = this.ULS590LOG.pins.JG.GetValue();
+		JH = this.ULS590LOG.pins.JH.GetValue();
+		CNTA = this.ULS590LOG.pins.CNTA.GetValue();
+		   GBAR =  GBAR_I ;
+		   RCK =  RCK_I ;
+		   CCKENBAR =  CCKENBAR_I ;
+		   CCK =  CCK_I ;
+		   CCLRBAR =  CCLRBAR_I ;
+		   CNTA =  !((!(CNTA & CCKENBAR) & CCK) & CCK) ;
+		   CNTB =  JA & CNTA ;
+		   CNTC =  JB & CNTB ;
+		   CNTD =  JC & CNTC ;
+		   CNTE =  JD & CNTD ;
+		   CNTF =  JE & CNTE ;
+		   CNTG =  JF & CNTF ;
+		   CNTH =  JG & CNTG ;
+		   MCLK =  !RCK ;
+		   RCOBAR =  !(JH & JG & JF & JE & JD & JC & JB & JA) ;
+		
+		this.ULS590LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS590LOG.pins.RCK.SetValue(RCK);
+		this.ULS590LOG.pins.CCKENBAR.SetValue(CCKENBAR);
+		this.ULS590LOG.pins.CCK.SetValue(CCK);
+		this.ULS590LOG.pins.CCLRBAR.SetValue(CCLRBAR);
+		this.ULS590LOG.pins.CNTA.SetValue(CNTA);
+		this.ULS590LOG.pins.CNTB.SetValue(CNTB);
+		this.ULS590LOG.pins.CNTC.SetValue(CNTC);
+		this.ULS590LOG.pins.CNTD.SetValue(CNTD);
+		this.ULS590LOG.pins.CNTE.SetValue(CNTE);
+		this.ULS590LOG.pins.CNTF.SetValue(CNTF);
+		this.ULS590LOG.pins.CNTG.SetValue(CNTG);
+		this.ULS590LOG.pins.CNTH.SetValue(CNTH);
+		this.ULS590LOG.pins.MCLK.SetValue(MCLK);
+		this.ULS590LOG.pins.RCOBAR.SetValue(RCOBAR);
 	}
 }
 class SN74LS591 extends Component {
@@ -12179,7 +16859,7 @@ class SN74LS591 extends Component {
 		Connect(this.U9.pins.QBAR5, _D_NC);
 		Connect(this.U9.pins.QBAR6, _D_NC);
 		Connect(this.U9.pins.QBAR7, _D_NC);
-		this.ULS591LOG = new logicexp(['GBAR_I','RCK_I','CCKENBAR_I','CCK_I','CCLRBAR_I','JA','JB','JC','JD','JE','JF','JG','JH','CNTA','QA','QB','QC','QD','QE','QF','QG','QH'], ['GBAR','RCK','CCKENBAR','CCK','CCLRBAR','CNTA','CNTB','CNTC','CNTD','CNTE','CNTF','CNTG','CNTH','MCLK','RCOBAR','LQA','LQB','LQC','LQD','LQE','LQF','LQG','LQH'], ['IG']).Logic('   GBAR =  GBAR_I ;   RCK =  RCK_I ;   CCKENBAR =  CCKENBAR_I ;   CCK =  CCK_I ;   CCLRBAR =  CCLRBAR_I ;   IG =  !GBAR ;   CNTA =  !((!(CNTA & CCKENBAR) & CCK) & CCK) ;   CNTB =  JA & CNTA ;   CNTC =  JB & CNTB ;   CNTD =  JC & CNTC ;   CNTE =  JD & CNTD ;   CNTF =  JE & CNTE ;   CNTG =  JF & CNTF ;   CNTH =  JG & CNTG ;   MCLK =  !RCK ;   RCOBAR =  !(JH & JG & JF & JE & JD & JC & JB & JA) ;   LQA =  IG & QA ;   LQB =  IG & QB ;   LQC =  IG & QC ;   LQD =  IG & QD ;   LQE =  IG & QE ;   LQF =  IG & QF ;   LQG =  IG & QG ;   LQH =  IG & QH ;');
+		this.ULS591LOG = new logicexp(['GBAR_I','RCK_I','CCKENBAR_I','CCK_I','CCLRBAR_I','JA','JB','JC','JD','JE','JF','JG','JH','CNTA','QA','QB','QC','QD','QE','QF','QG','QH'], ['GBAR','RCK','CCKENBAR','CCK','CCLRBAR','CNTA','CNTB','CNTC','CNTD','CNTE','CNTF','CNTG','CNTH','MCLK','RCOBAR','LQA','LQB','LQC','LQD','LQE','LQF','LQG','LQH']).Callback(this.$exe_ULS591LOG);
 		Connect(this.ULS591LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS591LOG.pins.RCK_I, this.pins.RCK_I);
 		Connect(this.ULS591LOG.pins.CCKENBAR_I, this.pins.CCKENBAR_I);
@@ -12247,6 +16927,81 @@ class SN74LS591 extends Component {
 		Connect(LQH, this.pins.QH_O);
 		Connect(RCOBAR, this.pins.RCOBAR_O);
 		this.ULS591CON = new constraint(12);
+	}
+	$exe_ULS591LOG() {
+		var IG; // Temps
+		var GBAR_I, RCK_I, CCKENBAR_I, CCK_I, CCLRBAR_I, JA, JB, JC, JD, JE, JF, JG, JH, CNTA, QA, QB, QC, QD, QE, QF, QG, QH; // Inputs
+		var GBAR, RCK, CCKENBAR, CCK, CCLRBAR, CNTA, CNTB, CNTC, CNTD, CNTE, CNTF, CNTG, CNTH, MCLK, RCOBAR, LQA, LQB, LQC, LQD, LQE, LQF, LQG, LQH; // Outputs
+		GBAR_I = this.ULS591LOG.pins.GBAR_I.GetValue();
+		RCK_I = this.ULS591LOG.pins.RCK_I.GetValue();
+		CCKENBAR_I = this.ULS591LOG.pins.CCKENBAR_I.GetValue();
+		CCK_I = this.ULS591LOG.pins.CCK_I.GetValue();
+		CCLRBAR_I = this.ULS591LOG.pins.CCLRBAR_I.GetValue();
+		JA = this.ULS591LOG.pins.JA.GetValue();
+		JB = this.ULS591LOG.pins.JB.GetValue();
+		JC = this.ULS591LOG.pins.JC.GetValue();
+		JD = this.ULS591LOG.pins.JD.GetValue();
+		JE = this.ULS591LOG.pins.JE.GetValue();
+		JF = this.ULS591LOG.pins.JF.GetValue();
+		JG = this.ULS591LOG.pins.JG.GetValue();
+		JH = this.ULS591LOG.pins.JH.GetValue();
+		CNTA = this.ULS591LOG.pins.CNTA.GetValue();
+		QA = this.ULS591LOG.pins.QA.GetValue();
+		QB = this.ULS591LOG.pins.QB.GetValue();
+		QC = this.ULS591LOG.pins.QC.GetValue();
+		QD = this.ULS591LOG.pins.QD.GetValue();
+		QE = this.ULS591LOG.pins.QE.GetValue();
+		QF = this.ULS591LOG.pins.QF.GetValue();
+		QG = this.ULS591LOG.pins.QG.GetValue();
+		QH = this.ULS591LOG.pins.QH.GetValue();
+		   GBAR =  GBAR_I ;
+		   RCK =  RCK_I ;
+		   CCKENBAR =  CCKENBAR_I ;
+		   CCK =  CCK_I ;
+		   CCLRBAR =  CCLRBAR_I ;
+		   IG =  !GBAR ;
+		   CNTA =  !((!(CNTA & CCKENBAR) & CCK) & CCK) ;
+		   CNTB =  JA & CNTA ;
+		   CNTC =  JB & CNTB ;
+		   CNTD =  JC & CNTC ;
+		   CNTE =  JD & CNTD ;
+		   CNTF =  JE & CNTE ;
+		   CNTG =  JF & CNTF ;
+		   CNTH =  JG & CNTG ;
+		   MCLK =  !RCK ;
+		   RCOBAR =  !(JH & JG & JF & JE & JD & JC & JB & JA) ;
+		   LQA =  IG & QA ;
+		   LQB =  IG & QB ;
+		   LQC =  IG & QC ;
+		   LQD =  IG & QD ;
+		   LQE =  IG & QE ;
+		   LQF =  IG & QF ;
+		   LQG =  IG & QG ;
+		   LQH =  IG & QH ;
+		
+		this.ULS591LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS591LOG.pins.RCK.SetValue(RCK);
+		this.ULS591LOG.pins.CCKENBAR.SetValue(CCKENBAR);
+		this.ULS591LOG.pins.CCK.SetValue(CCK);
+		this.ULS591LOG.pins.CCLRBAR.SetValue(CCLRBAR);
+		this.ULS591LOG.pins.CNTA.SetValue(CNTA);
+		this.ULS591LOG.pins.CNTB.SetValue(CNTB);
+		this.ULS591LOG.pins.CNTC.SetValue(CNTC);
+		this.ULS591LOG.pins.CNTD.SetValue(CNTD);
+		this.ULS591LOG.pins.CNTE.SetValue(CNTE);
+		this.ULS591LOG.pins.CNTF.SetValue(CNTF);
+		this.ULS591LOG.pins.CNTG.SetValue(CNTG);
+		this.ULS591LOG.pins.CNTH.SetValue(CNTH);
+		this.ULS591LOG.pins.MCLK.SetValue(MCLK);
+		this.ULS591LOG.pins.RCOBAR.SetValue(RCOBAR);
+		this.ULS591LOG.pins.LQA.SetValue(LQA);
+		this.ULS591LOG.pins.LQB.SetValue(LQB);
+		this.ULS591LOG.pins.LQC.SetValue(LQC);
+		this.ULS591LOG.pins.LQD.SetValue(LQD);
+		this.ULS591LOG.pins.LQE.SetValue(LQE);
+		this.ULS591LOG.pins.LQF.SetValue(LQF);
+		this.ULS591LOG.pins.LQG.SetValue(LQG);
+		this.ULS591LOG.pins.LQH.SetValue(LQH);
 	}
 }
 class SN74LS592 extends Component {
@@ -12417,7 +17172,7 @@ class SN74LS592 extends Component {
 		Connect(this.U9.pins.QBAR6, RQGBAR);
 		let RQHBAR = new Pin();
 		Connect(this.U9.pins.QBAR7, RQHBAR);
-		this.ULS592LOG = new logicexp(['CCLRBAR_I','CCKENBAR_I','CCK_I','CLOADBAR_I','RCK_I','A_I','B_I','C_I','D_I','E_I','F_I','G_I','H_I','RQA','RQB','RQC','RQD','RQE','RQF','RQG','RQH','RQABAR','RQBBAR','RQCBAR','RQDBAR','RQEBAR','RQFBAR','RQGBAR','RQHBAR','CQA','CQB','CQC','CQD','CQE','CQF','CQG','CQH','CNTA'], ['CCLRBAR','CCKENBAR','CCK','CLOADBAR','RCK','A','B','C','D','E','F','G','H','SA','RA','SB','RB','SC','RC','SD','RD','SE','RE','SF','RF','SG','RG','SH','RH','CNTA','CNTB','CNTC','CNTD','CNTE','CNTF','CNTG','CNTH','RCOBAR'], ['ILD']).Logic('   CCLRBAR =  CCLRBAR_I ;   CCKENBAR =  CCKENBAR_I ;   CCK =  CCK_I ;   CLOADBAR =  CLOADBAR_I ;   RCK =  RCK_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   E =  E_I ;   F =  F_I ;   G =  G_I ;   H =  H_I ;   ILD =  !CLOADBAR ;   SA =  !(RQA & ILD) ;   SB =  !(RQB & ILD) ;   SC =  !(RQC & ILD) ;   SD =  !(RQD & ILD) ;   SE =  !(RQE & ILD) ;   SF =  !(RQF & ILD) ;   SG =  !(RQG & ILD) ;   SH =  !(RQH & ILD) ;   RA =  !(ILD & RQABAR) & CCLRBAR ;   RB =  !(ILD & RQBBAR) & CCLRBAR ;   RC =  !(ILD & RQCBAR) & CCLRBAR ;   RD =  !(ILD & RQDBAR) & CCLRBAR ;   RE =  !(ILD & RQEBAR) & CCLRBAR ;   RF =  !(ILD & RQFBAR) & CCLRBAR ;   RG =  !(ILD & RQGBAR) & CCLRBAR ;   RH =  !(ILD & RQHBAR) & CCLRBAR ;   CNTA =  !((!(CNTA & CCKENBAR) & CCK) & CCK) ;   CNTB =  CQA & CNTA ;   CNTC =  CQB & CNTB ;   CNTD =  CQC & CNTC ;   CNTE =  CQD & CNTD ;   CNTF =  CQE & CNTE ;   CNTG =  CQF & CNTF ;   CNTH =  CQG & CNTG ;   RCOBAR =  !(CQH & CQG & CQF & CQE & CQD & CQC & CQB & CQA) ;');
+		this.ULS592LOG = new logicexp(['CCLRBAR_I','CCKENBAR_I','CCK_I','CLOADBAR_I','RCK_I','A_I','B_I','C_I','D_I','E_I','F_I','G_I','H_I','RQA','RQB','RQC','RQD','RQE','RQF','RQG','RQH','RQABAR','RQBBAR','RQCBAR','RQDBAR','RQEBAR','RQFBAR','RQGBAR','RQHBAR','CQA','CQB','CQC','CQD','CQE','CQF','CQG','CQH','CNTA'], ['CCLRBAR','CCKENBAR','CCK','CLOADBAR','RCK','A','B','C','D','E','F','G','H','SA','RA','SB','RB','SC','RC','SD','RD','SE','RE','SF','RF','SG','RG','SH','RH','CNTA','CNTB','CNTC','CNTD','CNTE','CNTF','CNTG','CNTH','RCOBAR']).Callback(this.$exe_ULS592LOG);
 		Connect(this.ULS592LOG.pins.CCLRBAR_I, this.pins.CCLRBAR_I);
 		Connect(this.ULS592LOG.pins.CCKENBAR_I, this.pins.CCKENBAR_I);
 		Connect(this.ULS592LOG.pins.CCK_I, this.pins.CCK_I);
@@ -12499,6 +17254,127 @@ class SN74LS592 extends Component {
 		let RCOBAR = new Pin();
 		Connect(this.ULS592LOG.pins.RCOBAR, RCOBAR);
 		Connect(RCOBAR, this.pins.RCOBAR_O);
+	}
+	$exe_ULS592LOG() {
+		var ILD; // Temps
+		var CCLRBAR_I, CCKENBAR_I, CCK_I, CLOADBAR_I, RCK_I, A_I, B_I, C_I, D_I, E_I, F_I, G_I, H_I, RQA, RQB, RQC, RQD, RQE, RQF, RQG, RQH, RQABAR, RQBBAR, RQCBAR, RQDBAR, RQEBAR, RQFBAR, RQGBAR, RQHBAR, CQA, CQB, CQC, CQD, CQE, CQF, CQG, CQH, CNTA; // Inputs
+		var CCLRBAR, CCKENBAR, CCK, CLOADBAR, RCK, A, B, C, D, E, F, G, H, SA, RA, SB, RB, SC, RC, SD, RD, SE, RE, SF, RF, SG, RG, SH, RH, CNTA, CNTB, CNTC, CNTD, CNTE, CNTF, CNTG, CNTH, RCOBAR; // Outputs
+		CCLRBAR_I = this.ULS592LOG.pins.CCLRBAR_I.GetValue();
+		CCKENBAR_I = this.ULS592LOG.pins.CCKENBAR_I.GetValue();
+		CCK_I = this.ULS592LOG.pins.CCK_I.GetValue();
+		CLOADBAR_I = this.ULS592LOG.pins.CLOADBAR_I.GetValue();
+		RCK_I = this.ULS592LOG.pins.RCK_I.GetValue();
+		A_I = this.ULS592LOG.pins.A_I.GetValue();
+		B_I = this.ULS592LOG.pins.B_I.GetValue();
+		C_I = this.ULS592LOG.pins.C_I.GetValue();
+		D_I = this.ULS592LOG.pins.D_I.GetValue();
+		E_I = this.ULS592LOG.pins.E_I.GetValue();
+		F_I = this.ULS592LOG.pins.F_I.GetValue();
+		G_I = this.ULS592LOG.pins.G_I.GetValue();
+		H_I = this.ULS592LOG.pins.H_I.GetValue();
+		RQA = this.ULS592LOG.pins.RQA.GetValue();
+		RQB = this.ULS592LOG.pins.RQB.GetValue();
+		RQC = this.ULS592LOG.pins.RQC.GetValue();
+		RQD = this.ULS592LOG.pins.RQD.GetValue();
+		RQE = this.ULS592LOG.pins.RQE.GetValue();
+		RQF = this.ULS592LOG.pins.RQF.GetValue();
+		RQG = this.ULS592LOG.pins.RQG.GetValue();
+		RQH = this.ULS592LOG.pins.RQH.GetValue();
+		RQABAR = this.ULS592LOG.pins.RQABAR.GetValue();
+		RQBBAR = this.ULS592LOG.pins.RQBBAR.GetValue();
+		RQCBAR = this.ULS592LOG.pins.RQCBAR.GetValue();
+		RQDBAR = this.ULS592LOG.pins.RQDBAR.GetValue();
+		RQEBAR = this.ULS592LOG.pins.RQEBAR.GetValue();
+		RQFBAR = this.ULS592LOG.pins.RQFBAR.GetValue();
+		RQGBAR = this.ULS592LOG.pins.RQGBAR.GetValue();
+		RQHBAR = this.ULS592LOG.pins.RQHBAR.GetValue();
+		CQA = this.ULS592LOG.pins.CQA.GetValue();
+		CQB = this.ULS592LOG.pins.CQB.GetValue();
+		CQC = this.ULS592LOG.pins.CQC.GetValue();
+		CQD = this.ULS592LOG.pins.CQD.GetValue();
+		CQE = this.ULS592LOG.pins.CQE.GetValue();
+		CQF = this.ULS592LOG.pins.CQF.GetValue();
+		CQG = this.ULS592LOG.pins.CQG.GetValue();
+		CQH = this.ULS592LOG.pins.CQH.GetValue();
+		CNTA = this.ULS592LOG.pins.CNTA.GetValue();
+		   CCLRBAR =  CCLRBAR_I ;
+		   CCKENBAR =  CCKENBAR_I ;
+		   CCK =  CCK_I ;
+		   CLOADBAR =  CLOADBAR_I ;
+		   RCK =  RCK_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   E =  E_I ;
+		   F =  F_I ;
+		   G =  G_I ;
+		   H =  H_I ;
+		   ILD =  !CLOADBAR ;
+		   SA =  !(RQA & ILD) ;
+		   SB =  !(RQB & ILD) ;
+		   SC =  !(RQC & ILD) ;
+		   SD =  !(RQD & ILD) ;
+		   SE =  !(RQE & ILD) ;
+		   SF =  !(RQF & ILD) ;
+		   SG =  !(RQG & ILD) ;
+		   SH =  !(RQH & ILD) ;
+		   RA =  !(ILD & RQABAR) & CCLRBAR ;
+		   RB =  !(ILD & RQBBAR) & CCLRBAR ;
+		   RC =  !(ILD & RQCBAR) & CCLRBAR ;
+		   RD =  !(ILD & RQDBAR) & CCLRBAR ;
+		   RE =  !(ILD & RQEBAR) & CCLRBAR ;
+		   RF =  !(ILD & RQFBAR) & CCLRBAR ;
+		   RG =  !(ILD & RQGBAR) & CCLRBAR ;
+		   RH =  !(ILD & RQHBAR) & CCLRBAR ;
+		   CNTA =  !((!(CNTA & CCKENBAR) & CCK) & CCK) ;
+		   CNTB =  CQA & CNTA ;
+		   CNTC =  CQB & CNTB ;
+		   CNTD =  CQC & CNTC ;
+		   CNTE =  CQD & CNTD ;
+		   CNTF =  CQE & CNTE ;
+		   CNTG =  CQF & CNTF ;
+		   CNTH =  CQG & CNTG ;
+		   RCOBAR =  !(CQH & CQG & CQF & CQE & CQD & CQC & CQB & CQA) ;
+		
+		this.ULS592LOG.pins.CCLRBAR.SetValue(CCLRBAR);
+		this.ULS592LOG.pins.CCKENBAR.SetValue(CCKENBAR);
+		this.ULS592LOG.pins.CCK.SetValue(CCK);
+		this.ULS592LOG.pins.CLOADBAR.SetValue(CLOADBAR);
+		this.ULS592LOG.pins.RCK.SetValue(RCK);
+		this.ULS592LOG.pins.A.SetValue(A);
+		this.ULS592LOG.pins.B.SetValue(B);
+		this.ULS592LOG.pins.C.SetValue(C);
+		this.ULS592LOG.pins.D.SetValue(D);
+		this.ULS592LOG.pins.E.SetValue(E);
+		this.ULS592LOG.pins.F.SetValue(F);
+		this.ULS592LOG.pins.G.SetValue(G);
+		this.ULS592LOG.pins.H.SetValue(H);
+		this.ULS592LOG.pins.SA.SetValue(SA);
+		this.ULS592LOG.pins.RA.SetValue(RA);
+		this.ULS592LOG.pins.SB.SetValue(SB);
+		this.ULS592LOG.pins.RB.SetValue(RB);
+		this.ULS592LOG.pins.SC.SetValue(SC);
+		this.ULS592LOG.pins.RC.SetValue(RC);
+		this.ULS592LOG.pins.SD.SetValue(SD);
+		this.ULS592LOG.pins.RD.SetValue(RD);
+		this.ULS592LOG.pins.SE.SetValue(SE);
+		this.ULS592LOG.pins.RE.SetValue(RE);
+		this.ULS592LOG.pins.SF.SetValue(SF);
+		this.ULS592LOG.pins.RF.SetValue(RF);
+		this.ULS592LOG.pins.SG.SetValue(SG);
+		this.ULS592LOG.pins.RG.SetValue(RG);
+		this.ULS592LOG.pins.SH.SetValue(SH);
+		this.ULS592LOG.pins.RH.SetValue(RH);
+		this.ULS592LOG.pins.CNTA.SetValue(CNTA);
+		this.ULS592LOG.pins.CNTB.SetValue(CNTB);
+		this.ULS592LOG.pins.CNTC.SetValue(CNTC);
+		this.ULS592LOG.pins.CNTD.SetValue(CNTD);
+		this.ULS592LOG.pins.CNTE.SetValue(CNTE);
+		this.ULS592LOG.pins.CNTF.SetValue(CNTF);
+		this.ULS592LOG.pins.CNTG.SetValue(CNTG);
+		this.ULS592LOG.pins.CNTH.SetValue(CNTH);
+		this.ULS592LOG.pins.RCOBAR.SetValue(RCOBAR);
 	}
 }
 /**
@@ -12919,7 +17795,7 @@ class SN74LS597 extends Component {
 			H_I: new Pin(),
 			QH_O: new Pin(),
 		}
-		this.ULS597LOG = new logicexp(['SRCLRBAR_I','SRCK_I','SRLOADBAR_I','RCK_I','SER_I','A_I','B_I','C_I','D_I','E_I','F_I','G_I','H_I','QA','QB','QC','QD','QE','QF','QG','QHH','QABAR','QBBAR','QCBAR','QDBAR','QEBAR','QFBAR','QGBAR','QHHBAR'], ['SRCLRBAR','SRCK','SRLOADBAR','RCK','SER','A','B','C','D','E','F','G','H','SA','SB','SC','SD','SE','SF','SG','SH','RA','RB','RC','RD','RE','RF','RG','RH'], []).Logic('   SRCLRBAR  =  SRCLRBAR_I ;   SRCK      =  SRCK_I ;   SRLOADBAR =  SRLOADBAR_I ;   RCK       =  RCK_I ;   SER       =  SER_I ;   A         =  A_I ;   B         =  B_I ;   C         =  C_I ;   D         =  D_I ;   E         =  E_I ;   F         =  F_I ;   G         =  G_I ;   H         =  H_I ;   SA =  !(!SRLOADBAR & QA) ;   SB =  !(!SRLOADBAR & QB) ;   SC =  !(!SRLOADBAR & QC) ;   SD =  !(!SRLOADBAR & QD) ;   SE =  !(!SRLOADBAR & QE) ;   SF =  !(!SRLOADBAR & QF) ;   SG =  !(!SRLOADBAR & QG) ;   SH =  !(!SRLOADBAR & QHH) ;   RA =  !(!SRCLRBAR | (!SRLOADBAR & QABAR)) ;   RB =  !(!SRCLRBAR | (!SRLOADBAR & QBBAR)) ;   RC =  !(!SRCLRBAR | (!SRLOADBAR & QCBAR)) ;   RD =  !(!SRCLRBAR | (!SRLOADBAR & QDBAR)) ;   RE =  !(!SRCLRBAR | (!SRLOADBAR & QEBAR)) ;   RF =  !(!SRCLRBAR | (!SRLOADBAR & QFBAR)) ;   RG =  !(!SRCLRBAR | (!SRLOADBAR & QGBAR)) ;   RH =  !(!SRCLRBAR | (!SRLOADBAR & QHHBAR)) ;');
+		this.ULS597LOG = new logicexp(['SRCLRBAR_I','SRCK_I','SRLOADBAR_I','RCK_I','SER_I','A_I','B_I','C_I','D_I','E_I','F_I','G_I','H_I','QA','QB','QC','QD','QE','QF','QG','QHH','QABAR','QBBAR','QCBAR','QDBAR','QEBAR','QFBAR','QGBAR','QHHBAR'], ['SRCLRBAR','SRCK','SRLOADBAR','RCK','SER','A','B','C','D','E','F','G','H','SA','SB','SC','SD','SE','SF','SG','SH','RA','RB','RC','RD','RE','RF','RG','RH']).Callback(this.$exe_ULS597LOG);
 		Connect(this.ULS597LOG.pins.SRCLRBAR_I, this.pins.SRCLRBAR_I);
 		Connect(this.ULS597LOG.pins.SRCK_I, this.pins.SRCK_I);
 		Connect(this.ULS597LOG.pins.SRLOADBAR_I, this.pins.SRLOADBAR_I);
@@ -13117,6 +17993,98 @@ class SN74LS597 extends Component {
 		Connect(this.U9.pins.QBAR0, _D_NC);
 		Connect(QH, this.pins.QH_O);
 	}
+	$exe_ULS597LOG() {
+		var SRCLRBAR_I, SRCK_I, SRLOADBAR_I, RCK_I, SER_I, A_I, B_I, C_I, D_I, E_I, F_I, G_I, H_I, QA, QB, QC, QD, QE, QF, QG, QHH, QABAR, QBBAR, QCBAR, QDBAR, QEBAR, QFBAR, QGBAR, QHHBAR; // Inputs
+		var SRCLRBAR, SRCK, SRLOADBAR, RCK, SER, A, B, C, D, E, F, G, H, SA, SB, SC, SD, SE, SF, SG, SH, RA, RB, RC, RD, RE, RF, RG, RH; // Outputs
+		SRCLRBAR_I = this.ULS597LOG.pins.SRCLRBAR_I.GetValue();
+		SRCK_I = this.ULS597LOG.pins.SRCK_I.GetValue();
+		SRLOADBAR_I = this.ULS597LOG.pins.SRLOADBAR_I.GetValue();
+		RCK_I = this.ULS597LOG.pins.RCK_I.GetValue();
+		SER_I = this.ULS597LOG.pins.SER_I.GetValue();
+		A_I = this.ULS597LOG.pins.A_I.GetValue();
+		B_I = this.ULS597LOG.pins.B_I.GetValue();
+		C_I = this.ULS597LOG.pins.C_I.GetValue();
+		D_I = this.ULS597LOG.pins.D_I.GetValue();
+		E_I = this.ULS597LOG.pins.E_I.GetValue();
+		F_I = this.ULS597LOG.pins.F_I.GetValue();
+		G_I = this.ULS597LOG.pins.G_I.GetValue();
+		H_I = this.ULS597LOG.pins.H_I.GetValue();
+		QA = this.ULS597LOG.pins.QA.GetValue();
+		QB = this.ULS597LOG.pins.QB.GetValue();
+		QC = this.ULS597LOG.pins.QC.GetValue();
+		QD = this.ULS597LOG.pins.QD.GetValue();
+		QE = this.ULS597LOG.pins.QE.GetValue();
+		QF = this.ULS597LOG.pins.QF.GetValue();
+		QG = this.ULS597LOG.pins.QG.GetValue();
+		QHH = this.ULS597LOG.pins.QHH.GetValue();
+		QABAR = this.ULS597LOG.pins.QABAR.GetValue();
+		QBBAR = this.ULS597LOG.pins.QBBAR.GetValue();
+		QCBAR = this.ULS597LOG.pins.QCBAR.GetValue();
+		QDBAR = this.ULS597LOG.pins.QDBAR.GetValue();
+		QEBAR = this.ULS597LOG.pins.QEBAR.GetValue();
+		QFBAR = this.ULS597LOG.pins.QFBAR.GetValue();
+		QGBAR = this.ULS597LOG.pins.QGBAR.GetValue();
+		QHHBAR = this.ULS597LOG.pins.QHHBAR.GetValue();
+		   SRCLRBAR  =  SRCLRBAR_I ;
+		   SRCK      =  SRCK_I ;
+		   SRLOADBAR =  SRLOADBAR_I ;
+		   RCK       =  RCK_I ;
+		   SER       =  SER_I ;
+		   A         =  A_I ;
+		   B         =  B_I ;
+		   C         =  C_I ;
+		   D         =  D_I ;
+		   E         =  E_I ;
+		   F         =  F_I ;
+		   G         =  G_I ;
+		   H         =  H_I ;
+		   SA =  !(!SRLOADBAR & QA) ;
+		   SB =  !(!SRLOADBAR & QB) ;
+		   SC =  !(!SRLOADBAR & QC) ;
+		   SD =  !(!SRLOADBAR & QD) ;
+		   SE =  !(!SRLOADBAR & QE) ;
+		   SF =  !(!SRLOADBAR & QF) ;
+		   SG =  !(!SRLOADBAR & QG) ;
+		   SH =  !(!SRLOADBAR & QHH) ;
+		   RA =  !(!SRCLRBAR | (!SRLOADBAR & QABAR)) ;
+		   RB =  !(!SRCLRBAR | (!SRLOADBAR & QBBAR)) ;
+		   RC =  !(!SRCLRBAR | (!SRLOADBAR & QCBAR)) ;
+		   RD =  !(!SRCLRBAR | (!SRLOADBAR & QDBAR)) ;
+		   RE =  !(!SRCLRBAR | (!SRLOADBAR & QEBAR)) ;
+		   RF =  !(!SRCLRBAR | (!SRLOADBAR & QFBAR)) ;
+		   RG =  !(!SRCLRBAR | (!SRLOADBAR & QGBAR)) ;
+		   RH =  !(!SRCLRBAR | (!SRLOADBAR & QHHBAR)) ;
+		
+		this.ULS597LOG.pins.SRCLRBAR.SetValue(SRCLRBAR);
+		this.ULS597LOG.pins.SRCK.SetValue(SRCK);
+		this.ULS597LOG.pins.SRLOADBAR.SetValue(SRLOADBAR);
+		this.ULS597LOG.pins.RCK.SetValue(RCK);
+		this.ULS597LOG.pins.SER.SetValue(SER);
+		this.ULS597LOG.pins.A.SetValue(A);
+		this.ULS597LOG.pins.B.SetValue(B);
+		this.ULS597LOG.pins.C.SetValue(C);
+		this.ULS597LOG.pins.D.SetValue(D);
+		this.ULS597LOG.pins.E.SetValue(E);
+		this.ULS597LOG.pins.F.SetValue(F);
+		this.ULS597LOG.pins.G.SetValue(G);
+		this.ULS597LOG.pins.H.SetValue(H);
+		this.ULS597LOG.pins.SA.SetValue(SA);
+		this.ULS597LOG.pins.SB.SetValue(SB);
+		this.ULS597LOG.pins.SC.SetValue(SC);
+		this.ULS597LOG.pins.SD.SetValue(SD);
+		this.ULS597LOG.pins.SE.SetValue(SE);
+		this.ULS597LOG.pins.SF.SetValue(SF);
+		this.ULS597LOG.pins.SG.SetValue(SG);
+		this.ULS597LOG.pins.SH.SetValue(SH);
+		this.ULS597LOG.pins.RA.SetValue(RA);
+		this.ULS597LOG.pins.RB.SetValue(RB);
+		this.ULS597LOG.pins.RC.SetValue(RC);
+		this.ULS597LOG.pins.RD.SetValue(RD);
+		this.ULS597LOG.pins.RE.SetValue(RE);
+		this.ULS597LOG.pins.RF.SetValue(RF);
+		this.ULS597LOG.pins.RG.SetValue(RG);
+		this.ULS597LOG.pins.RH.SetValue(RH);
+	}
 }
 /**
  * 8-BIT SHIFT REGISTERS WITH INPUT LATCHES
@@ -13144,7 +18112,7 @@ class SN74LS598 extends Component {
 			HQH_B: new Pin(),
 			QH_O: new Pin(),
 		}
-		this.ULS598LOG = new logicexp(['SRCLRBAR_I','SRLOADBAR_I','SRCKENBAR_I','SRCK_I','RCK_I','GBAR_I','DS_I','SER1_I','SER0_I','AQA_B','BQB_B','CQC_B','DQD_B','EQE_B','FQF_B','GQG_B','HQH_B','Q1A','Q1B','Q1C','Q1D','Q1E','Q1F','Q1G','Q1H','Q1ABAR','Q1BBAR','Q1CBAR','Q1DBAR','Q1EBAR','Q1FBAR','Q1GBAR','Q1HBAR','SRCK2'], ['SRCLRBAR','SRLOADBAR','SRCKENBAR','SRCK','RCK','GBAR','DS','SER1','SER0','AQA','BQB','CQC','DQD','EQE','FQF','GQG','HQH','SA','SB','SC','SD','SE','SF','SG','SH','RA','RB','RC','RD','RE','RF','RG','RH','SRCK2','SER'], []).Logic('   SRCLRBAR  =  SRCLRBAR_I ;   SRLOADBAR =  SRLOADBAR_I ;   SRCKENBAR =  SRCKENBAR_I ;   SRCK      =  SRCK_I ;   RCK       =  RCK_I ;   GBAR      =  GBAR_I ;   DS        =  DS_I ;   SER1      =  SER1_I ;   SER0      =  SER0_I ;   AQA       =  AQA_B ;   BQB       =  BQB_B ;   CQC       =  CQC_B ;   DQD       =  DQD_B ;   EQE       =  EQE_B ;   FQF       =  FQF_B ;   GQG       =  GQG_B ;   HQH       =  HQH_B ;   SRCK2 =  SRCK & ((SRCK2 | (!SRCKENBAR)) & (SRCK)) ;   SER = (DS & SER1) | (!DS & SER0) ;   SA =  !(!SRLOADBAR & Q1A) ;   SB =  !(!SRLOADBAR & Q1B) ;   SC =  !(!SRLOADBAR & Q1C) ;   SD =  !(!SRLOADBAR & Q1D) ;   SE =  !(!SRLOADBAR & Q1E) ;   SF =  !(!SRLOADBAR & Q1F) ;   SG =  !(!SRLOADBAR & Q1G) ;   SH =  !(!SRLOADBAR & Q1H) ;   RA =  !(!SRCLRBAR | (!SRLOADBAR & Q1ABAR)) ;   RB =  !(!SRCLRBAR | (!SRLOADBAR & Q1BBAR)) ;   RC =  !(!SRCLRBAR | (!SRLOADBAR & Q1CBAR)) ;   RD =  !(!SRCLRBAR | (!SRLOADBAR & Q1DBAR)) ;   RE =  !(!SRCLRBAR | (!SRLOADBAR & Q1EBAR)) ;   RF =  !(!SRCLRBAR | (!SRLOADBAR & Q1FBAR)) ;   RG =  !(!SRCLRBAR | (!SRLOADBAR & Q1GBAR)) ;   RH =  !(!SRCLRBAR | (!SRLOADBAR & Q1HBAR)) ;');
+		this.ULS598LOG = new logicexp(['SRCLRBAR_I','SRLOADBAR_I','SRCKENBAR_I','SRCK_I','RCK_I','GBAR_I','DS_I','SER1_I','SER0_I','AQA_B','BQB_B','CQC_B','DQD_B','EQE_B','FQF_B','GQG_B','HQH_B','Q1A','Q1B','Q1C','Q1D','Q1E','Q1F','Q1G','Q1H','Q1ABAR','Q1BBAR','Q1CBAR','Q1DBAR','Q1EBAR','Q1FBAR','Q1GBAR','Q1HBAR','SRCK2'], ['SRCLRBAR','SRLOADBAR','SRCKENBAR','SRCK','RCK','GBAR','DS','SER1','SER0','AQA','BQB','CQC','DQD','EQE','FQF','GQG','HQH','SA','SB','SC','SD','SE','SF','SG','SH','RA','RB','RC','RD','RE','RF','RG','RH','SRCK2','SER']).Callback(this.$exe_ULS598LOG);
 		Connect(this.ULS598LOG.pins.SRCLRBAR_I, this.pins.SRCLRBAR_I);
 		Connect(this.ULS598LOG.pins.SRLOADBAR_I, this.pins.SRLOADBAR_I);
 		Connect(this.ULS598LOG.pins.SRCKENBAR_I, this.pins.SRCKENBAR_I);
@@ -13365,6 +18333,115 @@ class SN74LS598 extends Component {
 		Connect(LGQG, this.pins.GQG_B);
 		Connect(LHQH, this.pins.HQH_B);
 		Connect(LHQH, this.pins.QH_O);
+	}
+	$exe_ULS598LOG() {
+		var SRCLRBAR_I, SRLOADBAR_I, SRCKENBAR_I, SRCK_I, RCK_I, GBAR_I, DS_I, SER1_I, SER0_I, AQA_B, BQB_B, CQC_B, DQD_B, EQE_B, FQF_B, GQG_B, HQH_B, Q1A, Q1B, Q1C, Q1D, Q1E, Q1F, Q1G, Q1H, Q1ABAR, Q1BBAR, Q1CBAR, Q1DBAR, Q1EBAR, Q1FBAR, Q1GBAR, Q1HBAR, SRCK2; // Inputs
+		var SRCLRBAR, SRLOADBAR, SRCKENBAR, SRCK, RCK, GBAR, DS, SER1, SER0, AQA, BQB, CQC, DQD, EQE, FQF, GQG, HQH, SA, SB, SC, SD, SE, SF, SG, SH, RA, RB, RC, RD, RE, RF, RG, RH, SRCK2, SER; // Outputs
+		SRCLRBAR_I = this.ULS598LOG.pins.SRCLRBAR_I.GetValue();
+		SRLOADBAR_I = this.ULS598LOG.pins.SRLOADBAR_I.GetValue();
+		SRCKENBAR_I = this.ULS598LOG.pins.SRCKENBAR_I.GetValue();
+		SRCK_I = this.ULS598LOG.pins.SRCK_I.GetValue();
+		RCK_I = this.ULS598LOG.pins.RCK_I.GetValue();
+		GBAR_I = this.ULS598LOG.pins.GBAR_I.GetValue();
+		DS_I = this.ULS598LOG.pins.DS_I.GetValue();
+		SER1_I = this.ULS598LOG.pins.SER1_I.GetValue();
+		SER0_I = this.ULS598LOG.pins.SER0_I.GetValue();
+		AQA_B = this.ULS598LOG.pins.AQA_B.GetValue();
+		BQB_B = this.ULS598LOG.pins.BQB_B.GetValue();
+		CQC_B = this.ULS598LOG.pins.CQC_B.GetValue();
+		DQD_B = this.ULS598LOG.pins.DQD_B.GetValue();
+		EQE_B = this.ULS598LOG.pins.EQE_B.GetValue();
+		FQF_B = this.ULS598LOG.pins.FQF_B.GetValue();
+		GQG_B = this.ULS598LOG.pins.GQG_B.GetValue();
+		HQH_B = this.ULS598LOG.pins.HQH_B.GetValue();
+		Q1A = this.ULS598LOG.pins.Q1A.GetValue();
+		Q1B = this.ULS598LOG.pins.Q1B.GetValue();
+		Q1C = this.ULS598LOG.pins.Q1C.GetValue();
+		Q1D = this.ULS598LOG.pins.Q1D.GetValue();
+		Q1E = this.ULS598LOG.pins.Q1E.GetValue();
+		Q1F = this.ULS598LOG.pins.Q1F.GetValue();
+		Q1G = this.ULS598LOG.pins.Q1G.GetValue();
+		Q1H = this.ULS598LOG.pins.Q1H.GetValue();
+		Q1ABAR = this.ULS598LOG.pins.Q1ABAR.GetValue();
+		Q1BBAR = this.ULS598LOG.pins.Q1BBAR.GetValue();
+		Q1CBAR = this.ULS598LOG.pins.Q1CBAR.GetValue();
+		Q1DBAR = this.ULS598LOG.pins.Q1DBAR.GetValue();
+		Q1EBAR = this.ULS598LOG.pins.Q1EBAR.GetValue();
+		Q1FBAR = this.ULS598LOG.pins.Q1FBAR.GetValue();
+		Q1GBAR = this.ULS598LOG.pins.Q1GBAR.GetValue();
+		Q1HBAR = this.ULS598LOG.pins.Q1HBAR.GetValue();
+		SRCK2 = this.ULS598LOG.pins.SRCK2.GetValue();
+		   SRCLRBAR  =  SRCLRBAR_I ;
+		   SRLOADBAR =  SRLOADBAR_I ;
+		   SRCKENBAR =  SRCKENBAR_I ;
+		   SRCK      =  SRCK_I ;
+		   RCK       =  RCK_I ;
+		   GBAR      =  GBAR_I ;
+		   DS        =  DS_I ;
+		   SER1      =  SER1_I ;
+		   SER0      =  SER0_I ;
+		   AQA       =  AQA_B ;
+		   BQB       =  BQB_B ;
+		   CQC       =  CQC_B ;
+		   DQD       =  DQD_B ;
+		   EQE       =  EQE_B ;
+		   FQF       =  FQF_B ;
+		   GQG       =  GQG_B ;
+		   HQH       =  HQH_B ;
+		   SRCK2 =  SRCK & ((SRCK2 | (!SRCKENBAR)) & (SRCK)) ;
+		   SER = (DS & SER1) | (!DS & SER0) ;
+		   SA =  !(!SRLOADBAR & Q1A) ;
+		   SB =  !(!SRLOADBAR & Q1B) ;
+		   SC =  !(!SRLOADBAR & Q1C) ;
+		   SD =  !(!SRLOADBAR & Q1D) ;
+		   SE =  !(!SRLOADBAR & Q1E) ;
+		   SF =  !(!SRLOADBAR & Q1F) ;
+		   SG =  !(!SRLOADBAR & Q1G) ;
+		   SH =  !(!SRLOADBAR & Q1H) ;
+		   RA =  !(!SRCLRBAR | (!SRLOADBAR & Q1ABAR)) ;
+		   RB =  !(!SRCLRBAR | (!SRLOADBAR & Q1BBAR)) ;
+		   RC =  !(!SRCLRBAR | (!SRLOADBAR & Q1CBAR)) ;
+		   RD =  !(!SRCLRBAR | (!SRLOADBAR & Q1DBAR)) ;
+		   RE =  !(!SRCLRBAR | (!SRLOADBAR & Q1EBAR)) ;
+		   RF =  !(!SRCLRBAR | (!SRLOADBAR & Q1FBAR)) ;
+		   RG =  !(!SRCLRBAR | (!SRLOADBAR & Q1GBAR)) ;
+		   RH =  !(!SRCLRBAR | (!SRLOADBAR & Q1HBAR)) ;
+		
+		this.ULS598LOG.pins.SRCLRBAR.SetValue(SRCLRBAR);
+		this.ULS598LOG.pins.SRLOADBAR.SetValue(SRLOADBAR);
+		this.ULS598LOG.pins.SRCKENBAR.SetValue(SRCKENBAR);
+		this.ULS598LOG.pins.SRCK.SetValue(SRCK);
+		this.ULS598LOG.pins.RCK.SetValue(RCK);
+		this.ULS598LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS598LOG.pins.DS.SetValue(DS);
+		this.ULS598LOG.pins.SER1.SetValue(SER1);
+		this.ULS598LOG.pins.SER0.SetValue(SER0);
+		this.ULS598LOG.pins.AQA.SetValue(AQA);
+		this.ULS598LOG.pins.BQB.SetValue(BQB);
+		this.ULS598LOG.pins.CQC.SetValue(CQC);
+		this.ULS598LOG.pins.DQD.SetValue(DQD);
+		this.ULS598LOG.pins.EQE.SetValue(EQE);
+		this.ULS598LOG.pins.FQF.SetValue(FQF);
+		this.ULS598LOG.pins.GQG.SetValue(GQG);
+		this.ULS598LOG.pins.HQH.SetValue(HQH);
+		this.ULS598LOG.pins.SA.SetValue(SA);
+		this.ULS598LOG.pins.SB.SetValue(SB);
+		this.ULS598LOG.pins.SC.SetValue(SC);
+		this.ULS598LOG.pins.SD.SetValue(SD);
+		this.ULS598LOG.pins.SE.SetValue(SE);
+		this.ULS598LOG.pins.SF.SetValue(SF);
+		this.ULS598LOG.pins.SG.SetValue(SG);
+		this.ULS598LOG.pins.SH.SetValue(SH);
+		this.ULS598LOG.pins.RA.SetValue(RA);
+		this.ULS598LOG.pins.RB.SetValue(RB);
+		this.ULS598LOG.pins.RC.SetValue(RC);
+		this.ULS598LOG.pins.RD.SetValue(RD);
+		this.ULS598LOG.pins.RE.SetValue(RE);
+		this.ULS598LOG.pins.RF.SetValue(RF);
+		this.ULS598LOG.pins.RG.SetValue(RG);
+		this.ULS598LOG.pins.RH.SetValue(RH);
+		this.ULS598LOG.pins.SRCK2.SetValue(SRCK2);
+		this.ULS598LOG.pins.SER.SetValue(SER);
 	}
 }
 /**
@@ -14003,7 +19080,7 @@ class SN74LS621 extends Component {
 		Connect(this.UBUF.pins.OUT14, B7_ST);
 		let B8_ST = new Pin();
 		Connect(this.UBUF.pins.OUT15, B8_ST);
-		this.ULS621LOG = new logicexp(['GBABAR_I','GAB_I','A1_ST','A2_ST','A3_ST','A4_ST','A5_ST','A6_ST','A7_ST','A8_ST','B1_ST','B2_ST','B3_ST','B4_ST','B5_ST','B6_ST','B7_ST','B8_ST'], ['GBABAR','GAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8'], ['GABBAR']).Logic('   GBABAR =  GBABAR_I ;   GAB  =  GAB_I ;   GABBAR  =  !GAB_I ;   A1 =  B1_ST | GBABAR ;   A2 =  B2_ST | GBABAR ;   A3 =  B3_ST | GBABAR ;   A4 =  B4_ST | GBABAR ;   A5 =  B5_ST | GBABAR ;   A6 =  B6_ST | GBABAR ;   A7 =  B7_ST | GBABAR ;   A8 =  B8_ST | GBABAR ;   B1 =  A1_ST | GABBAR ;   B2 =  A2_ST | GABBAR ;   B3 =  A3_ST | GABBAR ;   B4 =  A4_ST | GABBAR ;   B5 =  A5_ST | GABBAR ;   B6 =  A6_ST | GABBAR ;   B7 =  A7_ST | GABBAR ;   B8 =  A8_ST | GABBAR ;');
+		this.ULS621LOG = new logicexp(['GBABAR_I','GAB_I','A1_ST','A2_ST','A3_ST','A4_ST','A5_ST','A6_ST','A7_ST','A8_ST','B1_ST','B2_ST','B3_ST','B4_ST','B5_ST','B6_ST','B7_ST','B8_ST'], ['GBABAR','GAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8']).Callback(this.$exe_ULS621LOG);
 		Connect(this.ULS621LOG.pins.GBABAR_I, this.pins.GBABAR_I);
 		Connect(this.ULS621LOG.pins.GAB_I, this.pins.GAB_I);
 		Connect(this.ULS621LOG.pins.A1_ST, A1_ST);
@@ -14074,6 +19151,67 @@ class SN74LS621 extends Component {
 		Connect(B6, this.pins.B6_B);
 		Connect(B7, this.pins.B7_B);
 		Connect(B8, this.pins.B8_B);
+	}
+	$exe_ULS621LOG() {
+		var GABBAR; // Temps
+		var GBABAR_I, GAB_I, A1_ST, A2_ST, A3_ST, A4_ST, A5_ST, A6_ST, A7_ST, A8_ST, B1_ST, B2_ST, B3_ST, B4_ST, B5_ST, B6_ST, B7_ST, B8_ST; // Inputs
+		var GBABAR, GAB, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, B5, B6, B7, B8; // Outputs
+		GBABAR_I = this.ULS621LOG.pins.GBABAR_I.GetValue();
+		GAB_I = this.ULS621LOG.pins.GAB_I.GetValue();
+		A1_ST = this.ULS621LOG.pins.A1_ST.GetValue();
+		A2_ST = this.ULS621LOG.pins.A2_ST.GetValue();
+		A3_ST = this.ULS621LOG.pins.A3_ST.GetValue();
+		A4_ST = this.ULS621LOG.pins.A4_ST.GetValue();
+		A5_ST = this.ULS621LOG.pins.A5_ST.GetValue();
+		A6_ST = this.ULS621LOG.pins.A6_ST.GetValue();
+		A7_ST = this.ULS621LOG.pins.A7_ST.GetValue();
+		A8_ST = this.ULS621LOG.pins.A8_ST.GetValue();
+		B1_ST = this.ULS621LOG.pins.B1_ST.GetValue();
+		B2_ST = this.ULS621LOG.pins.B2_ST.GetValue();
+		B3_ST = this.ULS621LOG.pins.B3_ST.GetValue();
+		B4_ST = this.ULS621LOG.pins.B4_ST.GetValue();
+		B5_ST = this.ULS621LOG.pins.B5_ST.GetValue();
+		B6_ST = this.ULS621LOG.pins.B6_ST.GetValue();
+		B7_ST = this.ULS621LOG.pins.B7_ST.GetValue();
+		B8_ST = this.ULS621LOG.pins.B8_ST.GetValue();
+		   GBABAR =  GBABAR_I ;
+		   GAB  =  GAB_I ;
+		   GABBAR  =  !GAB_I ;
+		   A1 =  B1_ST | GBABAR ;
+		   A2 =  B2_ST | GBABAR ;
+		   A3 =  B3_ST | GBABAR ;
+		   A4 =  B4_ST | GBABAR ;
+		   A5 =  B5_ST | GBABAR ;
+		   A6 =  B6_ST | GBABAR ;
+		   A7 =  B7_ST | GBABAR ;
+		   A8 =  B8_ST | GBABAR ;
+		   B1 =  A1_ST | GABBAR ;
+		   B2 =  A2_ST | GABBAR ;
+		   B3 =  A3_ST | GABBAR ;
+		   B4 =  A4_ST | GABBAR ;
+		   B5 =  A5_ST | GABBAR ;
+		   B6 =  A6_ST | GABBAR ;
+		   B7 =  A7_ST | GABBAR ;
+		   B8 =  A8_ST | GABBAR ;
+		
+		this.ULS621LOG.pins.GBABAR.SetValue(GBABAR);
+		this.ULS621LOG.pins.GAB.SetValue(GAB);
+		this.ULS621LOG.pins.A1.SetValue(A1);
+		this.ULS621LOG.pins.A2.SetValue(A2);
+		this.ULS621LOG.pins.A3.SetValue(A3);
+		this.ULS621LOG.pins.A4.SetValue(A4);
+		this.ULS621LOG.pins.A5.SetValue(A5);
+		this.ULS621LOG.pins.A6.SetValue(A6);
+		this.ULS621LOG.pins.A7.SetValue(A7);
+		this.ULS621LOG.pins.A8.SetValue(A8);
+		this.ULS621LOG.pins.B1.SetValue(B1);
+		this.ULS621LOG.pins.B2.SetValue(B2);
+		this.ULS621LOG.pins.B3.SetValue(B3);
+		this.ULS621LOG.pins.B4.SetValue(B4);
+		this.ULS621LOG.pins.B5.SetValue(B5);
+		this.ULS621LOG.pins.B6.SetValue(B6);
+		this.ULS621LOG.pins.B7.SetValue(B7);
+		this.ULS621LOG.pins.B8.SetValue(B8);
 	}
 }
 /**
@@ -14151,7 +19289,7 @@ class SN74LS622 extends Component {
 		Connect(this.UBUF.pins.OUT14, B7_ST);
 		let B8_ST = new Pin();
 		Connect(this.UBUF.pins.OUT15, B8_ST);
-		this.ULS622LOG = new logicexp(['GBABAR_I','GAB_I','A1_ST','A2_ST','A3_ST','A4_ST','A5_ST','A6_ST','A7_ST','A8_ST','B1_ST','B2_ST','B3_ST','B4_ST','B5_ST','B6_ST','B7_ST','B8_ST'], ['GBABAR','GAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8'], ['GBA']).Logic('   GBABAR =  GBABAR_I ;   GBA    =  !GBABAR ;   GAB    =  GAB_I ;   A1 =  !(B1_ST & GBA) ;   A2 =  !(B2_ST & GBA) ;   A3 =  !(B3_ST & GBA) ;   A4 =  !(B4_ST & GBA) ;   A5 =  !(B5_ST & GBA) ;   A6 =  !(B6_ST & GBA) ;   A7 =  !(B7_ST & GBA) ;   A8 =  !(B8_ST & GBA) ;   B1 =  !(A1_ST & GAB) ;   B2 =  !(A2_ST & GAB) ;   B3 =  !(A3_ST & GAB) ;   B4 =  !(A4_ST & GAB) ;   B5 =  !(A5_ST & GAB) ;   B6 =  !(A6_ST & GAB) ;   B7 =  !(A7_ST & GAB) ;   B8 =  !(A8_ST & GAB) ;');
+		this.ULS622LOG = new logicexp(['GBABAR_I','GAB_I','A1_ST','A2_ST','A3_ST','A4_ST','A5_ST','A6_ST','A7_ST','A8_ST','B1_ST','B2_ST','B3_ST','B4_ST','B5_ST','B6_ST','B7_ST','B8_ST'], ['GBABAR','GAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8']).Callback(this.$exe_ULS622LOG);
 		Connect(this.ULS622LOG.pins.GBABAR_I, this.pins.GBABAR_I);
 		Connect(this.ULS622LOG.pins.GAB_I, this.pins.GAB_I);
 		Connect(this.ULS622LOG.pins.A1_ST, A1_ST);
@@ -14222,6 +19360,67 @@ class SN74LS622 extends Component {
 		Connect(B6, this.pins.B6_B);
 		Connect(B7, this.pins.B7_B);
 		Connect(B8, this.pins.B8_B);
+	}
+	$exe_ULS622LOG() {
+		var GBA; // Temps
+		var GBABAR_I, GAB_I, A1_ST, A2_ST, A3_ST, A4_ST, A5_ST, A6_ST, A7_ST, A8_ST, B1_ST, B2_ST, B3_ST, B4_ST, B5_ST, B6_ST, B7_ST, B8_ST; // Inputs
+		var GBABAR, GAB, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, B5, B6, B7, B8; // Outputs
+		GBABAR_I = this.ULS622LOG.pins.GBABAR_I.GetValue();
+		GAB_I = this.ULS622LOG.pins.GAB_I.GetValue();
+		A1_ST = this.ULS622LOG.pins.A1_ST.GetValue();
+		A2_ST = this.ULS622LOG.pins.A2_ST.GetValue();
+		A3_ST = this.ULS622LOG.pins.A3_ST.GetValue();
+		A4_ST = this.ULS622LOG.pins.A4_ST.GetValue();
+		A5_ST = this.ULS622LOG.pins.A5_ST.GetValue();
+		A6_ST = this.ULS622LOG.pins.A6_ST.GetValue();
+		A7_ST = this.ULS622LOG.pins.A7_ST.GetValue();
+		A8_ST = this.ULS622LOG.pins.A8_ST.GetValue();
+		B1_ST = this.ULS622LOG.pins.B1_ST.GetValue();
+		B2_ST = this.ULS622LOG.pins.B2_ST.GetValue();
+		B3_ST = this.ULS622LOG.pins.B3_ST.GetValue();
+		B4_ST = this.ULS622LOG.pins.B4_ST.GetValue();
+		B5_ST = this.ULS622LOG.pins.B5_ST.GetValue();
+		B6_ST = this.ULS622LOG.pins.B6_ST.GetValue();
+		B7_ST = this.ULS622LOG.pins.B7_ST.GetValue();
+		B8_ST = this.ULS622LOG.pins.B8_ST.GetValue();
+		   GBABAR =  GBABAR_I ;
+		   GBA    =  !GBABAR ;
+		   GAB    =  GAB_I ;
+		   A1 =  !(B1_ST & GBA) ;
+		   A2 =  !(B2_ST & GBA) ;
+		   A3 =  !(B3_ST & GBA) ;
+		   A4 =  !(B4_ST & GBA) ;
+		   A5 =  !(B5_ST & GBA) ;
+		   A6 =  !(B6_ST & GBA) ;
+		   A7 =  !(B7_ST & GBA) ;
+		   A8 =  !(B8_ST & GBA) ;
+		   B1 =  !(A1_ST & GAB) ;
+		   B2 =  !(A2_ST & GAB) ;
+		   B3 =  !(A3_ST & GAB) ;
+		   B4 =  !(A4_ST & GAB) ;
+		   B5 =  !(A5_ST & GAB) ;
+		   B6 =  !(A6_ST & GAB) ;
+		   B7 =  !(A7_ST & GAB) ;
+		   B8 =  !(A8_ST & GAB) ;
+		
+		this.ULS622LOG.pins.GBABAR.SetValue(GBABAR);
+		this.ULS622LOG.pins.GAB.SetValue(GAB);
+		this.ULS622LOG.pins.A1.SetValue(A1);
+		this.ULS622LOG.pins.A2.SetValue(A2);
+		this.ULS622LOG.pins.A3.SetValue(A3);
+		this.ULS622LOG.pins.A4.SetValue(A4);
+		this.ULS622LOG.pins.A5.SetValue(A5);
+		this.ULS622LOG.pins.A6.SetValue(A6);
+		this.ULS622LOG.pins.A7.SetValue(A7);
+		this.ULS622LOG.pins.A8.SetValue(A8);
+		this.ULS622LOG.pins.B1.SetValue(B1);
+		this.ULS622LOG.pins.B2.SetValue(B2);
+		this.ULS622LOG.pins.B3.SetValue(B3);
+		this.ULS622LOG.pins.B4.SetValue(B4);
+		this.ULS622LOG.pins.B5.SetValue(B5);
+		this.ULS622LOG.pins.B6.SetValue(B6);
+		this.ULS622LOG.pins.B7.SetValue(B7);
+		this.ULS622LOG.pins.B8.SetValue(B8);
 	}
 }
 /**
@@ -14322,7 +19521,7 @@ class SN74LS638 extends Component {
 			B7_B: new Pin(),
 			B8_B: new Pin(),
 		}
-		this.ULS638LOG = new logicexp(['GBAR_I','DIR_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B'], ['GBAR','DIR','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_O','A2_O','A3_O','A4_O','A5_O','A6_O','A7_O','A8_O','B1_O','B2_O','B3_O','B4_O','B5_O','B6_O','B7_O','B8_O','ENB'], ['ENA']).Logic('   GBAR =  GBAR_I ;   DIR =  DIR_I ;   A1 =  A1_B ;   A2 =  A2_B ;   A3 =  A3_B ;   A4 =  A4_B ;   A5 =  A5_B ;   A6 =  A6_B ;   A7 =  A7_B ;   A8 =  A8_B ;   B1 =  B1_B ;   B2 =  B2_B ;   B3 =  B3_B ;   B4 =  B4_B ;   B5 =  B5_B ;   B6 =  B6_B ;   B7 =  B7_B ;   B8 =  B8_B ;   ENA =  !(GBAR | DIR) ;   ENB =  !GBAR & DIR ;   A1_O =  !(ENA & B1) ;   A2_O =  !(ENA & B2) ;   A3_O =  !(ENA & B3) ;   A4_O =  !(ENA & B4) ;   A5_O =  !(ENA & B5) ;   A6_O =  !(ENA & B6) ;   A7_O =  !(ENA & B7) ;   A8_O =  !(ENA & B8) ;   B1_O =  !A1 ;   B2_O =  !A2 ;   B3_O =  !A3 ;   B4_O =  !A4 ;   B5_O =  !A5 ;   B6_O =  !A6 ;   B7_O =  !A7 ;   B8_O =  !A8 ;');
+		this.ULS638LOG = new logicexp(['GBAR_I','DIR_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B'], ['GBAR','DIR','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_O','A2_O','A3_O','A4_O','A5_O','A6_O','A7_O','A8_O','B1_O','B2_O','B3_O','B4_O','B5_O','B6_O','B7_O','B8_O','ENB']).Callback(this.$exe_ULS638LOG);
 		Connect(this.ULS638LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS638LOG.pins.DIR_I, this.pins.DIR_I);
 		Connect(this.ULS638LOG.pins.A1_B, this.pins.A1_B);
@@ -14428,6 +19627,101 @@ class SN74LS638 extends Component {
 		Connect(B7_O, this.pins.B7_B);
 		Connect(B8_O, this.pins.B8_B);
 	}
+	$exe_ULS638LOG() {
+		var ENA; // Temps
+		var GBAR_I, DIR_I, A1_B, A2_B, A3_B, A4_B, A5_B, A6_B, A7_B, A8_B, B1_B, B2_B, B3_B, B4_B, B5_B, B6_B, B7_B, B8_B; // Inputs
+		var GBAR, DIR, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, B5, B6, B7, B8, A1_O, A2_O, A3_O, A4_O, A5_O, A6_O, A7_O, A8_O, B1_O, B2_O, B3_O, B4_O, B5_O, B6_O, B7_O, B8_O, ENB; // Outputs
+		GBAR_I = this.ULS638LOG.pins.GBAR_I.GetValue();
+		DIR_I = this.ULS638LOG.pins.DIR_I.GetValue();
+		A1_B = this.ULS638LOG.pins.A1_B.GetValue();
+		A2_B = this.ULS638LOG.pins.A2_B.GetValue();
+		A3_B = this.ULS638LOG.pins.A3_B.GetValue();
+		A4_B = this.ULS638LOG.pins.A4_B.GetValue();
+		A5_B = this.ULS638LOG.pins.A5_B.GetValue();
+		A6_B = this.ULS638LOG.pins.A6_B.GetValue();
+		A7_B = this.ULS638LOG.pins.A7_B.GetValue();
+		A8_B = this.ULS638LOG.pins.A8_B.GetValue();
+		B1_B = this.ULS638LOG.pins.B1_B.GetValue();
+		B2_B = this.ULS638LOG.pins.B2_B.GetValue();
+		B3_B = this.ULS638LOG.pins.B3_B.GetValue();
+		B4_B = this.ULS638LOG.pins.B4_B.GetValue();
+		B5_B = this.ULS638LOG.pins.B5_B.GetValue();
+		B6_B = this.ULS638LOG.pins.B6_B.GetValue();
+		B7_B = this.ULS638LOG.pins.B7_B.GetValue();
+		B8_B = this.ULS638LOG.pins.B8_B.GetValue();
+		   GBAR =  GBAR_I ;
+		   DIR =  DIR_I ;
+		   A1 =  A1_B ;
+		   A2 =  A2_B ;
+		   A3 =  A3_B ;
+		   A4 =  A4_B ;
+		   A5 =  A5_B ;
+		   A6 =  A6_B ;
+		   A7 =  A7_B ;
+		   A8 =  A8_B ;
+		   B1 =  B1_B ;
+		   B2 =  B2_B ;
+		   B3 =  B3_B ;
+		   B4 =  B4_B ;
+		   B5 =  B5_B ;
+		   B6 =  B6_B ;
+		   B7 =  B7_B ;
+		   B8 =  B8_B ;
+		   ENA =  !(GBAR | DIR) ;
+		   ENB =  !GBAR & DIR ;
+		   A1_O =  !(ENA & B1) ;
+		   A2_O =  !(ENA & B2) ;
+		   A3_O =  !(ENA & B3) ;
+		   A4_O =  !(ENA & B4) ;
+		   A5_O =  !(ENA & B5) ;
+		   A6_O =  !(ENA & B6) ;
+		   A7_O =  !(ENA & B7) ;
+		   A8_O =  !(ENA & B8) ;
+		   B1_O =  !A1 ;
+		   B2_O =  !A2 ;
+		   B3_O =  !A3 ;
+		   B4_O =  !A4 ;
+		   B5_O =  !A5 ;
+		   B6_O =  !A6 ;
+		   B7_O =  !A7 ;
+		   B8_O =  !A8 ;
+		
+		this.ULS638LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS638LOG.pins.DIR.SetValue(DIR);
+		this.ULS638LOG.pins.A1.SetValue(A1);
+		this.ULS638LOG.pins.A2.SetValue(A2);
+		this.ULS638LOG.pins.A3.SetValue(A3);
+		this.ULS638LOG.pins.A4.SetValue(A4);
+		this.ULS638LOG.pins.A5.SetValue(A5);
+		this.ULS638LOG.pins.A6.SetValue(A6);
+		this.ULS638LOG.pins.A7.SetValue(A7);
+		this.ULS638LOG.pins.A8.SetValue(A8);
+		this.ULS638LOG.pins.B1.SetValue(B1);
+		this.ULS638LOG.pins.B2.SetValue(B2);
+		this.ULS638LOG.pins.B3.SetValue(B3);
+		this.ULS638LOG.pins.B4.SetValue(B4);
+		this.ULS638LOG.pins.B5.SetValue(B5);
+		this.ULS638LOG.pins.B6.SetValue(B6);
+		this.ULS638LOG.pins.B7.SetValue(B7);
+		this.ULS638LOG.pins.B8.SetValue(B8);
+		this.ULS638LOG.pins.A1_O.SetValue(A1_O);
+		this.ULS638LOG.pins.A2_O.SetValue(A2_O);
+		this.ULS638LOG.pins.A3_O.SetValue(A3_O);
+		this.ULS638LOG.pins.A4_O.SetValue(A4_O);
+		this.ULS638LOG.pins.A5_O.SetValue(A5_O);
+		this.ULS638LOG.pins.A6_O.SetValue(A6_O);
+		this.ULS638LOG.pins.A7_O.SetValue(A7_O);
+		this.ULS638LOG.pins.A8_O.SetValue(A8_O);
+		this.ULS638LOG.pins.B1_O.SetValue(B1_O);
+		this.ULS638LOG.pins.B2_O.SetValue(B2_O);
+		this.ULS638LOG.pins.B3_O.SetValue(B3_O);
+		this.ULS638LOG.pins.B4_O.SetValue(B4_O);
+		this.ULS638LOG.pins.B5_O.SetValue(B5_O);
+		this.ULS638LOG.pins.B6_O.SetValue(B6_O);
+		this.ULS638LOG.pins.B7_O.SetValue(B7_O);
+		this.ULS638LOG.pins.B8_O.SetValue(B8_O);
+		this.ULS638LOG.pins.ENB.SetValue(ENB);
+	}
 }
 /**
  * BUS TRANSCEIVERS OCTAL WITH 3-STATE AND OPEN-COLLECTOR OUTPUTS
@@ -14455,7 +19749,7 @@ class SN74LS639 extends Component {
 			B7_B: new Pin(),
 			B8_B: new Pin(),
 		}
-		this.ULS639LOG = new logicexp(['GBAR_I','DIR_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B'], ['GBAR','DIR','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_O','A2_O','A3_O','A4_O','A5_O','A6_O','A7_O','A8_O','B1_O','B2_O','B3_O','B4_O','B5_O','B6_O','B7_O','B8_O','ENB'], ['ENA']).Logic('   GBAR =  GBAR_I ;   DIR =  DIR_I ;   A1 =  A1_B ;   A2 =  A2_B ;   A3 =  A3_B ;   A4 =  A4_B ;   A5 =  A5_B ;   A6 =  A6_B ;   A7 =  A7_B ;   A8 =  A8_B ;   B1 =  B1_B ;   B2 =  B2_B ;   B3 =  B3_B ;   B4 =  B4_B ;   B5 =  B5_B ;   B6 =  B6_B ;   B7 =  B7_B ;   B8 =  B8_B ;   ENA =  !(GBAR | DIR) ;   ENB =  !GBAR & DIR ;   A1_O =  !(ENA & !B1) ;   A2_O =  !(ENA & !B2) ;   A3_O =  !(ENA & !B3) ;   A4_O =  !(ENA & !B4) ;   A5_O =  !(ENA & !B5) ;   A6_O =  !(ENA & !B6) ;   A7_O =  !(ENA & !B7) ;   A8_O =  !(ENA & !B8) ;   B1_O =  A1 ;   B2_O =  A2 ;   B3_O =  A3 ;   B4_O =  A4 ;   B5_O =  A5 ;   B6_O =  A6 ;   B7_O =  A7 ;   B8_O =  A8 ;');
+		this.ULS639LOG = new logicexp(['GBAR_I','DIR_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B'], ['GBAR','DIR','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_O','A2_O','A3_O','A4_O','A5_O','A6_O','A7_O','A8_O','B1_O','B2_O','B3_O','B4_O','B5_O','B6_O','B7_O','B8_O','ENB']).Callback(this.$exe_ULS639LOG);
 		Connect(this.ULS639LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS639LOG.pins.DIR_I, this.pins.DIR_I);
 		Connect(this.ULS639LOG.pins.A1_B, this.pins.A1_B);
@@ -14560,6 +19854,101 @@ class SN74LS639 extends Component {
 		Connect(B6_O, this.pins.B6_B);
 		Connect(B7_O, this.pins.B7_B);
 		Connect(B8_O, this.pins.B8_B);
+	}
+	$exe_ULS639LOG() {
+		var ENA; // Temps
+		var GBAR_I, DIR_I, A1_B, A2_B, A3_B, A4_B, A5_B, A6_B, A7_B, A8_B, B1_B, B2_B, B3_B, B4_B, B5_B, B6_B, B7_B, B8_B; // Inputs
+		var GBAR, DIR, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, B5, B6, B7, B8, A1_O, A2_O, A3_O, A4_O, A5_O, A6_O, A7_O, A8_O, B1_O, B2_O, B3_O, B4_O, B5_O, B6_O, B7_O, B8_O, ENB; // Outputs
+		GBAR_I = this.ULS639LOG.pins.GBAR_I.GetValue();
+		DIR_I = this.ULS639LOG.pins.DIR_I.GetValue();
+		A1_B = this.ULS639LOG.pins.A1_B.GetValue();
+		A2_B = this.ULS639LOG.pins.A2_B.GetValue();
+		A3_B = this.ULS639LOG.pins.A3_B.GetValue();
+		A4_B = this.ULS639LOG.pins.A4_B.GetValue();
+		A5_B = this.ULS639LOG.pins.A5_B.GetValue();
+		A6_B = this.ULS639LOG.pins.A6_B.GetValue();
+		A7_B = this.ULS639LOG.pins.A7_B.GetValue();
+		A8_B = this.ULS639LOG.pins.A8_B.GetValue();
+		B1_B = this.ULS639LOG.pins.B1_B.GetValue();
+		B2_B = this.ULS639LOG.pins.B2_B.GetValue();
+		B3_B = this.ULS639LOG.pins.B3_B.GetValue();
+		B4_B = this.ULS639LOG.pins.B4_B.GetValue();
+		B5_B = this.ULS639LOG.pins.B5_B.GetValue();
+		B6_B = this.ULS639LOG.pins.B6_B.GetValue();
+		B7_B = this.ULS639LOG.pins.B7_B.GetValue();
+		B8_B = this.ULS639LOG.pins.B8_B.GetValue();
+		   GBAR =  GBAR_I ;
+		   DIR =  DIR_I ;
+		   A1 =  A1_B ;
+		   A2 =  A2_B ;
+		   A3 =  A3_B ;
+		   A4 =  A4_B ;
+		   A5 =  A5_B ;
+		   A6 =  A6_B ;
+		   A7 =  A7_B ;
+		   A8 =  A8_B ;
+		   B1 =  B1_B ;
+		   B2 =  B2_B ;
+		   B3 =  B3_B ;
+		   B4 =  B4_B ;
+		   B5 =  B5_B ;
+		   B6 =  B6_B ;
+		   B7 =  B7_B ;
+		   B8 =  B8_B ;
+		   ENA =  !(GBAR | DIR) ;
+		   ENB =  !GBAR & DIR ;
+		   A1_O =  !(ENA & !B1) ;
+		   A2_O =  !(ENA & !B2) ;
+		   A3_O =  !(ENA & !B3) ;
+		   A4_O =  !(ENA & !B4) ;
+		   A5_O =  !(ENA & !B5) ;
+		   A6_O =  !(ENA & !B6) ;
+		   A7_O =  !(ENA & !B7) ;
+		   A8_O =  !(ENA & !B8) ;
+		   B1_O =  A1 ;
+		   B2_O =  A2 ;
+		   B3_O =  A3 ;
+		   B4_O =  A4 ;
+		   B5_O =  A5 ;
+		   B6_O =  A6 ;
+		   B7_O =  A7 ;
+		   B8_O =  A8 ;
+		
+		this.ULS639LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS639LOG.pins.DIR.SetValue(DIR);
+		this.ULS639LOG.pins.A1.SetValue(A1);
+		this.ULS639LOG.pins.A2.SetValue(A2);
+		this.ULS639LOG.pins.A3.SetValue(A3);
+		this.ULS639LOG.pins.A4.SetValue(A4);
+		this.ULS639LOG.pins.A5.SetValue(A5);
+		this.ULS639LOG.pins.A6.SetValue(A6);
+		this.ULS639LOG.pins.A7.SetValue(A7);
+		this.ULS639LOG.pins.A8.SetValue(A8);
+		this.ULS639LOG.pins.B1.SetValue(B1);
+		this.ULS639LOG.pins.B2.SetValue(B2);
+		this.ULS639LOG.pins.B3.SetValue(B3);
+		this.ULS639LOG.pins.B4.SetValue(B4);
+		this.ULS639LOG.pins.B5.SetValue(B5);
+		this.ULS639LOG.pins.B6.SetValue(B6);
+		this.ULS639LOG.pins.B7.SetValue(B7);
+		this.ULS639LOG.pins.B8.SetValue(B8);
+		this.ULS639LOG.pins.A1_O.SetValue(A1_O);
+		this.ULS639LOG.pins.A2_O.SetValue(A2_O);
+		this.ULS639LOG.pins.A3_O.SetValue(A3_O);
+		this.ULS639LOG.pins.A4_O.SetValue(A4_O);
+		this.ULS639LOG.pins.A5_O.SetValue(A5_O);
+		this.ULS639LOG.pins.A6_O.SetValue(A6_O);
+		this.ULS639LOG.pins.A7_O.SetValue(A7_O);
+		this.ULS639LOG.pins.A8_O.SetValue(A8_O);
+		this.ULS639LOG.pins.B1_O.SetValue(B1_O);
+		this.ULS639LOG.pins.B2_O.SetValue(B2_O);
+		this.ULS639LOG.pins.B3_O.SetValue(B3_O);
+		this.ULS639LOG.pins.B4_O.SetValue(B4_O);
+		this.ULS639LOG.pins.B5_O.SetValue(B5_O);
+		this.ULS639LOG.pins.B6_O.SetValue(B6_O);
+		this.ULS639LOG.pins.B7_O.SetValue(B7_O);
+		this.ULS639LOG.pins.B8_O.SetValue(B8_O);
+		this.ULS639LOG.pins.ENB.SetValue(ENB);
 	}
 }
 /**
@@ -14721,7 +20110,7 @@ class SN74LS641 extends Component {
 		Connect(this.U1.pins.OUT14, B7);
 		let B8 = new Pin();
 		Connect(this.U1.pins.OUT15, B8);
-		this.ULS641LOG = new logicexp(['GBAR_I','DIR_I','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8'], ['GBAR','DIR','IA1','IA2','IA3','IA4','IA5','IA6','IA7','IA8','IB1','IB2','IB3','IB4','IB5','IB6','IB7','IB8','ATOB','BTOA'], []).Logic('   GBAR =  GBAR_I ;   DIR  =  DIR_I ;   ATOB =  !GBAR & DIR ;   BTOA =  !GBAR & !DIR ;   IA1 =  !(!B1 & BTOA) ;   IA2 =  !(!B2 & BTOA) ;   IA3 =  !(!B3 & BTOA) ;   IA4 =  !(!B4 & BTOA) ;   IA5 =  !(!B5 & BTOA) ;   IA6 =  !(!B6 & BTOA) ;   IA7 =  !(!B7 & BTOA) ;   IA8 =  !(!B8 & BTOA) ;   IB1 =  !(!A1 & ATOB) ;   IB2 =  !(!A2 & ATOB) ;   IB3 =  !(!A3 & ATOB) ;   IB4 =  !(!A4 & ATOB) ;   IB5 =  !(!A5 & ATOB) ;   IB6 =  !(!A6 & ATOB) ;   IB7 =  !(!A7 & ATOB) ;   IB8 =  !(!A8 & ATOB) ;');
+		this.ULS641LOG = new logicexp(['GBAR_I','DIR_I','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8'], ['GBAR','DIR','IA1','IA2','IA3','IA4','IA5','IA6','IA7','IA8','IB1','IB2','IB3','IB4','IB5','IB6','IB7','IB8','ATOB','BTOA']).Callback(this.$exe_ULS641LOG);
 		Connect(this.ULS641LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS641LOG.pins.DIR_I, this.pins.DIR_I);
 		Connect(this.ULS641LOG.pins.A1, A1);
@@ -14796,6 +20185,69 @@ class SN74LS641 extends Component {
 		Connect(IB6, this.pins.B6_B);
 		Connect(IB7, this.pins.B7_B);
 		Connect(IB8, this.pins.B8_B);
+	}
+	$exe_ULS641LOG() {
+		var GBAR_I, DIR_I, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, B5, B6, B7, B8; // Inputs
+		var GBAR, DIR, IA1, IA2, IA3, IA4, IA5, IA6, IA7, IA8, IB1, IB2, IB3, IB4, IB5, IB6, IB7, IB8, ATOB, BTOA; // Outputs
+		GBAR_I = this.ULS641LOG.pins.GBAR_I.GetValue();
+		DIR_I = this.ULS641LOG.pins.DIR_I.GetValue();
+		A1 = this.ULS641LOG.pins.A1.GetValue();
+		A2 = this.ULS641LOG.pins.A2.GetValue();
+		A3 = this.ULS641LOG.pins.A3.GetValue();
+		A4 = this.ULS641LOG.pins.A4.GetValue();
+		A5 = this.ULS641LOG.pins.A5.GetValue();
+		A6 = this.ULS641LOG.pins.A6.GetValue();
+		A7 = this.ULS641LOG.pins.A7.GetValue();
+		A8 = this.ULS641LOG.pins.A8.GetValue();
+		B1 = this.ULS641LOG.pins.B1.GetValue();
+		B2 = this.ULS641LOG.pins.B2.GetValue();
+		B3 = this.ULS641LOG.pins.B3.GetValue();
+		B4 = this.ULS641LOG.pins.B4.GetValue();
+		B5 = this.ULS641LOG.pins.B5.GetValue();
+		B6 = this.ULS641LOG.pins.B6.GetValue();
+		B7 = this.ULS641LOG.pins.B7.GetValue();
+		B8 = this.ULS641LOG.pins.B8.GetValue();
+		   GBAR =  GBAR_I ;
+		   DIR  =  DIR_I ;
+		   ATOB =  !GBAR & DIR ;
+		   BTOA =  !GBAR & !DIR ;
+		   IA1 =  !(!B1 & BTOA) ;
+		   IA2 =  !(!B2 & BTOA) ;
+		   IA3 =  !(!B3 & BTOA) ;
+		   IA4 =  !(!B4 & BTOA) ;
+		   IA5 =  !(!B5 & BTOA) ;
+		   IA6 =  !(!B6 & BTOA) ;
+		   IA7 =  !(!B7 & BTOA) ;
+		   IA8 =  !(!B8 & BTOA) ;
+		   IB1 =  !(!A1 & ATOB) ;
+		   IB2 =  !(!A2 & ATOB) ;
+		   IB3 =  !(!A3 & ATOB) ;
+		   IB4 =  !(!A4 & ATOB) ;
+		   IB5 =  !(!A5 & ATOB) ;
+		   IB6 =  !(!A6 & ATOB) ;
+		   IB7 =  !(!A7 & ATOB) ;
+		   IB8 =  !(!A8 & ATOB) ;
+		
+		this.ULS641LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS641LOG.pins.DIR.SetValue(DIR);
+		this.ULS641LOG.pins.IA1.SetValue(IA1);
+		this.ULS641LOG.pins.IA2.SetValue(IA2);
+		this.ULS641LOG.pins.IA3.SetValue(IA3);
+		this.ULS641LOG.pins.IA4.SetValue(IA4);
+		this.ULS641LOG.pins.IA5.SetValue(IA5);
+		this.ULS641LOG.pins.IA6.SetValue(IA6);
+		this.ULS641LOG.pins.IA7.SetValue(IA7);
+		this.ULS641LOG.pins.IA8.SetValue(IA8);
+		this.ULS641LOG.pins.IB1.SetValue(IB1);
+		this.ULS641LOG.pins.IB2.SetValue(IB2);
+		this.ULS641LOG.pins.IB3.SetValue(IB3);
+		this.ULS641LOG.pins.IB4.SetValue(IB4);
+		this.ULS641LOG.pins.IB5.SetValue(IB5);
+		this.ULS641LOG.pins.IB6.SetValue(IB6);
+		this.ULS641LOG.pins.IB7.SetValue(IB7);
+		this.ULS641LOG.pins.IB8.SetValue(IB8);
+		this.ULS641LOG.pins.ATOB.SetValue(ATOB);
+		this.ULS641LOG.pins.BTOA.SetValue(BTOA);
 	}
 }
 /**
@@ -14873,7 +20325,7 @@ class SN74LS642 extends Component {
 		Connect(this.U1.pins.OUT14, B7);
 		let B8 = new Pin();
 		Connect(this.U1.pins.OUT15, B8);
-		this.ULS642LOG = new logicexp(['GBAR_I','DIR_I','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8'], ['GBAR','DIR','IA1','IA2','IA3','IA4','IA5','IA6','IA7','IA8','IB1','IB2','IB3','IB4','IB5','IB6','IB7','IB8','ATOB','BTOA'], []).Logic('   GBAR =  GBAR_I ;   DIR  =  DIR_I ;   ATOB =  !GBAR & DIR ;   BTOA =  !GBAR & !DIR ;   IA1 =  !(B1 & BTOA) ;   IA2 =  !(B2 & BTOA) ;   IA3 =  !(B3 & BTOA) ;   IA4 =  !(B4 & BTOA) ;   IA5 =  !(B5 & BTOA) ;   IA6 =  !(B6 & BTOA) ;   IA7 =  !(B7 & BTOA) ;   IA8 =  !(B8 & BTOA) ;   IB1 =  !(A1 & ATOB) ;   IB2 =  !(A2 & ATOB) ;   IB3 =  !(A3 & ATOB) ;   IB4 =  !(A4 & ATOB) ;   IB5 =  !(A5 & ATOB) ;   IB6 =  !(A6 & ATOB) ;   IB7 =  !(A7 & ATOB) ;   IB8 =  !(A8 & ATOB) ;');
+		this.ULS642LOG = new logicexp(['GBAR_I','DIR_I','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8'], ['GBAR','DIR','IA1','IA2','IA3','IA4','IA5','IA6','IA7','IA8','IB1','IB2','IB3','IB4','IB5','IB6','IB7','IB8','ATOB','BTOA']).Callback(this.$exe_ULS642LOG);
 		Connect(this.ULS642LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS642LOG.pins.DIR_I, this.pins.DIR_I);
 		Connect(this.ULS642LOG.pins.A1, A1);
@@ -14948,6 +20400,69 @@ class SN74LS642 extends Component {
 		Connect(IB6, this.pins.B6_B);
 		Connect(IB7, this.pins.B7_B);
 		Connect(IB8, this.pins.B8_B);
+	}
+	$exe_ULS642LOG() {
+		var GBAR_I, DIR_I, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, B5, B6, B7, B8; // Inputs
+		var GBAR, DIR, IA1, IA2, IA3, IA4, IA5, IA6, IA7, IA8, IB1, IB2, IB3, IB4, IB5, IB6, IB7, IB8, ATOB, BTOA; // Outputs
+		GBAR_I = this.ULS642LOG.pins.GBAR_I.GetValue();
+		DIR_I = this.ULS642LOG.pins.DIR_I.GetValue();
+		A1 = this.ULS642LOG.pins.A1.GetValue();
+		A2 = this.ULS642LOG.pins.A2.GetValue();
+		A3 = this.ULS642LOG.pins.A3.GetValue();
+		A4 = this.ULS642LOG.pins.A4.GetValue();
+		A5 = this.ULS642LOG.pins.A5.GetValue();
+		A6 = this.ULS642LOG.pins.A6.GetValue();
+		A7 = this.ULS642LOG.pins.A7.GetValue();
+		A8 = this.ULS642LOG.pins.A8.GetValue();
+		B1 = this.ULS642LOG.pins.B1.GetValue();
+		B2 = this.ULS642LOG.pins.B2.GetValue();
+		B3 = this.ULS642LOG.pins.B3.GetValue();
+		B4 = this.ULS642LOG.pins.B4.GetValue();
+		B5 = this.ULS642LOG.pins.B5.GetValue();
+		B6 = this.ULS642LOG.pins.B6.GetValue();
+		B7 = this.ULS642LOG.pins.B7.GetValue();
+		B8 = this.ULS642LOG.pins.B8.GetValue();
+		   GBAR =  GBAR_I ;
+		   DIR  =  DIR_I ;
+		   ATOB =  !GBAR & DIR ;
+		   BTOA =  !GBAR & !DIR ;
+		   IA1 =  !(B1 & BTOA) ;
+		   IA2 =  !(B2 & BTOA) ;
+		   IA3 =  !(B3 & BTOA) ;
+		   IA4 =  !(B4 & BTOA) ;
+		   IA5 =  !(B5 & BTOA) ;
+		   IA6 =  !(B6 & BTOA) ;
+		   IA7 =  !(B7 & BTOA) ;
+		   IA8 =  !(B8 & BTOA) ;
+		   IB1 =  !(A1 & ATOB) ;
+		   IB2 =  !(A2 & ATOB) ;
+		   IB3 =  !(A3 & ATOB) ;
+		   IB4 =  !(A4 & ATOB) ;
+		   IB5 =  !(A5 & ATOB) ;
+		   IB6 =  !(A6 & ATOB) ;
+		   IB7 =  !(A7 & ATOB) ;
+		   IB8 =  !(A8 & ATOB) ;
+		
+		this.ULS642LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS642LOG.pins.DIR.SetValue(DIR);
+		this.ULS642LOG.pins.IA1.SetValue(IA1);
+		this.ULS642LOG.pins.IA2.SetValue(IA2);
+		this.ULS642LOG.pins.IA3.SetValue(IA3);
+		this.ULS642LOG.pins.IA4.SetValue(IA4);
+		this.ULS642LOG.pins.IA5.SetValue(IA5);
+		this.ULS642LOG.pins.IA6.SetValue(IA6);
+		this.ULS642LOG.pins.IA7.SetValue(IA7);
+		this.ULS642LOG.pins.IA8.SetValue(IA8);
+		this.ULS642LOG.pins.IB1.SetValue(IB1);
+		this.ULS642LOG.pins.IB2.SetValue(IB2);
+		this.ULS642LOG.pins.IB3.SetValue(IB3);
+		this.ULS642LOG.pins.IB4.SetValue(IB4);
+		this.ULS642LOG.pins.IB5.SetValue(IB5);
+		this.ULS642LOG.pins.IB6.SetValue(IB6);
+		this.ULS642LOG.pins.IB7.SetValue(IB7);
+		this.ULS642LOG.pins.IB8.SetValue(IB8);
+		this.ULS642LOG.pins.ATOB.SetValue(ATOB);
+		this.ULS642LOG.pins.BTOA.SetValue(BTOA);
 	}
 }
 /**
@@ -15109,7 +20624,7 @@ class SN74LS644 extends Component {
 		Connect(this.U1.pins.OUT14, B7);
 		let B8 = new Pin();
 		Connect(this.U1.pins.OUT15, B8);
-		this.ULS644LOG = new logicexp(['GBAR_I','DIR_I','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8'], ['GBAR','DIR','IA1','IA2','IA3','IA4','IA5','IA6','IA7','IA8','IB1','IB2','IB3','IB4','IB5','IB6','IB7','IB8','ATOB','BTOA'], []).Logic('   GBAR =  GBAR_I ;   DIR  =  DIR_I ;   ATOB =  !GBAR & DIR ;   BTOA =  !GBAR & !DIR ;   IA1 =  !(!B1 & BTOA) ;   IA2 =  !(!B2 & BTOA) ;   IA3 =  !(!B3 & BTOA) ;   IA4 =  !(!B4 & BTOA) ;   IA5 =  !(!B5 & BTOA) ;   IA6 =  !(!B6 & BTOA) ;   IA7 =  !(!B7 & BTOA) ;   IA8 =  !(!B8 & BTOA) ;   IB1 =  !(A1 & ATOB) ;   IB2 =  !(A2 & ATOB) ;   IB3 =  !(A3 & ATOB) ;   IB4 =  !(A4 & ATOB) ;   IB5 =  !(A5 & ATOB) ;   IB6 =  !(A6 & ATOB) ;   IB7 =  !(A7 & ATOB) ;   IB8 =  !(A8 & ATOB) ;');
+		this.ULS644LOG = new logicexp(['GBAR_I','DIR_I','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8'], ['GBAR','DIR','IA1','IA2','IA3','IA4','IA5','IA6','IA7','IA8','IB1','IB2','IB3','IB4','IB5','IB6','IB7','IB8','ATOB','BTOA']).Callback(this.$exe_ULS644LOG);
 		Connect(this.ULS644LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS644LOG.pins.DIR_I, this.pins.DIR_I);
 		Connect(this.ULS644LOG.pins.A1, A1);
@@ -15184,6 +20699,69 @@ class SN74LS644 extends Component {
 		Connect(IB6, this.pins.B6_B);
 		Connect(IB7, this.pins.B7_B);
 		Connect(IB8, this.pins.B8_B);
+	}
+	$exe_ULS644LOG() {
+		var GBAR_I, DIR_I, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, B5, B6, B7, B8; // Inputs
+		var GBAR, DIR, IA1, IA2, IA3, IA4, IA5, IA6, IA7, IA8, IB1, IB2, IB3, IB4, IB5, IB6, IB7, IB8, ATOB, BTOA; // Outputs
+		GBAR_I = this.ULS644LOG.pins.GBAR_I.GetValue();
+		DIR_I = this.ULS644LOG.pins.DIR_I.GetValue();
+		A1 = this.ULS644LOG.pins.A1.GetValue();
+		A2 = this.ULS644LOG.pins.A2.GetValue();
+		A3 = this.ULS644LOG.pins.A3.GetValue();
+		A4 = this.ULS644LOG.pins.A4.GetValue();
+		A5 = this.ULS644LOG.pins.A5.GetValue();
+		A6 = this.ULS644LOG.pins.A6.GetValue();
+		A7 = this.ULS644LOG.pins.A7.GetValue();
+		A8 = this.ULS644LOG.pins.A8.GetValue();
+		B1 = this.ULS644LOG.pins.B1.GetValue();
+		B2 = this.ULS644LOG.pins.B2.GetValue();
+		B3 = this.ULS644LOG.pins.B3.GetValue();
+		B4 = this.ULS644LOG.pins.B4.GetValue();
+		B5 = this.ULS644LOG.pins.B5.GetValue();
+		B6 = this.ULS644LOG.pins.B6.GetValue();
+		B7 = this.ULS644LOG.pins.B7.GetValue();
+		B8 = this.ULS644LOG.pins.B8.GetValue();
+		   GBAR =  GBAR_I ;
+		   DIR  =  DIR_I ;
+		   ATOB =  !GBAR & DIR ;
+		   BTOA =  !GBAR & !DIR ;
+		   IA1 =  !(!B1 & BTOA) ;
+		   IA2 =  !(!B2 & BTOA) ;
+		   IA3 =  !(!B3 & BTOA) ;
+		   IA4 =  !(!B4 & BTOA) ;
+		   IA5 =  !(!B5 & BTOA) ;
+		   IA6 =  !(!B6 & BTOA) ;
+		   IA7 =  !(!B7 & BTOA) ;
+		   IA8 =  !(!B8 & BTOA) ;
+		   IB1 =  !(A1 & ATOB) ;
+		   IB2 =  !(A2 & ATOB) ;
+		   IB3 =  !(A3 & ATOB) ;
+		   IB4 =  !(A4 & ATOB) ;
+		   IB5 =  !(A5 & ATOB) ;
+		   IB6 =  !(A6 & ATOB) ;
+		   IB7 =  !(A7 & ATOB) ;
+		   IB8 =  !(A8 & ATOB) ;
+		
+		this.ULS644LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS644LOG.pins.DIR.SetValue(DIR);
+		this.ULS644LOG.pins.IA1.SetValue(IA1);
+		this.ULS644LOG.pins.IA2.SetValue(IA2);
+		this.ULS644LOG.pins.IA3.SetValue(IA3);
+		this.ULS644LOG.pins.IA4.SetValue(IA4);
+		this.ULS644LOG.pins.IA5.SetValue(IA5);
+		this.ULS644LOG.pins.IA6.SetValue(IA6);
+		this.ULS644LOG.pins.IA7.SetValue(IA7);
+		this.ULS644LOG.pins.IA8.SetValue(IA8);
+		this.ULS644LOG.pins.IB1.SetValue(IB1);
+		this.ULS644LOG.pins.IB2.SetValue(IB2);
+		this.ULS644LOG.pins.IB3.SetValue(IB3);
+		this.ULS644LOG.pins.IB4.SetValue(IB4);
+		this.ULS644LOG.pins.IB5.SetValue(IB5);
+		this.ULS644LOG.pins.IB6.SetValue(IB6);
+		this.ULS644LOG.pins.IB7.SetValue(IB7);
+		this.ULS644LOG.pins.IB8.SetValue(IB8);
+		this.ULS644LOG.pins.ATOB.SetValue(ATOB);
+		this.ULS644LOG.pins.BTOA.SetValue(BTOA);
 	}
 }
 /**
@@ -15308,7 +20886,7 @@ class SN74LS646 extends Component {
 		Connect(this.U_NO_HYST.pins.OUT0, GBAR);
 		let DIR = new Pin();
 		Connect(this.U_NO_HYST.pins.OUT1, DIR);
-		this.ULS646LOG1 = new logicexp(['GBAR','DIR','CBA_I','SBA_I','CAB_I','SAB_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B','QA1','QA2','QA3','QA4','QA5','QA6','QA7','QA8','QB1','QB2','QB3','QB4','QB5','QB6','QB7','QB8'], ['CBA','SBA','CAB','SAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_OUT','A2_OUT','A3_OUT','A4_OUT','A5_OUT','A6_OUT','A7_OUT','A8_OUT','B1_OUT','B2_OUT','B3_OUT','B4_OUT','B5_OUT','B6_OUT','B7_OUT','B8_OUT','ENA','ENB'], ['SBABAR','SABBAR']).Logic('   CBA =  CBA_I ;   SBA =  SBA_I ;   SBABAR =  !SBA ;   CAB =  CAB_I ;   SAB =  SAB_I ;   SABBAR =  !SAB ;   ENA =  !DIR & !GBAR ;   ENB =   DIR & !GBAR ;   A1 =  A1_B ;   B1 =  B1_B ;   A2 =  A2_B ;   B2 =  B2_B ;   A3 =  A3_B ;   B3 =  B3_B ;   A4 =  A4_B ;   B4 =  B4_B ;   A5 =  A5_B ;   B5 =  B5_B ;   A6 =  A6_B ;   B6 =  B6_B ;   A7 =  A7_B ;   B7 =  B7_B ;   A8 =  A8_B ;   B8 =  B8_B ;   A1_OUT =  !((!B1 & SBABAR) | (SBA & QB1)) ;   B1_OUT =  !((!A1 & SABBAR) | (SAB & QA1)) ;   A2_OUT =  !((!B2 & SBABAR) | (SBA & QB2)) ;   B2_OUT =  !((!A2 & SABBAR) | (SAB & QA2)) ;   A3_OUT =  !((!B3 & SBABAR) | (SBA & QB3)) ;   B3_OUT =  !((!A3 & SABBAR) | (SAB & QA3)) ;   A4_OUT =  !((!B4 & SBABAR) | (SBA & QB4)) ;   B4_OUT =  !((!A4 & SABBAR) | (SAB & QA4)) ;   A5_OUT =  !((!B5 & SBABAR) | (SBA & QB5)) ;   B5_OUT =  !((!A5 & SABBAR) | (SAB & QA5)) ;   A6_OUT =  !((!B6 & SBABAR) | (SBA & QB6)) ;   B6_OUT =  !((!A6 & SABBAR) | (SAB & QA6)) ;   A7_OUT =  !((!B7 & SBABAR) | (SBA & QB7)) ;   B7_OUT =  !((!A7 & SABBAR) | (SAB & QA7)) ;   A8_OUT =  !((!B8 & SBABAR) | (SBA & QB8)) ;   B8_OUT =  !((!A8 & SABBAR) | (SAB & QA8)) ;');
+		this.ULS646LOG1 = new logicexp(['GBAR','DIR','CBA_I','SBA_I','CAB_I','SAB_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B','QA1','QA2','QA3','QA4','QA5','QA6','QA7','QA8','QB1','QB2','QB3','QB4','QB5','QB6','QB7','QB8'], ['CBA','SBA','CAB','SAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_OUT','A2_OUT','A3_OUT','A4_OUT','A5_OUT','A6_OUT','A7_OUT','A8_OUT','B1_OUT','B2_OUT','B3_OUT','B4_OUT','B5_OUT','B6_OUT','B7_OUT','B8_OUT','ENA','ENB']).Callback(this.$exe_ULS646LOG1);
 		Connect(this.ULS646LOG1.pins.GBAR, GBAR);
 		Connect(this.ULS646LOG1.pins.DIR, DIR);
 		Connect(this.ULS646LOG1.pins.CBA_I, this.pins.CBA_I);
@@ -15512,6 +21090,128 @@ class SN74LS646 extends Component {
 		Connect(B7_OUT, this.pins.B7_B);
 		Connect(B8_OUT, this.pins.B8_B);
 	}
+	$exe_ULS646LOG1() {
+		var SBABAR, SABBAR; // Temps
+		var GBAR, DIR, CBA_I, SBA_I, CAB_I, SAB_I, A1_B, A2_B, A3_B, A4_B, A5_B, A6_B, A7_B, A8_B, B1_B, B2_B, B3_B, B4_B, B5_B, B6_B, B7_B, B8_B, QA1, QA2, QA3, QA4, QA5, QA6, QA7, QA8, QB1, QB2, QB3, QB4, QB5, QB6, QB7, QB8; // Inputs
+		var CBA, SBA, CAB, SAB, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, B5, B6, B7, B8, A1_OUT, A2_OUT, A3_OUT, A4_OUT, A5_OUT, A6_OUT, A7_OUT, A8_OUT, B1_OUT, B2_OUT, B3_OUT, B4_OUT, B5_OUT, B6_OUT, B7_OUT, B8_OUT, ENA, ENB; // Outputs
+		GBAR = this.ULS646LOG1.pins.GBAR.GetValue();
+		DIR = this.ULS646LOG1.pins.DIR.GetValue();
+		CBA_I = this.ULS646LOG1.pins.CBA_I.GetValue();
+		SBA_I = this.ULS646LOG1.pins.SBA_I.GetValue();
+		CAB_I = this.ULS646LOG1.pins.CAB_I.GetValue();
+		SAB_I = this.ULS646LOG1.pins.SAB_I.GetValue();
+		A1_B = this.ULS646LOG1.pins.A1_B.GetValue();
+		A2_B = this.ULS646LOG1.pins.A2_B.GetValue();
+		A3_B = this.ULS646LOG1.pins.A3_B.GetValue();
+		A4_B = this.ULS646LOG1.pins.A4_B.GetValue();
+		A5_B = this.ULS646LOG1.pins.A5_B.GetValue();
+		A6_B = this.ULS646LOG1.pins.A6_B.GetValue();
+		A7_B = this.ULS646LOG1.pins.A7_B.GetValue();
+		A8_B = this.ULS646LOG1.pins.A8_B.GetValue();
+		B1_B = this.ULS646LOG1.pins.B1_B.GetValue();
+		B2_B = this.ULS646LOG1.pins.B2_B.GetValue();
+		B3_B = this.ULS646LOG1.pins.B3_B.GetValue();
+		B4_B = this.ULS646LOG1.pins.B4_B.GetValue();
+		B5_B = this.ULS646LOG1.pins.B5_B.GetValue();
+		B6_B = this.ULS646LOG1.pins.B6_B.GetValue();
+		B7_B = this.ULS646LOG1.pins.B7_B.GetValue();
+		B8_B = this.ULS646LOG1.pins.B8_B.GetValue();
+		QA1 = this.ULS646LOG1.pins.QA1.GetValue();
+		QA2 = this.ULS646LOG1.pins.QA2.GetValue();
+		QA3 = this.ULS646LOG1.pins.QA3.GetValue();
+		QA4 = this.ULS646LOG1.pins.QA4.GetValue();
+		QA5 = this.ULS646LOG1.pins.QA5.GetValue();
+		QA6 = this.ULS646LOG1.pins.QA6.GetValue();
+		QA7 = this.ULS646LOG1.pins.QA7.GetValue();
+		QA8 = this.ULS646LOG1.pins.QA8.GetValue();
+		QB1 = this.ULS646LOG1.pins.QB1.GetValue();
+		QB2 = this.ULS646LOG1.pins.QB2.GetValue();
+		QB3 = this.ULS646LOG1.pins.QB3.GetValue();
+		QB4 = this.ULS646LOG1.pins.QB4.GetValue();
+		QB5 = this.ULS646LOG1.pins.QB5.GetValue();
+		QB6 = this.ULS646LOG1.pins.QB6.GetValue();
+		QB7 = this.ULS646LOG1.pins.QB7.GetValue();
+		QB8 = this.ULS646LOG1.pins.QB8.GetValue();
+		   CBA =  CBA_I ;
+		   SBA =  SBA_I ;
+		   SBABAR =  !SBA ;
+		   CAB =  CAB_I ;
+		   SAB =  SAB_I ;
+		   SABBAR =  !SAB ;
+		   ENA =  !DIR & !GBAR ;
+		   ENB =   DIR & !GBAR ;
+		   A1 =  A1_B ;
+		   B1 =  B1_B ;
+		   A2 =  A2_B ;
+		   B2 =  B2_B ;
+		   A3 =  A3_B ;
+		   B3 =  B3_B ;
+		   A4 =  A4_B ;
+		   B4 =  B4_B ;
+		   A5 =  A5_B ;
+		   B5 =  B5_B ;
+		   A6 =  A6_B ;
+		   B6 =  B6_B ;
+		   A7 =  A7_B ;
+		   B7 =  B7_B ;
+		   A8 =  A8_B ;
+		   B8 =  B8_B ;
+		   A1_OUT =  !((!B1 & SBABAR) | (SBA & QB1)) ;
+		   B1_OUT =  !((!A1 & SABBAR) | (SAB & QA1)) ;
+		   A2_OUT =  !((!B2 & SBABAR) | (SBA & QB2)) ;
+		   B2_OUT =  !((!A2 & SABBAR) | (SAB & QA2)) ;
+		   A3_OUT =  !((!B3 & SBABAR) | (SBA & QB3)) ;
+		   B3_OUT =  !((!A3 & SABBAR) | (SAB & QA3)) ;
+		   A4_OUT =  !((!B4 & SBABAR) | (SBA & QB4)) ;
+		   B4_OUT =  !((!A4 & SABBAR) | (SAB & QA4)) ;
+		   A5_OUT =  !((!B5 & SBABAR) | (SBA & QB5)) ;
+		   B5_OUT =  !((!A5 & SABBAR) | (SAB & QA5)) ;
+		   A6_OUT =  !((!B6 & SBABAR) | (SBA & QB6)) ;
+		   B6_OUT =  !((!A6 & SABBAR) | (SAB & QA6)) ;
+		   A7_OUT =  !((!B7 & SBABAR) | (SBA & QB7)) ;
+		   B7_OUT =  !((!A7 & SABBAR) | (SAB & QA7)) ;
+		   A8_OUT =  !((!B8 & SBABAR) | (SBA & QB8)) ;
+		   B8_OUT =  !((!A8 & SABBAR) | (SAB & QA8)) ;
+		
+		this.ULS646LOG1.pins.CBA.SetValue(CBA);
+		this.ULS646LOG1.pins.SBA.SetValue(SBA);
+		this.ULS646LOG1.pins.CAB.SetValue(CAB);
+		this.ULS646LOG1.pins.SAB.SetValue(SAB);
+		this.ULS646LOG1.pins.A1.SetValue(A1);
+		this.ULS646LOG1.pins.A2.SetValue(A2);
+		this.ULS646LOG1.pins.A3.SetValue(A3);
+		this.ULS646LOG1.pins.A4.SetValue(A4);
+		this.ULS646LOG1.pins.A5.SetValue(A5);
+		this.ULS646LOG1.pins.A6.SetValue(A6);
+		this.ULS646LOG1.pins.A7.SetValue(A7);
+		this.ULS646LOG1.pins.A8.SetValue(A8);
+		this.ULS646LOG1.pins.B1.SetValue(B1);
+		this.ULS646LOG1.pins.B2.SetValue(B2);
+		this.ULS646LOG1.pins.B3.SetValue(B3);
+		this.ULS646LOG1.pins.B4.SetValue(B4);
+		this.ULS646LOG1.pins.B5.SetValue(B5);
+		this.ULS646LOG1.pins.B6.SetValue(B6);
+		this.ULS646LOG1.pins.B7.SetValue(B7);
+		this.ULS646LOG1.pins.B8.SetValue(B8);
+		this.ULS646LOG1.pins.A1_OUT.SetValue(A1_OUT);
+		this.ULS646LOG1.pins.A2_OUT.SetValue(A2_OUT);
+		this.ULS646LOG1.pins.A3_OUT.SetValue(A3_OUT);
+		this.ULS646LOG1.pins.A4_OUT.SetValue(A4_OUT);
+		this.ULS646LOG1.pins.A5_OUT.SetValue(A5_OUT);
+		this.ULS646LOG1.pins.A6_OUT.SetValue(A6_OUT);
+		this.ULS646LOG1.pins.A7_OUT.SetValue(A7_OUT);
+		this.ULS646LOG1.pins.A8_OUT.SetValue(A8_OUT);
+		this.ULS646LOG1.pins.B1_OUT.SetValue(B1_OUT);
+		this.ULS646LOG1.pins.B2_OUT.SetValue(B2_OUT);
+		this.ULS646LOG1.pins.B3_OUT.SetValue(B3_OUT);
+		this.ULS646LOG1.pins.B4_OUT.SetValue(B4_OUT);
+		this.ULS646LOG1.pins.B5_OUT.SetValue(B5_OUT);
+		this.ULS646LOG1.pins.B6_OUT.SetValue(B6_OUT);
+		this.ULS646LOG1.pins.B7_OUT.SetValue(B7_OUT);
+		this.ULS646LOG1.pins.B8_OUT.SetValue(B8_OUT);
+		this.ULS646LOG1.pins.ENA.SetValue(ENA);
+		this.ULS646LOG1.pins.ENB.SetValue(ENB);
+	}
 }
 /**
  * OCTAL BUS TRANSCEIVER_REGISTER WITH 3-STATE OUTPUTS
@@ -15550,7 +21250,7 @@ class SN74LS648 extends Component {
 		Connect(this.U_NO_HYST.pins.OUT0, GBAR);
 		let DIR = new Pin();
 		Connect(this.U_NO_HYST.pins.OUT1, DIR);
-		this.ULS648LOG1 = new logicexp(['GBAR','DIR','CBA_I','SBA_I','CAB_I','SAB_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B','QA1','QA2','QA3','QA4','QA5','QA6','QA7','QA8','QB1','QB2','QB3','QB4','QB5','QB6','QB7','QB8'], ['CBA','SBA','CAB','SAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_OUT','A2_OUT','A3_OUT','A4_OUT','A5_OUT','A6_OUT','A7_OUT','A8_OUT','B1_OUT','B2_OUT','B3_OUT','B4_OUT','B5_OUT','B6_OUT','B7_OUT','B8_OUT','ENA','ENB'], ['SBABAR','SABBAR']).Logic('   CBA =  CBA_I ;   SBA =  SBA_I ;   SBABAR =  !SBA ;   CAB =  CAB_I ;   SAB =  SAB_I ;   SABBAR =  !SAB ;   ENA =  !DIR & !GBAR ;   ENB =   DIR & !GBAR ;   A1 =  A1_B ;   B1 =  B1_B ;   A2 =  A2_B ;   B2 =  B2_B ;   A3 =  A3_B ;   B3 =  B3_B ;   A4 =  A4_B ;   B4 =  B4_B ;   A5 =  A5_B ;   B5 =  B5_B ;   A6 =  A6_B ;   B6 =  B6_B ;   A7 =  A7_B ;   B7 =  B7_B ;   A8 =  A8_B ;   B8 =  B8_B ;   A1_OUT =  !((B1 & SBABAR) | (SBA & QB1)) ;   B1_OUT =  !((A1 & SABBAR) | (SAB & QA1)) ;   A2_OUT =  !((B2 & SBABAR) | (SBA & QB2)) ;   B2_OUT =  !((A2 & SABBAR) | (SAB & QA2)) ;   A3_OUT =  !((B3 & SBABAR) | (SBA & QB3)) ;   B3_OUT =  !((A3 & SABBAR) | (SAB & QA3)) ;   A4_OUT =  !((B4 & SBABAR) | (SBA & QB4)) ;   B4_OUT =  !((A4 & SABBAR) | (SAB & QA4)) ;   A5_OUT =  !((B5 & SBABAR) | (SBA & QB5)) ;   B5_OUT =  !((A5 & SABBAR) | (SAB & QA5)) ;   A6_OUT =  !((B6 & SBABAR) | (SBA & QB6)) ;   B6_OUT =  !((A6 & SABBAR) | (SAB & QA6)) ;   A7_OUT =  !((B7 & SBABAR) | (SBA & QB7)) ;   B7_OUT =  !((A7 & SABBAR) | (SAB & QA7)) ;   A8_OUT =  !((B8 & SBABAR) | (SBA & QB8)) ;   B8_OUT =  !((A8 & SABBAR) | (SAB & QA8)) ;');
+		this.ULS648LOG1 = new logicexp(['GBAR','DIR','CBA_I','SBA_I','CAB_I','SAB_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B','QA1','QA2','QA3','QA4','QA5','QA6','QA7','QA8','QB1','QB2','QB3','QB4','QB5','QB6','QB7','QB8'], ['CBA','SBA','CAB','SAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_OUT','A2_OUT','A3_OUT','A4_OUT','A5_OUT','A6_OUT','A7_OUT','A8_OUT','B1_OUT','B2_OUT','B3_OUT','B4_OUT','B5_OUT','B6_OUT','B7_OUT','B8_OUT','ENA','ENB']).Callback(this.$exe_ULS648LOG1);
 		Connect(this.ULS648LOG1.pins.GBAR, GBAR);
 		Connect(this.ULS648LOG1.pins.DIR, DIR);
 		Connect(this.ULS648LOG1.pins.CBA_I, this.pins.CBA_I);
@@ -15753,6 +21453,128 @@ class SN74LS648 extends Component {
 		Connect(B6_OUT, this.pins.B6_B);
 		Connect(B7_OUT, this.pins.B7_B);
 		Connect(B8_OUT, this.pins.B8_B);
+	}
+	$exe_ULS648LOG1() {
+		var SBABAR, SABBAR; // Temps
+		var GBAR, DIR, CBA_I, SBA_I, CAB_I, SAB_I, A1_B, A2_B, A3_B, A4_B, A5_B, A6_B, A7_B, A8_B, B1_B, B2_B, B3_B, B4_B, B5_B, B6_B, B7_B, B8_B, QA1, QA2, QA3, QA4, QA5, QA6, QA7, QA8, QB1, QB2, QB3, QB4, QB5, QB6, QB7, QB8; // Inputs
+		var CBA, SBA, CAB, SAB, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, B5, B6, B7, B8, A1_OUT, A2_OUT, A3_OUT, A4_OUT, A5_OUT, A6_OUT, A7_OUT, A8_OUT, B1_OUT, B2_OUT, B3_OUT, B4_OUT, B5_OUT, B6_OUT, B7_OUT, B8_OUT, ENA, ENB; // Outputs
+		GBAR = this.ULS648LOG1.pins.GBAR.GetValue();
+		DIR = this.ULS648LOG1.pins.DIR.GetValue();
+		CBA_I = this.ULS648LOG1.pins.CBA_I.GetValue();
+		SBA_I = this.ULS648LOG1.pins.SBA_I.GetValue();
+		CAB_I = this.ULS648LOG1.pins.CAB_I.GetValue();
+		SAB_I = this.ULS648LOG1.pins.SAB_I.GetValue();
+		A1_B = this.ULS648LOG1.pins.A1_B.GetValue();
+		A2_B = this.ULS648LOG1.pins.A2_B.GetValue();
+		A3_B = this.ULS648LOG1.pins.A3_B.GetValue();
+		A4_B = this.ULS648LOG1.pins.A4_B.GetValue();
+		A5_B = this.ULS648LOG1.pins.A5_B.GetValue();
+		A6_B = this.ULS648LOG1.pins.A6_B.GetValue();
+		A7_B = this.ULS648LOG1.pins.A7_B.GetValue();
+		A8_B = this.ULS648LOG1.pins.A8_B.GetValue();
+		B1_B = this.ULS648LOG1.pins.B1_B.GetValue();
+		B2_B = this.ULS648LOG1.pins.B2_B.GetValue();
+		B3_B = this.ULS648LOG1.pins.B3_B.GetValue();
+		B4_B = this.ULS648LOG1.pins.B4_B.GetValue();
+		B5_B = this.ULS648LOG1.pins.B5_B.GetValue();
+		B6_B = this.ULS648LOG1.pins.B6_B.GetValue();
+		B7_B = this.ULS648LOG1.pins.B7_B.GetValue();
+		B8_B = this.ULS648LOG1.pins.B8_B.GetValue();
+		QA1 = this.ULS648LOG1.pins.QA1.GetValue();
+		QA2 = this.ULS648LOG1.pins.QA2.GetValue();
+		QA3 = this.ULS648LOG1.pins.QA3.GetValue();
+		QA4 = this.ULS648LOG1.pins.QA4.GetValue();
+		QA5 = this.ULS648LOG1.pins.QA5.GetValue();
+		QA6 = this.ULS648LOG1.pins.QA6.GetValue();
+		QA7 = this.ULS648LOG1.pins.QA7.GetValue();
+		QA8 = this.ULS648LOG1.pins.QA8.GetValue();
+		QB1 = this.ULS648LOG1.pins.QB1.GetValue();
+		QB2 = this.ULS648LOG1.pins.QB2.GetValue();
+		QB3 = this.ULS648LOG1.pins.QB3.GetValue();
+		QB4 = this.ULS648LOG1.pins.QB4.GetValue();
+		QB5 = this.ULS648LOG1.pins.QB5.GetValue();
+		QB6 = this.ULS648LOG1.pins.QB6.GetValue();
+		QB7 = this.ULS648LOG1.pins.QB7.GetValue();
+		QB8 = this.ULS648LOG1.pins.QB8.GetValue();
+		   CBA =  CBA_I ;
+		   SBA =  SBA_I ;
+		   SBABAR =  !SBA ;
+		   CAB =  CAB_I ;
+		   SAB =  SAB_I ;
+		   SABBAR =  !SAB ;
+		   ENA =  !DIR & !GBAR ;
+		   ENB =   DIR & !GBAR ;
+		   A1 =  A1_B ;
+		   B1 =  B1_B ;
+		   A2 =  A2_B ;
+		   B2 =  B2_B ;
+		   A3 =  A3_B ;
+		   B3 =  B3_B ;
+		   A4 =  A4_B ;
+		   B4 =  B4_B ;
+		   A5 =  A5_B ;
+		   B5 =  B5_B ;
+		   A6 =  A6_B ;
+		   B6 =  B6_B ;
+		   A7 =  A7_B ;
+		   B7 =  B7_B ;
+		   A8 =  A8_B ;
+		   B8 =  B8_B ;
+		   A1_OUT =  !((B1 & SBABAR) | (SBA & QB1)) ;
+		   B1_OUT =  !((A1 & SABBAR) | (SAB & QA1)) ;
+		   A2_OUT =  !((B2 & SBABAR) | (SBA & QB2)) ;
+		   B2_OUT =  !((A2 & SABBAR) | (SAB & QA2)) ;
+		   A3_OUT =  !((B3 & SBABAR) | (SBA & QB3)) ;
+		   B3_OUT =  !((A3 & SABBAR) | (SAB & QA3)) ;
+		   A4_OUT =  !((B4 & SBABAR) | (SBA & QB4)) ;
+		   B4_OUT =  !((A4 & SABBAR) | (SAB & QA4)) ;
+		   A5_OUT =  !((B5 & SBABAR) | (SBA & QB5)) ;
+		   B5_OUT =  !((A5 & SABBAR) | (SAB & QA5)) ;
+		   A6_OUT =  !((B6 & SBABAR) | (SBA & QB6)) ;
+		   B6_OUT =  !((A6 & SABBAR) | (SAB & QA6)) ;
+		   A7_OUT =  !((B7 & SBABAR) | (SBA & QB7)) ;
+		   B7_OUT =  !((A7 & SABBAR) | (SAB & QA7)) ;
+		   A8_OUT =  !((B8 & SBABAR) | (SBA & QB8)) ;
+		   B8_OUT =  !((A8 & SABBAR) | (SAB & QA8)) ;
+		
+		this.ULS648LOG1.pins.CBA.SetValue(CBA);
+		this.ULS648LOG1.pins.SBA.SetValue(SBA);
+		this.ULS648LOG1.pins.CAB.SetValue(CAB);
+		this.ULS648LOG1.pins.SAB.SetValue(SAB);
+		this.ULS648LOG1.pins.A1.SetValue(A1);
+		this.ULS648LOG1.pins.A2.SetValue(A2);
+		this.ULS648LOG1.pins.A3.SetValue(A3);
+		this.ULS648LOG1.pins.A4.SetValue(A4);
+		this.ULS648LOG1.pins.A5.SetValue(A5);
+		this.ULS648LOG1.pins.A6.SetValue(A6);
+		this.ULS648LOG1.pins.A7.SetValue(A7);
+		this.ULS648LOG1.pins.A8.SetValue(A8);
+		this.ULS648LOG1.pins.B1.SetValue(B1);
+		this.ULS648LOG1.pins.B2.SetValue(B2);
+		this.ULS648LOG1.pins.B3.SetValue(B3);
+		this.ULS648LOG1.pins.B4.SetValue(B4);
+		this.ULS648LOG1.pins.B5.SetValue(B5);
+		this.ULS648LOG1.pins.B6.SetValue(B6);
+		this.ULS648LOG1.pins.B7.SetValue(B7);
+		this.ULS648LOG1.pins.B8.SetValue(B8);
+		this.ULS648LOG1.pins.A1_OUT.SetValue(A1_OUT);
+		this.ULS648LOG1.pins.A2_OUT.SetValue(A2_OUT);
+		this.ULS648LOG1.pins.A3_OUT.SetValue(A3_OUT);
+		this.ULS648LOG1.pins.A4_OUT.SetValue(A4_OUT);
+		this.ULS648LOG1.pins.A5_OUT.SetValue(A5_OUT);
+		this.ULS648LOG1.pins.A6_OUT.SetValue(A6_OUT);
+		this.ULS648LOG1.pins.A7_OUT.SetValue(A7_OUT);
+		this.ULS648LOG1.pins.A8_OUT.SetValue(A8_OUT);
+		this.ULS648LOG1.pins.B1_OUT.SetValue(B1_OUT);
+		this.ULS648LOG1.pins.B2_OUT.SetValue(B2_OUT);
+		this.ULS648LOG1.pins.B3_OUT.SetValue(B3_OUT);
+		this.ULS648LOG1.pins.B4_OUT.SetValue(B4_OUT);
+		this.ULS648LOG1.pins.B5_OUT.SetValue(B5_OUT);
+		this.ULS648LOG1.pins.B6_OUT.SetValue(B6_OUT);
+		this.ULS648LOG1.pins.B7_OUT.SetValue(B7_OUT);
+		this.ULS648LOG1.pins.B8_OUT.SetValue(B8_OUT);
+		this.ULS648LOG1.pins.ENA.SetValue(ENA);
+		this.ULS648LOG1.pins.ENB.SetValue(ENB);
 	}
 }
 /**
@@ -15983,7 +21805,7 @@ class SN74LS651 extends Component {
 		Connect(this.U6.pins.OUT5, B6_IO);
 		Connect(this.U6.pins.OUT6, B7_IO);
 		Connect(this.U6.pins.OUT7, B8_IO);
-		this.ULS651LOG = new logicexp(['GBABAR_I','GAB_I','CBA_I','SBA_I','CAB_I','SAB_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B','QA1','QA2','QA3','QA4','QA5','QA6','QA7','QA8','QB1','QB2','QB3','QB4','QB5','QB6','QB7','QB8'], ['GBABAR','GAB','CBA','SBA','CAB','SAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_O','A2_O','A3_O','A4_O','A5_O','A6_O','A7_O','A8_O','B1_O','B2_O','B3_O','B4_O','B5_O','B6_O','B7_O','B8_O','IGAB','IGBABAR'], ['ISAB','ISBA']).Logic('   GBABAR =  GBABAR_I ;   GAB =  GAB_I ;   CBA =  CBA_I ;   SBA =  SBA_I ;   CAB =  CAB_I ;   SAB =  SAB_I ;   A1 =  A1_B ;   A2 =  A2_B ;   A3 =  A3_B ;   A4 =  A4_B ;   A5 =  A5_B ;   A6 =  A6_B ;   A7 =  A7_B ;   A8 =  A8_B ;   B1 =  B1_B ;   B2 =  B2_B ;   B3 =  B3_B ;   B4 =  B4_B ;   B5 =  B5_B ;   B6 =  B6_B ;   B7 =  B7_B ;   B8 =  B8_B ;   ISAB =  !SAB ;   ISBA =  !SBA ;   IGAB =  !GAB ;   IGBABAR =  !GBABAR ;   A1_O =  !((SBA & QA1) | (ISBA & B1)) ;   A2_O =  !((SBA & QA2) | (ISBA & B2)) ;   A3_O =  !((SBA & QA3) | (ISBA & B3)) ;   A4_O =  !((SBA & QA4) | (ISBA & B4)) ;   A5_O =  !((SBA & QA5) | (ISBA & B5)) ;   A6_O =  !((SBA & QA6) | (ISBA & B6)) ;   A7_O =  !((SBA & QA7) | (ISBA & B7)) ;   A8_O =  !((SBA & QA8) | (ISBA & B8)) ;   B1_O =  !((SAB & QB1) | (ISAB & A1)) ;   B2_O =  !((SAB & QB2) | (ISAB & A2)) ;   B3_O =  !((SAB & QB3) | (ISAB & A3)) ;   B4_O =  !((SAB & QB4) | (ISAB & A4)) ;   B5_O =  !((SAB & QB5) | (ISAB & A5)) ;   B6_O =  !((SAB & QB6) | (ISAB & A6)) ;   B7_O =  !((SAB & QB7) | (ISAB & A7)) ;   B8_O =  !((SAB & QB8) | (ISAB & A8)) ;');
+		this.ULS651LOG = new logicexp(['GBABAR_I','GAB_I','CBA_I','SBA_I','CAB_I','SAB_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B','QA1','QA2','QA3','QA4','QA5','QA6','QA7','QA8','QB1','QB2','QB3','QB4','QB5','QB6','QB7','QB8'], ['GBABAR','GAB','CBA','SBA','CAB','SAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_O','A2_O','A3_O','A4_O','A5_O','A6_O','A7_O','A8_O','B1_O','B2_O','B3_O','B4_O','B5_O','B6_O','B7_O','B8_O','IGAB','IGBABAR']).Callback(this.$exe_ULS651LOG);
 		Connect(this.ULS651LOG.pins.GBABAR_I, this.pins.GBABAR_I);
 		Connect(this.ULS651LOG.pins.GAB_I, this.pins.GAB_I);
 		Connect(this.ULS651LOG.pins.CBA_I, this.pins.CBA_I);
@@ -16080,6 +21902,132 @@ class SN74LS651 extends Component {
 		Connect(B6_IO, this.pins.B6_B);
 		Connect(B7_IO, this.pins.B7_B);
 		Connect(B8_IO, this.pins.B8_B);
+	}
+	$exe_ULS651LOG() {
+		var ISAB, ISBA; // Temps
+		var GBABAR_I, GAB_I, CBA_I, SBA_I, CAB_I, SAB_I, A1_B, A2_B, A3_B, A4_B, A5_B, A6_B, A7_B, A8_B, B1_B, B2_B, B3_B, B4_B, B5_B, B6_B, B7_B, B8_B, QA1, QA2, QA3, QA4, QA5, QA6, QA7, QA8, QB1, QB2, QB3, QB4, QB5, QB6, QB7, QB8; // Inputs
+		var GBABAR, GAB, CBA, SBA, CAB, SAB, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, B5, B6, B7, B8, A1_O, A2_O, A3_O, A4_O, A5_O, A6_O, A7_O, A8_O, B1_O, B2_O, B3_O, B4_O, B5_O, B6_O, B7_O, B8_O, IGAB, IGBABAR; // Outputs
+		GBABAR_I = this.ULS651LOG.pins.GBABAR_I.GetValue();
+		GAB_I = this.ULS651LOG.pins.GAB_I.GetValue();
+		CBA_I = this.ULS651LOG.pins.CBA_I.GetValue();
+		SBA_I = this.ULS651LOG.pins.SBA_I.GetValue();
+		CAB_I = this.ULS651LOG.pins.CAB_I.GetValue();
+		SAB_I = this.ULS651LOG.pins.SAB_I.GetValue();
+		A1_B = this.ULS651LOG.pins.A1_B.GetValue();
+		A2_B = this.ULS651LOG.pins.A2_B.GetValue();
+		A3_B = this.ULS651LOG.pins.A3_B.GetValue();
+		A4_B = this.ULS651LOG.pins.A4_B.GetValue();
+		A5_B = this.ULS651LOG.pins.A5_B.GetValue();
+		A6_B = this.ULS651LOG.pins.A6_B.GetValue();
+		A7_B = this.ULS651LOG.pins.A7_B.GetValue();
+		A8_B = this.ULS651LOG.pins.A8_B.GetValue();
+		B1_B = this.ULS651LOG.pins.B1_B.GetValue();
+		B2_B = this.ULS651LOG.pins.B2_B.GetValue();
+		B3_B = this.ULS651LOG.pins.B3_B.GetValue();
+		B4_B = this.ULS651LOG.pins.B4_B.GetValue();
+		B5_B = this.ULS651LOG.pins.B5_B.GetValue();
+		B6_B = this.ULS651LOG.pins.B6_B.GetValue();
+		B7_B = this.ULS651LOG.pins.B7_B.GetValue();
+		B8_B = this.ULS651LOG.pins.B8_B.GetValue();
+		QA1 = this.ULS651LOG.pins.QA1.GetValue();
+		QA2 = this.ULS651LOG.pins.QA2.GetValue();
+		QA3 = this.ULS651LOG.pins.QA3.GetValue();
+		QA4 = this.ULS651LOG.pins.QA4.GetValue();
+		QA5 = this.ULS651LOG.pins.QA5.GetValue();
+		QA6 = this.ULS651LOG.pins.QA6.GetValue();
+		QA7 = this.ULS651LOG.pins.QA7.GetValue();
+		QA8 = this.ULS651LOG.pins.QA8.GetValue();
+		QB1 = this.ULS651LOG.pins.QB1.GetValue();
+		QB2 = this.ULS651LOG.pins.QB2.GetValue();
+		QB3 = this.ULS651LOG.pins.QB3.GetValue();
+		QB4 = this.ULS651LOG.pins.QB4.GetValue();
+		QB5 = this.ULS651LOG.pins.QB5.GetValue();
+		QB6 = this.ULS651LOG.pins.QB6.GetValue();
+		QB7 = this.ULS651LOG.pins.QB7.GetValue();
+		QB8 = this.ULS651LOG.pins.QB8.GetValue();
+		   GBABAR =  GBABAR_I ;
+		   GAB =  GAB_I ;
+		   CBA =  CBA_I ;
+		   SBA =  SBA_I ;
+		   CAB =  CAB_I ;
+		   SAB =  SAB_I ;
+		   A1 =  A1_B ;
+		   A2 =  A2_B ;
+		   A3 =  A3_B ;
+		   A4 =  A4_B ;
+		   A5 =  A5_B ;
+		   A6 =  A6_B ;
+		   A7 =  A7_B ;
+		   A8 =  A8_B ;
+		   B1 =  B1_B ;
+		   B2 =  B2_B ;
+		   B3 =  B3_B ;
+		   B4 =  B4_B ;
+		   B5 =  B5_B ;
+		   B6 =  B6_B ;
+		   B7 =  B7_B ;
+		   B8 =  B8_B ;
+		   ISAB =  !SAB ;
+		   ISBA =  !SBA ;
+		   IGAB =  !GAB ;
+		   IGBABAR =  !GBABAR ;
+		   A1_O =  !((SBA & QA1) | (ISBA & B1)) ;
+		   A2_O =  !((SBA & QA2) | (ISBA & B2)) ;
+		   A3_O =  !((SBA & QA3) | (ISBA & B3)) ;
+		   A4_O =  !((SBA & QA4) | (ISBA & B4)) ;
+		   A5_O =  !((SBA & QA5) | (ISBA & B5)) ;
+		   A6_O =  !((SBA & QA6) | (ISBA & B6)) ;
+		   A7_O =  !((SBA & QA7) | (ISBA & B7)) ;
+		   A8_O =  !((SBA & QA8) | (ISBA & B8)) ;
+		   B1_O =  !((SAB & QB1) | (ISAB & A1)) ;
+		   B2_O =  !((SAB & QB2) | (ISAB & A2)) ;
+		   B3_O =  !((SAB & QB3) | (ISAB & A3)) ;
+		   B4_O =  !((SAB & QB4) | (ISAB & A4)) ;
+		   B5_O =  !((SAB & QB5) | (ISAB & A5)) ;
+		   B6_O =  !((SAB & QB6) | (ISAB & A6)) ;
+		   B7_O =  !((SAB & QB7) | (ISAB & A7)) ;
+		   B8_O =  !((SAB & QB8) | (ISAB & A8)) ;
+		
+		this.ULS651LOG.pins.GBABAR.SetValue(GBABAR);
+		this.ULS651LOG.pins.GAB.SetValue(GAB);
+		this.ULS651LOG.pins.CBA.SetValue(CBA);
+		this.ULS651LOG.pins.SBA.SetValue(SBA);
+		this.ULS651LOG.pins.CAB.SetValue(CAB);
+		this.ULS651LOG.pins.SAB.SetValue(SAB);
+		this.ULS651LOG.pins.A1.SetValue(A1);
+		this.ULS651LOG.pins.A2.SetValue(A2);
+		this.ULS651LOG.pins.A3.SetValue(A3);
+		this.ULS651LOG.pins.A4.SetValue(A4);
+		this.ULS651LOG.pins.A5.SetValue(A5);
+		this.ULS651LOG.pins.A6.SetValue(A6);
+		this.ULS651LOG.pins.A7.SetValue(A7);
+		this.ULS651LOG.pins.A8.SetValue(A8);
+		this.ULS651LOG.pins.B1.SetValue(B1);
+		this.ULS651LOG.pins.B2.SetValue(B2);
+		this.ULS651LOG.pins.B3.SetValue(B3);
+		this.ULS651LOG.pins.B4.SetValue(B4);
+		this.ULS651LOG.pins.B5.SetValue(B5);
+		this.ULS651LOG.pins.B6.SetValue(B6);
+		this.ULS651LOG.pins.B7.SetValue(B7);
+		this.ULS651LOG.pins.B8.SetValue(B8);
+		this.ULS651LOG.pins.A1_O.SetValue(A1_O);
+		this.ULS651LOG.pins.A2_O.SetValue(A2_O);
+		this.ULS651LOG.pins.A3_O.SetValue(A3_O);
+		this.ULS651LOG.pins.A4_O.SetValue(A4_O);
+		this.ULS651LOG.pins.A5_O.SetValue(A5_O);
+		this.ULS651LOG.pins.A6_O.SetValue(A6_O);
+		this.ULS651LOG.pins.A7_O.SetValue(A7_O);
+		this.ULS651LOG.pins.A8_O.SetValue(A8_O);
+		this.ULS651LOG.pins.B1_O.SetValue(B1_O);
+		this.ULS651LOG.pins.B2_O.SetValue(B2_O);
+		this.ULS651LOG.pins.B3_O.SetValue(B3_O);
+		this.ULS651LOG.pins.B4_O.SetValue(B4_O);
+		this.ULS651LOG.pins.B5_O.SetValue(B5_O);
+		this.ULS651LOG.pins.B6_O.SetValue(B6_O);
+		this.ULS651LOG.pins.B7_O.SetValue(B7_O);
+		this.ULS651LOG.pins.B8_O.SetValue(B8_O);
+		this.ULS651LOG.pins.IGAB.SetValue(IGAB);
+		this.ULS651LOG.pins.IGBABAR.SetValue(IGBABAR);
 	}
 }
 /**
@@ -16310,7 +22258,7 @@ class SN74LS652 extends Component {
 		Connect(this.U6.pins.OUT5, B6_IO);
 		Connect(this.U6.pins.OUT6, B7_IO);
 		Connect(this.U6.pins.OUT7, B8_IO);
-		this.ULS652LOG = new logicexp(['GBABAR_I','GAB_I','CBA_I','SBA_I','CAB_I','SAB_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B','QA1BAR','QA2BAR','QA3BAR','QA4BAR','QA5BAR','QA6BAR','QA7BAR','QA8BAR','QB1BAR','QB2BAR','QB3BAR','QB4BAR','QB5BAR','QB6BAR','QB7BAR','QB8BAR'], ['GBABAR','GAB','CBA','SBA','CAB','SAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_O','A2_O','A3_O','A4_O','A5_O','A6_O','A7_O','A8_O','B1_O','B2_O','B3_O','B4_O','B5_O','B6_O','B7_O','B8_O','IGAB','IGBABAR'], ['ISAB','ISBA']).Logic('   GBABAR =  GBABAR_I ;   GAB =  GAB_I ;   CBA =  CBA_I ;   SBA =  SBA_I ;   CAB =  CAB_I ;   SAB =  SAB_I ;   A1 =  A1_B ;   A2 =  A2_B ;   A3 =  A3_B ;   A4 =  A4_B ;   A5 =  A5_B ;   A6 =  A6_B ;   A7 =  A7_B ;   A8 =  A8_B ;   B1 =  B1_B ;   B2 =  B2_B ;   B3 =  B3_B ;   B4 =  B4_B ;   B5 =  B5_B ;   B6 =  B6_B ;   B7 =  B7_B ;   B8 =  B8_B ;   ISAB =  !SAB ;   ISBA =  !SBA ;   IGAB =  !GAB ;   IGBABAR =  !GBABAR ;   A1_O =  !((SBA & QA1BAR) | (ISBA & !B1)) ;   A2_O =  !((SBA & QA2BAR) | (ISBA & !B2)) ;   A3_O =  !((SBA & QA3BAR) | (ISBA & !B3)) ;   A4_O =  !((SBA & QA4BAR) | (ISBA & !B4)) ;   A5_O =  !((SBA & QA5BAR) | (ISBA & !B5)) ;   A6_O =  !((SBA & QA6BAR) | (ISBA & !B6)) ;   A7_O =  !((SBA & QA7BAR) | (ISBA & !B7)) ;   A8_O =  !((SBA & QA8BAR) | (ISBA & !B8)) ;   B1_O =  !((SAB & QB1BAR) | (ISAB & !A1)) ;   B2_O =  !((SAB & QB2BAR) | (ISAB & !A2)) ;   B3_O =  !((SAB & QB3BAR) | (ISAB & !A3)) ;   B4_O =  !((SAB & QB4BAR) | (ISAB & !A4)) ;   B5_O =  !((SAB & QB5BAR) | (ISAB & !A5)) ;   B6_O =  !((SAB & QB6BAR) | (ISAB & !A6)) ;   B7_O =  !((SAB & QB7BAR) | (ISAB & !A7)) ;   B8_O =  !((SAB & QB8BAR) | (ISAB & !A8)) ;');
+		this.ULS652LOG = new logicexp(['GBABAR_I','GAB_I','CBA_I','SBA_I','CAB_I','SAB_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B','QA1BAR','QA2BAR','QA3BAR','QA4BAR','QA5BAR','QA6BAR','QA7BAR','QA8BAR','QB1BAR','QB2BAR','QB3BAR','QB4BAR','QB5BAR','QB6BAR','QB7BAR','QB8BAR'], ['GBABAR','GAB','CBA','SBA','CAB','SAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_O','A2_O','A3_O','A4_O','A5_O','A6_O','A7_O','A8_O','B1_O','B2_O','B3_O','B4_O','B5_O','B6_O','B7_O','B8_O','IGAB','IGBABAR']).Callback(this.$exe_ULS652LOG);
 		Connect(this.ULS652LOG.pins.GBABAR_I, this.pins.GBABAR_I);
 		Connect(this.ULS652LOG.pins.GAB_I, this.pins.GAB_I);
 		Connect(this.ULS652LOG.pins.CBA_I, this.pins.CBA_I);
@@ -16407,6 +22355,132 @@ class SN74LS652 extends Component {
 		Connect(B6_IO, this.pins.B6_B);
 		Connect(B7_IO, this.pins.B7_B);
 		Connect(B8_IO, this.pins.B8_B);
+	}
+	$exe_ULS652LOG() {
+		var ISAB, ISBA; // Temps
+		var GBABAR_I, GAB_I, CBA_I, SBA_I, CAB_I, SAB_I, A1_B, A2_B, A3_B, A4_B, A5_B, A6_B, A7_B, A8_B, B1_B, B2_B, B3_B, B4_B, B5_B, B6_B, B7_B, B8_B, QA1BAR, QA2BAR, QA3BAR, QA4BAR, QA5BAR, QA6BAR, QA7BAR, QA8BAR, QB1BAR, QB2BAR, QB3BAR, QB4BAR, QB5BAR, QB6BAR, QB7BAR, QB8BAR; // Inputs
+		var GBABAR, GAB, CBA, SBA, CAB, SAB, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, B5, B6, B7, B8, A1_O, A2_O, A3_O, A4_O, A5_O, A6_O, A7_O, A8_O, B1_O, B2_O, B3_O, B4_O, B5_O, B6_O, B7_O, B8_O, IGAB, IGBABAR; // Outputs
+		GBABAR_I = this.ULS652LOG.pins.GBABAR_I.GetValue();
+		GAB_I = this.ULS652LOG.pins.GAB_I.GetValue();
+		CBA_I = this.ULS652LOG.pins.CBA_I.GetValue();
+		SBA_I = this.ULS652LOG.pins.SBA_I.GetValue();
+		CAB_I = this.ULS652LOG.pins.CAB_I.GetValue();
+		SAB_I = this.ULS652LOG.pins.SAB_I.GetValue();
+		A1_B = this.ULS652LOG.pins.A1_B.GetValue();
+		A2_B = this.ULS652LOG.pins.A2_B.GetValue();
+		A3_B = this.ULS652LOG.pins.A3_B.GetValue();
+		A4_B = this.ULS652LOG.pins.A4_B.GetValue();
+		A5_B = this.ULS652LOG.pins.A5_B.GetValue();
+		A6_B = this.ULS652LOG.pins.A6_B.GetValue();
+		A7_B = this.ULS652LOG.pins.A7_B.GetValue();
+		A8_B = this.ULS652LOG.pins.A8_B.GetValue();
+		B1_B = this.ULS652LOG.pins.B1_B.GetValue();
+		B2_B = this.ULS652LOG.pins.B2_B.GetValue();
+		B3_B = this.ULS652LOG.pins.B3_B.GetValue();
+		B4_B = this.ULS652LOG.pins.B4_B.GetValue();
+		B5_B = this.ULS652LOG.pins.B5_B.GetValue();
+		B6_B = this.ULS652LOG.pins.B6_B.GetValue();
+		B7_B = this.ULS652LOG.pins.B7_B.GetValue();
+		B8_B = this.ULS652LOG.pins.B8_B.GetValue();
+		QA1BAR = this.ULS652LOG.pins.QA1BAR.GetValue();
+		QA2BAR = this.ULS652LOG.pins.QA2BAR.GetValue();
+		QA3BAR = this.ULS652LOG.pins.QA3BAR.GetValue();
+		QA4BAR = this.ULS652LOG.pins.QA4BAR.GetValue();
+		QA5BAR = this.ULS652LOG.pins.QA5BAR.GetValue();
+		QA6BAR = this.ULS652LOG.pins.QA6BAR.GetValue();
+		QA7BAR = this.ULS652LOG.pins.QA7BAR.GetValue();
+		QA8BAR = this.ULS652LOG.pins.QA8BAR.GetValue();
+		QB1BAR = this.ULS652LOG.pins.QB1BAR.GetValue();
+		QB2BAR = this.ULS652LOG.pins.QB2BAR.GetValue();
+		QB3BAR = this.ULS652LOG.pins.QB3BAR.GetValue();
+		QB4BAR = this.ULS652LOG.pins.QB4BAR.GetValue();
+		QB5BAR = this.ULS652LOG.pins.QB5BAR.GetValue();
+		QB6BAR = this.ULS652LOG.pins.QB6BAR.GetValue();
+		QB7BAR = this.ULS652LOG.pins.QB7BAR.GetValue();
+		QB8BAR = this.ULS652LOG.pins.QB8BAR.GetValue();
+		   GBABAR =  GBABAR_I ;
+		   GAB =  GAB_I ;
+		   CBA =  CBA_I ;
+		   SBA =  SBA_I ;
+		   CAB =  CAB_I ;
+		   SAB =  SAB_I ;
+		   A1 =  A1_B ;
+		   A2 =  A2_B ;
+		   A3 =  A3_B ;
+		   A4 =  A4_B ;
+		   A5 =  A5_B ;
+		   A6 =  A6_B ;
+		   A7 =  A7_B ;
+		   A8 =  A8_B ;
+		   B1 =  B1_B ;
+		   B2 =  B2_B ;
+		   B3 =  B3_B ;
+		   B4 =  B4_B ;
+		   B5 =  B5_B ;
+		   B6 =  B6_B ;
+		   B7 =  B7_B ;
+		   B8 =  B8_B ;
+		   ISAB =  !SAB ;
+		   ISBA =  !SBA ;
+		   IGAB =  !GAB ;
+		   IGBABAR =  !GBABAR ;
+		   A1_O =  !((SBA & QA1BAR) | (ISBA & !B1)) ;
+		   A2_O =  !((SBA & QA2BAR) | (ISBA & !B2)) ;
+		   A3_O =  !((SBA & QA3BAR) | (ISBA & !B3)) ;
+		   A4_O =  !((SBA & QA4BAR) | (ISBA & !B4)) ;
+		   A5_O =  !((SBA & QA5BAR) | (ISBA & !B5)) ;
+		   A6_O =  !((SBA & QA6BAR) | (ISBA & !B6)) ;
+		   A7_O =  !((SBA & QA7BAR) | (ISBA & !B7)) ;
+		   A8_O =  !((SBA & QA8BAR) | (ISBA & !B8)) ;
+		   B1_O =  !((SAB & QB1BAR) | (ISAB & !A1)) ;
+		   B2_O =  !((SAB & QB2BAR) | (ISAB & !A2)) ;
+		   B3_O =  !((SAB & QB3BAR) | (ISAB & !A3)) ;
+		   B4_O =  !((SAB & QB4BAR) | (ISAB & !A4)) ;
+		   B5_O =  !((SAB & QB5BAR) | (ISAB & !A5)) ;
+		   B6_O =  !((SAB & QB6BAR) | (ISAB & !A6)) ;
+		   B7_O =  !((SAB & QB7BAR) | (ISAB & !A7)) ;
+		   B8_O =  !((SAB & QB8BAR) | (ISAB & !A8)) ;
+		
+		this.ULS652LOG.pins.GBABAR.SetValue(GBABAR);
+		this.ULS652LOG.pins.GAB.SetValue(GAB);
+		this.ULS652LOG.pins.CBA.SetValue(CBA);
+		this.ULS652LOG.pins.SBA.SetValue(SBA);
+		this.ULS652LOG.pins.CAB.SetValue(CAB);
+		this.ULS652LOG.pins.SAB.SetValue(SAB);
+		this.ULS652LOG.pins.A1.SetValue(A1);
+		this.ULS652LOG.pins.A2.SetValue(A2);
+		this.ULS652LOG.pins.A3.SetValue(A3);
+		this.ULS652LOG.pins.A4.SetValue(A4);
+		this.ULS652LOG.pins.A5.SetValue(A5);
+		this.ULS652LOG.pins.A6.SetValue(A6);
+		this.ULS652LOG.pins.A7.SetValue(A7);
+		this.ULS652LOG.pins.A8.SetValue(A8);
+		this.ULS652LOG.pins.B1.SetValue(B1);
+		this.ULS652LOG.pins.B2.SetValue(B2);
+		this.ULS652LOG.pins.B3.SetValue(B3);
+		this.ULS652LOG.pins.B4.SetValue(B4);
+		this.ULS652LOG.pins.B5.SetValue(B5);
+		this.ULS652LOG.pins.B6.SetValue(B6);
+		this.ULS652LOG.pins.B7.SetValue(B7);
+		this.ULS652LOG.pins.B8.SetValue(B8);
+		this.ULS652LOG.pins.A1_O.SetValue(A1_O);
+		this.ULS652LOG.pins.A2_O.SetValue(A2_O);
+		this.ULS652LOG.pins.A3_O.SetValue(A3_O);
+		this.ULS652LOG.pins.A4_O.SetValue(A4_O);
+		this.ULS652LOG.pins.A5_O.SetValue(A5_O);
+		this.ULS652LOG.pins.A6_O.SetValue(A6_O);
+		this.ULS652LOG.pins.A7_O.SetValue(A7_O);
+		this.ULS652LOG.pins.A8_O.SetValue(A8_O);
+		this.ULS652LOG.pins.B1_O.SetValue(B1_O);
+		this.ULS652LOG.pins.B2_O.SetValue(B2_O);
+		this.ULS652LOG.pins.B3_O.SetValue(B3_O);
+		this.ULS652LOG.pins.B4_O.SetValue(B4_O);
+		this.ULS652LOG.pins.B5_O.SetValue(B5_O);
+		this.ULS652LOG.pins.B6_O.SetValue(B6_O);
+		this.ULS652LOG.pins.B7_O.SetValue(B7_O);
+		this.ULS652LOG.pins.B8_O.SetValue(B8_O);
+		this.ULS652LOG.pins.IGAB.SetValue(IGAB);
+		this.ULS652LOG.pins.IGBABAR.SetValue(IGBABAR);
 	}
 }
 /**
@@ -16637,7 +22711,7 @@ class SN74LS653 extends Component {
 		Connect(this.U6.pins.OUT5, B6_IO);
 		Connect(this.U6.pins.OUT6, B7_IO);
 		Connect(this.U6.pins.OUT7, B8_IO);
-		this.ULS653LOG = new logicexp(['GBABAR_I','GAB_I','CBA_I','SBA_I','CAB_I','SAB_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B','QA1','QA2','QA3','QA4','QA5','QA6','QA7','QA8','QB1','QB2','QB3','QB4','QB5','QB6','QB7','QB8'], ['GBABAR','GAB','CBA','SBA','CAB','SAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_O','A2_O','A3_O','A4_O','A5_O','A6_O','A7_O','A8_O','B1_O','B2_O','B3_O','B4_O','B5_O','B6_O','B7_O','B8_O','IGAB','IGBABAR'], ['ISAB','ISBA']).Logic('   GBABAR =  GBABAR_I ;   GAB =  GAB_I ;   CBA =  CBA_I ;   SBA =  SBA_I ;   CAB =  CAB_I ;   SAB =  SAB_I ;   A1 =  A1_B ;   A2 =  A2_B ;   A3 =  A3_B ;   A4 =  A4_B ;   A5 =  A5_B ;   A6 =  A6_B ;   A7 =  A7_B ;   A8 =  A8_B ;   B1 =  B1_B ;   B2 =  B2_B ;   B3 =  B3_B ;   B4 =  B4_B ;   B5 =  B5_B ;   B6 =  B6_B ;   B7 =  B7_B ;   B8 =  B8_B ;   ISAB =  !SAB ;   ISBA =  !SBA ;   IGAB =  !GAB ;   IGBABAR =  !GBABAR ;   A1_O =  !((SBA & QA1) | (ISBA & B1)) | GBABAR ;   A2_O =  !((SBA & QA2) | (ISBA & B2)) | GBABAR ;   A3_O =  !((SBA & QA3) | (ISBA & B3)) | GBABAR ;   A4_O =  !((SBA & QA4) | (ISBA & B4)) | GBABAR ;   A5_O =  !((SBA & QA5) | (ISBA & B5)) | GBABAR ;   A6_O =  !((SBA & QA6) | (ISBA & B6)) | GBABAR ;   A7_O =  !((SBA & QA7) | (ISBA & B7)) | GBABAR ;   A8_O =  !((SBA & QA8) | (ISBA & B8)) | GBABAR ;   B1_O =  !((SAB & QB1) | (ISAB & A1)) ;   B2_O =  !((SAB & QB2) | (ISAB & A2)) ;   B3_O =  !((SAB & QB3) | (ISAB & A3)) ;   B4_O =  !((SAB & QB4) | (ISAB & A4)) ;   B5_O =  !((SAB & QB5) | (ISAB & A5)) ;   B6_O =  !((SAB & QB6) | (ISAB & A6)) ;   B7_O =  !((SAB & QB7) | (ISAB & A7)) ;   B8_O =  !((SAB & QB8) | (ISAB & A8)) ;');
+		this.ULS653LOG = new logicexp(['GBABAR_I','GAB_I','CBA_I','SBA_I','CAB_I','SAB_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B','QA1','QA2','QA3','QA4','QA5','QA6','QA7','QA8','QB1','QB2','QB3','QB4','QB5','QB6','QB7','QB8'], ['GBABAR','GAB','CBA','SBA','CAB','SAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_O','A2_O','A3_O','A4_O','A5_O','A6_O','A7_O','A8_O','B1_O','B2_O','B3_O','B4_O','B5_O','B6_O','B7_O','B8_O','IGAB','IGBABAR']).Callback(this.$exe_ULS653LOG);
 		Connect(this.ULS653LOG.pins.GBABAR_I, this.pins.GBABAR_I);
 		Connect(this.ULS653LOG.pins.GAB_I, this.pins.GAB_I);
 		Connect(this.ULS653LOG.pins.CBA_I, this.pins.CBA_I);
@@ -16735,6 +22809,132 @@ class SN74LS653 extends Component {
 		Connect(B7_IO, this.pins.B7_B);
 		Connect(B8_IO, this.pins.B8_B);
 		this.ULS653CON = new constraint(18);
+	}
+	$exe_ULS653LOG() {
+		var ISAB, ISBA; // Temps
+		var GBABAR_I, GAB_I, CBA_I, SBA_I, CAB_I, SAB_I, A1_B, A2_B, A3_B, A4_B, A5_B, A6_B, A7_B, A8_B, B1_B, B2_B, B3_B, B4_B, B5_B, B6_B, B7_B, B8_B, QA1, QA2, QA3, QA4, QA5, QA6, QA7, QA8, QB1, QB2, QB3, QB4, QB5, QB6, QB7, QB8; // Inputs
+		var GBABAR, GAB, CBA, SBA, CAB, SAB, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, B5, B6, B7, B8, A1_O, A2_O, A3_O, A4_O, A5_O, A6_O, A7_O, A8_O, B1_O, B2_O, B3_O, B4_O, B5_O, B6_O, B7_O, B8_O, IGAB, IGBABAR; // Outputs
+		GBABAR_I = this.ULS653LOG.pins.GBABAR_I.GetValue();
+		GAB_I = this.ULS653LOG.pins.GAB_I.GetValue();
+		CBA_I = this.ULS653LOG.pins.CBA_I.GetValue();
+		SBA_I = this.ULS653LOG.pins.SBA_I.GetValue();
+		CAB_I = this.ULS653LOG.pins.CAB_I.GetValue();
+		SAB_I = this.ULS653LOG.pins.SAB_I.GetValue();
+		A1_B = this.ULS653LOG.pins.A1_B.GetValue();
+		A2_B = this.ULS653LOG.pins.A2_B.GetValue();
+		A3_B = this.ULS653LOG.pins.A3_B.GetValue();
+		A4_B = this.ULS653LOG.pins.A4_B.GetValue();
+		A5_B = this.ULS653LOG.pins.A5_B.GetValue();
+		A6_B = this.ULS653LOG.pins.A6_B.GetValue();
+		A7_B = this.ULS653LOG.pins.A7_B.GetValue();
+		A8_B = this.ULS653LOG.pins.A8_B.GetValue();
+		B1_B = this.ULS653LOG.pins.B1_B.GetValue();
+		B2_B = this.ULS653LOG.pins.B2_B.GetValue();
+		B3_B = this.ULS653LOG.pins.B3_B.GetValue();
+		B4_B = this.ULS653LOG.pins.B4_B.GetValue();
+		B5_B = this.ULS653LOG.pins.B5_B.GetValue();
+		B6_B = this.ULS653LOG.pins.B6_B.GetValue();
+		B7_B = this.ULS653LOG.pins.B7_B.GetValue();
+		B8_B = this.ULS653LOG.pins.B8_B.GetValue();
+		QA1 = this.ULS653LOG.pins.QA1.GetValue();
+		QA2 = this.ULS653LOG.pins.QA2.GetValue();
+		QA3 = this.ULS653LOG.pins.QA3.GetValue();
+		QA4 = this.ULS653LOG.pins.QA4.GetValue();
+		QA5 = this.ULS653LOG.pins.QA5.GetValue();
+		QA6 = this.ULS653LOG.pins.QA6.GetValue();
+		QA7 = this.ULS653LOG.pins.QA7.GetValue();
+		QA8 = this.ULS653LOG.pins.QA8.GetValue();
+		QB1 = this.ULS653LOG.pins.QB1.GetValue();
+		QB2 = this.ULS653LOG.pins.QB2.GetValue();
+		QB3 = this.ULS653LOG.pins.QB3.GetValue();
+		QB4 = this.ULS653LOG.pins.QB4.GetValue();
+		QB5 = this.ULS653LOG.pins.QB5.GetValue();
+		QB6 = this.ULS653LOG.pins.QB6.GetValue();
+		QB7 = this.ULS653LOG.pins.QB7.GetValue();
+		QB8 = this.ULS653LOG.pins.QB8.GetValue();
+		   GBABAR =  GBABAR_I ;
+		   GAB =  GAB_I ;
+		   CBA =  CBA_I ;
+		   SBA =  SBA_I ;
+		   CAB =  CAB_I ;
+		   SAB =  SAB_I ;
+		   A1 =  A1_B ;
+		   A2 =  A2_B ;
+		   A3 =  A3_B ;
+		   A4 =  A4_B ;
+		   A5 =  A5_B ;
+		   A6 =  A6_B ;
+		   A7 =  A7_B ;
+		   A8 =  A8_B ;
+		   B1 =  B1_B ;
+		   B2 =  B2_B ;
+		   B3 =  B3_B ;
+		   B4 =  B4_B ;
+		   B5 =  B5_B ;
+		   B6 =  B6_B ;
+		   B7 =  B7_B ;
+		   B8 =  B8_B ;
+		   ISAB =  !SAB ;
+		   ISBA =  !SBA ;
+		   IGAB =  !GAB ;
+		   IGBABAR =  !GBABAR ;
+		   A1_O =  !((SBA & QA1) | (ISBA & B1)) | GBABAR ;
+		   A2_O =  !((SBA & QA2) | (ISBA & B2)) | GBABAR ;
+		   A3_O =  !((SBA & QA3) | (ISBA & B3)) | GBABAR ;
+		   A4_O =  !((SBA & QA4) | (ISBA & B4)) | GBABAR ;
+		   A5_O =  !((SBA & QA5) | (ISBA & B5)) | GBABAR ;
+		   A6_O =  !((SBA & QA6) | (ISBA & B6)) | GBABAR ;
+		   A7_O =  !((SBA & QA7) | (ISBA & B7)) | GBABAR ;
+		   A8_O =  !((SBA & QA8) | (ISBA & B8)) | GBABAR ;
+		   B1_O =  !((SAB & QB1) | (ISAB & A1)) ;
+		   B2_O =  !((SAB & QB2) | (ISAB & A2)) ;
+		   B3_O =  !((SAB & QB3) | (ISAB & A3)) ;
+		   B4_O =  !((SAB & QB4) | (ISAB & A4)) ;
+		   B5_O =  !((SAB & QB5) | (ISAB & A5)) ;
+		   B6_O =  !((SAB & QB6) | (ISAB & A6)) ;
+		   B7_O =  !((SAB & QB7) | (ISAB & A7)) ;
+		   B8_O =  !((SAB & QB8) | (ISAB & A8)) ;
+		
+		this.ULS653LOG.pins.GBABAR.SetValue(GBABAR);
+		this.ULS653LOG.pins.GAB.SetValue(GAB);
+		this.ULS653LOG.pins.CBA.SetValue(CBA);
+		this.ULS653LOG.pins.SBA.SetValue(SBA);
+		this.ULS653LOG.pins.CAB.SetValue(CAB);
+		this.ULS653LOG.pins.SAB.SetValue(SAB);
+		this.ULS653LOG.pins.A1.SetValue(A1);
+		this.ULS653LOG.pins.A2.SetValue(A2);
+		this.ULS653LOG.pins.A3.SetValue(A3);
+		this.ULS653LOG.pins.A4.SetValue(A4);
+		this.ULS653LOG.pins.A5.SetValue(A5);
+		this.ULS653LOG.pins.A6.SetValue(A6);
+		this.ULS653LOG.pins.A7.SetValue(A7);
+		this.ULS653LOG.pins.A8.SetValue(A8);
+		this.ULS653LOG.pins.B1.SetValue(B1);
+		this.ULS653LOG.pins.B2.SetValue(B2);
+		this.ULS653LOG.pins.B3.SetValue(B3);
+		this.ULS653LOG.pins.B4.SetValue(B4);
+		this.ULS653LOG.pins.B5.SetValue(B5);
+		this.ULS653LOG.pins.B6.SetValue(B6);
+		this.ULS653LOG.pins.B7.SetValue(B7);
+		this.ULS653LOG.pins.B8.SetValue(B8);
+		this.ULS653LOG.pins.A1_O.SetValue(A1_O);
+		this.ULS653LOG.pins.A2_O.SetValue(A2_O);
+		this.ULS653LOG.pins.A3_O.SetValue(A3_O);
+		this.ULS653LOG.pins.A4_O.SetValue(A4_O);
+		this.ULS653LOG.pins.A5_O.SetValue(A5_O);
+		this.ULS653LOG.pins.A6_O.SetValue(A6_O);
+		this.ULS653LOG.pins.A7_O.SetValue(A7_O);
+		this.ULS653LOG.pins.A8_O.SetValue(A8_O);
+		this.ULS653LOG.pins.B1_O.SetValue(B1_O);
+		this.ULS653LOG.pins.B2_O.SetValue(B2_O);
+		this.ULS653LOG.pins.B3_O.SetValue(B3_O);
+		this.ULS653LOG.pins.B4_O.SetValue(B4_O);
+		this.ULS653LOG.pins.B5_O.SetValue(B5_O);
+		this.ULS653LOG.pins.B6_O.SetValue(B6_O);
+		this.ULS653LOG.pins.B7_O.SetValue(B7_O);
+		this.ULS653LOG.pins.B8_O.SetValue(B8_O);
+		this.ULS653LOG.pins.IGAB.SetValue(IGAB);
+		this.ULS653LOG.pins.IGBABAR.SetValue(IGBABAR);
 	}
 }
 /**
@@ -16965,7 +23165,7 @@ class SN74LS654 extends Component {
 		Connect(this.U6.pins.OUT5, B6_IO);
 		Connect(this.U6.pins.OUT6, B7_IO);
 		Connect(this.U6.pins.OUT7, B8_IO);
-		this.ULS654LOG = new logicexp(['GBABAR_I','GAB_I','CBA_I','SBA_I','CAB_I','SAB_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B','QA1BAR','QA2BAR','QA3BAR','QA4BAR','QA5BAR','QA6BAR','QA7BAR','QA8BAR','QB1BAR','QB2BAR','QB3BAR','QB4BAR','QB5BAR','QB6BAR','QB7BAR','QB8BAR'], ['GBABAR','GAB','CBA','SBA','CAB','SAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_O','A2_O','A3_O','A4_O','A5_O','A6_O','A7_O','A8_O','B1_O','B2_O','B3_O','B4_O','B5_O','B6_O','B7_O','B8_O','IGAB','IGBABAR'], ['ISAB','ISBA']).Logic('   GBABAR =  GBABAR_I ;   GAB =  GAB_I ;   CBA =  CBA_I ;   SBA =  SBA_I ;   CAB =  CAB_I ;   SAB =  SAB_I ;   A1 =  A1_B ;   A2 =  A2_B ;   A3 =  A3_B ;   A4 =  A4_B ;   A5 =  A5_B ;   A6 =  A6_B ;   A7 =  A7_B ;   A8 =  A8_B ;   B1 =  B1_B ;   B2 =  B2_B ;   B3 =  B3_B ;   B4 =  B4_B ;   B5 =  B5_B ;   B6 =  B6_B ;   B7 =  B7_B ;   B8 =  B8_B ;   ISAB =  !SAB ;   ISBA =  !SBA ;   IGAB =  !GAB ;   IGBABAR =  !GBABAR ;   A1_O =  !((SBA & QA1BAR) | (ISBA & !B1)) | GBABAR ;   A2_O =  !((SBA & QA2BAR) | (ISBA & !B2)) | GBABAR ;   A3_O =  !((SBA & QA3BAR) | (ISBA & !B3)) | GBABAR ;   A4_O =  !((SBA & QA4BAR) | (ISBA & !B4)) | GBABAR ;   A5_O =  !((SBA & QA5BAR) | (ISBA & !B5)) | GBABAR ;   A6_O =  !((SBA & QA6BAR) | (ISBA & !B6)) | GBABAR ;   A7_O =  !((SBA & QA7BAR) | (ISBA & !B7)) | GBABAR ;   A8_O =  !((SBA & QA8BAR) | (ISBA & !B8)) | GBABAR ;   B1_O =  !((SAB & QB1BAR) | (ISAB & !A1)) ;   B2_O =  !((SAB & QB2BAR) | (ISAB & !A2)) ;   B3_O =  !((SAB & QB3BAR) | (ISAB & !A3)) ;   B4_O =  !((SAB & QB4BAR) | (ISAB & !A4)) ;   B5_O =  !((SAB & QB5BAR) | (ISAB & !A5)) ;   B6_O =  !((SAB & QB6BAR) | (ISAB & !A6)) ;   B7_O =  !((SAB & QB7BAR) | (ISAB & !A7)) ;   B8_O =  !((SAB & QB8BAR) | (ISAB & !A8)) ;');
+		this.ULS654LOG = new logicexp(['GBABAR_I','GAB_I','CBA_I','SBA_I','CAB_I','SAB_I','A1_B','A2_B','A3_B','A4_B','A5_B','A6_B','A7_B','A8_B','B1_B','B2_B','B3_B','B4_B','B5_B','B6_B','B7_B','B8_B','QA1BAR','QA2BAR','QA3BAR','QA4BAR','QA5BAR','QA6BAR','QA7BAR','QA8BAR','QB1BAR','QB2BAR','QB3BAR','QB4BAR','QB5BAR','QB6BAR','QB7BAR','QB8BAR'], ['GBABAR','GAB','CBA','SBA','CAB','SAB','A1','A2','A3','A4','A5','A6','A7','A8','B1','B2','B3','B4','B5','B6','B7','B8','A1_O','A2_O','A3_O','A4_O','A5_O','A6_O','A7_O','A8_O','B1_O','B2_O','B3_O','B4_O','B5_O','B6_O','B7_O','B8_O','IGAB','IGBABAR']).Callback(this.$exe_ULS654LOG);
 		Connect(this.ULS654LOG.pins.GBABAR_I, this.pins.GBABAR_I);
 		Connect(this.ULS654LOG.pins.GAB_I, this.pins.GAB_I);
 		Connect(this.ULS654LOG.pins.CBA_I, this.pins.CBA_I);
@@ -17064,6 +23264,132 @@ class SN74LS654 extends Component {
 		Connect(B8_IO, this.pins.B8_B);
 		this.ULS654CON = new constraint(18);
 	}
+	$exe_ULS654LOG() {
+		var ISAB, ISBA; // Temps
+		var GBABAR_I, GAB_I, CBA_I, SBA_I, CAB_I, SAB_I, A1_B, A2_B, A3_B, A4_B, A5_B, A6_B, A7_B, A8_B, B1_B, B2_B, B3_B, B4_B, B5_B, B6_B, B7_B, B8_B, QA1BAR, QA2BAR, QA3BAR, QA4BAR, QA5BAR, QA6BAR, QA7BAR, QA8BAR, QB1BAR, QB2BAR, QB3BAR, QB4BAR, QB5BAR, QB6BAR, QB7BAR, QB8BAR; // Inputs
+		var GBABAR, GAB, CBA, SBA, CAB, SAB, A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, B5, B6, B7, B8, A1_O, A2_O, A3_O, A4_O, A5_O, A6_O, A7_O, A8_O, B1_O, B2_O, B3_O, B4_O, B5_O, B6_O, B7_O, B8_O, IGAB, IGBABAR; // Outputs
+		GBABAR_I = this.ULS654LOG.pins.GBABAR_I.GetValue();
+		GAB_I = this.ULS654LOG.pins.GAB_I.GetValue();
+		CBA_I = this.ULS654LOG.pins.CBA_I.GetValue();
+		SBA_I = this.ULS654LOG.pins.SBA_I.GetValue();
+		CAB_I = this.ULS654LOG.pins.CAB_I.GetValue();
+		SAB_I = this.ULS654LOG.pins.SAB_I.GetValue();
+		A1_B = this.ULS654LOG.pins.A1_B.GetValue();
+		A2_B = this.ULS654LOG.pins.A2_B.GetValue();
+		A3_B = this.ULS654LOG.pins.A3_B.GetValue();
+		A4_B = this.ULS654LOG.pins.A4_B.GetValue();
+		A5_B = this.ULS654LOG.pins.A5_B.GetValue();
+		A6_B = this.ULS654LOG.pins.A6_B.GetValue();
+		A7_B = this.ULS654LOG.pins.A7_B.GetValue();
+		A8_B = this.ULS654LOG.pins.A8_B.GetValue();
+		B1_B = this.ULS654LOG.pins.B1_B.GetValue();
+		B2_B = this.ULS654LOG.pins.B2_B.GetValue();
+		B3_B = this.ULS654LOG.pins.B3_B.GetValue();
+		B4_B = this.ULS654LOG.pins.B4_B.GetValue();
+		B5_B = this.ULS654LOG.pins.B5_B.GetValue();
+		B6_B = this.ULS654LOG.pins.B6_B.GetValue();
+		B7_B = this.ULS654LOG.pins.B7_B.GetValue();
+		B8_B = this.ULS654LOG.pins.B8_B.GetValue();
+		QA1BAR = this.ULS654LOG.pins.QA1BAR.GetValue();
+		QA2BAR = this.ULS654LOG.pins.QA2BAR.GetValue();
+		QA3BAR = this.ULS654LOG.pins.QA3BAR.GetValue();
+		QA4BAR = this.ULS654LOG.pins.QA4BAR.GetValue();
+		QA5BAR = this.ULS654LOG.pins.QA5BAR.GetValue();
+		QA6BAR = this.ULS654LOG.pins.QA6BAR.GetValue();
+		QA7BAR = this.ULS654LOG.pins.QA7BAR.GetValue();
+		QA8BAR = this.ULS654LOG.pins.QA8BAR.GetValue();
+		QB1BAR = this.ULS654LOG.pins.QB1BAR.GetValue();
+		QB2BAR = this.ULS654LOG.pins.QB2BAR.GetValue();
+		QB3BAR = this.ULS654LOG.pins.QB3BAR.GetValue();
+		QB4BAR = this.ULS654LOG.pins.QB4BAR.GetValue();
+		QB5BAR = this.ULS654LOG.pins.QB5BAR.GetValue();
+		QB6BAR = this.ULS654LOG.pins.QB6BAR.GetValue();
+		QB7BAR = this.ULS654LOG.pins.QB7BAR.GetValue();
+		QB8BAR = this.ULS654LOG.pins.QB8BAR.GetValue();
+		   GBABAR =  GBABAR_I ;
+		   GAB =  GAB_I ;
+		   CBA =  CBA_I ;
+		   SBA =  SBA_I ;
+		   CAB =  CAB_I ;
+		   SAB =  SAB_I ;
+		   A1 =  A1_B ;
+		   A2 =  A2_B ;
+		   A3 =  A3_B ;
+		   A4 =  A4_B ;
+		   A5 =  A5_B ;
+		   A6 =  A6_B ;
+		   A7 =  A7_B ;
+		   A8 =  A8_B ;
+		   B1 =  B1_B ;
+		   B2 =  B2_B ;
+		   B3 =  B3_B ;
+		   B4 =  B4_B ;
+		   B5 =  B5_B ;
+		   B6 =  B6_B ;
+		   B7 =  B7_B ;
+		   B8 =  B8_B ;
+		   ISAB =  !SAB ;
+		   ISBA =  !SBA ;
+		   IGAB =  !GAB ;
+		   IGBABAR =  !GBABAR ;
+		   A1_O =  !((SBA & QA1BAR) | (ISBA & !B1)) | GBABAR ;
+		   A2_O =  !((SBA & QA2BAR) | (ISBA & !B2)) | GBABAR ;
+		   A3_O =  !((SBA & QA3BAR) | (ISBA & !B3)) | GBABAR ;
+		   A4_O =  !((SBA & QA4BAR) | (ISBA & !B4)) | GBABAR ;
+		   A5_O =  !((SBA & QA5BAR) | (ISBA & !B5)) | GBABAR ;
+		   A6_O =  !((SBA & QA6BAR) | (ISBA & !B6)) | GBABAR ;
+		   A7_O =  !((SBA & QA7BAR) | (ISBA & !B7)) | GBABAR ;
+		   A8_O =  !((SBA & QA8BAR) | (ISBA & !B8)) | GBABAR ;
+		   B1_O =  !((SAB & QB1BAR) | (ISAB & !A1)) ;
+		   B2_O =  !((SAB & QB2BAR) | (ISAB & !A2)) ;
+		   B3_O =  !((SAB & QB3BAR) | (ISAB & !A3)) ;
+		   B4_O =  !((SAB & QB4BAR) | (ISAB & !A4)) ;
+		   B5_O =  !((SAB & QB5BAR) | (ISAB & !A5)) ;
+		   B6_O =  !((SAB & QB6BAR) | (ISAB & !A6)) ;
+		   B7_O =  !((SAB & QB7BAR) | (ISAB & !A7)) ;
+		   B8_O =  !((SAB & QB8BAR) | (ISAB & !A8)) ;
+		
+		this.ULS654LOG.pins.GBABAR.SetValue(GBABAR);
+		this.ULS654LOG.pins.GAB.SetValue(GAB);
+		this.ULS654LOG.pins.CBA.SetValue(CBA);
+		this.ULS654LOG.pins.SBA.SetValue(SBA);
+		this.ULS654LOG.pins.CAB.SetValue(CAB);
+		this.ULS654LOG.pins.SAB.SetValue(SAB);
+		this.ULS654LOG.pins.A1.SetValue(A1);
+		this.ULS654LOG.pins.A2.SetValue(A2);
+		this.ULS654LOG.pins.A3.SetValue(A3);
+		this.ULS654LOG.pins.A4.SetValue(A4);
+		this.ULS654LOG.pins.A5.SetValue(A5);
+		this.ULS654LOG.pins.A6.SetValue(A6);
+		this.ULS654LOG.pins.A7.SetValue(A7);
+		this.ULS654LOG.pins.A8.SetValue(A8);
+		this.ULS654LOG.pins.B1.SetValue(B1);
+		this.ULS654LOG.pins.B2.SetValue(B2);
+		this.ULS654LOG.pins.B3.SetValue(B3);
+		this.ULS654LOG.pins.B4.SetValue(B4);
+		this.ULS654LOG.pins.B5.SetValue(B5);
+		this.ULS654LOG.pins.B6.SetValue(B6);
+		this.ULS654LOG.pins.B7.SetValue(B7);
+		this.ULS654LOG.pins.B8.SetValue(B8);
+		this.ULS654LOG.pins.A1_O.SetValue(A1_O);
+		this.ULS654LOG.pins.A2_O.SetValue(A2_O);
+		this.ULS654LOG.pins.A3_O.SetValue(A3_O);
+		this.ULS654LOG.pins.A4_O.SetValue(A4_O);
+		this.ULS654LOG.pins.A5_O.SetValue(A5_O);
+		this.ULS654LOG.pins.A6_O.SetValue(A6_O);
+		this.ULS654LOG.pins.A7_O.SetValue(A7_O);
+		this.ULS654LOG.pins.A8_O.SetValue(A8_O);
+		this.ULS654LOG.pins.B1_O.SetValue(B1_O);
+		this.ULS654LOG.pins.B2_O.SetValue(B2_O);
+		this.ULS654LOG.pins.B3_O.SetValue(B3_O);
+		this.ULS654LOG.pins.B4_O.SetValue(B4_O);
+		this.ULS654LOG.pins.B5_O.SetValue(B5_O);
+		this.ULS654LOG.pins.B6_O.SetValue(B6_O);
+		this.ULS654LOG.pins.B7_O.SetValue(B7_O);
+		this.ULS654LOG.pins.B8_O.SetValue(B8_O);
+		this.ULS654LOG.pins.IGAB.SetValue(IGAB);
+		this.ULS654LOG.pins.IGBABAR.SetValue(IGBABAR);
+	}
 }
 /**
  * Synchronous 4-bit Decade Counters
@@ -17087,7 +23413,7 @@ class SN74LS668 extends Component {
 			QD_O: new Pin(),
 			RCOBAR_O: new Pin(),
 		}
-		this.ULS668LOG = new logicexp(['CLK_I','U_DBAR_I','ENPBAR_I','ENTBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['CLK','U_DBAR','ENPBAR','ENTBAR','LOADBAR','A','B','C','D','RCOBAR','DA','DB','DC','DD','IEN'], ['ENP','ENT','UD','LOAD','IA1','IB1','IC1','ID1','IB2','IB3']).Logic('   CLK =  CLK_I ;                        U_DBAR =  U_DBAR_I ;   ENPBAR =  ENPBAR_I ;   ENTBAR =  ENTBAR_I ;   ENP =  !ENPBAR ;   ENT =  !ENTBAR ;   LOADBAR =  LOADBAR_I ;   UD =  !U_DBAR ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   LOAD =  !LOADBAR ;                  IEN =  ENP & ENT & LOADBAR ;   IA1 =  !((UD & QA) | (U_DBAR & QABAR)) ;   IB1 =  !((UD & QB) | (U_DBAR & QBBAR)) ;   IC1 =  !((UD & QC) | (U_DBAR & QCBAR)) ;   ID1 =  !((UD & QD) | (U_DBAR & QDBAR)) ;   IB2 =  !(ID1 & U_DBAR) ;   IB3 =  !(UD & IA1 & IB1 & IC1 & ID1) ;   DA =  (QA & !IEN & LOADBAR) | (IEN & QABAR) | (A & LOAD) ;   DB =  (!(IEN & IA1) & LOADBAR & QB) |     (IA1 & IEN & IB2 & IB3 & QBBAR) | (B & LOAD) ;   DC =  (!(IEN & IA1 & IB1) & LOADBAR & QC) |     (IEN & IB3 & IA1 & IB1 & QCBAR) | (C & LOAD) ;   DD =  (!(IEN & IA1) & LOADBAR & QD) |     (IEN & IA1 & IB1 & IC1 & QDBAR) | (D & LOAD) ;   RCOBAR =  !((ID1 & IA1 & U_DBAR & ENT) | ( ID1 & IC1 & IB1 & IA1 &     UD & ENT)) ;');
+		this.ULS668LOG = new logicexp(['CLK_I','U_DBAR_I','ENPBAR_I','ENTBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['CLK','U_DBAR','ENPBAR','ENTBAR','LOADBAR','A','B','C','D','RCOBAR','DA','DB','DC','DD','IEN']).Callback(this.$exe_ULS668LOG);
 		Connect(this.ULS668LOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.ULS668LOG.pins.U_DBAR_I, this.pins.U_DBAR_I);
 		Connect(this.ULS668LOG.pins.ENPBAR_I, this.pins.ENPBAR_I);
@@ -17165,6 +23491,69 @@ class SN74LS668 extends Component {
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
 	}
+	$exe_ULS668LOG() {
+		var ENP, ENT, UD, LOAD, IA1, IB1, IC1, ID1, IB2, IB3; // Temps
+		var CLK_I, U_DBAR_I, ENPBAR_I, ENTBAR_I, LOADBAR_I, A_I, B_I, C_I, D_I, QA, QB, QC, QD, QABAR, QBBAR, QCBAR, QDBAR; // Inputs
+		var CLK, U_DBAR, ENPBAR, ENTBAR, LOADBAR, A, B, C, D, RCOBAR, DA, DB, DC, DD, IEN; // Outputs
+		CLK_I = this.ULS668LOG.pins.CLK_I.GetValue();
+		U_DBAR_I = this.ULS668LOG.pins.U_DBAR_I.GetValue();
+		ENPBAR_I = this.ULS668LOG.pins.ENPBAR_I.GetValue();
+		ENTBAR_I = this.ULS668LOG.pins.ENTBAR_I.GetValue();
+		LOADBAR_I = this.ULS668LOG.pins.LOADBAR_I.GetValue();
+		A_I = this.ULS668LOG.pins.A_I.GetValue();
+		B_I = this.ULS668LOG.pins.B_I.GetValue();
+		C_I = this.ULS668LOG.pins.C_I.GetValue();
+		D_I = this.ULS668LOG.pins.D_I.GetValue();
+		QA = this.ULS668LOG.pins.QA.GetValue();
+		QB = this.ULS668LOG.pins.QB.GetValue();
+		QC = this.ULS668LOG.pins.QC.GetValue();
+		QD = this.ULS668LOG.pins.QD.GetValue();
+		QABAR = this.ULS668LOG.pins.QABAR.GetValue();
+		QBBAR = this.ULS668LOG.pins.QBBAR.GetValue();
+		QCBAR = this.ULS668LOG.pins.QCBAR.GetValue();
+		QDBAR = this.ULS668LOG.pins.QDBAR.GetValue();
+		   CLK =  CLK_I ;
+		                        U_DBAR =  U_DBAR_I ;
+		   ENPBAR =  ENPBAR_I ;
+		   ENTBAR =  ENTBAR_I ;
+		   ENP =  !ENPBAR ;
+		   ENT =  !ENTBAR ;
+		   LOADBAR =  LOADBAR_I ;
+		   UD =  !U_DBAR ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   LOAD =  !LOADBAR ;
+		                  IEN =  ENP & ENT & LOADBAR ;
+		   IA1 =  !((UD & QA) | (U_DBAR & QABAR)) ;
+		   IB1 =  !((UD & QB) | (U_DBAR & QBBAR)) ;
+		   IC1 =  !((UD & QC) | (U_DBAR & QCBAR)) ;
+		   ID1 =  !((UD & QD) | (U_DBAR & QDBAR)) ;
+		   IB2 =  !(ID1 & U_DBAR) ;
+		   IB3 =  !(UD & IA1 & IB1 & IC1 & ID1) ;
+		   DA =  (QA & !IEN & LOADBAR) | (IEN & QABAR) | (A & LOAD) ;
+		   DB =  (!(IEN & IA1) & LOADBAR & QB) |     (IA1 & IEN & IB2 & IB3 & QBBAR) | (B & LOAD) ;
+		   DC =  (!(IEN & IA1 & IB1) & LOADBAR & QC) |     (IEN & IB3 & IA1 & IB1 & QCBAR) | (C & LOAD) ;
+		   DD =  (!(IEN & IA1) & LOADBAR & QD) |     (IEN & IA1 & IB1 & IC1 & QDBAR) | (D & LOAD) ;
+		   RCOBAR =  !((ID1 & IA1 & U_DBAR & ENT) | ( ID1 & IC1 & IB1 & IA1 &     UD & ENT)) ;
+		
+		this.ULS668LOG.pins.CLK.SetValue(CLK);
+		this.ULS668LOG.pins.U_DBAR.SetValue(U_DBAR);
+		this.ULS668LOG.pins.ENPBAR.SetValue(ENPBAR);
+		this.ULS668LOG.pins.ENTBAR.SetValue(ENTBAR);
+		this.ULS668LOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS668LOG.pins.A.SetValue(A);
+		this.ULS668LOG.pins.B.SetValue(B);
+		this.ULS668LOG.pins.C.SetValue(C);
+		this.ULS668LOG.pins.D.SetValue(D);
+		this.ULS668LOG.pins.RCOBAR.SetValue(RCOBAR);
+		this.ULS668LOG.pins.DA.SetValue(DA);
+		this.ULS668LOG.pins.DB.SetValue(DB);
+		this.ULS668LOG.pins.DC.SetValue(DC);
+		this.ULS668LOG.pins.DD.SetValue(DD);
+		this.ULS668LOG.pins.IEN.SetValue(IEN);
+	}
 }
 class SN74LS669 extends Component {
 	constructor() {
@@ -17214,7 +23603,7 @@ class SN74LS669 extends Component {
 		Connect(this.U1.pins.QBAR2, QCBAR);
 		let QDBAR = new Pin();
 		Connect(this.U1.pins.QBAR3, QDBAR);
-		this.ULS699LOG = new logicexp(['CLK_I','U_DBAR_I','ENPBAR_I','ENTBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['CLK','U_DBAR','ENPBAR','ENTBAR','LOADBAR','A','B','C','D','DA','DB','DC','DD','RCOBAR','IEN'], ['ILD','IUD1','IUD2','IUD3','IUD4','IUD5','IA1','IA2','IB1','IB2','IC1','IC2','ID1','ID2']).Logic('   CLK =  CLK_I ;   U_DBAR =  U_DBAR_I ;   ENPBAR =  ENPBAR_I ;   ENTBAR =  ENTBAR_I ;   LOADBAR =  LOADBAR_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   ILD =  !LOADBAR ;   IEN =  LOADBAR & !ENPBAR & !ENTBAR ;   IUD1 =  !U_DBAR ;   IUD2 =  !((QA & IUD1) | (U_DBAR & QABAR)) ;   IUD3 =  !((QB & IUD1) | (U_DBAR & QBBAR)) ;   IUD4 =  !((QC & IUD1) | (U_DBAR & QCBAR)) ;   IUD5 =  !((QD & IUD1) | (U_DBAR & QDBAR)) ;   IA1 =  QA & !IEN & LOADBAR ;   IA2 =  IEN & QABAR ;   IB1 =  QB & LOADBAR & !(IEN & IUD2) ;   IB2 =  IUD2 & IEN & QBBAR ;   IC1 =  QC & LOADBAR & !(IEN & IUD2 & IUD3) ;   IC2 =  IEN & IUD3 & IUD2 & QCBAR ;   ID1 =  QD & LOADBAR & !(IEN & IUD2 & IUD3 & IUD4) ;   ID2 =  IEN & IUD4 & IUD3 & IUD2 & QDBAR ;   DA =  IA1 | IA2 | (ILD & A) ;   DB =  IB1 | IB2 | (ILD & B) ;   DC =  IC1 | IC2 | (ILD & C) ;   DD =  ID1 | ID2 | (ILD & D) ;   RCOBAR =  !(IUD5 & IUD4 & IUD3 & IUD2 & !ENTBAR) ;');
+		this.ULS699LOG = new logicexp(['CLK_I','U_DBAR_I','ENPBAR_I','ENTBAR_I','LOADBAR_I','A_I','B_I','C_I','D_I','QA','QB','QC','QD','QABAR','QBBAR','QCBAR','QDBAR'], ['CLK','U_DBAR','ENPBAR','ENTBAR','LOADBAR','A','B','C','D','DA','DB','DC','DD','RCOBAR','IEN']).Callback(this.$exe_ULS699LOG);
 		Connect(this.ULS699LOG.pins.CLK_I, this.pins.CLK_I);
 		Connect(this.ULS699LOG.pins.U_DBAR_I, this.pins.U_DBAR_I);
 		Connect(this.ULS699LOG.pins.ENPBAR_I, this.pins.ENPBAR_I);
@@ -17262,6 +23651,73 @@ class SN74LS669 extends Component {
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
 		Connect(RCOBAR, this.pins.RCOBAR_O);
+	}
+	$exe_ULS699LOG() {
+		var ILD, IUD1, IUD2, IUD3, IUD4, IUD5, IA1, IA2, IB1, IB2, IC1, IC2, ID1, ID2; // Temps
+		var CLK_I, U_DBAR_I, ENPBAR_I, ENTBAR_I, LOADBAR_I, A_I, B_I, C_I, D_I, QA, QB, QC, QD, QABAR, QBBAR, QCBAR, QDBAR; // Inputs
+		var CLK, U_DBAR, ENPBAR, ENTBAR, LOADBAR, A, B, C, D, DA, DB, DC, DD, RCOBAR, IEN; // Outputs
+		CLK_I = this.ULS699LOG.pins.CLK_I.GetValue();
+		U_DBAR_I = this.ULS699LOG.pins.U_DBAR_I.GetValue();
+		ENPBAR_I = this.ULS699LOG.pins.ENPBAR_I.GetValue();
+		ENTBAR_I = this.ULS699LOG.pins.ENTBAR_I.GetValue();
+		LOADBAR_I = this.ULS699LOG.pins.LOADBAR_I.GetValue();
+		A_I = this.ULS699LOG.pins.A_I.GetValue();
+		B_I = this.ULS699LOG.pins.B_I.GetValue();
+		C_I = this.ULS699LOG.pins.C_I.GetValue();
+		D_I = this.ULS699LOG.pins.D_I.GetValue();
+		QA = this.ULS699LOG.pins.QA.GetValue();
+		QB = this.ULS699LOG.pins.QB.GetValue();
+		QC = this.ULS699LOG.pins.QC.GetValue();
+		QD = this.ULS699LOG.pins.QD.GetValue();
+		QABAR = this.ULS699LOG.pins.QABAR.GetValue();
+		QBBAR = this.ULS699LOG.pins.QBBAR.GetValue();
+		QCBAR = this.ULS699LOG.pins.QCBAR.GetValue();
+		QDBAR = this.ULS699LOG.pins.QDBAR.GetValue();
+		   CLK =  CLK_I ;
+		   U_DBAR =  U_DBAR_I ;
+		   ENPBAR =  ENPBAR_I ;
+		   ENTBAR =  ENTBAR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   ILD =  !LOADBAR ;
+		   IEN =  LOADBAR & !ENPBAR & !ENTBAR ;
+		   IUD1 =  !U_DBAR ;
+		   IUD2 =  !((QA & IUD1) | (U_DBAR & QABAR)) ;
+		   IUD3 =  !((QB & IUD1) | (U_DBAR & QBBAR)) ;
+		   IUD4 =  !((QC & IUD1) | (U_DBAR & QCBAR)) ;
+		   IUD5 =  !((QD & IUD1) | (U_DBAR & QDBAR)) ;
+		   IA1 =  QA & !IEN & LOADBAR ;
+		   IA2 =  IEN & QABAR ;
+		   IB1 =  QB & LOADBAR & !(IEN & IUD2) ;
+		   IB2 =  IUD2 & IEN & QBBAR ;
+		   IC1 =  QC & LOADBAR & !(IEN & IUD2 & IUD3) ;
+		   IC2 =  IEN & IUD3 & IUD2 & QCBAR ;
+		   ID1 =  QD & LOADBAR & !(IEN & IUD2 & IUD3 & IUD4) ;
+		   ID2 =  IEN & IUD4 & IUD3 & IUD2 & QDBAR ;
+		   DA =  IA1 | IA2 | (ILD & A) ;
+		   DB =  IB1 | IB2 | (ILD & B) ;
+		   DC =  IC1 | IC2 | (ILD & C) ;
+		   DD =  ID1 | ID2 | (ILD & D) ;
+		   RCOBAR =  !(IUD5 & IUD4 & IUD3 & IUD2 & !ENTBAR) ;
+		
+		this.ULS699LOG.pins.CLK.SetValue(CLK);
+		this.ULS699LOG.pins.U_DBAR.SetValue(U_DBAR);
+		this.ULS699LOG.pins.ENPBAR.SetValue(ENPBAR);
+		this.ULS699LOG.pins.ENTBAR.SetValue(ENTBAR);
+		this.ULS699LOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS699LOG.pins.A.SetValue(A);
+		this.ULS699LOG.pins.B.SetValue(B);
+		this.ULS699LOG.pins.C.SetValue(C);
+		this.ULS699LOG.pins.D.SetValue(D);
+		this.ULS699LOG.pins.DA.SetValue(DA);
+		this.ULS699LOG.pins.DB.SetValue(DB);
+		this.ULS699LOG.pins.DC.SetValue(DC);
+		this.ULS699LOG.pins.DD.SetValue(DD);
+		this.ULS699LOG.pins.RCOBAR.SetValue(RCOBAR);
+		this.ULS699LOG.pins.IEN.SetValue(IEN);
 	}
 }
 /**
@@ -17374,7 +23830,7 @@ class SN74LS670 extends Component {
 		Connect(this.UD.pins.QBAR1, _D_NC);
 		Connect(this.UD.pins.QBAR2, _D_NC);
 		Connect(this.UD.pins.QBAR3, _D_NC);
-		this.ULS670LOG = new logicexp(['GWBAR_I','GRBAR_I','WA_I','WB_I','RA_I','RB_I','D1_I','D2_I','D3_I','D4_I','AQ1','AQ2','AQ3','AQ4','BQ1','BQ2','BQ3','BQ4','CQ1','CQ2','CQ3','CQ4','DQ1','DQ2','DQ3','DQ4'], ['GWBAR','GRBAR','WA','WB','RA','RB','D1','D2','D3','D4','GATEA','GATEB','GATEC','GATED','Q1','Q2','Q3','Q4'], ['ENABLE2','ENABLE1']).Logic('   GWBAR   =  GWBAR_I ;   GRBAR   =  GRBAR_I ;   WA      =  WA_I ;   WB      =  WB_I ;   RA      =  RA_I ;   RB      =  RB_I ;   D1      =  D1_I ;   D2      =  D2_I ;   D3      =  D3_I ;   D4      =  D4_I ;   ENABLE2 =  !(GWBAR | WB) ;   ENABLE1 =  !(GWBAR | ENABLE2) ;   GATEA   =  ENABLE2 & !WA ;   GATEB   =  ENABLE2 &  WA ;   GATEC   =  ENABLE1 & !WA ;   GATED   =  ENABLE1 &  WA ;   Q1      =  (AQ1 & !RA & !RB) |               (BQ1 &  RA & !RB) |               (CQ1 & !RA &  RB) |               (DQ1 &  RA &  RB)             ;   Q2      =  (AQ2 & !RA & !RB) |               (BQ2 &  RA & !RB) |               (CQ2 & !RA &  RB) |               (DQ2 &  RA &  RB)             ;   Q3      =  (AQ3 & !RA & !RB) |               (BQ3 &  RA & !RB) |               (CQ3 & !RA &  RB) |               (DQ3 &  RA &  RB)             ;   Q4      =  (AQ4 & !RA & !RB) |               (BQ4 &  RA & !RB) |               (CQ4 & !RA &  RB) |               (DQ4 &  RA &  RB)             ;');
+		this.ULS670LOG = new logicexp(['GWBAR_I','GRBAR_I','WA_I','WB_I','RA_I','RB_I','D1_I','D2_I','D3_I','D4_I','AQ1','AQ2','AQ3','AQ4','BQ1','BQ2','BQ3','BQ4','CQ1','CQ2','CQ3','CQ4','DQ1','DQ2','DQ3','DQ4'], ['GWBAR','GRBAR','WA','WB','RA','RB','D1','D2','D3','D4','GATEA','GATEB','GATEC','GATED','Q1','Q2','Q3','Q4']).Callback(this.$exe_ULS670LOG);
 		Connect(this.ULS670LOG.pins.GWBAR_I, this.pins.GWBAR_I);
 		Connect(this.ULS670LOG.pins.GRBAR_I, this.pins.GRBAR_I);
 		Connect(this.ULS670LOG.pins.WA_I, this.pins.WA_I);
@@ -17434,6 +23890,76 @@ class SN74LS670 extends Component {
 		Connect(Q3, this.pins.Q3_O);
 		Connect(Q4, this.pins.Q4_O);
 	}
+	$exe_ULS670LOG() {
+		var ENABLE2, ENABLE1; // Temps
+		var GWBAR_I, GRBAR_I, WA_I, WB_I, RA_I, RB_I, D1_I, D2_I, D3_I, D4_I, AQ1, AQ2, AQ3, AQ4, BQ1, BQ2, BQ3, BQ4, CQ1, CQ2, CQ3, CQ4, DQ1, DQ2, DQ3, DQ4; // Inputs
+		var GWBAR, GRBAR, WA, WB, RA, RB, D1, D2, D3, D4, GATEA, GATEB, GATEC, GATED, Q1, Q2, Q3, Q4; // Outputs
+		GWBAR_I = this.ULS670LOG.pins.GWBAR_I.GetValue();
+		GRBAR_I = this.ULS670LOG.pins.GRBAR_I.GetValue();
+		WA_I = this.ULS670LOG.pins.WA_I.GetValue();
+		WB_I = this.ULS670LOG.pins.WB_I.GetValue();
+		RA_I = this.ULS670LOG.pins.RA_I.GetValue();
+		RB_I = this.ULS670LOG.pins.RB_I.GetValue();
+		D1_I = this.ULS670LOG.pins.D1_I.GetValue();
+		D2_I = this.ULS670LOG.pins.D2_I.GetValue();
+		D3_I = this.ULS670LOG.pins.D3_I.GetValue();
+		D4_I = this.ULS670LOG.pins.D4_I.GetValue();
+		AQ1 = this.ULS670LOG.pins.AQ1.GetValue();
+		AQ2 = this.ULS670LOG.pins.AQ2.GetValue();
+		AQ3 = this.ULS670LOG.pins.AQ3.GetValue();
+		AQ4 = this.ULS670LOG.pins.AQ4.GetValue();
+		BQ1 = this.ULS670LOG.pins.BQ1.GetValue();
+		BQ2 = this.ULS670LOG.pins.BQ2.GetValue();
+		BQ3 = this.ULS670LOG.pins.BQ3.GetValue();
+		BQ4 = this.ULS670LOG.pins.BQ4.GetValue();
+		CQ1 = this.ULS670LOG.pins.CQ1.GetValue();
+		CQ2 = this.ULS670LOG.pins.CQ2.GetValue();
+		CQ3 = this.ULS670LOG.pins.CQ3.GetValue();
+		CQ4 = this.ULS670LOG.pins.CQ4.GetValue();
+		DQ1 = this.ULS670LOG.pins.DQ1.GetValue();
+		DQ2 = this.ULS670LOG.pins.DQ2.GetValue();
+		DQ3 = this.ULS670LOG.pins.DQ3.GetValue();
+		DQ4 = this.ULS670LOG.pins.DQ4.GetValue();
+		   GWBAR   =  GWBAR_I ;
+		   GRBAR   =  GRBAR_I ;
+		   WA      =  WA_I ;
+		   WB      =  WB_I ;
+		   RA      =  RA_I ;
+		   RB      =  RB_I ;
+		   D1      =  D1_I ;
+		   D2      =  D2_I ;
+		   D3      =  D3_I ;
+		   D4      =  D4_I ;
+		   ENABLE2 =  !(GWBAR | WB) ;
+		   ENABLE1 =  !(GWBAR | ENABLE2) ;
+		   GATEA   =  ENABLE2 & !WA ;
+		   GATEB   =  ENABLE2 &  WA ;
+		   GATEC   =  ENABLE1 & !WA ;
+		   GATED   =  ENABLE1 &  WA ;
+		   Q1      =  (AQ1 & !RA & !RB) |               (BQ1 &  RA & !RB) |               (CQ1 & !RA &  RB) |               (DQ1 &  RA &  RB)             ;
+		   Q2      =  (AQ2 & !RA & !RB) |               (BQ2 &  RA & !RB) |               (CQ2 & !RA &  RB) |               (DQ2 &  RA &  RB)             ;
+		   Q3      =  (AQ3 & !RA & !RB) |               (BQ3 &  RA & !RB) |               (CQ3 & !RA &  RB) |               (DQ3 &  RA &  RB)             ;
+		   Q4      =  (AQ4 & !RA & !RB) |               (BQ4 &  RA & !RB) |               (CQ4 & !RA &  RB) |               (DQ4 &  RA &  RB)             ;
+		
+		this.ULS670LOG.pins.GWBAR.SetValue(GWBAR);
+		this.ULS670LOG.pins.GRBAR.SetValue(GRBAR);
+		this.ULS670LOG.pins.WA.SetValue(WA);
+		this.ULS670LOG.pins.WB.SetValue(WB);
+		this.ULS670LOG.pins.RA.SetValue(RA);
+		this.ULS670LOG.pins.RB.SetValue(RB);
+		this.ULS670LOG.pins.D1.SetValue(D1);
+		this.ULS670LOG.pins.D2.SetValue(D2);
+		this.ULS670LOG.pins.D3.SetValue(D3);
+		this.ULS670LOG.pins.D4.SetValue(D4);
+		this.ULS670LOG.pins.GATEA.SetValue(GATEA);
+		this.ULS670LOG.pins.GATEB.SetValue(GATEB);
+		this.ULS670LOG.pins.GATEC.SetValue(GATEC);
+		this.ULS670LOG.pins.GATED.SetValue(GATED);
+		this.ULS670LOG.pins.Q1.SetValue(Q1);
+		this.ULS670LOG.pins.Q2.SetValue(Q2);
+		this.ULS670LOG.pins.Q3.SetValue(Q3);
+		this.ULS670LOG.pins.Q4.SetValue(Q4);
+	}
 }
 /**
  * 4-BIT SHIFT REGISTERS_LATCHES WITH 3-STATE OUTPUTS
@@ -17461,7 +23987,7 @@ class SN74LS671 extends Component {
 			QD_O: new Pin(),
 			CASC_O: new Pin(),
 		}
-		this.ULS671LOG = new logicexp(['GBAR_I','R_SBAR_I','SRCK_I','SRCLRBAR_I','RCK_I','S0_I','S1_I','SERR_I','A_I','B_I','C_I','D_I','SERL_I','Q1A','Q1B','Q1C','Q1D','Q1ABAR','Q1BBAR','Q1CBAR','Q1DBAR','Q2ABAR','Q2BBAR','Q2CBAR','Q2DBAR'], ['GBAR','R_SBAR','SRCK','SRCLRBAR','RCK','SERR','S0','S1','SERL','A','B','C','D','D1A','D1B','D1C','D1D','QA','QB','QC','QD','CASC'], ['_S1_S0','_S1S0','S1_S0','S1S0']).Logic('   R_SBAR    =  R_SBAR_I ;   S0        =  S0_I ;   S1        =  S1_I ;   SERR      =  SERR_I ;   SERL      =  SERL_I ;   SRCLRBAR  =  SRCLRBAR_I ;   SRCK      =  SRCK_I ;   RCK       =  RCK_I ;   GBAR      =  GBAR_I ;   A         =  A_I ;   B         =  B_I ;   C         =  C_I ;   D         =  D_I ;   _S1_S0      =  !S1 & !S0 ;   _S1S0       =  !S1 & S0  ;   S1_S0       =  S1  & !S0 ;   S1S0        =  S1  & S0  ;   D1A =  (S1S0 & A) | (S1_S0 & Q1B   ) | (_S1S0 & SERR)   | (_S1_S0 & Q1A) ;   D1B =  (S1S0 & B) | (S1_S0 & Q1C   ) | (_S1S0 & Q1A   ) | (_S1_S0 & Q1B) ;   D1C =  (S1S0 & C) | (S1_S0 & Q1D   ) | (_S1S0 & Q1B   ) | (_S1_S0 & Q1C) ;   D1D =  (S1S0 & D) | (S1_S0 & SERL)   | (_S1S0 & Q1C   ) | (_S1_S0 & Q1D) ;   QA =  !((Q2ABAR & R_SBAR) | (Q1ABAR & !R_SBAR)) ;   QB =  !((Q2BBAR & R_SBAR) | (Q1BBAR & !R_SBAR)) ;   QC =  !((Q2CBAR & R_SBAR) | (Q1CBAR & !R_SBAR)) ;   QD =  !((Q2DBAR & R_SBAR) | (Q1DBAR & !R_SBAR)) ;   CASC =  !((Q1DBAR & _S1S0   ) | (Q1ABAR & S1_S0   )) ;');
+		this.ULS671LOG = new logicexp(['GBAR_I','R_SBAR_I','SRCK_I','SRCLRBAR_I','RCK_I','S0_I','S1_I','SERR_I','A_I','B_I','C_I','D_I','SERL_I','Q1A','Q1B','Q1C','Q1D','Q1ABAR','Q1BBAR','Q1CBAR','Q1DBAR','Q2ABAR','Q2BBAR','Q2CBAR','Q2DBAR'], ['GBAR','R_SBAR','SRCK','SRCLRBAR','RCK','SERR','S0','S1','SERL','A','B','C','D','D1A','D1B','D1C','D1D','QA','QB','QC','QD','CASC']).Callback(this.$exe_ULS671LOG);
 		Connect(this.ULS671LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS671LOG.pins.R_SBAR_I, this.pins.R_SBAR_I);
 		Connect(this.ULS671LOG.pins.SRCK_I, this.pins.SRCK_I);
@@ -17585,6 +24111,85 @@ class SN74LS671 extends Component {
 		Connect(QD, this.pins.QD_O);
 		Connect(CASC, this.pins.CASC_O);
 	}
+	$exe_ULS671LOG() {
+		var _S1_S0, _S1S0, S1_S0, S1S0; // Temps
+		var GBAR_I, R_SBAR_I, SRCK_I, SRCLRBAR_I, RCK_I, S0_I, S1_I, SERR_I, A_I, B_I, C_I, D_I, SERL_I, Q1A, Q1B, Q1C, Q1D, Q1ABAR, Q1BBAR, Q1CBAR, Q1DBAR, Q2ABAR, Q2BBAR, Q2CBAR, Q2DBAR; // Inputs
+		var GBAR, R_SBAR, SRCK, SRCLRBAR, RCK, SERR, S0, S1, SERL, A, B, C, D, D1A, D1B, D1C, D1D, QA, QB, QC, QD, CASC; // Outputs
+		GBAR_I = this.ULS671LOG.pins.GBAR_I.GetValue();
+		R_SBAR_I = this.ULS671LOG.pins.R_SBAR_I.GetValue();
+		SRCK_I = this.ULS671LOG.pins.SRCK_I.GetValue();
+		SRCLRBAR_I = this.ULS671LOG.pins.SRCLRBAR_I.GetValue();
+		RCK_I = this.ULS671LOG.pins.RCK_I.GetValue();
+		S0_I = this.ULS671LOG.pins.S0_I.GetValue();
+		S1_I = this.ULS671LOG.pins.S1_I.GetValue();
+		SERR_I = this.ULS671LOG.pins.SERR_I.GetValue();
+		A_I = this.ULS671LOG.pins.A_I.GetValue();
+		B_I = this.ULS671LOG.pins.B_I.GetValue();
+		C_I = this.ULS671LOG.pins.C_I.GetValue();
+		D_I = this.ULS671LOG.pins.D_I.GetValue();
+		SERL_I = this.ULS671LOG.pins.SERL_I.GetValue();
+		Q1A = this.ULS671LOG.pins.Q1A.GetValue();
+		Q1B = this.ULS671LOG.pins.Q1B.GetValue();
+		Q1C = this.ULS671LOG.pins.Q1C.GetValue();
+		Q1D = this.ULS671LOG.pins.Q1D.GetValue();
+		Q1ABAR = this.ULS671LOG.pins.Q1ABAR.GetValue();
+		Q1BBAR = this.ULS671LOG.pins.Q1BBAR.GetValue();
+		Q1CBAR = this.ULS671LOG.pins.Q1CBAR.GetValue();
+		Q1DBAR = this.ULS671LOG.pins.Q1DBAR.GetValue();
+		Q2ABAR = this.ULS671LOG.pins.Q2ABAR.GetValue();
+		Q2BBAR = this.ULS671LOG.pins.Q2BBAR.GetValue();
+		Q2CBAR = this.ULS671LOG.pins.Q2CBAR.GetValue();
+		Q2DBAR = this.ULS671LOG.pins.Q2DBAR.GetValue();
+		   R_SBAR    =  R_SBAR_I ;
+		   S0        =  S0_I ;
+		   S1        =  S1_I ;
+		   SERR      =  SERR_I ;
+		   SERL      =  SERL_I ;
+		   SRCLRBAR  =  SRCLRBAR_I ;
+		   SRCK      =  SRCK_I ;
+		   RCK       =  RCK_I ;
+		   GBAR      =  GBAR_I ;
+		   A         =  A_I ;
+		   B         =  B_I ;
+		   C         =  C_I ;
+		   D         =  D_I ;
+		   _S1_S0      =  !S1 & !S0 ;
+		   _S1S0       =  !S1 & S0  ;
+		   S1_S0       =  S1  & !S0 ;
+		   S1S0        =  S1  & S0  ;
+		   D1A =  (S1S0 & A) | (S1_S0 & Q1B   ) | (_S1S0 & SERR)   | (_S1_S0 & Q1A) ;
+		   D1B =  (S1S0 & B) | (S1_S0 & Q1C   ) | (_S1S0 & Q1A   ) | (_S1_S0 & Q1B) ;
+		   D1C =  (S1S0 & C) | (S1_S0 & Q1D   ) | (_S1S0 & Q1B   ) | (_S1_S0 & Q1C) ;
+		   D1D =  (S1S0 & D) | (S1_S0 & SERL)   | (_S1S0 & Q1C   ) | (_S1_S0 & Q1D) ;
+		   QA =  !((Q2ABAR & R_SBAR) | (Q1ABAR & !R_SBAR)) ;
+		   QB =  !((Q2BBAR & R_SBAR) | (Q1BBAR & !R_SBAR)) ;
+		   QC =  !((Q2CBAR & R_SBAR) | (Q1CBAR & !R_SBAR)) ;
+		   QD =  !((Q2DBAR & R_SBAR) | (Q1DBAR & !R_SBAR)) ;
+		   CASC =  !((Q1DBAR & _S1S0   ) | (Q1ABAR & S1_S0   )) ;
+		
+		this.ULS671LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS671LOG.pins.R_SBAR.SetValue(R_SBAR);
+		this.ULS671LOG.pins.SRCK.SetValue(SRCK);
+		this.ULS671LOG.pins.SRCLRBAR.SetValue(SRCLRBAR);
+		this.ULS671LOG.pins.RCK.SetValue(RCK);
+		this.ULS671LOG.pins.SERR.SetValue(SERR);
+		this.ULS671LOG.pins.S0.SetValue(S0);
+		this.ULS671LOG.pins.S1.SetValue(S1);
+		this.ULS671LOG.pins.SERL.SetValue(SERL);
+		this.ULS671LOG.pins.A.SetValue(A);
+		this.ULS671LOG.pins.B.SetValue(B);
+		this.ULS671LOG.pins.C.SetValue(C);
+		this.ULS671LOG.pins.D.SetValue(D);
+		this.ULS671LOG.pins.D1A.SetValue(D1A);
+		this.ULS671LOG.pins.D1B.SetValue(D1B);
+		this.ULS671LOG.pins.D1C.SetValue(D1C);
+		this.ULS671LOG.pins.D1D.SetValue(D1D);
+		this.ULS671LOG.pins.QA.SetValue(QA);
+		this.ULS671LOG.pins.QB.SetValue(QB);
+		this.ULS671LOG.pins.QC.SetValue(QC);
+		this.ULS671LOG.pins.QD.SetValue(QD);
+		this.ULS671LOG.pins.CASC.SetValue(CASC);
+	}
 }
 /**
  * 4-BIT SHIFT REGISTERS_LATCHES WITH 3-STATE OUTPUTS
@@ -17612,7 +24217,7 @@ class SN74LS672 extends Component {
 			QD_O: new Pin(),
 			CASC_O: new Pin(),
 		}
-		this.ULS672LOG = new logicexp(['GBAR_I','R_SBAR_I','SRCK_I','SRCLRBAR_I','RCK_I','S0_I','S1_I','SERR_I','A_I','B_I','C_I','D_I','SERL_I','Q1A','Q1B','Q1C','Q1D','Q1ABAR','Q1BBAR','Q1CBAR','Q1DBAR','Q2ABAR','Q2BBAR','Q2CBAR','Q2DBAR'], ['GBAR','R_SBAR','SRCK','SRCLRBAR','RCK','SERR','S0','S1','SERL','A','B','C','D','D1A','D1B','D1C','D1D','QA','QB','QC','QD','CASC'], ['_S1_S0','_S1S0','S1_S0','S1S0']).Logic('   R_SBAR    =  R_SBAR_I ;   S0        =  S0_I ;   S1        =  S1_I ;   SERR      =  SERR_I ;   SERL      =  SERL_I ;   SRCLRBAR  =  SRCLRBAR_I ;   SRCK      =  SRCK_I ;   RCK       =  RCK_I ;   GBAR      =  GBAR_I ;   A         =  A_I ;   B         =  B_I ;   C         =  C_I ;   D         =  D_I ;   _S1_S0      =  !S1 & !S0 ;   _S1S0       =  !S1 & S0  ;   S1_S0       =  S1  & !S0 ;   S1S0        =  S1  & S0  ;   D1A =  (S1S0 & A & SRCLRBAR)     | (S1_S0 & Q1B & SRCLRBAR)    |          (_S1S0 & SERR & SRCLRBAR) | (_S1_S0 & Q1A & SRCLRBAR) ;   D1B =  (S1S0 & B & SRCLRBAR)     | (S1_S0 & Q1C & SRCLRBAR)    |          (_S1S0 & Q1A & SRCLRBAR)    | (_S1_S0 & Q1B & SRCLRBAR) ;   D1C =  (S1S0 & C & SRCLRBAR)     | (S1_S0 & Q1D & SRCLRBAR)    |          (_S1S0 & Q1B & SRCLRBAR)    | (_S1_S0 & Q1C & SRCLRBAR) ;   D1D =  (S1S0 & D & SRCLRBAR)     | (S1_S0 & SERL & SRCLRBAR) |          (_S1S0 & Q1C & SRCLRBAR)    | (_S1_S0 & Q1D & SRCLRBAR) ;   QA =  !((Q2ABAR & R_SBAR) | (Q1ABAR & !R_SBAR)) ;   QB =  !((Q2BBAR & R_SBAR) | (Q1BBAR & !R_SBAR)) ;   QC =  !((Q2CBAR & R_SBAR) | (Q1CBAR & !R_SBAR)) ;   QD =  !((Q2DBAR & R_SBAR) | (Q1DBAR & !R_SBAR)) ;   CASC =  !((Q1DBAR & _S1S0   ) | (Q1ABAR & S1_S0   )) ;');
+		this.ULS672LOG = new logicexp(['GBAR_I','R_SBAR_I','SRCK_I','SRCLRBAR_I','RCK_I','S0_I','S1_I','SERR_I','A_I','B_I','C_I','D_I','SERL_I','Q1A','Q1B','Q1C','Q1D','Q1ABAR','Q1BBAR','Q1CBAR','Q1DBAR','Q2ABAR','Q2BBAR','Q2CBAR','Q2DBAR'], ['GBAR','R_SBAR','SRCK','SRCLRBAR','RCK','SERR','S0','S1','SERL','A','B','C','D','D1A','D1B','D1C','D1D','QA','QB','QC','QD','CASC']).Callback(this.$exe_ULS672LOG);
 		Connect(this.ULS672LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS672LOG.pins.R_SBAR_I, this.pins.R_SBAR_I);
 		Connect(this.ULS672LOG.pins.SRCK_I, this.pins.SRCK_I);
@@ -17736,6 +24341,85 @@ class SN74LS672 extends Component {
 		Connect(QD, this.pins.QD_O);
 		Connect(CASC, this.pins.CASC_O);
 	}
+	$exe_ULS672LOG() {
+		var _S1_S0, _S1S0, S1_S0, S1S0; // Temps
+		var GBAR_I, R_SBAR_I, SRCK_I, SRCLRBAR_I, RCK_I, S0_I, S1_I, SERR_I, A_I, B_I, C_I, D_I, SERL_I, Q1A, Q1B, Q1C, Q1D, Q1ABAR, Q1BBAR, Q1CBAR, Q1DBAR, Q2ABAR, Q2BBAR, Q2CBAR, Q2DBAR; // Inputs
+		var GBAR, R_SBAR, SRCK, SRCLRBAR, RCK, SERR, S0, S1, SERL, A, B, C, D, D1A, D1B, D1C, D1D, QA, QB, QC, QD, CASC; // Outputs
+		GBAR_I = this.ULS672LOG.pins.GBAR_I.GetValue();
+		R_SBAR_I = this.ULS672LOG.pins.R_SBAR_I.GetValue();
+		SRCK_I = this.ULS672LOG.pins.SRCK_I.GetValue();
+		SRCLRBAR_I = this.ULS672LOG.pins.SRCLRBAR_I.GetValue();
+		RCK_I = this.ULS672LOG.pins.RCK_I.GetValue();
+		S0_I = this.ULS672LOG.pins.S0_I.GetValue();
+		S1_I = this.ULS672LOG.pins.S1_I.GetValue();
+		SERR_I = this.ULS672LOG.pins.SERR_I.GetValue();
+		A_I = this.ULS672LOG.pins.A_I.GetValue();
+		B_I = this.ULS672LOG.pins.B_I.GetValue();
+		C_I = this.ULS672LOG.pins.C_I.GetValue();
+		D_I = this.ULS672LOG.pins.D_I.GetValue();
+		SERL_I = this.ULS672LOG.pins.SERL_I.GetValue();
+		Q1A = this.ULS672LOG.pins.Q1A.GetValue();
+		Q1B = this.ULS672LOG.pins.Q1B.GetValue();
+		Q1C = this.ULS672LOG.pins.Q1C.GetValue();
+		Q1D = this.ULS672LOG.pins.Q1D.GetValue();
+		Q1ABAR = this.ULS672LOG.pins.Q1ABAR.GetValue();
+		Q1BBAR = this.ULS672LOG.pins.Q1BBAR.GetValue();
+		Q1CBAR = this.ULS672LOG.pins.Q1CBAR.GetValue();
+		Q1DBAR = this.ULS672LOG.pins.Q1DBAR.GetValue();
+		Q2ABAR = this.ULS672LOG.pins.Q2ABAR.GetValue();
+		Q2BBAR = this.ULS672LOG.pins.Q2BBAR.GetValue();
+		Q2CBAR = this.ULS672LOG.pins.Q2CBAR.GetValue();
+		Q2DBAR = this.ULS672LOG.pins.Q2DBAR.GetValue();
+		   R_SBAR    =  R_SBAR_I ;
+		   S0        =  S0_I ;
+		   S1        =  S1_I ;
+		   SERR      =  SERR_I ;
+		   SERL      =  SERL_I ;
+		   SRCLRBAR  =  SRCLRBAR_I ;
+		   SRCK      =  SRCK_I ;
+		   RCK       =  RCK_I ;
+		   GBAR      =  GBAR_I ;
+		   A         =  A_I ;
+		   B         =  B_I ;
+		   C         =  C_I ;
+		   D         =  D_I ;
+		   _S1_S0      =  !S1 & !S0 ;
+		   _S1S0       =  !S1 & S0  ;
+		   S1_S0       =  S1  & !S0 ;
+		   S1S0        =  S1  & S0  ;
+		   D1A =  (S1S0 & A & SRCLRBAR)     | (S1_S0 & Q1B & SRCLRBAR)    |          (_S1S0 & SERR & SRCLRBAR) | (_S1_S0 & Q1A & SRCLRBAR) ;
+		   D1B =  (S1S0 & B & SRCLRBAR)     | (S1_S0 & Q1C & SRCLRBAR)    |          (_S1S0 & Q1A & SRCLRBAR)    | (_S1_S0 & Q1B & SRCLRBAR) ;
+		   D1C =  (S1S0 & C & SRCLRBAR)     | (S1_S0 & Q1D & SRCLRBAR)    |          (_S1S0 & Q1B & SRCLRBAR)    | (_S1_S0 & Q1C & SRCLRBAR) ;
+		   D1D =  (S1S0 & D & SRCLRBAR)     | (S1_S0 & SERL & SRCLRBAR) |          (_S1S0 & Q1C & SRCLRBAR)    | (_S1_S0 & Q1D & SRCLRBAR) ;
+		   QA =  !((Q2ABAR & R_SBAR) | (Q1ABAR & !R_SBAR)) ;
+		   QB =  !((Q2BBAR & R_SBAR) | (Q1BBAR & !R_SBAR)) ;
+		   QC =  !((Q2CBAR & R_SBAR) | (Q1CBAR & !R_SBAR)) ;
+		   QD =  !((Q2DBAR & R_SBAR) | (Q1DBAR & !R_SBAR)) ;
+		   CASC =  !((Q1DBAR & _S1S0   ) | (Q1ABAR & S1_S0   )) ;
+		
+		this.ULS672LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS672LOG.pins.R_SBAR.SetValue(R_SBAR);
+		this.ULS672LOG.pins.SRCK.SetValue(SRCK);
+		this.ULS672LOG.pins.SRCLRBAR.SetValue(SRCLRBAR);
+		this.ULS672LOG.pins.RCK.SetValue(RCK);
+		this.ULS672LOG.pins.SERR.SetValue(SERR);
+		this.ULS672LOG.pins.S0.SetValue(S0);
+		this.ULS672LOG.pins.S1.SetValue(S1);
+		this.ULS672LOG.pins.SERL.SetValue(SERL);
+		this.ULS672LOG.pins.A.SetValue(A);
+		this.ULS672LOG.pins.B.SetValue(B);
+		this.ULS672LOG.pins.C.SetValue(C);
+		this.ULS672LOG.pins.D.SetValue(D);
+		this.ULS672LOG.pins.D1A.SetValue(D1A);
+		this.ULS672LOG.pins.D1B.SetValue(D1B);
+		this.ULS672LOG.pins.D1C.SetValue(D1C);
+		this.ULS672LOG.pins.D1D.SetValue(D1D);
+		this.ULS672LOG.pins.QA.SetValue(QA);
+		this.ULS672LOG.pins.QB.SetValue(QB);
+		this.ULS672LOG.pins.QC.SetValue(QC);
+		this.ULS672LOG.pins.QD.SetValue(QD);
+		this.ULS672LOG.pins.CASC.SetValue(CASC);
+	}
 }
 /**
  * 8-BIT MAGNITUDE COMPARATORS
@@ -17763,7 +24447,7 @@ class SN74LS684 extends Component {
 			PEQBAR_O: new Pin(),
 			PGQBAR_O: new Pin(),
 		}
-		this.ULS684LOG = new logicexp(['P7_I','P6_I','P5_I','P4_I','P3_I','P2_I','P1_I','P0_I','Q7_I','Q6_I','Q5_I','Q4_I','Q3_I','Q2_I','Q1_I','Q0_I'], ['P7','P6','P5','P4','P3','P2','P1','P0','Q7','Q6','Q5','Q4','Q3','Q2','Q1','Q0','PEQBAR','PGQBAR'], ['PQ7','PQ6','PQ5','PQ4','PQ3','PQ2','PQ1','PQ0','PQ67','PQ57','PQ47','PQ37','PQ27','PQ17']).Logic('   P7 =  P7_I ;   P6 =  P6_I ;   P5 =  P5_I ;   P4 =  P4_I ;   P3 =  P3_I ;   P2 =  P2_I ;   P1 =  P1_I ;   P0 =  P0_I ;   Q7 =  Q7_I ;   Q6 =  Q6_I ;   Q5 =  Q5_I ;   Q4 =  Q4_I ;   Q3 =  Q3_I ;   Q2 =  Q2_I ;   Q1 =  Q1_I ;   Q0 =  Q0_I ;   PQ7    =  !(P7 ^ Q7) ;   PQ6    =  !(P6 ^ Q6) ;   PQ5    =  !(P5 ^ Q5) ;   PQ4    =  !(P4 ^ Q4) ;   PQ3    =  !(P3 ^ Q3) ;   PQ2    =  !(P2 ^ Q2) ;   PQ1    =  !(P1 ^ Q1) ;   PQ0    =  !(P0 ^ Q0) ;   PQ67   =  PQ6 & PQ7  ;   PQ57   =  PQ5 & PQ67 ;   PQ47   =  PQ4 & PQ57 ;   PQ37   =  PQ3 & PQ47 ;   PQ27   =  PQ2 & PQ37 ;   PQ17   =  PQ1 & PQ27 ;   PEQBAR =  !(PQ7 & PQ6 & PQ5 & PQ4 & PQ3 & PQ2 & PQ1 & PQ0) ;   PGQBAR =  !((PQ17 & !Q0 & P0) | (PQ27 & !Q1 & P1) | (PQ37 & !Q2 & P2) |                (PQ47 & !Q3 & P3) | (PQ57 & !Q4 & P4) | (PQ67 & !Q5 & P5) |                (PQ7 & !Q6 & P6)  | (!Q7 & P7)) ;');
+		this.ULS684LOG = new logicexp(['P7_I','P6_I','P5_I','P4_I','P3_I','P2_I','P1_I','P0_I','Q7_I','Q6_I','Q5_I','Q4_I','Q3_I','Q2_I','Q1_I','Q0_I'], ['P7','P6','P5','P4','P3','P2','P1','P0','Q7','Q6','Q5','Q4','Q3','Q2','Q1','Q0','PEQBAR','PGQBAR']).Callback(this.$exe_ULS684LOG);
 		Connect(this.ULS684LOG.pins.P7_I, this.pins.P7_I);
 		Connect(this.ULS684LOG.pins.P6_I, this.pins.P6_I);
 		Connect(this.ULS684LOG.pins.P5_I, this.pins.P5_I);
@@ -17819,6 +24503,78 @@ class SN74LS684 extends Component {
 		Connect(PEQBAR, this.pins.PEQBAR_O);
 		Connect(PGQBAR, this.pins.PGQBAR_O);
 	}
+	$exe_ULS684LOG() {
+		var PQ7, PQ6, PQ5, PQ4, PQ3, PQ2, PQ1, PQ0, PQ67, PQ57, PQ47, PQ37, PQ27, PQ17; // Temps
+		var P7_I, P6_I, P5_I, P4_I, P3_I, P2_I, P1_I, P0_I, Q7_I, Q6_I, Q5_I, Q4_I, Q3_I, Q2_I, Q1_I, Q0_I; // Inputs
+		var P7, P6, P5, P4, P3, P2, P1, P0, Q7, Q6, Q5, Q4, Q3, Q2, Q1, Q0, PEQBAR, PGQBAR; // Outputs
+		P7_I = this.ULS684LOG.pins.P7_I.GetValue();
+		P6_I = this.ULS684LOG.pins.P6_I.GetValue();
+		P5_I = this.ULS684LOG.pins.P5_I.GetValue();
+		P4_I = this.ULS684LOG.pins.P4_I.GetValue();
+		P3_I = this.ULS684LOG.pins.P3_I.GetValue();
+		P2_I = this.ULS684LOG.pins.P2_I.GetValue();
+		P1_I = this.ULS684LOG.pins.P1_I.GetValue();
+		P0_I = this.ULS684LOG.pins.P0_I.GetValue();
+		Q7_I = this.ULS684LOG.pins.Q7_I.GetValue();
+		Q6_I = this.ULS684LOG.pins.Q6_I.GetValue();
+		Q5_I = this.ULS684LOG.pins.Q5_I.GetValue();
+		Q4_I = this.ULS684LOG.pins.Q4_I.GetValue();
+		Q3_I = this.ULS684LOG.pins.Q3_I.GetValue();
+		Q2_I = this.ULS684LOG.pins.Q2_I.GetValue();
+		Q1_I = this.ULS684LOG.pins.Q1_I.GetValue();
+		Q0_I = this.ULS684LOG.pins.Q0_I.GetValue();
+		   P7 =  P7_I ;
+		   P6 =  P6_I ;
+		   P5 =  P5_I ;
+		   P4 =  P4_I ;
+		   P3 =  P3_I ;
+		   P2 =  P2_I ;
+		   P1 =  P1_I ;
+		   P0 =  P0_I ;
+		   Q7 =  Q7_I ;
+		   Q6 =  Q6_I ;
+		   Q5 =  Q5_I ;
+		   Q4 =  Q4_I ;
+		   Q3 =  Q3_I ;
+		   Q2 =  Q2_I ;
+		   Q1 =  Q1_I ;
+		   Q0 =  Q0_I ;
+		   PQ7    =  !(P7 ^ Q7) ;
+		   PQ6    =  !(P6 ^ Q6) ;
+		   PQ5    =  !(P5 ^ Q5) ;
+		   PQ4    =  !(P4 ^ Q4) ;
+		   PQ3    =  !(P3 ^ Q3) ;
+		   PQ2    =  !(P2 ^ Q2) ;
+		   PQ1    =  !(P1 ^ Q1) ;
+		   PQ0    =  !(P0 ^ Q0) ;
+		   PQ67   =  PQ6 & PQ7  ;
+		   PQ57   =  PQ5 & PQ67 ;
+		   PQ47   =  PQ4 & PQ57 ;
+		   PQ37   =  PQ3 & PQ47 ;
+		   PQ27   =  PQ2 & PQ37 ;
+		   PQ17   =  PQ1 & PQ27 ;
+		   PEQBAR =  !(PQ7 & PQ6 & PQ5 & PQ4 & PQ3 & PQ2 & PQ1 & PQ0) ;
+		   PGQBAR =  !((PQ17 & !Q0 & P0) | (PQ27 & !Q1 & P1) | (PQ37 & !Q2 & P2) |                (PQ47 & !Q3 & P3) | (PQ57 & !Q4 & P4) | (PQ67 & !Q5 & P5) |                (PQ7 & !Q6 & P6)  | (!Q7 & P7)) ;
+		
+		this.ULS684LOG.pins.P7.SetValue(P7);
+		this.ULS684LOG.pins.P6.SetValue(P6);
+		this.ULS684LOG.pins.P5.SetValue(P5);
+		this.ULS684LOG.pins.P4.SetValue(P4);
+		this.ULS684LOG.pins.P3.SetValue(P3);
+		this.ULS684LOG.pins.P2.SetValue(P2);
+		this.ULS684LOG.pins.P1.SetValue(P1);
+		this.ULS684LOG.pins.P0.SetValue(P0);
+		this.ULS684LOG.pins.Q7.SetValue(Q7);
+		this.ULS684LOG.pins.Q6.SetValue(Q6);
+		this.ULS684LOG.pins.Q5.SetValue(Q5);
+		this.ULS684LOG.pins.Q4.SetValue(Q4);
+		this.ULS684LOG.pins.Q3.SetValue(Q3);
+		this.ULS684LOG.pins.Q2.SetValue(Q2);
+		this.ULS684LOG.pins.Q1.SetValue(Q1);
+		this.ULS684LOG.pins.Q0.SetValue(Q0);
+		this.ULS684LOG.pins.PEQBAR.SetValue(PEQBAR);
+		this.ULS684LOG.pins.PGQBAR.SetValue(PGQBAR);
+	}
 }
 /**
  * 8-BIT MAGNITUDE_IDENTITY COMPARATOR WITH OPEN-COLLECTOR OUTPUTS
@@ -17846,7 +24602,7 @@ class SN74LS685 extends Component {
 			PEQBAR_O: new Pin(),
 			PGQBAR_O: new Pin(),
 		}
-		this.ULS685LOG = new logicexp(['P7_I','P6_I','P5_I','P4_I','P3_I','P2_I','P1_I','P0_I','Q7_I','Q6_I','Q5_I','Q4_I','Q3_I','Q2_I','Q1_I','Q0_I'], ['P7','P6','P5','P4','P3','P2','P1','P0','Q7','Q6','Q5','Q4','Q3','Q2','Q1','Q0','PEQBAR','PGQBAR'], ['PQ7','PQ6','PQ5','PQ4','PQ3','PQ2','PQ1','PQ0','PQ67','PQ57','PQ47','PQ37','PQ27','PQ17']).Logic('   P7 =  P7_I ;   P6 =  P6_I ;   P5 =  P5_I ;   P4 =  P4_I ;   P3 =  P3_I ;   P2 =  P2_I ;   P1 =  P1_I ;   P0 =  P0_I ;   Q7 =  Q7_I ;   Q6 =  Q6_I ;   Q5 =  Q5_I ;   Q4 =  Q4_I ;   Q3 =  Q3_I ;   Q2 =  Q2_I ;   Q1 =  Q1_I ;   Q0 =  Q0_I ;   PQ7    =  !(P7 ^ Q7) ;   PQ6    =  !(P6 ^ Q6) ;   PQ5    =  !(P5 ^ Q5) ;   PQ4    =  !(P4 ^ Q4) ;   PQ3    =  !(P3 ^ Q3) ;   PQ2    =  !(P2 ^ Q2) ;   PQ1    =  !(P1 ^ Q1) ;   PQ0    =  !(P0 ^ Q0) ;   PQ67   =  PQ6 & PQ7  ;   PQ57   =  PQ5 & PQ67 ;   PQ47   =  PQ4 & PQ57 ;   PQ37   =  PQ3 & PQ47 ;   PQ27   =  PQ2 & PQ37 ;   PQ17   =  PQ1 & PQ27 ;   PEQBAR =  !PQ17 ;   PGQBAR =  !((PQ17 & !Q0 & P0) | (PQ27 & !Q1 & P1) | (PQ37 & !Q2 & P2) |                (PQ47 & !Q3 & P3) | (PQ57 & !Q4 & P4) | (PQ67 & !Q5 & P5) |                (PQ7 & !Q6 & P6)  | (!Q7 & P7)) ;');
+		this.ULS685LOG = new logicexp(['P7_I','P6_I','P5_I','P4_I','P3_I','P2_I','P1_I','P0_I','Q7_I','Q6_I','Q5_I','Q4_I','Q3_I','Q2_I','Q1_I','Q0_I'], ['P7','P6','P5','P4','P3','P2','P1','P0','Q7','Q6','Q5','Q4','Q3','Q2','Q1','Q0','PEQBAR','PGQBAR']).Callback(this.$exe_ULS685LOG);
 		Connect(this.ULS685LOG.pins.P7_I, this.pins.P7_I);
 		Connect(this.ULS685LOG.pins.P6_I, this.pins.P6_I);
 		Connect(this.ULS685LOG.pins.P5_I, this.pins.P5_I);
@@ -17901,6 +24657,78 @@ class SN74LS685 extends Component {
 		Connect(this.ULS685LOG.pins.PGQBAR, PGQBAR);
 		Connect(PEQBAR, this.pins.PEQBAR_O);
 		Connect(PGQBAR, this.pins.PGQBAR_O);
+	}
+	$exe_ULS685LOG() {
+		var PQ7, PQ6, PQ5, PQ4, PQ3, PQ2, PQ1, PQ0, PQ67, PQ57, PQ47, PQ37, PQ27, PQ17; // Temps
+		var P7_I, P6_I, P5_I, P4_I, P3_I, P2_I, P1_I, P0_I, Q7_I, Q6_I, Q5_I, Q4_I, Q3_I, Q2_I, Q1_I, Q0_I; // Inputs
+		var P7, P6, P5, P4, P3, P2, P1, P0, Q7, Q6, Q5, Q4, Q3, Q2, Q1, Q0, PEQBAR, PGQBAR; // Outputs
+		P7_I = this.ULS685LOG.pins.P7_I.GetValue();
+		P6_I = this.ULS685LOG.pins.P6_I.GetValue();
+		P5_I = this.ULS685LOG.pins.P5_I.GetValue();
+		P4_I = this.ULS685LOG.pins.P4_I.GetValue();
+		P3_I = this.ULS685LOG.pins.P3_I.GetValue();
+		P2_I = this.ULS685LOG.pins.P2_I.GetValue();
+		P1_I = this.ULS685LOG.pins.P1_I.GetValue();
+		P0_I = this.ULS685LOG.pins.P0_I.GetValue();
+		Q7_I = this.ULS685LOG.pins.Q7_I.GetValue();
+		Q6_I = this.ULS685LOG.pins.Q6_I.GetValue();
+		Q5_I = this.ULS685LOG.pins.Q5_I.GetValue();
+		Q4_I = this.ULS685LOG.pins.Q4_I.GetValue();
+		Q3_I = this.ULS685LOG.pins.Q3_I.GetValue();
+		Q2_I = this.ULS685LOG.pins.Q2_I.GetValue();
+		Q1_I = this.ULS685LOG.pins.Q1_I.GetValue();
+		Q0_I = this.ULS685LOG.pins.Q0_I.GetValue();
+		   P7 =  P7_I ;
+		   P6 =  P6_I ;
+		   P5 =  P5_I ;
+		   P4 =  P4_I ;
+		   P3 =  P3_I ;
+		   P2 =  P2_I ;
+		   P1 =  P1_I ;
+		   P0 =  P0_I ;
+		   Q7 =  Q7_I ;
+		   Q6 =  Q6_I ;
+		   Q5 =  Q5_I ;
+		   Q4 =  Q4_I ;
+		   Q3 =  Q3_I ;
+		   Q2 =  Q2_I ;
+		   Q1 =  Q1_I ;
+		   Q0 =  Q0_I ;
+		   PQ7    =  !(P7 ^ Q7) ;
+		   PQ6    =  !(P6 ^ Q6) ;
+		   PQ5    =  !(P5 ^ Q5) ;
+		   PQ4    =  !(P4 ^ Q4) ;
+		   PQ3    =  !(P3 ^ Q3) ;
+		   PQ2    =  !(P2 ^ Q2) ;
+		   PQ1    =  !(P1 ^ Q1) ;
+		   PQ0    =  !(P0 ^ Q0) ;
+		   PQ67   =  PQ6 & PQ7  ;
+		   PQ57   =  PQ5 & PQ67 ;
+		   PQ47   =  PQ4 & PQ57 ;
+		   PQ37   =  PQ3 & PQ47 ;
+		   PQ27   =  PQ2 & PQ37 ;
+		   PQ17   =  PQ1 & PQ27 ;
+		   PEQBAR =  !PQ17 ;
+		   PGQBAR =  !((PQ17 & !Q0 & P0) | (PQ27 & !Q1 & P1) | (PQ37 & !Q2 & P2) |                (PQ47 & !Q3 & P3) | (PQ57 & !Q4 & P4) | (PQ67 & !Q5 & P5) |                (PQ7 & !Q6 & P6)  | (!Q7 & P7)) ;
+		
+		this.ULS685LOG.pins.P7.SetValue(P7);
+		this.ULS685LOG.pins.P6.SetValue(P6);
+		this.ULS685LOG.pins.P5.SetValue(P5);
+		this.ULS685LOG.pins.P4.SetValue(P4);
+		this.ULS685LOG.pins.P3.SetValue(P3);
+		this.ULS685LOG.pins.P2.SetValue(P2);
+		this.ULS685LOG.pins.P1.SetValue(P1);
+		this.ULS685LOG.pins.P0.SetValue(P0);
+		this.ULS685LOG.pins.Q7.SetValue(Q7);
+		this.ULS685LOG.pins.Q6.SetValue(Q6);
+		this.ULS685LOG.pins.Q5.SetValue(Q5);
+		this.ULS685LOG.pins.Q4.SetValue(Q4);
+		this.ULS685LOG.pins.Q3.SetValue(Q3);
+		this.ULS685LOG.pins.Q2.SetValue(Q2);
+		this.ULS685LOG.pins.Q1.SetValue(Q1);
+		this.ULS685LOG.pins.Q0.SetValue(Q0);
+		this.ULS685LOG.pins.PEQBAR.SetValue(PEQBAR);
+		this.ULS685LOG.pins.PGQBAR.SetValue(PGQBAR);
 	}
 }
 /**
@@ -17980,7 +24808,7 @@ class SN74LS686 extends Component {
 		Connect(this.U1.pins.OUT14, Q1);
 		let Q0 = new Pin();
 		Connect(this.U1.pins.OUT15, Q0);
-		this.ULS686LOG = new logicexp(['P7','P6','P5','P4','P3','P2','P1','P0','Q7','Q6','Q5','Q4','Q3','Q2','Q1','Q0','G1BAR_I','G2BAR_I'], ['G1BAR','G2BAR','PEQBAR','PGQBAR'], ['PQ7','PQ6','PQ5','PQ4','PQ3','PQ2','PQ1','PQ0','PQG76','PQG75','PQG74','PQG73','PQG72','PQG71']).Logic('   G1BAR  =  G1BAR_I ;   G2BAR  =  G2BAR_I ;   PQ7 =  !(P7 ^ Q7) ;   PQ6 =  !(P6 ^ Q6) ;   PQ5 =  !(P5 ^ Q5) ;   PQ4 =  !(P4 ^ Q4) ;   PQ3 =  !(P3 ^ Q3) ;   PQ2 =  !(P2 ^ Q2) ;   PQ1 =  !(P1 ^ Q1) ;   PQ0 =  !(P0 ^ Q0) ;   PQG76 =  PQ7 & PQ6 & !G2BAR ;   PQG75 =  PQG76 & PQ5 ;   PQG74 =  PQG75 & PQ4 ;   PQG73 =  PQG74 & PQ3 ;   PQG72 =  PQG73 & PQ2 ;   PQG71 =  PQG72 & PQ1 ;   PEQBAR =  !(PQ7 & PQ6 & PQ5 & PQ4 & PQ3 & PQ2 & PQ1 & PQ0 & !G1BAR) ;   PGQBAR =  !((PQG71 & !Q0 & P0) | (PQG72 & !Q1 & P1) |                (PQG73 & !Q2 & P2) | (PQG74 & !Q3 & P3) |                (PQG75 & !Q4 & P4) | (PQG76 & !Q5 & P5) |                (PQ7 & !G2BAR & !Q6 & P6) | (!G2BAR & !Q7 & P7)) ;');
+		this.ULS686LOG = new logicexp(['P7','P6','P5','P4','P3','P2','P1','P0','Q7','Q6','Q5','Q4','Q3','Q2','Q1','Q0','G1BAR_I','G2BAR_I'], ['G1BAR','G2BAR','PEQBAR','PGQBAR']).Callback(this.$exe_ULS686LOG);
 		Connect(this.ULS686LOG.pins.P7, P7);
 		Connect(this.ULS686LOG.pins.P6, P6);
 		Connect(this.ULS686LOG.pins.P5, P5);
@@ -18009,6 +24837,52 @@ class SN74LS686 extends Component {
 		Connect(this.ULS686LOG.pins.PGQBAR, PGQBAR);
 		Connect(PEQBAR, this.pins.PEQBAR_O);
 		Connect(PGQBAR, this.pins.PGQBAR_O);
+	}
+	$exe_ULS686LOG() {
+		var PQ7, PQ6, PQ5, PQ4, PQ3, PQ2, PQ1, PQ0, PQG76, PQG75, PQG74, PQG73, PQG72, PQG71; // Temps
+		var P7, P6, P5, P4, P3, P2, P1, P0, Q7, Q6, Q5, Q4, Q3, Q2, Q1, Q0, G1BAR_I, G2BAR_I; // Inputs
+		var G1BAR, G2BAR, PEQBAR, PGQBAR; // Outputs
+		P7 = this.ULS686LOG.pins.P7.GetValue();
+		P6 = this.ULS686LOG.pins.P6.GetValue();
+		P5 = this.ULS686LOG.pins.P5.GetValue();
+		P4 = this.ULS686LOG.pins.P4.GetValue();
+		P3 = this.ULS686LOG.pins.P3.GetValue();
+		P2 = this.ULS686LOG.pins.P2.GetValue();
+		P1 = this.ULS686LOG.pins.P1.GetValue();
+		P0 = this.ULS686LOG.pins.P0.GetValue();
+		Q7 = this.ULS686LOG.pins.Q7.GetValue();
+		Q6 = this.ULS686LOG.pins.Q6.GetValue();
+		Q5 = this.ULS686LOG.pins.Q5.GetValue();
+		Q4 = this.ULS686LOG.pins.Q4.GetValue();
+		Q3 = this.ULS686LOG.pins.Q3.GetValue();
+		Q2 = this.ULS686LOG.pins.Q2.GetValue();
+		Q1 = this.ULS686LOG.pins.Q1.GetValue();
+		Q0 = this.ULS686LOG.pins.Q0.GetValue();
+		G1BAR_I = this.ULS686LOG.pins.G1BAR_I.GetValue();
+		G2BAR_I = this.ULS686LOG.pins.G2BAR_I.GetValue();
+		   G1BAR  =  G1BAR_I ;
+		   G2BAR  =  G2BAR_I ;
+		   PQ7 =  !(P7 ^ Q7) ;
+		   PQ6 =  !(P6 ^ Q6) ;
+		   PQ5 =  !(P5 ^ Q5) ;
+		   PQ4 =  !(P4 ^ Q4) ;
+		   PQ3 =  !(P3 ^ Q3) ;
+		   PQ2 =  !(P2 ^ Q2) ;
+		   PQ1 =  !(P1 ^ Q1) ;
+		   PQ0 =  !(P0 ^ Q0) ;
+		   PQG76 =  PQ7 & PQ6 & !G2BAR ;
+		   PQG75 =  PQG76 & PQ5 ;
+		   PQG74 =  PQG75 & PQ4 ;
+		   PQG73 =  PQG74 & PQ3 ;
+		   PQG72 =  PQG73 & PQ2 ;
+		   PQG71 =  PQG72 & PQ1 ;
+		   PEQBAR =  !(PQ7 & PQ6 & PQ5 & PQ4 & PQ3 & PQ2 & PQ1 & PQ0 & !G1BAR) ;
+		   PGQBAR =  !((PQG71 & !Q0 & P0) | (PQG72 & !Q1 & P1) |                (PQG73 & !Q2 & P2) | (PQG74 & !Q3 & P3) |                (PQG75 & !Q4 & P4) | (PQG76 & !Q5 & P5) |                (PQ7 & !G2BAR & !Q6 & P6) | (!G2BAR & !Q7 & P7)) ;
+		
+		this.ULS686LOG.pins.G1BAR.SetValue(G1BAR);
+		this.ULS686LOG.pins.G2BAR.SetValue(G2BAR);
+		this.ULS686LOG.pins.PEQBAR.SetValue(PEQBAR);
+		this.ULS686LOG.pins.PGQBAR.SetValue(PGQBAR);
 	}
 }
 /**
@@ -18088,7 +24962,7 @@ class SN74LS687 extends Component {
 		Connect(this.U1.pins.OUT14, Q1);
 		let Q0 = new Pin();
 		Connect(this.U1.pins.OUT15, Q0);
-		this.ULS687LOG = new logicexp(['P7','P6','P5','P4','P3','P2','P1','P0','Q7','Q6','Q5','Q4','Q3','Q2','Q1','Q0','G1BAR_I','G2BAR_I'], ['G1BAR','G2BAR','PEQBAR','PGQBAR'], ['PQ7','PQ6','PQ5','PQ4','PQ3','PQ2','PQ1','PQ0','PQG76','PQG75','PQG74','PQG73','PQG72','PQG71']).Logic('   G1BAR  =  G1BAR_I ;   G2BAR  =  G2BAR_I ;   PQ7 =  !(!P7 ^ !Q7) ;   PQ6 =  !(!P6 ^ !Q6) ;   PQ5 =  !(!P5 ^ !Q5) ;   PQ4 =  !(!P4 ^ !Q4) ;   PQ3 =  !(!P3 ^ !Q3) ;   PQ2 =  !(!P2 ^ !Q2) ;   PQ1 =  !(!P1 ^ !Q1) ;   PQ0 =  !(!P0 ^ !Q0) ;   PQG76 =  PQ7 & PQ6 & !G2BAR ;   PQG75 =  PQG76 & PQ5 ;   PQG74 =  PQG75 & PQ4 ;   PQG73 =  PQG74 & PQ3 ;   PQG72 =  PQG73 & PQ2 ;   PQG71 =  PQG72 & PQ1 ;   PEQBAR =  !(PQ7 & PQ6 & PQ5 & PQ4 & PQ3 & PQ2 & PQ1 & PQ0 & !G1BAR) ;   PGQBAR =  !((PQG71 & !Q0 & P0) | (PQG72 & !Q1 & P1) |                (PQG73 & !Q2 & P2) | (PQG74 & !Q3 & P3) |                (PQG75 & !Q4 & P4) | (PQG76 & !Q5 & P5) |                (PQ7 & !G2BAR & !Q6 & P6) | (!G2BAR & !Q7 & P7)) ;');
+		this.ULS687LOG = new logicexp(['P7','P6','P5','P4','P3','P2','P1','P0','Q7','Q6','Q5','Q4','Q3','Q2','Q1','Q0','G1BAR_I','G2BAR_I'], ['G1BAR','G2BAR','PEQBAR','PGQBAR']).Callback(this.$exe_ULS687LOG);
 		Connect(this.ULS687LOG.pins.P7, P7);
 		Connect(this.ULS687LOG.pins.P6, P6);
 		Connect(this.ULS687LOG.pins.P5, P5);
@@ -18117,6 +24991,52 @@ class SN74LS687 extends Component {
 		Connect(this.ULS687LOG.pins.PGQBAR, PGQBAR);
 		Connect(PEQBAR, this.pins.PEQBAR_O);
 		Connect(PGQBAR, this.pins.PGQBAR_O);
+	}
+	$exe_ULS687LOG() {
+		var PQ7, PQ6, PQ5, PQ4, PQ3, PQ2, PQ1, PQ0, PQG76, PQG75, PQG74, PQG73, PQG72, PQG71; // Temps
+		var P7, P6, P5, P4, P3, P2, P1, P0, Q7, Q6, Q5, Q4, Q3, Q2, Q1, Q0, G1BAR_I, G2BAR_I; // Inputs
+		var G1BAR, G2BAR, PEQBAR, PGQBAR; // Outputs
+		P7 = this.ULS687LOG.pins.P7.GetValue();
+		P6 = this.ULS687LOG.pins.P6.GetValue();
+		P5 = this.ULS687LOG.pins.P5.GetValue();
+		P4 = this.ULS687LOG.pins.P4.GetValue();
+		P3 = this.ULS687LOG.pins.P3.GetValue();
+		P2 = this.ULS687LOG.pins.P2.GetValue();
+		P1 = this.ULS687LOG.pins.P1.GetValue();
+		P0 = this.ULS687LOG.pins.P0.GetValue();
+		Q7 = this.ULS687LOG.pins.Q7.GetValue();
+		Q6 = this.ULS687LOG.pins.Q6.GetValue();
+		Q5 = this.ULS687LOG.pins.Q5.GetValue();
+		Q4 = this.ULS687LOG.pins.Q4.GetValue();
+		Q3 = this.ULS687LOG.pins.Q3.GetValue();
+		Q2 = this.ULS687LOG.pins.Q2.GetValue();
+		Q1 = this.ULS687LOG.pins.Q1.GetValue();
+		Q0 = this.ULS687LOG.pins.Q0.GetValue();
+		G1BAR_I = this.ULS687LOG.pins.G1BAR_I.GetValue();
+		G2BAR_I = this.ULS687LOG.pins.G2BAR_I.GetValue();
+		   G1BAR  =  G1BAR_I ;
+		   G2BAR  =  G2BAR_I ;
+		   PQ7 =  !(!P7 ^ !Q7) ;
+		   PQ6 =  !(!P6 ^ !Q6) ;
+		   PQ5 =  !(!P5 ^ !Q5) ;
+		   PQ4 =  !(!P4 ^ !Q4) ;
+		   PQ3 =  !(!P3 ^ !Q3) ;
+		   PQ2 =  !(!P2 ^ !Q2) ;
+		   PQ1 =  !(!P1 ^ !Q1) ;
+		   PQ0 =  !(!P0 ^ !Q0) ;
+		   PQG76 =  PQ7 & PQ6 & !G2BAR ;
+		   PQG75 =  PQG76 & PQ5 ;
+		   PQG74 =  PQG75 & PQ4 ;
+		   PQG73 =  PQG74 & PQ3 ;
+		   PQG72 =  PQG73 & PQ2 ;
+		   PQG71 =  PQG72 & PQ1 ;
+		   PEQBAR =  !(PQ7 & PQ6 & PQ5 & PQ4 & PQ3 & PQ2 & PQ1 & PQ0 & !G1BAR) ;
+		   PGQBAR =  !((PQG71 & !Q0 & P0) | (PQG72 & !Q1 & P1) |                (PQG73 & !Q2 & P2) | (PQG74 & !Q3 & P3) |                (PQG75 & !Q4 & P4) | (PQG76 & !Q5 & P5) |                (PQ7 & !G2BAR & !Q6 & P6) | (!G2BAR & !Q7 & P7)) ;
+		
+		this.ULS687LOG.pins.G1BAR.SetValue(G1BAR);
+		this.ULS687LOG.pins.G2BAR.SetValue(G2BAR);
+		this.ULS687LOG.pins.PEQBAR.SetValue(PEQBAR);
+		this.ULS687LOG.pins.PGQBAR.SetValue(PGQBAR);
 	}
 }
 /**
@@ -18194,7 +25114,7 @@ class SN74LS688 extends Component {
 		Connect(this.U1.pins.OUT14, Q1);
 		let Q0 = new Pin();
 		Connect(this.U1.pins.OUT15, Q0);
-		this.ULS688LOG = new logicexp(['GBAR_I','P7','P6','P5','P4','P3','P2','P1','P0','Q7','Q6','Q5','Q4','Q3','Q2','Q1','Q0'], ['GBAR','PEQBAR'], ['PEQ7','PEQ6','PEQ5','PEQ4','PEQ3','PEQ2','PEQ1','PEQ0']).Logic('   GBAR =  GBAR_I ;   PEQ7 =  !(!P7 ^ !Q7) ;   PEQ6 =  !(!P6 ^ !Q6) ;   PEQ5 =  !(!P5 ^ !Q5) ;   PEQ4 =  !(!P4 ^ !Q4) ;   PEQ3 =  !(!P3 ^ !Q3) ;   PEQ2 =  !(!P2 ^ !Q2) ;   PEQ1 =  !(!P1 ^ !Q1) ;   PEQ0 =  !(!P0 ^ !Q0) ;   PEQBAR =  !(PEQ7 & PEQ6 & PEQ5 & PEQ4 & PEQ3 & PEQ2 & PEQ1 & PEQ0 & !GBAR) ;');
+		this.ULS688LOG = new logicexp(['GBAR_I','P7','P6','P5','P4','P3','P2','P1','P0','Q7','Q6','Q5','Q4','Q3','Q2','Q1','Q0'], ['GBAR','PEQBAR']).Callback(this.$exe_ULS688LOG);
 		Connect(this.ULS688LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS688LOG.pins.P7, P7);
 		Connect(this.ULS688LOG.pins.P6, P6);
@@ -18217,6 +25137,41 @@ class SN74LS688 extends Component {
 		let PEQBAR = new Pin();
 		Connect(this.ULS688LOG.pins.PEQBAR, PEQBAR);
 		Connect(PEQBAR, this.pins.PEQBAR_O);
+	}
+	$exe_ULS688LOG() {
+		var PEQ7, PEQ6, PEQ5, PEQ4, PEQ3, PEQ2, PEQ1, PEQ0; // Temps
+		var GBAR_I, P7, P6, P5, P4, P3, P2, P1, P0, Q7, Q6, Q5, Q4, Q3, Q2, Q1, Q0; // Inputs
+		var GBAR, PEQBAR; // Outputs
+		GBAR_I = this.ULS688LOG.pins.GBAR_I.GetValue();
+		P7 = this.ULS688LOG.pins.P7.GetValue();
+		P6 = this.ULS688LOG.pins.P6.GetValue();
+		P5 = this.ULS688LOG.pins.P5.GetValue();
+		P4 = this.ULS688LOG.pins.P4.GetValue();
+		P3 = this.ULS688LOG.pins.P3.GetValue();
+		P2 = this.ULS688LOG.pins.P2.GetValue();
+		P1 = this.ULS688LOG.pins.P1.GetValue();
+		P0 = this.ULS688LOG.pins.P0.GetValue();
+		Q7 = this.ULS688LOG.pins.Q7.GetValue();
+		Q6 = this.ULS688LOG.pins.Q6.GetValue();
+		Q5 = this.ULS688LOG.pins.Q5.GetValue();
+		Q4 = this.ULS688LOG.pins.Q4.GetValue();
+		Q3 = this.ULS688LOG.pins.Q3.GetValue();
+		Q2 = this.ULS688LOG.pins.Q2.GetValue();
+		Q1 = this.ULS688LOG.pins.Q1.GetValue();
+		Q0 = this.ULS688LOG.pins.Q0.GetValue();
+		   GBAR =  GBAR_I ;
+		   PEQ7 =  !(!P7 ^ !Q7) ;
+		   PEQ6 =  !(!P6 ^ !Q6) ;
+		   PEQ5 =  !(!P5 ^ !Q5) ;
+		   PEQ4 =  !(!P4 ^ !Q4) ;
+		   PEQ3 =  !(!P3 ^ !Q3) ;
+		   PEQ2 =  !(!P2 ^ !Q2) ;
+		   PEQ1 =  !(!P1 ^ !Q1) ;
+		   PEQ0 =  !(!P0 ^ !Q0) ;
+		   PEQBAR =  !(PEQ7 & PEQ6 & PEQ5 & PEQ4 & PEQ3 & PEQ2 & PEQ1 & PEQ0 & !GBAR) ;
+		
+		this.ULS688LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS688LOG.pins.PEQBAR.SetValue(PEQBAR);
 	}
 }
 /**
@@ -18294,7 +25249,7 @@ class SN74LS689 extends Component {
 		Connect(this.U1.pins.OUT14, Q1);
 		let Q0 = new Pin();
 		Connect(this.U1.pins.OUT15, Q0);
-		this.ULS689LOG = new logicexp(['GBAR_I','P7','P6','P5','P4','P3','P2','P1','P0','Q7','Q6','Q5','Q4','Q3','Q2','Q1','Q0'], ['GBAR','PEQBAR'], ['PEQ7','PEQ6','PEQ5','PEQ4','PEQ3','PEQ2','PEQ1','PEQ0']).Logic('   GBAR =  GBAR_I ;   PEQ7 =  !(!P7 ^ !Q7) ;   PEQ6 =  !(!P6 ^ !Q6) ;   PEQ5 =  !(!P5 ^ !Q5) ;   PEQ4 =  !(!P4 ^ !Q4) ;   PEQ3 =  !(!P3 ^ !Q3) ;   PEQ2 =  !(!P2 ^ !Q2) ;   PEQ1 =  !(!P1 ^ !Q1) ;   PEQ0 =  !(!P0 ^ !Q0) ;   PEQBAR =  !(PEQ7 & PEQ6 & PEQ5 & PEQ4 & PEQ3 & PEQ2 & PEQ1 & PEQ0 & !GBAR) ;');
+		this.ULS689LOG = new logicexp(['GBAR_I','P7','P6','P5','P4','P3','P2','P1','P0','Q7','Q6','Q5','Q4','Q3','Q2','Q1','Q0'], ['GBAR','PEQBAR']).Callback(this.$exe_ULS689LOG);
 		Connect(this.ULS689LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS689LOG.pins.P7, P7);
 		Connect(this.ULS689LOG.pins.P6, P6);
@@ -18317,6 +25272,41 @@ class SN74LS689 extends Component {
 		let PEQBAR = new Pin();
 		Connect(this.ULS689LOG.pins.PEQBAR, PEQBAR);
 		Connect(PEQBAR, this.pins.PEQBAR_O);
+	}
+	$exe_ULS689LOG() {
+		var PEQ7, PEQ6, PEQ5, PEQ4, PEQ3, PEQ2, PEQ1, PEQ0; // Temps
+		var GBAR_I, P7, P6, P5, P4, P3, P2, P1, P0, Q7, Q6, Q5, Q4, Q3, Q2, Q1, Q0; // Inputs
+		var GBAR, PEQBAR; // Outputs
+		GBAR_I = this.ULS689LOG.pins.GBAR_I.GetValue();
+		P7 = this.ULS689LOG.pins.P7.GetValue();
+		P6 = this.ULS689LOG.pins.P6.GetValue();
+		P5 = this.ULS689LOG.pins.P5.GetValue();
+		P4 = this.ULS689LOG.pins.P4.GetValue();
+		P3 = this.ULS689LOG.pins.P3.GetValue();
+		P2 = this.ULS689LOG.pins.P2.GetValue();
+		P1 = this.ULS689LOG.pins.P1.GetValue();
+		P0 = this.ULS689LOG.pins.P0.GetValue();
+		Q7 = this.ULS689LOG.pins.Q7.GetValue();
+		Q6 = this.ULS689LOG.pins.Q6.GetValue();
+		Q5 = this.ULS689LOG.pins.Q5.GetValue();
+		Q4 = this.ULS689LOG.pins.Q4.GetValue();
+		Q3 = this.ULS689LOG.pins.Q3.GetValue();
+		Q2 = this.ULS689LOG.pins.Q2.GetValue();
+		Q1 = this.ULS689LOG.pins.Q1.GetValue();
+		Q0 = this.ULS689LOG.pins.Q0.GetValue();
+		   GBAR =  GBAR_I ;
+		   PEQ7 =  !(!P7 ^ !Q7) ;
+		   PEQ6 =  !(!P6 ^ !Q6) ;
+		   PEQ5 =  !(!P5 ^ !Q5) ;
+		   PEQ4 =  !(!P4 ^ !Q4) ;
+		   PEQ3 =  !(!P3 ^ !Q3) ;
+		   PEQ2 =  !(!P2 ^ !Q2) ;
+		   PEQ1 =  !(!P1 ^ !Q1) ;
+		   PEQ0 =  !(!P0 ^ !Q0) ;
+		   PEQBAR =  !(PEQ7 & PEQ6 & PEQ5 & PEQ4 & PEQ3 & PEQ2 & PEQ1 & PEQ0 & !GBAR) ;
+		
+		this.ULS689LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS689LOG.pins.PEQBAR.SetValue(PEQBAR);
 	}
 }
 class SN74LS690 extends Component {
@@ -18394,7 +25384,7 @@ class SN74LS690 extends Component {
 		Connect(this.U2.pins.QBAR2, RCBAR);
 		let RDBAR = new Pin();
 		Connect(this.U2.pins.QBAR3, RDBAR);
-		this.ULS690LOG = new logicexp(['GBAR_I','R_CBAR_I','RCLRBAR_I','RCK_I','CCLRBAR_I','LOADBAR_I','ENP_I','ENT_I','CCK_I','A_I','B_I','C_I','D_I','CA','CB','CC','CD','CABAR','CBBAR','CCBAR','CDBAR','RABAR','RBBAR','RCBAR','RDBAR'], ['GBAR','R_CBAR','RCLRBAR','RCK','CCLRBAR','LOADBAR','ENP','ENT','CCK','A','B','C','D','DA','DB','DC','DD','QA','QB','QC','QD','RCO','IEN'], ['IA1','IA2','IB1','IB2','IB3','IC1','IC2','IC3','ID1','ID2']).Logic('   GBAR =  GBAR_I ;   R_CBAR =  R_CBAR_I ;   RCLRBAR =  RCLRBAR_I ;   RCK =  RCK_I ;   CCLRBAR =  CCLRBAR_I ;   LOADBAR =  LOADBAR_I ;   ENP =  ENP_I ;   ENT =  ENT_I ;   CCK =  CCK_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   IEN =  LOADBAR & ENP & ENT ;   IA1 =  CA & IEN ;   IA2 =  !IEN & LOADBAR & CABAR ;   IB1 =  CB & IEN & !CABAR ;   IB2 =  (!IEN | CABAR) & LOADBAR & CBBAR ;   IB3 =  IEN & !CABAR & CCBAR & !CDBAR ;   IC1 =  CC & IEN & !CABAR & !CBBAR ;   IC2 =  (!IEN | CABAR | CBBAR) & LOADBAR & CCBAR ;   IC3 =  IEN & !CABAR & !CBBAR & !CDBAR ;   ID1 =  CD & IEN & !CABAR ;   ID2 =  (!IEN | CABAR | CBBAR | CCBAR) & LOADBAR & CDBAR ;   DA =  !(IA1 | IA2 | !(LOADBAR | A)) ;   DB =  !(IB1 | IB2 | IB3 | !(LOADBAR | B)) ;   DC =  !(IC1 | IC2 | IC3 | !(LOADBAR | C)) ;   DD =  !(ID1 | ID2 | !(LOADBAR | D)) ;   QA =  !((R_CBAR & RABAR) | (!R_CBAR & CABAR)) ;   QB =  !((R_CBAR & RBBAR)   | (!R_CBAR & CBBAR)) ;   QC =  !((R_CBAR & RCBAR)   | (!R_CBAR & CCBAR)) ;   QD =  !((R_CBAR & RDBAR)   | (!R_CBAR & CDBAR)) ;   RCO =  !(!ENT | CABAR | CDBAR) ;');
+		this.ULS690LOG = new logicexp(['GBAR_I','R_CBAR_I','RCLRBAR_I','RCK_I','CCLRBAR_I','LOADBAR_I','ENP_I','ENT_I','CCK_I','A_I','B_I','C_I','D_I','CA','CB','CC','CD','CABAR','CBBAR','CCBAR','CDBAR','RABAR','RBBAR','RCBAR','RDBAR'], ['GBAR','R_CBAR','RCLRBAR','RCK','CCLRBAR','LOADBAR','ENP','ENT','CCK','A','B','C','D','DA','DB','DC','DD','QA','QB','QC','QD','RCO','IEN']).Callback(this.$exe_ULS690LOG);
 		Connect(this.ULS690LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS690LOG.pins.R_CBAR_I, this.pins.R_CBAR_I);
 		Connect(this.ULS690LOG.pins.RCLRBAR_I, this.pins.RCLRBAR_I);
@@ -18463,6 +25453,93 @@ class SN74LS690 extends Component {
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
 		Connect(RCO, this.pins.RCO_O);
+	}
+	$exe_ULS690LOG() {
+		var IA1, IA2, IB1, IB2, IB3, IC1, IC2, IC3, ID1, ID2; // Temps
+		var GBAR_I, R_CBAR_I, RCLRBAR_I, RCK_I, CCLRBAR_I, LOADBAR_I, ENP_I, ENT_I, CCK_I, A_I, B_I, C_I, D_I, CA, CB, CC, CD, CABAR, CBBAR, CCBAR, CDBAR, RABAR, RBBAR, RCBAR, RDBAR; // Inputs
+		var GBAR, R_CBAR, RCLRBAR, RCK, CCLRBAR, LOADBAR, ENP, ENT, CCK, A, B, C, D, DA, DB, DC, DD, QA, QB, QC, QD, RCO, IEN; // Outputs
+		GBAR_I = this.ULS690LOG.pins.GBAR_I.GetValue();
+		R_CBAR_I = this.ULS690LOG.pins.R_CBAR_I.GetValue();
+		RCLRBAR_I = this.ULS690LOG.pins.RCLRBAR_I.GetValue();
+		RCK_I = this.ULS690LOG.pins.RCK_I.GetValue();
+		CCLRBAR_I = this.ULS690LOG.pins.CCLRBAR_I.GetValue();
+		LOADBAR_I = this.ULS690LOG.pins.LOADBAR_I.GetValue();
+		ENP_I = this.ULS690LOG.pins.ENP_I.GetValue();
+		ENT_I = this.ULS690LOG.pins.ENT_I.GetValue();
+		CCK_I = this.ULS690LOG.pins.CCK_I.GetValue();
+		A_I = this.ULS690LOG.pins.A_I.GetValue();
+		B_I = this.ULS690LOG.pins.B_I.GetValue();
+		C_I = this.ULS690LOG.pins.C_I.GetValue();
+		D_I = this.ULS690LOG.pins.D_I.GetValue();
+		CA = this.ULS690LOG.pins.CA.GetValue();
+		CB = this.ULS690LOG.pins.CB.GetValue();
+		CC = this.ULS690LOG.pins.CC.GetValue();
+		CD = this.ULS690LOG.pins.CD.GetValue();
+		CABAR = this.ULS690LOG.pins.CABAR.GetValue();
+		CBBAR = this.ULS690LOG.pins.CBBAR.GetValue();
+		CCBAR = this.ULS690LOG.pins.CCBAR.GetValue();
+		CDBAR = this.ULS690LOG.pins.CDBAR.GetValue();
+		RABAR = this.ULS690LOG.pins.RABAR.GetValue();
+		RBBAR = this.ULS690LOG.pins.RBBAR.GetValue();
+		RCBAR = this.ULS690LOG.pins.RCBAR.GetValue();
+		RDBAR = this.ULS690LOG.pins.RDBAR.GetValue();
+		   GBAR =  GBAR_I ;
+		   R_CBAR =  R_CBAR_I ;
+		   RCLRBAR =  RCLRBAR_I ;
+		   RCK =  RCK_I ;
+		   CCLRBAR =  CCLRBAR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   ENP =  ENP_I ;
+		   ENT =  ENT_I ;
+		   CCK =  CCK_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   IEN =  LOADBAR & ENP & ENT ;
+		   IA1 =  CA & IEN ;
+		   IA2 =  !IEN & LOADBAR & CABAR ;
+		   IB1 =  CB & IEN & !CABAR ;
+		   IB2 =  (!IEN | CABAR) & LOADBAR & CBBAR ;
+		   IB3 =  IEN & !CABAR & CCBAR & !CDBAR ;
+		   IC1 =  CC & IEN & !CABAR & !CBBAR ;
+		   IC2 =  (!IEN | CABAR | CBBAR) & LOADBAR & CCBAR ;
+		   IC3 =  IEN & !CABAR & !CBBAR & !CDBAR ;
+		   ID1 =  CD & IEN & !CABAR ;
+		   ID2 =  (!IEN | CABAR | CBBAR | CCBAR) & LOADBAR & CDBAR ;
+		   DA =  !(IA1 | IA2 | !(LOADBAR | A)) ;
+		   DB =  !(IB1 | IB2 | IB3 | !(LOADBAR | B)) ;
+		   DC =  !(IC1 | IC2 | IC3 | !(LOADBAR | C)) ;
+		   DD =  !(ID1 | ID2 | !(LOADBAR | D)) ;
+		   QA =  !((R_CBAR & RABAR) | (!R_CBAR & CABAR)) ;
+		   QB =  !((R_CBAR & RBBAR)   | (!R_CBAR & CBBAR)) ;
+		   QC =  !((R_CBAR & RCBAR)   | (!R_CBAR & CCBAR)) ;
+		   QD =  !((R_CBAR & RDBAR)   | (!R_CBAR & CDBAR)) ;
+		   RCO =  !(!ENT | CABAR | CDBAR) ;
+		
+		this.ULS690LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS690LOG.pins.R_CBAR.SetValue(R_CBAR);
+		this.ULS690LOG.pins.RCLRBAR.SetValue(RCLRBAR);
+		this.ULS690LOG.pins.RCK.SetValue(RCK);
+		this.ULS690LOG.pins.CCLRBAR.SetValue(CCLRBAR);
+		this.ULS690LOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS690LOG.pins.ENP.SetValue(ENP);
+		this.ULS690LOG.pins.ENT.SetValue(ENT);
+		this.ULS690LOG.pins.CCK.SetValue(CCK);
+		this.ULS690LOG.pins.A.SetValue(A);
+		this.ULS690LOG.pins.B.SetValue(B);
+		this.ULS690LOG.pins.C.SetValue(C);
+		this.ULS690LOG.pins.D.SetValue(D);
+		this.ULS690LOG.pins.DA.SetValue(DA);
+		this.ULS690LOG.pins.DB.SetValue(DB);
+		this.ULS690LOG.pins.DC.SetValue(DC);
+		this.ULS690LOG.pins.DD.SetValue(DD);
+		this.ULS690LOG.pins.QA.SetValue(QA);
+		this.ULS690LOG.pins.QB.SetValue(QB);
+		this.ULS690LOG.pins.QC.SetValue(QC);
+		this.ULS690LOG.pins.QD.SetValue(QD);
+		this.ULS690LOG.pins.RCO.SetValue(RCO);
+		this.ULS690LOG.pins.IEN.SetValue(IEN);
 	}
 }
 class SN74LS691 extends Component {
@@ -18540,7 +25617,7 @@ class SN74LS691 extends Component {
 		Connect(this.U2.pins.QBAR2, RCBAR);
 		let RDBAR = new Pin();
 		Connect(this.U2.pins.QBAR3, RDBAR);
-		this.ULS691LOG = new logicexp(['GBAR_I','R_CBAR_I','RCLRBAR_I','RCK_I','CCLRBAR_I','LOADBAR_I','ENP_I','ENT_I','CCK_I','A_I','B_I','C_I','D_I','CA','CB','CC','CD','CABAR','CBBAR','CCBAR','CDBAR','RABAR','RBBAR','RCBAR','RDBAR'], ['GBAR','R_CBAR','RCLRBAR','RCK','CCLRBAR','LOADBAR','ENP','ENT','CCK','A','B','C','D','DA','DB','DC','DD','QA','QB','QC','QD','RCO','IEN'], ['IA1','IA2','IB1','IB2','IC1','IC2','ID1','ID2']).Logic('   GBAR =  GBAR_I ;   R_CBAR =  R_CBAR_I ;   RCLRBAR =  RCLRBAR_I ;   RCK =  RCK_I ;   CCLRBAR =  CCLRBAR_I ;   LOADBAR =  LOADBAR_I ;   ENP =  ENP_I ;   ENT =  ENT_I ;   CCK =  CCK_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   IEN =  LOADBAR & ENP & ENT ;   IA1 =  CA & IEN ;   IA2 =  !IEN & LOADBAR & CABAR ;   IB1 =  CB & IEN & !CABAR ;   IB2 =  (!IEN | CABAR) & LOADBAR & CBBAR ;   IC1 =  CC & IEN & !CABAR & !CBBAR ;   IC2 =  (!IEN | CABAR | CBBAR) & LOADBAR & CCBAR ;   ID1 =  CD & IEN & !CABAR & !CBBAR & !CCBAR ;   ID2 =  (!IEN | CABAR | CBBAR | CCBAR) & LOADBAR & CDBAR ;   DA =  !(IA1 | IA2 | !(LOADBAR | A)) ;   DB =  !(IB1 | IB2 | !(LOADBAR | B)) ;   DC =  !(IC1 | IC2 | !(LOADBAR | C)) ;   DD =  !(ID1 | ID2 | !(LOADBAR | D)) ;   QA =  !((R_CBAR & RABAR) | (!R_CBAR & CABAR)) ;   QB =  !((R_CBAR & RBBAR)  | (!R_CBAR & CBBAR)) ;   QC =  !((R_CBAR & RCBAR)  | (!R_CBAR & CCBAR)) ;   QD =  !((R_CBAR & RDBAR)  | (!R_CBAR & CDBAR)) ;   RCO =  !(!ENT | CABAR | CBBAR | CCBAR | CDBAR) ;');
+		this.ULS691LOG = new logicexp(['GBAR_I','R_CBAR_I','RCLRBAR_I','RCK_I','CCLRBAR_I','LOADBAR_I','ENP_I','ENT_I','CCK_I','A_I','B_I','C_I','D_I','CA','CB','CC','CD','CABAR','CBBAR','CCBAR','CDBAR','RABAR','RBBAR','RCBAR','RDBAR'], ['GBAR','R_CBAR','RCLRBAR','RCK','CCLRBAR','LOADBAR','ENP','ENT','CCK','A','B','C','D','DA','DB','DC','DD','QA','QB','QC','QD','RCO','IEN']).Callback(this.$exe_ULS691LOG);
 		Connect(this.ULS691LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS691LOG.pins.R_CBAR_I, this.pins.R_CBAR_I);
 		Connect(this.ULS691LOG.pins.RCLRBAR_I, this.pins.RCLRBAR_I);
@@ -18609,6 +25686,91 @@ class SN74LS691 extends Component {
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
 		Connect(RCO, this.pins.RCO_O);
+	}
+	$exe_ULS691LOG() {
+		var IA1, IA2, IB1, IB2, IC1, IC2, ID1, ID2; // Temps
+		var GBAR_I, R_CBAR_I, RCLRBAR_I, RCK_I, CCLRBAR_I, LOADBAR_I, ENP_I, ENT_I, CCK_I, A_I, B_I, C_I, D_I, CA, CB, CC, CD, CABAR, CBBAR, CCBAR, CDBAR, RABAR, RBBAR, RCBAR, RDBAR; // Inputs
+		var GBAR, R_CBAR, RCLRBAR, RCK, CCLRBAR, LOADBAR, ENP, ENT, CCK, A, B, C, D, DA, DB, DC, DD, QA, QB, QC, QD, RCO, IEN; // Outputs
+		GBAR_I = this.ULS691LOG.pins.GBAR_I.GetValue();
+		R_CBAR_I = this.ULS691LOG.pins.R_CBAR_I.GetValue();
+		RCLRBAR_I = this.ULS691LOG.pins.RCLRBAR_I.GetValue();
+		RCK_I = this.ULS691LOG.pins.RCK_I.GetValue();
+		CCLRBAR_I = this.ULS691LOG.pins.CCLRBAR_I.GetValue();
+		LOADBAR_I = this.ULS691LOG.pins.LOADBAR_I.GetValue();
+		ENP_I = this.ULS691LOG.pins.ENP_I.GetValue();
+		ENT_I = this.ULS691LOG.pins.ENT_I.GetValue();
+		CCK_I = this.ULS691LOG.pins.CCK_I.GetValue();
+		A_I = this.ULS691LOG.pins.A_I.GetValue();
+		B_I = this.ULS691LOG.pins.B_I.GetValue();
+		C_I = this.ULS691LOG.pins.C_I.GetValue();
+		D_I = this.ULS691LOG.pins.D_I.GetValue();
+		CA = this.ULS691LOG.pins.CA.GetValue();
+		CB = this.ULS691LOG.pins.CB.GetValue();
+		CC = this.ULS691LOG.pins.CC.GetValue();
+		CD = this.ULS691LOG.pins.CD.GetValue();
+		CABAR = this.ULS691LOG.pins.CABAR.GetValue();
+		CBBAR = this.ULS691LOG.pins.CBBAR.GetValue();
+		CCBAR = this.ULS691LOG.pins.CCBAR.GetValue();
+		CDBAR = this.ULS691LOG.pins.CDBAR.GetValue();
+		RABAR = this.ULS691LOG.pins.RABAR.GetValue();
+		RBBAR = this.ULS691LOG.pins.RBBAR.GetValue();
+		RCBAR = this.ULS691LOG.pins.RCBAR.GetValue();
+		RDBAR = this.ULS691LOG.pins.RDBAR.GetValue();
+		   GBAR =  GBAR_I ;
+		   R_CBAR =  R_CBAR_I ;
+		   RCLRBAR =  RCLRBAR_I ;
+		   RCK =  RCK_I ;
+		   CCLRBAR =  CCLRBAR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   ENP =  ENP_I ;
+		   ENT =  ENT_I ;
+		   CCK =  CCK_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   IEN =  LOADBAR & ENP & ENT ;
+		   IA1 =  CA & IEN ;
+		   IA2 =  !IEN & LOADBAR & CABAR ;
+		   IB1 =  CB & IEN & !CABAR ;
+		   IB2 =  (!IEN | CABAR) & LOADBAR & CBBAR ;
+		   IC1 =  CC & IEN & !CABAR & !CBBAR ;
+		   IC2 =  (!IEN | CABAR | CBBAR) & LOADBAR & CCBAR ;
+		   ID1 =  CD & IEN & !CABAR & !CBBAR & !CCBAR ;
+		   ID2 =  (!IEN | CABAR | CBBAR | CCBAR) & LOADBAR & CDBAR ;
+		   DA =  !(IA1 | IA2 | !(LOADBAR | A)) ;
+		   DB =  !(IB1 | IB2 | !(LOADBAR | B)) ;
+		   DC =  !(IC1 | IC2 | !(LOADBAR | C)) ;
+		   DD =  !(ID1 | ID2 | !(LOADBAR | D)) ;
+		   QA =  !((R_CBAR & RABAR) | (!R_CBAR & CABAR)) ;
+		   QB =  !((R_CBAR & RBBAR)  | (!R_CBAR & CBBAR)) ;
+		   QC =  !((R_CBAR & RCBAR)  | (!R_CBAR & CCBAR)) ;
+		   QD =  !((R_CBAR & RDBAR)  | (!R_CBAR & CDBAR)) ;
+		   RCO =  !(!ENT | CABAR | CBBAR | CCBAR | CDBAR) ;
+		
+		this.ULS691LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS691LOG.pins.R_CBAR.SetValue(R_CBAR);
+		this.ULS691LOG.pins.RCLRBAR.SetValue(RCLRBAR);
+		this.ULS691LOG.pins.RCK.SetValue(RCK);
+		this.ULS691LOG.pins.CCLRBAR.SetValue(CCLRBAR);
+		this.ULS691LOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS691LOG.pins.ENP.SetValue(ENP);
+		this.ULS691LOG.pins.ENT.SetValue(ENT);
+		this.ULS691LOG.pins.CCK.SetValue(CCK);
+		this.ULS691LOG.pins.A.SetValue(A);
+		this.ULS691LOG.pins.B.SetValue(B);
+		this.ULS691LOG.pins.C.SetValue(C);
+		this.ULS691LOG.pins.D.SetValue(D);
+		this.ULS691LOG.pins.DA.SetValue(DA);
+		this.ULS691LOG.pins.DB.SetValue(DB);
+		this.ULS691LOG.pins.DC.SetValue(DC);
+		this.ULS691LOG.pins.DD.SetValue(DD);
+		this.ULS691LOG.pins.QA.SetValue(QA);
+		this.ULS691LOG.pins.QB.SetValue(QB);
+		this.ULS691LOG.pins.QC.SetValue(QC);
+		this.ULS691LOG.pins.QD.SetValue(QD);
+		this.ULS691LOG.pins.RCO.SetValue(RCO);
+		this.ULS691LOG.pins.IEN.SetValue(IEN);
 	}
 }
 class SN74LS692 extends Component {
@@ -18688,7 +25850,7 @@ class SN74LS692 extends Component {
 		Connect(this.U2.pins.QBAR2, RCBAR);
 		let RDBAR = new Pin();
 		Connect(this.U2.pins.QBAR3, RDBAR);
-		this.ULS692LOG = new logicexp(['GBAR_I','R_CBAR_I','RCLRBAR_I','RCK_I','CCLRBAR_I','LOADBAR_I','ENP_I','ENT_I','CCK_I','A_I','B_I','C_I','D_I','IQA','IQB','IQC','IQD','IQABAR','IQBBAR','IQCBAR','IQDBAR','RABAR','RBBAR','RCBAR','RDBAR'], ['GBAR','R_CBAR','RCLRBAR','RCK','CCLRBAR','LOADBAR','ENP','ENT','CCK','A','B','C','D','DA','DB','DC','DD','CA','CB','CC','CD','QA','QB','QC','QD','RCO','IEN'], ['ICL','IA1','IA2','IA3','IB1','IB2','IB3','IB4','IC1','IC2','IC3','IC4','ID1','ID2','ID3']).Logic('   GBAR =  GBAR_I ;   R_CBAR =  R_CBAR_I ;   RCLRBAR =  RCLRBAR_I ;   RCK =  RCK_I ;   CCLRBAR =  CCLRBAR_I ;   LOADBAR =  LOADBAR_I ;   ENP =  ENP_I ;   ENT =  ENT_I ;   CCK =  CCK_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   IEN =  LOADBAR & ENP & ENT ;   ICL =  !CCLRBAR ;   IA1 =  IQA & IEN ;   IA2 =  !IEN & LOADBAR & IQABAR ;   IA3 =  ICL | !(LOADBAR | A) ;   IB1 =  IQB & IEN & !IQABAR ;   IB2 =  (!IEN | IQABAR) & LOADBAR & IQBBAR ;   IB3 =  ICL | !(LOADBAR | B) ;   IB4 =  IEN & !IQABAR & IQCBAR & !IQDBAR ;   IC1 =  IQC & IEN & !IQABAR & !IQBBAR ;   IC2 =  (!IEN | IQABAR | IQBBAR) & LOADBAR & IQCBAR ;   IC3 =  ICL | !(LOADBAR | C) ;   IC4 =  IEN & !IQABAR & !IQBBAR & !IQDBAR ;   ID1 =  IQD & IEN & !IQABAR ;   ID2 =  (!IEN | IQABAR | IQBBAR | IQCBAR) & LOADBAR & IQDBAR ;   ID3 =  ICL | !(LOADBAR | D) ;   DA =  !(IA1 | IA2 | IA3) ;   DB =  !(IB1 | IB2 | IB3 | IB4) ;   DC =  !(IC1 | IC2 | IC3 | IC4) ;   DD =  !(ID1 | ID2 | ID3) ;   CA =  IQA & RCLRBAR ;   CB =  IQB & RCLRBAR ;   CC =  IQC & RCLRBAR ;   CD =  IQD & RCLRBAR ;   QA =  !((R_CBAR & RABAR) | (!R_CBAR & IQABAR)) ;   QB =  !((R_CBAR & RBBAR)   | (!R_CBAR & IQBBAR)) ;   QC =  !((R_CBAR & RCBAR)   | (!R_CBAR & IQCBAR)) ;   QD =  !((R_CBAR & RDBAR)   | (!R_CBAR & IQDBAR)) ;   RCO =  !(!ENT | IQABAR | IQDBAR) ;');
+		this.ULS692LOG = new logicexp(['GBAR_I','R_CBAR_I','RCLRBAR_I','RCK_I','CCLRBAR_I','LOADBAR_I','ENP_I','ENT_I','CCK_I','A_I','B_I','C_I','D_I','IQA','IQB','IQC','IQD','IQABAR','IQBBAR','IQCBAR','IQDBAR','RABAR','RBBAR','RCBAR','RDBAR'], ['GBAR','R_CBAR','RCLRBAR','RCK','CCLRBAR','LOADBAR','ENP','ENT','CCK','A','B','C','D','DA','DB','DC','DD','CA','CB','CC','CD','QA','QB','QC','QD','RCO','IEN']).Callback(this.$exe_ULS692LOG);
 		Connect(this.ULS692LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS692LOG.pins.R_CBAR_I, this.pins.R_CBAR_I);
 		Connect(this.ULS692LOG.pins.RCLRBAR_I, this.pins.RCLRBAR_I);
@@ -18763,6 +25925,106 @@ class SN74LS692 extends Component {
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
 		Connect(RCO, this.pins.RCO_O);
+	}
+	$exe_ULS692LOG() {
+		var ICL, IA1, IA2, IA3, IB1, IB2, IB3, IB4, IC1, IC2, IC3, IC4, ID1, ID2, ID3; // Temps
+		var GBAR_I, R_CBAR_I, RCLRBAR_I, RCK_I, CCLRBAR_I, LOADBAR_I, ENP_I, ENT_I, CCK_I, A_I, B_I, C_I, D_I, IQA, IQB, IQC, IQD, IQABAR, IQBBAR, IQCBAR, IQDBAR, RABAR, RBBAR, RCBAR, RDBAR; // Inputs
+		var GBAR, R_CBAR, RCLRBAR, RCK, CCLRBAR, LOADBAR, ENP, ENT, CCK, A, B, C, D, DA, DB, DC, DD, CA, CB, CC, CD, QA, QB, QC, QD, RCO, IEN; // Outputs
+		GBAR_I = this.ULS692LOG.pins.GBAR_I.GetValue();
+		R_CBAR_I = this.ULS692LOG.pins.R_CBAR_I.GetValue();
+		RCLRBAR_I = this.ULS692LOG.pins.RCLRBAR_I.GetValue();
+		RCK_I = this.ULS692LOG.pins.RCK_I.GetValue();
+		CCLRBAR_I = this.ULS692LOG.pins.CCLRBAR_I.GetValue();
+		LOADBAR_I = this.ULS692LOG.pins.LOADBAR_I.GetValue();
+		ENP_I = this.ULS692LOG.pins.ENP_I.GetValue();
+		ENT_I = this.ULS692LOG.pins.ENT_I.GetValue();
+		CCK_I = this.ULS692LOG.pins.CCK_I.GetValue();
+		A_I = this.ULS692LOG.pins.A_I.GetValue();
+		B_I = this.ULS692LOG.pins.B_I.GetValue();
+		C_I = this.ULS692LOG.pins.C_I.GetValue();
+		D_I = this.ULS692LOG.pins.D_I.GetValue();
+		IQA = this.ULS692LOG.pins.IQA.GetValue();
+		IQB = this.ULS692LOG.pins.IQB.GetValue();
+		IQC = this.ULS692LOG.pins.IQC.GetValue();
+		IQD = this.ULS692LOG.pins.IQD.GetValue();
+		IQABAR = this.ULS692LOG.pins.IQABAR.GetValue();
+		IQBBAR = this.ULS692LOG.pins.IQBBAR.GetValue();
+		IQCBAR = this.ULS692LOG.pins.IQCBAR.GetValue();
+		IQDBAR = this.ULS692LOG.pins.IQDBAR.GetValue();
+		RABAR = this.ULS692LOG.pins.RABAR.GetValue();
+		RBBAR = this.ULS692LOG.pins.RBBAR.GetValue();
+		RCBAR = this.ULS692LOG.pins.RCBAR.GetValue();
+		RDBAR = this.ULS692LOG.pins.RDBAR.GetValue();
+		   GBAR =  GBAR_I ;
+		   R_CBAR =  R_CBAR_I ;
+		   RCLRBAR =  RCLRBAR_I ;
+		   RCK =  RCK_I ;
+		   CCLRBAR =  CCLRBAR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   ENP =  ENP_I ;
+		   ENT =  ENT_I ;
+		   CCK =  CCK_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   IEN =  LOADBAR & ENP & ENT ;
+		   ICL =  !CCLRBAR ;
+		   IA1 =  IQA & IEN ;
+		   IA2 =  !IEN & LOADBAR & IQABAR ;
+		   IA3 =  ICL | !(LOADBAR | A) ;
+		   IB1 =  IQB & IEN & !IQABAR ;
+		   IB2 =  (!IEN | IQABAR) & LOADBAR & IQBBAR ;
+		   IB3 =  ICL | !(LOADBAR | B) ;
+		   IB4 =  IEN & !IQABAR & IQCBAR & !IQDBAR ;
+		   IC1 =  IQC & IEN & !IQABAR & !IQBBAR ;
+		   IC2 =  (!IEN | IQABAR | IQBBAR) & LOADBAR & IQCBAR ;
+		   IC3 =  ICL | !(LOADBAR | C) ;
+		   IC4 =  IEN & !IQABAR & !IQBBAR & !IQDBAR ;
+		   ID1 =  IQD & IEN & !IQABAR ;
+		   ID2 =  (!IEN | IQABAR | IQBBAR | IQCBAR) & LOADBAR & IQDBAR ;
+		   ID3 =  ICL | !(LOADBAR | D) ;
+		   DA =  !(IA1 | IA2 | IA3) ;
+		   DB =  !(IB1 | IB2 | IB3 | IB4) ;
+		   DC =  !(IC1 | IC2 | IC3 | IC4) ;
+		   DD =  !(ID1 | ID2 | ID3) ;
+		   CA =  IQA & RCLRBAR ;
+		   CB =  IQB & RCLRBAR ;
+		   CC =  IQC & RCLRBAR ;
+		   CD =  IQD & RCLRBAR ;
+		   QA =  !((R_CBAR & RABAR) | (!R_CBAR & IQABAR)) ;
+		   QB =  !((R_CBAR & RBBAR)   | (!R_CBAR & IQBBAR)) ;
+		   QC =  !((R_CBAR & RCBAR)   | (!R_CBAR & IQCBAR)) ;
+		   QD =  !((R_CBAR & RDBAR)   | (!R_CBAR & IQDBAR)) ;
+		   RCO =  !(!ENT | IQABAR | IQDBAR) ;
+		
+		this.ULS692LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS692LOG.pins.R_CBAR.SetValue(R_CBAR);
+		this.ULS692LOG.pins.RCLRBAR.SetValue(RCLRBAR);
+		this.ULS692LOG.pins.RCK.SetValue(RCK);
+		this.ULS692LOG.pins.CCLRBAR.SetValue(CCLRBAR);
+		this.ULS692LOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS692LOG.pins.ENP.SetValue(ENP);
+		this.ULS692LOG.pins.ENT.SetValue(ENT);
+		this.ULS692LOG.pins.CCK.SetValue(CCK);
+		this.ULS692LOG.pins.A.SetValue(A);
+		this.ULS692LOG.pins.B.SetValue(B);
+		this.ULS692LOG.pins.C.SetValue(C);
+		this.ULS692LOG.pins.D.SetValue(D);
+		this.ULS692LOG.pins.DA.SetValue(DA);
+		this.ULS692LOG.pins.DB.SetValue(DB);
+		this.ULS692LOG.pins.DC.SetValue(DC);
+		this.ULS692LOG.pins.DD.SetValue(DD);
+		this.ULS692LOG.pins.CA.SetValue(CA);
+		this.ULS692LOG.pins.CB.SetValue(CB);
+		this.ULS692LOG.pins.CC.SetValue(CC);
+		this.ULS692LOG.pins.CD.SetValue(CD);
+		this.ULS692LOG.pins.QA.SetValue(QA);
+		this.ULS692LOG.pins.QB.SetValue(QB);
+		this.ULS692LOG.pins.QC.SetValue(QC);
+		this.ULS692LOG.pins.QD.SetValue(QD);
+		this.ULS692LOG.pins.RCO.SetValue(RCO);
+		this.ULS692LOG.pins.IEN.SetValue(IEN);
 	}
 }
 class SN74LS693 extends Component {
@@ -18842,7 +26104,7 @@ class SN74LS693 extends Component {
 		Connect(this.U2.pins.QBAR2, RCBAR);
 		let RDBAR = new Pin();
 		Connect(this.U2.pins.QBAR3, RDBAR);
-		this.ULS693LOG = new logicexp(['GBAR_I','R_CBAR_I','RCLRBAR_I','RCK_I','CCLRBAR_I','LOADBAR_I','ENP_I','ENT_I','CCK_I','A_I','B_I','C_I','D_I','IQA','IQB','IQC','IQD','IQABAR','IQBBAR','IQCBAR','IQDBAR','RABAR','RBBAR','RCBAR','RDBAR'], ['GBAR','R_CBAR','RCLRBAR','RCK','CCLRBAR','LOADBAR','ENP','ENT','CCK','A','B','C','D','DA','DB','DC','DD','CA','CB','CC','CD','QA','QB','QC','QD','RCO','IEN'], ['ICL','IA1','IA2','IA3','IB1','IB2','IB3','IC1','IC2','IC3','ID1','ID2','ID3']).Logic('   GBAR =  GBAR_I ;   R_CBAR =  R_CBAR_I ;   RCLRBAR =  RCLRBAR_I ;   RCK =  RCK_I ;   CCLRBAR =  CCLRBAR_I ;   LOADBAR =  LOADBAR_I ;   ENP =  ENP_I ;   ENT =  ENT_I ;   CCK =  CCK_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   IEN =  LOADBAR & ENP & ENT ;   ICL =  !CCLRBAR ;   IA1 =  IQA & IEN ;   IA2 =  !IEN & LOADBAR & IQABAR ;   IA3 =  ICL | !(LOADBAR | A) ;   IB1 =  IQB & IEN & !IQABAR ;   IB2 =  (!IEN | IQABAR) & LOADBAR & IQBBAR ;   IB3 =  ICL | !(LOADBAR | B) ;   IC1 =  IQC & IEN & !IQABAR & !IQBBAR ;   IC2 =  (!IEN | IQABAR | IQBBAR) & LOADBAR & IQCBAR ;   IC3 =  ICL | !(LOADBAR | C) ;   ID1 =  IQD & IEN & !IQABAR & !IQBBAR & !IQCBAR ;   ID2 =  (!IEN | IQABAR | IQBBAR | IQCBAR) & LOADBAR & IQDBAR ;   ID3 =  ICL | !(LOADBAR | D) ;   DA =  !(IA1 | IA2 | IA3) ;   DB =  !(IB1 | IB2 | IB3) ;   DC =  !(IC1 | IC2 | IC3) ;   DD =  !(ID1 | ID2 | ID3) ;   CA =  IQA & RCLRBAR ;   CB =  IQB & RCLRBAR ;   CC =  IQC & RCLRBAR ;   CD =  IQD & RCLRBAR ;   QA =  !((R_CBAR & RABAR) | (!R_CBAR & IQABAR)) ;   QB =  !((R_CBAR & RBBAR)  | (!R_CBAR & IQBBAR)) ;   QC =  !((R_CBAR & RCBAR)  | (!R_CBAR & IQCBAR)) ;   QD =  !((R_CBAR & RDBAR)  | (!R_CBAR & IQDBAR)) ;   RCO =  !(!ENT | IQABAR | IQBBAR | IQCBAR | IQDBAR) ;');
+		this.ULS693LOG = new logicexp(['GBAR_I','R_CBAR_I','RCLRBAR_I','RCK_I','CCLRBAR_I','LOADBAR_I','ENP_I','ENT_I','CCK_I','A_I','B_I','C_I','D_I','IQA','IQB','IQC','IQD','IQABAR','IQBBAR','IQCBAR','IQDBAR','RABAR','RBBAR','RCBAR','RDBAR'], ['GBAR','R_CBAR','RCLRBAR','RCK','CCLRBAR','LOADBAR','ENP','ENT','CCK','A','B','C','D','DA','DB','DC','DD','CA','CB','CC','CD','QA','QB','QC','QD','RCO','IEN']).Callback(this.$exe_ULS693LOG);
 		Connect(this.ULS693LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS693LOG.pins.R_CBAR_I, this.pins.R_CBAR_I);
 		Connect(this.ULS693LOG.pins.RCLRBAR_I, this.pins.RCLRBAR_I);
@@ -18918,6 +26180,104 @@ class SN74LS693 extends Component {
 		Connect(QD, this.pins.QD_O);
 		Connect(RCO, this.pins.RCO_O);
 	}
+	$exe_ULS693LOG() {
+		var ICL, IA1, IA2, IA3, IB1, IB2, IB3, IC1, IC2, IC3, ID1, ID2, ID3; // Temps
+		var GBAR_I, R_CBAR_I, RCLRBAR_I, RCK_I, CCLRBAR_I, LOADBAR_I, ENP_I, ENT_I, CCK_I, A_I, B_I, C_I, D_I, IQA, IQB, IQC, IQD, IQABAR, IQBBAR, IQCBAR, IQDBAR, RABAR, RBBAR, RCBAR, RDBAR; // Inputs
+		var GBAR, R_CBAR, RCLRBAR, RCK, CCLRBAR, LOADBAR, ENP, ENT, CCK, A, B, C, D, DA, DB, DC, DD, CA, CB, CC, CD, QA, QB, QC, QD, RCO, IEN; // Outputs
+		GBAR_I = this.ULS693LOG.pins.GBAR_I.GetValue();
+		R_CBAR_I = this.ULS693LOG.pins.R_CBAR_I.GetValue();
+		RCLRBAR_I = this.ULS693LOG.pins.RCLRBAR_I.GetValue();
+		RCK_I = this.ULS693LOG.pins.RCK_I.GetValue();
+		CCLRBAR_I = this.ULS693LOG.pins.CCLRBAR_I.GetValue();
+		LOADBAR_I = this.ULS693LOG.pins.LOADBAR_I.GetValue();
+		ENP_I = this.ULS693LOG.pins.ENP_I.GetValue();
+		ENT_I = this.ULS693LOG.pins.ENT_I.GetValue();
+		CCK_I = this.ULS693LOG.pins.CCK_I.GetValue();
+		A_I = this.ULS693LOG.pins.A_I.GetValue();
+		B_I = this.ULS693LOG.pins.B_I.GetValue();
+		C_I = this.ULS693LOG.pins.C_I.GetValue();
+		D_I = this.ULS693LOG.pins.D_I.GetValue();
+		IQA = this.ULS693LOG.pins.IQA.GetValue();
+		IQB = this.ULS693LOG.pins.IQB.GetValue();
+		IQC = this.ULS693LOG.pins.IQC.GetValue();
+		IQD = this.ULS693LOG.pins.IQD.GetValue();
+		IQABAR = this.ULS693LOG.pins.IQABAR.GetValue();
+		IQBBAR = this.ULS693LOG.pins.IQBBAR.GetValue();
+		IQCBAR = this.ULS693LOG.pins.IQCBAR.GetValue();
+		IQDBAR = this.ULS693LOG.pins.IQDBAR.GetValue();
+		RABAR = this.ULS693LOG.pins.RABAR.GetValue();
+		RBBAR = this.ULS693LOG.pins.RBBAR.GetValue();
+		RCBAR = this.ULS693LOG.pins.RCBAR.GetValue();
+		RDBAR = this.ULS693LOG.pins.RDBAR.GetValue();
+		   GBAR =  GBAR_I ;
+		   R_CBAR =  R_CBAR_I ;
+		   RCLRBAR =  RCLRBAR_I ;
+		   RCK =  RCK_I ;
+		   CCLRBAR =  CCLRBAR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   ENP =  ENP_I ;
+		   ENT =  ENT_I ;
+		   CCK =  CCK_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   IEN =  LOADBAR & ENP & ENT ;
+		   ICL =  !CCLRBAR ;
+		   IA1 =  IQA & IEN ;
+		   IA2 =  !IEN & LOADBAR & IQABAR ;
+		   IA3 =  ICL | !(LOADBAR | A) ;
+		   IB1 =  IQB & IEN & !IQABAR ;
+		   IB2 =  (!IEN | IQABAR) & LOADBAR & IQBBAR ;
+		   IB3 =  ICL | !(LOADBAR | B) ;
+		   IC1 =  IQC & IEN & !IQABAR & !IQBBAR ;
+		   IC2 =  (!IEN | IQABAR | IQBBAR) & LOADBAR & IQCBAR ;
+		   IC3 =  ICL | !(LOADBAR | C) ;
+		   ID1 =  IQD & IEN & !IQABAR & !IQBBAR & !IQCBAR ;
+		   ID2 =  (!IEN | IQABAR | IQBBAR | IQCBAR) & LOADBAR & IQDBAR ;
+		   ID3 =  ICL | !(LOADBAR | D) ;
+		   DA =  !(IA1 | IA2 | IA3) ;
+		   DB =  !(IB1 | IB2 | IB3) ;
+		   DC =  !(IC1 | IC2 | IC3) ;
+		   DD =  !(ID1 | ID2 | ID3) ;
+		   CA =  IQA & RCLRBAR ;
+		   CB =  IQB & RCLRBAR ;
+		   CC =  IQC & RCLRBAR ;
+		   CD =  IQD & RCLRBAR ;
+		   QA =  !((R_CBAR & RABAR) | (!R_CBAR & IQABAR)) ;
+		   QB =  !((R_CBAR & RBBAR)  | (!R_CBAR & IQBBAR)) ;
+		   QC =  !((R_CBAR & RCBAR)  | (!R_CBAR & IQCBAR)) ;
+		   QD =  !((R_CBAR & RDBAR)  | (!R_CBAR & IQDBAR)) ;
+		   RCO =  !(!ENT | IQABAR | IQBBAR | IQCBAR | IQDBAR) ;
+		
+		this.ULS693LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS693LOG.pins.R_CBAR.SetValue(R_CBAR);
+		this.ULS693LOG.pins.RCLRBAR.SetValue(RCLRBAR);
+		this.ULS693LOG.pins.RCK.SetValue(RCK);
+		this.ULS693LOG.pins.CCLRBAR.SetValue(CCLRBAR);
+		this.ULS693LOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS693LOG.pins.ENP.SetValue(ENP);
+		this.ULS693LOG.pins.ENT.SetValue(ENT);
+		this.ULS693LOG.pins.CCK.SetValue(CCK);
+		this.ULS693LOG.pins.A.SetValue(A);
+		this.ULS693LOG.pins.B.SetValue(B);
+		this.ULS693LOG.pins.C.SetValue(C);
+		this.ULS693LOG.pins.D.SetValue(D);
+		this.ULS693LOG.pins.DA.SetValue(DA);
+		this.ULS693LOG.pins.DB.SetValue(DB);
+		this.ULS693LOG.pins.DC.SetValue(DC);
+		this.ULS693LOG.pins.DD.SetValue(DD);
+		this.ULS693LOG.pins.CA.SetValue(CA);
+		this.ULS693LOG.pins.CB.SetValue(CB);
+		this.ULS693LOG.pins.CC.SetValue(CC);
+		this.ULS693LOG.pins.CD.SetValue(CD);
+		this.ULS693LOG.pins.QA.SetValue(QA);
+		this.ULS693LOG.pins.QB.SetValue(QB);
+		this.ULS693LOG.pins.QC.SetValue(QC);
+		this.ULS693LOG.pins.QD.SetValue(QD);
+		this.ULS693LOG.pins.RCO.SetValue(RCO);
+		this.ULS693LOG.pins.IEN.SetValue(IEN);
+	}
 }
 /**
  * SYNCHRONOUS UP_DOWN COUNTER WITH OUTPUT REGISTERS AND MULTILEXED
@@ -18945,7 +26305,7 @@ class SN74LS696 extends Component {
 			QD_O: new Pin(),
 			RCOBAR_O: new Pin(),
 		}
-		this.ULS696LOG = new logicexp(['GBAR_I','R_CBAR_I','RCK_I','CCLRBAR_I','U_DBAR_I','LOADBAR_I','ENPBAR_I','ENTBAR_I','CCK_I','A_I','B_I','C_I','D_I','LA','LB','LC','LD','LABAR','LBBAR','LCBAR','LDBAR','OUTA','OUTB','OUTC','OUTD'], ['GBAR','R_CBAR','RCK','CCLRBAR','U_DBAR','LOADBAR','ENPBAR','ENTBAR','CCK','A','B','C','D','DA','DB','DC','DD','RCOBAR','QA','QB','QC','QD','EN'], ['LOADA','LOADB','LOADC','LOADD','U_DA','U_DB','U_DC','U_DD']).Logic('   GBAR =  GBAR_I ;   R_CBAR =  R_CBAR_I ;   RCK =  RCK_I ;   CCLRBAR =  CCLRBAR_I ;   U_DBAR =  U_DBAR_I ;   LOADBAR =  LOADBAR_I ;   ENPBAR =  ENPBAR_I ;   ENTBAR =  ENTBAR_I ;   CCK =  CCK_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   LOADA =  !(LOADBAR | A) ;   LOADB =  !(LOADBAR | B) ;   LOADC =  !(LOADBAR | C) ;   LOADD =  !(LOADBAR | D) ;   U_DA =  !((LA & !U_DBAR) | (U_DBAR & LABAR)) ;   U_DB =  !((LB & !U_DBAR) | (U_DBAR & LBBAR)) ;   U_DC =  !((LC & !U_DBAR) | (U_DBAR & LCBAR)) ;   U_DD =  !((LD & !U_DBAR) | (U_DBAR & LDBAR)) ;   EN =  (LOADBAR & !ENPBAR & !ENTBAR) ;   DA =  !((LA & EN) | (!EN & LOADBAR & LABAR) | LOADA) ;   DB =  !((LB & EN & U_DA) | (LCBAR & EN & U_DA & U_DD) |            ((!EN | !U_DA) & LOADBAR & LBBAR) | LOADB) ;   DC =  !((LC & EN & U_DA & U_DB) | (EN & U_DA & U_DB & U_DD) |            ((!EN | !U_DA | !U_DB) & LOADBAR & LCBAR) | LOADC) ;   DD =  !((LD & EN & U_DA) | ((!EN | !U_DA | !U_DB | !U_DC) & LOADBAR & LDBAR)            | LOADD) ;   RCOBAR =  !((U_DBAR & U_DA & U_DD & !ENTBAR) |                (!ENTBAR & U_DA & U_DB & U_DC & U_DD & !U_DBAR));   QA =  !((R_CBAR & OUTA) | (!R_CBAR & LABAR)) ;   QB =  !((R_CBAR & OUTB) | (!R_CBAR & LBBAR)) ;   QC =  !((R_CBAR & OUTC) | (!R_CBAR & LCBAR)) ;   QD =  !((R_CBAR & OUTD) | (!R_CBAR & LDBAR)) ;');
+		this.ULS696LOG = new logicexp(['GBAR_I','R_CBAR_I','RCK_I','CCLRBAR_I','U_DBAR_I','LOADBAR_I','ENPBAR_I','ENTBAR_I','CCK_I','A_I','B_I','C_I','D_I','LA','LB','LC','LD','LABAR','LBBAR','LCBAR','LDBAR','OUTA','OUTB','OUTC','OUTD'], ['GBAR','R_CBAR','RCK','CCLRBAR','U_DBAR','LOADBAR','ENPBAR','ENTBAR','CCK','A','B','C','D','DA','DB','DC','DD','RCOBAR','QA','QB','QC','QD','EN']).Callback(this.$exe_ULS696LOG);
 		Connect(this.ULS696LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS696LOG.pins.R_CBAR_I, this.pins.R_CBAR_I);
 		Connect(this.ULS696LOG.pins.RCK_I, this.pins.RCK_I);
@@ -19067,6 +26427,91 @@ class SN74LS696 extends Component {
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
 	}
+	$exe_ULS696LOG() {
+		var LOADA, LOADB, LOADC, LOADD, U_DA, U_DB, U_DC, U_DD; // Temps
+		var GBAR_I, R_CBAR_I, RCK_I, CCLRBAR_I, U_DBAR_I, LOADBAR_I, ENPBAR_I, ENTBAR_I, CCK_I, A_I, B_I, C_I, D_I, LA, LB, LC, LD, LABAR, LBBAR, LCBAR, LDBAR, OUTA, OUTB, OUTC, OUTD; // Inputs
+		var GBAR, R_CBAR, RCK, CCLRBAR, U_DBAR, LOADBAR, ENPBAR, ENTBAR, CCK, A, B, C, D, DA, DB, DC, DD, RCOBAR, QA, QB, QC, QD, EN; // Outputs
+		GBAR_I = this.ULS696LOG.pins.GBAR_I.GetValue();
+		R_CBAR_I = this.ULS696LOG.pins.R_CBAR_I.GetValue();
+		RCK_I = this.ULS696LOG.pins.RCK_I.GetValue();
+		CCLRBAR_I = this.ULS696LOG.pins.CCLRBAR_I.GetValue();
+		U_DBAR_I = this.ULS696LOG.pins.U_DBAR_I.GetValue();
+		LOADBAR_I = this.ULS696LOG.pins.LOADBAR_I.GetValue();
+		ENPBAR_I = this.ULS696LOG.pins.ENPBAR_I.GetValue();
+		ENTBAR_I = this.ULS696LOG.pins.ENTBAR_I.GetValue();
+		CCK_I = this.ULS696LOG.pins.CCK_I.GetValue();
+		A_I = this.ULS696LOG.pins.A_I.GetValue();
+		B_I = this.ULS696LOG.pins.B_I.GetValue();
+		C_I = this.ULS696LOG.pins.C_I.GetValue();
+		D_I = this.ULS696LOG.pins.D_I.GetValue();
+		LA = this.ULS696LOG.pins.LA.GetValue();
+		LB = this.ULS696LOG.pins.LB.GetValue();
+		LC = this.ULS696LOG.pins.LC.GetValue();
+		LD = this.ULS696LOG.pins.LD.GetValue();
+		LABAR = this.ULS696LOG.pins.LABAR.GetValue();
+		LBBAR = this.ULS696LOG.pins.LBBAR.GetValue();
+		LCBAR = this.ULS696LOG.pins.LCBAR.GetValue();
+		LDBAR = this.ULS696LOG.pins.LDBAR.GetValue();
+		OUTA = this.ULS696LOG.pins.OUTA.GetValue();
+		OUTB = this.ULS696LOG.pins.OUTB.GetValue();
+		OUTC = this.ULS696LOG.pins.OUTC.GetValue();
+		OUTD = this.ULS696LOG.pins.OUTD.GetValue();
+		   GBAR =  GBAR_I ;
+		   R_CBAR =  R_CBAR_I ;
+		   RCK =  RCK_I ;
+		   CCLRBAR =  CCLRBAR_I ;
+		   U_DBAR =  U_DBAR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   ENPBAR =  ENPBAR_I ;
+		   ENTBAR =  ENTBAR_I ;
+		   CCK =  CCK_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   LOADA =  !(LOADBAR | A) ;
+		   LOADB =  !(LOADBAR | B) ;
+		   LOADC =  !(LOADBAR | C) ;
+		   LOADD =  !(LOADBAR | D) ;
+		   U_DA =  !((LA & !U_DBAR) | (U_DBAR & LABAR)) ;
+		   U_DB =  !((LB & !U_DBAR) | (U_DBAR & LBBAR)) ;
+		   U_DC =  !((LC & !U_DBAR) | (U_DBAR & LCBAR)) ;
+		   U_DD =  !((LD & !U_DBAR) | (U_DBAR & LDBAR)) ;
+		   EN =  (LOADBAR & !ENPBAR & !ENTBAR) ;
+		   DA =  !((LA & EN) | (!EN & LOADBAR & LABAR) | LOADA) ;
+		   DB =  !((LB & EN & U_DA) | (LCBAR & EN & U_DA & U_DD) |            ((!EN | !U_DA) & LOADBAR & LBBAR) | LOADB) ;
+		   DC =  !((LC & EN & U_DA & U_DB) | (EN & U_DA & U_DB & U_DD) |            ((!EN | !U_DA | !U_DB) & LOADBAR & LCBAR) | LOADC) ;
+		   DD =  !((LD & EN & U_DA) | ((!EN | !U_DA | !U_DB | !U_DC) & LOADBAR & LDBAR)            | LOADD) ;
+		   RCOBAR =  !((U_DBAR & U_DA & U_DD & !ENTBAR) |                (!ENTBAR & U_DA & U_DB & U_DC & U_DD & !U_DBAR));
+		   QA =  !((R_CBAR & OUTA) | (!R_CBAR & LABAR)) ;
+		   QB =  !((R_CBAR & OUTB) | (!R_CBAR & LBBAR)) ;
+		   QC =  !((R_CBAR & OUTC) | (!R_CBAR & LCBAR)) ;
+		   QD =  !((R_CBAR & OUTD) | (!R_CBAR & LDBAR)) ;
+		
+		this.ULS696LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS696LOG.pins.R_CBAR.SetValue(R_CBAR);
+		this.ULS696LOG.pins.RCK.SetValue(RCK);
+		this.ULS696LOG.pins.CCLRBAR.SetValue(CCLRBAR);
+		this.ULS696LOG.pins.U_DBAR.SetValue(U_DBAR);
+		this.ULS696LOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS696LOG.pins.ENPBAR.SetValue(ENPBAR);
+		this.ULS696LOG.pins.ENTBAR.SetValue(ENTBAR);
+		this.ULS696LOG.pins.CCK.SetValue(CCK);
+		this.ULS696LOG.pins.A.SetValue(A);
+		this.ULS696LOG.pins.B.SetValue(B);
+		this.ULS696LOG.pins.C.SetValue(C);
+		this.ULS696LOG.pins.D.SetValue(D);
+		this.ULS696LOG.pins.DA.SetValue(DA);
+		this.ULS696LOG.pins.DB.SetValue(DB);
+		this.ULS696LOG.pins.DC.SetValue(DC);
+		this.ULS696LOG.pins.DD.SetValue(DD);
+		this.ULS696LOG.pins.RCOBAR.SetValue(RCOBAR);
+		this.ULS696LOG.pins.QA.SetValue(QA);
+		this.ULS696LOG.pins.QB.SetValue(QB);
+		this.ULS696LOG.pins.QC.SetValue(QC);
+		this.ULS696LOG.pins.QD.SetValue(QD);
+		this.ULS696LOG.pins.EN.SetValue(EN);
+	}
 }
 class SN74LS697 extends Component {
 	constructor() {
@@ -19142,7 +26587,7 @@ class SN74LS697 extends Component {
 		Connect(this.U2.pins.QBAR2, RCBAR);
 		let RDBAR = new Pin();
 		Connect(this.U2.pins.QBAR3, RDBAR);
-		this.ULS697LOG = new logicexp(['GBAR_I','R_CBAR_I','RCK_I','CCLRBAR_I','U_DBAR_I','LOADBAR_I','ENPBAR_I','ENTBAR_I','CCK_I','A_I','B_I','C_I','D_I','CA','CB','CC','CD','CABAR','CBBAR','CCBAR','CDBAR','RABAR','RBBAR','RCBAR','RDBAR'], ['GBAR','R_CBAR','RCK','CCLRBAR','U_DBAR','LOADBAR','ENPBAR','ENTBAR','CCK','A','B','C','D','DA','DB','DC','DD','QA','QB','QC','QD','RCOBAR','IEN'], ['UP','DN','IRC','IA1','IA2','IA3','IB1','IB2','IB3','IC1','IC2','IC3','ID1','ID2','ID3']).Logic('   GBAR =  GBAR_I ;   R_CBAR =  R_CBAR_I ;   RCK =  RCK_I ;   CCLRBAR =  CCLRBAR_I ;   U_DBAR =  U_DBAR_I ;   LOADBAR =  LOADBAR_I ;   ENPBAR =  ENPBAR_I ;   ENTBAR =  ENTBAR_I ;   CCK =  CCK_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   UP =  U_DBAR ;   DN =  !U_DBAR ;   IEN =  !(!LOADBAR | ENPBAR | ENTBAR) ;   IRC =  !R_CBAR ;   IA1 =  CA & IEN ;   IA2 =  !IEN & LOADBAR & CABAR ;   IA3 =  !((CA & DN) | (UP & CABAR)) ;   IB1 =  CB & IEN & IA3 ;   IB2 =  !(IEN & IA3) & LOADBAR & CBBAR ;   IB3 =  !((CB & DN) | (UP & CBBAR)) ;   IC1 =  CC & IEN & IA3 & IB3 ;   IC2 =  !(IEN & IA3 & IB3) & LOADBAR & CCBAR ;   IC3 =  !((CC & DN) | (UP & CCBAR)) ;   ID1 =  CD & IEN & IA3 & IB3 & IC3 ;   ID2 =  !(IEN & IA3 & IB3 & IC3 ) & LOADBAR & CDBAR ;   ID3 =  !((CD & DN) | (UP & CDBAR)) ;   DA =  !(IA1 | IA2 | !(LOADBAR | A)) ;   DB =  !(IB1 | IB2 | !(LOADBAR | B)) ;   DC =  !(IC1 | IC2 | !(LOADBAR | C)) ;   DD =  !(ID1 | ID2 | !(LOADBAR | D)) ;   QA =  !((R_CBAR & RABAR) | (IRC & CABAR)) ;   QB =  !((R_CBAR & RBBAR) | (IRC & CBBAR)) ;   QC =  !((R_CBAR & RCBAR) | (IRC & CCBAR)) ;   QD =  !((R_CBAR & RDBAR) | (IRC & CDBAR)) ;   RCOBAR =  !(!ENTBAR & IA3 & IB3 & IC3 & ID3) ;');
+		this.ULS697LOG = new logicexp(['GBAR_I','R_CBAR_I','RCK_I','CCLRBAR_I','U_DBAR_I','LOADBAR_I','ENPBAR_I','ENTBAR_I','CCK_I','A_I','B_I','C_I','D_I','CA','CB','CC','CD','CABAR','CBBAR','CCBAR','CDBAR','RABAR','RBBAR','RCBAR','RDBAR'], ['GBAR','R_CBAR','RCK','CCLRBAR','U_DBAR','LOADBAR','ENPBAR','ENTBAR','CCK','A','B','C','D','DA','DB','DC','DD','QA','QB','QC','QD','RCOBAR','IEN']).Callback(this.$exe_ULS697LOG);
 		Connect(this.ULS697LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS697LOG.pins.R_CBAR_I, this.pins.R_CBAR_I);
 		Connect(this.ULS697LOG.pins.RCK_I, this.pins.RCK_I);
@@ -19213,6 +26658,98 @@ class SN74LS697 extends Component {
 		Connect(QD, this.pins.QD_O);
 		Connect(RCOBAR, this.pins.RCOBAR_O);
 	}
+	$exe_ULS697LOG() {
+		var UP, DN, IRC, IA1, IA2, IA3, IB1, IB2, IB3, IC1, IC2, IC3, ID1, ID2, ID3; // Temps
+		var GBAR_I, R_CBAR_I, RCK_I, CCLRBAR_I, U_DBAR_I, LOADBAR_I, ENPBAR_I, ENTBAR_I, CCK_I, A_I, B_I, C_I, D_I, CA, CB, CC, CD, CABAR, CBBAR, CCBAR, CDBAR, RABAR, RBBAR, RCBAR, RDBAR; // Inputs
+		var GBAR, R_CBAR, RCK, CCLRBAR, U_DBAR, LOADBAR, ENPBAR, ENTBAR, CCK, A, B, C, D, DA, DB, DC, DD, QA, QB, QC, QD, RCOBAR, IEN; // Outputs
+		GBAR_I = this.ULS697LOG.pins.GBAR_I.GetValue();
+		R_CBAR_I = this.ULS697LOG.pins.R_CBAR_I.GetValue();
+		RCK_I = this.ULS697LOG.pins.RCK_I.GetValue();
+		CCLRBAR_I = this.ULS697LOG.pins.CCLRBAR_I.GetValue();
+		U_DBAR_I = this.ULS697LOG.pins.U_DBAR_I.GetValue();
+		LOADBAR_I = this.ULS697LOG.pins.LOADBAR_I.GetValue();
+		ENPBAR_I = this.ULS697LOG.pins.ENPBAR_I.GetValue();
+		ENTBAR_I = this.ULS697LOG.pins.ENTBAR_I.GetValue();
+		CCK_I = this.ULS697LOG.pins.CCK_I.GetValue();
+		A_I = this.ULS697LOG.pins.A_I.GetValue();
+		B_I = this.ULS697LOG.pins.B_I.GetValue();
+		C_I = this.ULS697LOG.pins.C_I.GetValue();
+		D_I = this.ULS697LOG.pins.D_I.GetValue();
+		CA = this.ULS697LOG.pins.CA.GetValue();
+		CB = this.ULS697LOG.pins.CB.GetValue();
+		CC = this.ULS697LOG.pins.CC.GetValue();
+		CD = this.ULS697LOG.pins.CD.GetValue();
+		CABAR = this.ULS697LOG.pins.CABAR.GetValue();
+		CBBAR = this.ULS697LOG.pins.CBBAR.GetValue();
+		CCBAR = this.ULS697LOG.pins.CCBAR.GetValue();
+		CDBAR = this.ULS697LOG.pins.CDBAR.GetValue();
+		RABAR = this.ULS697LOG.pins.RABAR.GetValue();
+		RBBAR = this.ULS697LOG.pins.RBBAR.GetValue();
+		RCBAR = this.ULS697LOG.pins.RCBAR.GetValue();
+		RDBAR = this.ULS697LOG.pins.RDBAR.GetValue();
+		   GBAR =  GBAR_I ;
+		   R_CBAR =  R_CBAR_I ;
+		   RCK =  RCK_I ;
+		   CCLRBAR =  CCLRBAR_I ;
+		   U_DBAR =  U_DBAR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   ENPBAR =  ENPBAR_I ;
+		   ENTBAR =  ENTBAR_I ;
+		   CCK =  CCK_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   UP =  U_DBAR ;
+		   DN =  !U_DBAR ;
+		   IEN =  !(!LOADBAR | ENPBAR | ENTBAR) ;
+		   IRC =  !R_CBAR ;
+		   IA1 =  CA & IEN ;
+		   IA2 =  !IEN & LOADBAR & CABAR ;
+		   IA3 =  !((CA & DN) | (UP & CABAR)) ;
+		   IB1 =  CB & IEN & IA3 ;
+		   IB2 =  !(IEN & IA3) & LOADBAR & CBBAR ;
+		   IB3 =  !((CB & DN) | (UP & CBBAR)) ;
+		   IC1 =  CC & IEN & IA3 & IB3 ;
+		   IC2 =  !(IEN & IA3 & IB3) & LOADBAR & CCBAR ;
+		   IC3 =  !((CC & DN) | (UP & CCBAR)) ;
+		   ID1 =  CD & IEN & IA3 & IB3 & IC3 ;
+		   ID2 =  !(IEN & IA3 & IB3 & IC3 ) & LOADBAR & CDBAR ;
+		   ID3 =  !((CD & DN) | (UP & CDBAR)) ;
+		   DA =  !(IA1 | IA2 | !(LOADBAR | A)) ;
+		   DB =  !(IB1 | IB2 | !(LOADBAR | B)) ;
+		   DC =  !(IC1 | IC2 | !(LOADBAR | C)) ;
+		   DD =  !(ID1 | ID2 | !(LOADBAR | D)) ;
+		   QA =  !((R_CBAR & RABAR) | (IRC & CABAR)) ;
+		   QB =  !((R_CBAR & RBBAR) | (IRC & CBBAR)) ;
+		   QC =  !((R_CBAR & RCBAR) | (IRC & CCBAR)) ;
+		   QD =  !((R_CBAR & RDBAR) | (IRC & CDBAR)) ;
+		   RCOBAR =  !(!ENTBAR & IA3 & IB3 & IC3 & ID3) ;
+		
+		this.ULS697LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS697LOG.pins.R_CBAR.SetValue(R_CBAR);
+		this.ULS697LOG.pins.RCK.SetValue(RCK);
+		this.ULS697LOG.pins.CCLRBAR.SetValue(CCLRBAR);
+		this.ULS697LOG.pins.U_DBAR.SetValue(U_DBAR);
+		this.ULS697LOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS697LOG.pins.ENPBAR.SetValue(ENPBAR);
+		this.ULS697LOG.pins.ENTBAR.SetValue(ENTBAR);
+		this.ULS697LOG.pins.CCK.SetValue(CCK);
+		this.ULS697LOG.pins.A.SetValue(A);
+		this.ULS697LOG.pins.B.SetValue(B);
+		this.ULS697LOG.pins.C.SetValue(C);
+		this.ULS697LOG.pins.D.SetValue(D);
+		this.ULS697LOG.pins.DA.SetValue(DA);
+		this.ULS697LOG.pins.DB.SetValue(DB);
+		this.ULS697LOG.pins.DC.SetValue(DC);
+		this.ULS697LOG.pins.DD.SetValue(DD);
+		this.ULS697LOG.pins.QA.SetValue(QA);
+		this.ULS697LOG.pins.QB.SetValue(QB);
+		this.ULS697LOG.pins.QC.SetValue(QC);
+		this.ULS697LOG.pins.QD.SetValue(QD);
+		this.ULS697LOG.pins.RCOBAR.SetValue(RCOBAR);
+		this.ULS697LOG.pins.IEN.SetValue(IEN);
+	}
 }
 /**
  * SYNCHRONOUS UP_DOWN COUNTER WITH OUTPUT REGISTERS AND MULTILEXED
@@ -19240,7 +26777,7 @@ class SN74LS698 extends Component {
 			QD_O: new Pin(),
 			RCOBAR_O: new Pin(),
 		}
-		this.ULS698LOG = new logicexp(['GBAR_I','R_CBAR_I','RCK_I','CCLRBAR_I','U_DBAR_I','LOADBAR_I','ENPBAR_I','ENTBAR_I','CCK_I','A_I','B_I','C_I','D_I','LA','LB','LC','LD','LABAR','LBBAR','LCBAR','LDBAR','OUTA','OUTB','OUTC','OUTD'], ['GBAR','R_CBAR','RCK','CCLRBAR','U_DBAR','LOADBAR','ENPBAR','ENTBAR','CCK','A','B','C','D','DA','DB','DC','DD','RCOBAR','QA','QB','QC','QD','EN'], ['LOADA','LOADB','LOADC','LOADD','U_DA','U_DB','U_DC','U_DD']).Logic('   GBAR =  GBAR_I ;   R_CBAR =  R_CBAR_I ;   RCK =  RCK_I ;   CCLRBAR =  CCLRBAR_I ;   U_DBAR =  U_DBAR_I ;   LOADBAR =  LOADBAR_I ;   ENPBAR =  ENPBAR_I ;   ENTBAR =  ENTBAR_I ;   CCK =  CCK_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   LOADA =  !(LOADBAR | A) | !CCLRBAR ;   LOADB =  !(LOADBAR | B) | !CCLRBAR ;   LOADC =  !(LOADBAR | C) | !CCLRBAR ;   LOADD =  !(LOADBAR | D) | !CCLRBAR ;   U_DA =  !((LA & !U_DBAR) | (U_DBAR & LABAR)) ;   U_DB =  !((LB & !U_DBAR) | (U_DBAR & LBBAR)) ;   U_DC =  !((LC & !U_DBAR) | (U_DBAR & LCBAR)) ;   U_DD =  !((LD & !U_DBAR) | (U_DBAR & LDBAR)) ;   EN =  LOADBAR & !ENPBAR & !ENTBAR ;   DA =  !((LA & EN) | (!EN & LOADBAR & LABAR) | LOADA) ;   DB =  !((LB & EN & U_DA) | (LCBAR & EN & U_DA & U_DD) |            ((!EN | !U_DA) & LOADBAR & LBBAR) | LOADB) ;   DC =  !((LC & EN & U_DA & U_DB) | (EN & U_DA & U_DB & U_DD) |            ((!EN | !U_DA | !U_DB) & LOADBAR & LCBAR) | LOADC) ;   DD =  !((LD & EN & U_DA) | ((!EN | !U_DA | !U_DB | !U_DC) & LOADBAR & LDBAR)            | LOADD) ;   RCOBAR =  !((U_DBAR & U_DA & U_DD & !ENTBAR) |                (!ENTBAR & U_DA & U_DB & U_DC & U_DD & !U_DBAR)) ;   QA =  !((R_CBAR & OUTA) | (!R_CBAR & LABAR)) ;   QB =  !((R_CBAR & OUTB) | (!R_CBAR & LBBAR)) ;   QC =  !((R_CBAR & OUTC) | (!R_CBAR & LCBAR)) ;   QD =  !((R_CBAR & OUTD) | (!R_CBAR & LDBAR)) ;');
+		this.ULS698LOG = new logicexp(['GBAR_I','R_CBAR_I','RCK_I','CCLRBAR_I','U_DBAR_I','LOADBAR_I','ENPBAR_I','ENTBAR_I','CCK_I','A_I','B_I','C_I','D_I','LA','LB','LC','LD','LABAR','LBBAR','LCBAR','LDBAR','OUTA','OUTB','OUTC','OUTD'], ['GBAR','R_CBAR','RCK','CCLRBAR','U_DBAR','LOADBAR','ENPBAR','ENTBAR','CCK','A','B','C','D','DA','DB','DC','DD','RCOBAR','QA','QB','QC','QD','EN']).Callback(this.$exe_ULS698LOG);
 		Connect(this.ULS698LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS698LOG.pins.R_CBAR_I, this.pins.R_CBAR_I);
 		Connect(this.ULS698LOG.pins.RCK_I, this.pins.RCK_I);
@@ -19362,6 +26899,91 @@ class SN74LS698 extends Component {
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
 	}
+	$exe_ULS698LOG() {
+		var LOADA, LOADB, LOADC, LOADD, U_DA, U_DB, U_DC, U_DD; // Temps
+		var GBAR_I, R_CBAR_I, RCK_I, CCLRBAR_I, U_DBAR_I, LOADBAR_I, ENPBAR_I, ENTBAR_I, CCK_I, A_I, B_I, C_I, D_I, LA, LB, LC, LD, LABAR, LBBAR, LCBAR, LDBAR, OUTA, OUTB, OUTC, OUTD; // Inputs
+		var GBAR, R_CBAR, RCK, CCLRBAR, U_DBAR, LOADBAR, ENPBAR, ENTBAR, CCK, A, B, C, D, DA, DB, DC, DD, RCOBAR, QA, QB, QC, QD, EN; // Outputs
+		GBAR_I = this.ULS698LOG.pins.GBAR_I.GetValue();
+		R_CBAR_I = this.ULS698LOG.pins.R_CBAR_I.GetValue();
+		RCK_I = this.ULS698LOG.pins.RCK_I.GetValue();
+		CCLRBAR_I = this.ULS698LOG.pins.CCLRBAR_I.GetValue();
+		U_DBAR_I = this.ULS698LOG.pins.U_DBAR_I.GetValue();
+		LOADBAR_I = this.ULS698LOG.pins.LOADBAR_I.GetValue();
+		ENPBAR_I = this.ULS698LOG.pins.ENPBAR_I.GetValue();
+		ENTBAR_I = this.ULS698LOG.pins.ENTBAR_I.GetValue();
+		CCK_I = this.ULS698LOG.pins.CCK_I.GetValue();
+		A_I = this.ULS698LOG.pins.A_I.GetValue();
+		B_I = this.ULS698LOG.pins.B_I.GetValue();
+		C_I = this.ULS698LOG.pins.C_I.GetValue();
+		D_I = this.ULS698LOG.pins.D_I.GetValue();
+		LA = this.ULS698LOG.pins.LA.GetValue();
+		LB = this.ULS698LOG.pins.LB.GetValue();
+		LC = this.ULS698LOG.pins.LC.GetValue();
+		LD = this.ULS698LOG.pins.LD.GetValue();
+		LABAR = this.ULS698LOG.pins.LABAR.GetValue();
+		LBBAR = this.ULS698LOG.pins.LBBAR.GetValue();
+		LCBAR = this.ULS698LOG.pins.LCBAR.GetValue();
+		LDBAR = this.ULS698LOG.pins.LDBAR.GetValue();
+		OUTA = this.ULS698LOG.pins.OUTA.GetValue();
+		OUTB = this.ULS698LOG.pins.OUTB.GetValue();
+		OUTC = this.ULS698LOG.pins.OUTC.GetValue();
+		OUTD = this.ULS698LOG.pins.OUTD.GetValue();
+		   GBAR =  GBAR_I ;
+		   R_CBAR =  R_CBAR_I ;
+		   RCK =  RCK_I ;
+		   CCLRBAR =  CCLRBAR_I ;
+		   U_DBAR =  U_DBAR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   ENPBAR =  ENPBAR_I ;
+		   ENTBAR =  ENTBAR_I ;
+		   CCK =  CCK_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   LOADA =  !(LOADBAR | A) | !CCLRBAR ;
+		   LOADB =  !(LOADBAR | B) | !CCLRBAR ;
+		   LOADC =  !(LOADBAR | C) | !CCLRBAR ;
+		   LOADD =  !(LOADBAR | D) | !CCLRBAR ;
+		   U_DA =  !((LA & !U_DBAR) | (U_DBAR & LABAR)) ;
+		   U_DB =  !((LB & !U_DBAR) | (U_DBAR & LBBAR)) ;
+		   U_DC =  !((LC & !U_DBAR) | (U_DBAR & LCBAR)) ;
+		   U_DD =  !((LD & !U_DBAR) | (U_DBAR & LDBAR)) ;
+		   EN =  LOADBAR & !ENPBAR & !ENTBAR ;
+		   DA =  !((LA & EN) | (!EN & LOADBAR & LABAR) | LOADA) ;
+		   DB =  !((LB & EN & U_DA) | (LCBAR & EN & U_DA & U_DD) |            ((!EN | !U_DA) & LOADBAR & LBBAR) | LOADB) ;
+		   DC =  !((LC & EN & U_DA & U_DB) | (EN & U_DA & U_DB & U_DD) |            ((!EN | !U_DA | !U_DB) & LOADBAR & LCBAR) | LOADC) ;
+		   DD =  !((LD & EN & U_DA) | ((!EN | !U_DA | !U_DB | !U_DC) & LOADBAR & LDBAR)            | LOADD) ;
+		   RCOBAR =  !((U_DBAR & U_DA & U_DD & !ENTBAR) |                (!ENTBAR & U_DA & U_DB & U_DC & U_DD & !U_DBAR)) ;
+		   QA =  !((R_CBAR & OUTA) | (!R_CBAR & LABAR)) ;
+		   QB =  !((R_CBAR & OUTB) | (!R_CBAR & LBBAR)) ;
+		   QC =  !((R_CBAR & OUTC) | (!R_CBAR & LCBAR)) ;
+		   QD =  !((R_CBAR & OUTD) | (!R_CBAR & LDBAR)) ;
+		
+		this.ULS698LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS698LOG.pins.R_CBAR.SetValue(R_CBAR);
+		this.ULS698LOG.pins.RCK.SetValue(RCK);
+		this.ULS698LOG.pins.CCLRBAR.SetValue(CCLRBAR);
+		this.ULS698LOG.pins.U_DBAR.SetValue(U_DBAR);
+		this.ULS698LOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS698LOG.pins.ENPBAR.SetValue(ENPBAR);
+		this.ULS698LOG.pins.ENTBAR.SetValue(ENTBAR);
+		this.ULS698LOG.pins.CCK.SetValue(CCK);
+		this.ULS698LOG.pins.A.SetValue(A);
+		this.ULS698LOG.pins.B.SetValue(B);
+		this.ULS698LOG.pins.C.SetValue(C);
+		this.ULS698LOG.pins.D.SetValue(D);
+		this.ULS698LOG.pins.DA.SetValue(DA);
+		this.ULS698LOG.pins.DB.SetValue(DB);
+		this.ULS698LOG.pins.DC.SetValue(DC);
+		this.ULS698LOG.pins.DD.SetValue(DD);
+		this.ULS698LOG.pins.RCOBAR.SetValue(RCOBAR);
+		this.ULS698LOG.pins.QA.SetValue(QA);
+		this.ULS698LOG.pins.QB.SetValue(QB);
+		this.ULS698LOG.pins.QC.SetValue(QC);
+		this.ULS698LOG.pins.QD.SetValue(QD);
+		this.ULS698LOG.pins.EN.SetValue(EN);
+	}
 }
 class SN74LS699 extends Component {
 	constructor() {
@@ -19436,7 +27058,7 @@ class SN74LS699 extends Component {
 		Connect(this.U2.pins.QBAR2, RCBAR);
 		let RDBAR = new Pin();
 		Connect(this.U2.pins.QBAR3, RDBAR);
-		this.ULS699LOG = new logicexp(['GBAR_I','R_CBAR_I','RCK_I','CCLRBAR_I','U_DBAR_I','LOADBAR_I','ENPBAR_I','ENTBAR_I','CCK_I','A_I','B_I','C_I','D_I','CA','CB','CC','CD','CABAR','CBBAR','CCBAR','CDBAR','RABAR','RBBAR','RCBAR','RDBAR'], ['GBAR','R_CBAR','RCK','CCLRBAR','U_DBAR','LOADBAR','ENPBAR','ENTBAR','CCK','A','B','C','D','DA','DB','DC','DD','QA','QB','QC','QD','RCOBAR','IEN'], ['UP','DN','ICL','IRC','IA1','IA2','IA3','IB1','IB2','IB3','IC1','IC2','IC3','ID1','ID2','ID3']).Logic('   GBAR =  GBAR_I ;   R_CBAR =  R_CBAR_I ;   RCK =  RCK_I ;   CCLRBAR =  CCLRBAR_I ;   U_DBAR =  U_DBAR_I ;   LOADBAR =  LOADBAR_I ;   ENPBAR =  ENPBAR_I ;   ENTBAR =  ENTBAR_I ;   CCK =  CCK_I ;   A =  A_I ;   B =  B_I ;   C =  C_I ;   D =  D_I ;   UP =  U_DBAR ;   DN =  !U_DBAR ;   IEN =  !(!LOADBAR | ENPBAR | ENTBAR) ;   ICL =  !CCLRBAR ;   IRC =  !R_CBAR ;   IA1 =  CA & IEN ;   IA2 =  !IEN & LOADBAR & CABAR ;   IA3 =  !((CA & DN) | (UP & CABAR)) ;   IB1 =  CB & IEN & IA3 ;   IB2 =  !(IEN & IA3) & LOADBAR & CBBAR ;   IB3 =  !((CB & DN) | (UP & CBBAR)) ;   IC1 =  CC & IEN & IA3 & IB3 ;   IC2 =  !(IEN & IA3 & IB3) & LOADBAR & CCBAR ;   IC3 =  !((CC & DN) | (UP & CCBAR)) ;   ID1 =  CD & IEN & IA3 & IB3 & IC3 ;   ID2 =  !(IEN & IA3 & IB3 & IC3 ) & LOADBAR & CDBAR ;   ID3 =  !((CD & DN) | (UP & CDBAR)) ;   DA =  !(IA1 | IA2 | !(LOADBAR | A) | ICL) ;   DB =  !(IB1 | IB2 | !(LOADBAR | B) | ICL) ;   DC =  !(IC1 | IC2 | !(LOADBAR | C) | ICL) ;   DD =  !(ID1 | ID2 | !(LOADBAR | D) | ICL) ;   QA =  !((R_CBAR & RABAR) | (IRC & CABAR)) ;   QB =  !((R_CBAR & RBBAR)	| (IRC & CBBAR)) ;   QC =  !((R_CBAR & RCBAR)	| (IRC & CCBAR)) ;   QD =  !((R_CBAR & RDBAR)	| (IRC & CDBAR)) ;   RCOBAR =  !(!ENTBAR & IA3 & IB3 & IC3 & ID3) ;');
+		this.ULS699LOG = new logicexp(['GBAR_I','R_CBAR_I','RCK_I','CCLRBAR_I','U_DBAR_I','LOADBAR_I','ENPBAR_I','ENTBAR_I','CCK_I','A_I','B_I','C_I','D_I','CA','CB','CC','CD','CABAR','CBBAR','CCBAR','CDBAR','RABAR','RBBAR','RCBAR','RDBAR'], ['GBAR','R_CBAR','RCK','CCLRBAR','U_DBAR','LOADBAR','ENPBAR','ENTBAR','CCK','A','B','C','D','DA','DB','DC','DD','QA','QB','QC','QD','RCOBAR','IEN']).Callback(this.$exe_ULS699LOG);
 		Connect(this.ULS699LOG.pins.GBAR_I, this.pins.GBAR_I);
 		Connect(this.ULS699LOG.pins.R_CBAR_I, this.pins.R_CBAR_I);
 		Connect(this.ULS699LOG.pins.RCK_I, this.pins.RCK_I);
@@ -19507,6 +27129,99 @@ class SN74LS699 extends Component {
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
 		Connect(RCOBAR, this.pins.RCOBAR_O);
+	}
+	$exe_ULS699LOG() {
+		var UP, DN, ICL, IRC, IA1, IA2, IA3, IB1, IB2, IB3, IC1, IC2, IC3, ID1, ID2, ID3; // Temps
+		var GBAR_I, R_CBAR_I, RCK_I, CCLRBAR_I, U_DBAR_I, LOADBAR_I, ENPBAR_I, ENTBAR_I, CCK_I, A_I, B_I, C_I, D_I, CA, CB, CC, CD, CABAR, CBBAR, CCBAR, CDBAR, RABAR, RBBAR, RCBAR, RDBAR; // Inputs
+		var GBAR, R_CBAR, RCK, CCLRBAR, U_DBAR, LOADBAR, ENPBAR, ENTBAR, CCK, A, B, C, D, DA, DB, DC, DD, QA, QB, QC, QD, RCOBAR, IEN; // Outputs
+		GBAR_I = this.ULS699LOG.pins.GBAR_I.GetValue();
+		R_CBAR_I = this.ULS699LOG.pins.R_CBAR_I.GetValue();
+		RCK_I = this.ULS699LOG.pins.RCK_I.GetValue();
+		CCLRBAR_I = this.ULS699LOG.pins.CCLRBAR_I.GetValue();
+		U_DBAR_I = this.ULS699LOG.pins.U_DBAR_I.GetValue();
+		LOADBAR_I = this.ULS699LOG.pins.LOADBAR_I.GetValue();
+		ENPBAR_I = this.ULS699LOG.pins.ENPBAR_I.GetValue();
+		ENTBAR_I = this.ULS699LOG.pins.ENTBAR_I.GetValue();
+		CCK_I = this.ULS699LOG.pins.CCK_I.GetValue();
+		A_I = this.ULS699LOG.pins.A_I.GetValue();
+		B_I = this.ULS699LOG.pins.B_I.GetValue();
+		C_I = this.ULS699LOG.pins.C_I.GetValue();
+		D_I = this.ULS699LOG.pins.D_I.GetValue();
+		CA = this.ULS699LOG.pins.CA.GetValue();
+		CB = this.ULS699LOG.pins.CB.GetValue();
+		CC = this.ULS699LOG.pins.CC.GetValue();
+		CD = this.ULS699LOG.pins.CD.GetValue();
+		CABAR = this.ULS699LOG.pins.CABAR.GetValue();
+		CBBAR = this.ULS699LOG.pins.CBBAR.GetValue();
+		CCBAR = this.ULS699LOG.pins.CCBAR.GetValue();
+		CDBAR = this.ULS699LOG.pins.CDBAR.GetValue();
+		RABAR = this.ULS699LOG.pins.RABAR.GetValue();
+		RBBAR = this.ULS699LOG.pins.RBBAR.GetValue();
+		RCBAR = this.ULS699LOG.pins.RCBAR.GetValue();
+		RDBAR = this.ULS699LOG.pins.RDBAR.GetValue();
+		   GBAR =  GBAR_I ;
+		   R_CBAR =  R_CBAR_I ;
+		   RCK =  RCK_I ;
+		   CCLRBAR =  CCLRBAR_I ;
+		   U_DBAR =  U_DBAR_I ;
+		   LOADBAR =  LOADBAR_I ;
+		   ENPBAR =  ENPBAR_I ;
+		   ENTBAR =  ENTBAR_I ;
+		   CCK =  CCK_I ;
+		   A =  A_I ;
+		   B =  B_I ;
+		   C =  C_I ;
+		   D =  D_I ;
+		   UP =  U_DBAR ;
+		   DN =  !U_DBAR ;
+		   IEN =  !(!LOADBAR | ENPBAR | ENTBAR) ;
+		   ICL =  !CCLRBAR ;
+		   IRC =  !R_CBAR ;
+		   IA1 =  CA & IEN ;
+		   IA2 =  !IEN & LOADBAR & CABAR ;
+		   IA3 =  !((CA & DN) | (UP & CABAR)) ;
+		   IB1 =  CB & IEN & IA3 ;
+		   IB2 =  !(IEN & IA3) & LOADBAR & CBBAR ;
+		   IB3 =  !((CB & DN) | (UP & CBBAR)) ;
+		   IC1 =  CC & IEN & IA3 & IB3 ;
+		   IC2 =  !(IEN & IA3 & IB3) & LOADBAR & CCBAR ;
+		   IC3 =  !((CC & DN) | (UP & CCBAR)) ;
+		   ID1 =  CD & IEN & IA3 & IB3 & IC3 ;
+		   ID2 =  !(IEN & IA3 & IB3 & IC3 ) & LOADBAR & CDBAR ;
+		   ID3 =  !((CD & DN) | (UP & CDBAR)) ;
+		   DA =  !(IA1 | IA2 | !(LOADBAR | A) | ICL) ;
+		   DB =  !(IB1 | IB2 | !(LOADBAR | B) | ICL) ;
+		   DC =  !(IC1 | IC2 | !(LOADBAR | C) | ICL) ;
+		   DD =  !(ID1 | ID2 | !(LOADBAR | D) | ICL) ;
+		   QA =  !((R_CBAR & RABAR) | (IRC & CABAR)) ;
+		   QB =  !((R_CBAR & RBBAR)	| (IRC & CBBAR)) ;
+		   QC =  !((R_CBAR & RCBAR)	| (IRC & CCBAR)) ;
+		   QD =  !((R_CBAR & RDBAR)	| (IRC & CDBAR)) ;
+		   RCOBAR =  !(!ENTBAR & IA3 & IB3 & IC3 & ID3) ;
+		
+		this.ULS699LOG.pins.GBAR.SetValue(GBAR);
+		this.ULS699LOG.pins.R_CBAR.SetValue(R_CBAR);
+		this.ULS699LOG.pins.RCK.SetValue(RCK);
+		this.ULS699LOG.pins.CCLRBAR.SetValue(CCLRBAR);
+		this.ULS699LOG.pins.U_DBAR.SetValue(U_DBAR);
+		this.ULS699LOG.pins.LOADBAR.SetValue(LOADBAR);
+		this.ULS699LOG.pins.ENPBAR.SetValue(ENPBAR);
+		this.ULS699LOG.pins.ENTBAR.SetValue(ENTBAR);
+		this.ULS699LOG.pins.CCK.SetValue(CCK);
+		this.ULS699LOG.pins.A.SetValue(A);
+		this.ULS699LOG.pins.B.SetValue(B);
+		this.ULS699LOG.pins.C.SetValue(C);
+		this.ULS699LOG.pins.D.SetValue(D);
+		this.ULS699LOG.pins.DA.SetValue(DA);
+		this.ULS699LOG.pins.DB.SetValue(DB);
+		this.ULS699LOG.pins.DC.SetValue(DC);
+		this.ULS699LOG.pins.DD.SetValue(DD);
+		this.ULS699LOG.pins.QA.SetValue(QA);
+		this.ULS699LOG.pins.QB.SetValue(QB);
+		this.ULS699LOG.pins.QC.SetValue(QC);
+		this.ULS699LOG.pins.QD.SetValue(QD);
+		this.ULS699LOG.pins.RCOBAR.SetValue(RCOBAR);
+		this.ULS699LOG.pins.IEN.SetValue(IEN);
 	}
 }
 module.exports.SN74LS00 = SN74LS00;

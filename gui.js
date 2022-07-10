@@ -27,7 +27,8 @@ class Schematic_Generator {
       id: "root",
       layoutOptions: {
         "elk.algorithm": "layered",
-        "spacing.baseValue": "40.0"
+        "spacing.baseValue": "10.0",
+				"elk.layered.considerModelOrder.strategy": "NODES_AND_EDGES"
       },
       children: [],
       edges: []
@@ -99,13 +100,8 @@ class Schematic_Generator {
 			let firstPin = wirePinsComponentOwned[0];
 			if (firstPin === p) continue;
 
-			console.log('p', p.owner.ref, p.ref);
-			console.log('firstPin', firstPin.owner.ref, firstPin.ref);
-
 			let firstPinID = `${firstPin.owner.ref}.${firstPin.ref}`;
       let thisPinID = `${p.owner.ref}.${p.ref}`;
-
-			console.log(firstPinID, thisPinID);
 
       let newEdge = {
         id: `e.${firstPinID}.${thisPinID}.0`,

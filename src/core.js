@@ -228,7 +228,7 @@ class Circuit extends Footprint {
 	}
 
 	//init() {}
-
+	
 	GetComponents(deep, ret) {
 		ret = ret ?? {};
 		for (let k in this) {
@@ -265,7 +265,7 @@ class Circuit extends Footprint {
 		}
 
 		for (let k in this.exeOrder)
-			this.exeOrder[k].$execute();
+			this.exeOrder[k].$execute(this);
 		
 		if (global.debug)
 			if (this.$debug)
@@ -303,7 +303,15 @@ class Component extends Circuit {
 }
 
 class Board extends Circuit {
-
+	GetBoards() {
+		let ret = {};
+		for (let k in this) {
+			let item = this[k];
+			if (item instanceof Board)
+				ret[k] = item;
+		}
+		return ret;
+	}
 }
 
 class Bus extends Circuit {
@@ -707,27 +715,14 @@ class logicexp extends Circuit {
 			this.pins[i] = new Pin();
 	}
 
-
-	Logic(code) {
-		this.code = code;
-		this.codeScript = new vm.Script(this.code);
-		this.context = vm.createContext({});
+	Callback(cb) {
+		this.cb = cb;
 		return this;
 	}
 
-	$execute() {
-		for (var i of this.inputs)
-			this.context[i] = this.pins[i].GetValue() ? 255 : 0;
-		for (var i of this.outputs)
-			this.context[i] = this.pins[i].GetValue() ? 255 : 0;
-		for (var i of this.temps)
-			this.context[i] = false;
-
-		scopeEval(this.code, this.context);
-		//this.codeScript.runInContext(this.context);
-
-		for (var i of this.outputs)
-			this.pins[i].SetValue(this.context[i]);
+	$execute(owner) {
+		this.cb.apply(owner);
+		return;
 	}
 }
 

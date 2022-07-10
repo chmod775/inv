@@ -274,19 +274,25 @@ class Part {
 			temps: []
 		};
 
+		let vars = [];
+
 		let nInputs = a[0];
 		let nOutputs = a[1];
 
 		for (var i = 0; i < nInputs; i++) {
-			let tc = sanitizeName(t.getToken().content);
+			let _tc = t.getToken().content;
+			let tc = sanitizeName(_tc);
 			this.pins[tc] = tc;
 			this.context.inputs.push(tc);
+			vars.push(_tc);
 		}
 
 		for (var i = 0; i < nOutputs; i++) {
-			let tc = sanitizeName(t.getToken().content);
+			let _tc = t.getToken().content;
+			let tc = sanitizeName(_tc);
 			this.pins[tc] = tc;
 			this.context.outputs.push(tc);
+			vars.push(_tc);
 		}
 
 		// Find logic
@@ -300,11 +306,13 @@ class Part {
 
 		let logicLines = logicCode.replace(/\{/g, '').split('}').filter(l => l.length > 0);
 
-		let vars = [];
 		for (let l of logicLines) {
 			let varItem = l.substring(0, l.indexOf('=')).trim();
 			vars.push(varItem);
 		}
+
+		if (vars.includes('1QCBAR'))
+			console.log(vars);
 
 		let sanitizedCode = logicLines.join('\n');
 		for (let v of vars) {
@@ -430,9 +438,7 @@ class Circuit {
 				}
 			} else {
 				if (p.logic) {
-					out.push(`\t\tthis.${p.name} = new ${p.func}([${p.context.inputs.map(t => `'${t}'`).join(',')}], [${p.context.outputs.map(t => `'${t}'`).join(',')}], [${p.context.temps.map(t => `'${t}'`).join(',')}]).Logic('${p.logic}');`);
-					//out.push(`\t\tthis.${p.name} = new ${p.func}([${p.context.inputs.map(t => `'${t}'`).join(',')}], [${p.context.outputs.map(t => `'${t}'`).join(',')}], [${p.context.temps.map(t => `'${t}'`).join(',')}]).Logic('${p.logic}');`);
-					//out.push(`\t\tthis.${p.name} = new ${p.func}(${p.args.join(',')}).Context([${p.context.inputs.map(t => `'${t}'`).join(',')}], [${p.context.outputs.map(t => `'${t}'`).join(',')}]).Logic('${p.logic}');`);
+					out.push(`\t\tthis.${p.name} = new ${p.func}([${p.context.inputs.map(t => `'${t}'`).join(',')}], [${p.context.outputs.map(t => `'${t}'`).join(',')}]).Callback(this.$exe_${p.name});`);
 				} else {
 					out.push(`\t\tthis.${p.name} = new ${p.func}(${p.args.join(',')});`);
 				}
@@ -462,6 +468,26 @@ class Circuit {
 
     }
     out.push(`\t}`);
+
+		for (let p of this.parts) {
+			if (p.logic) {
+				out.push(`\t$exe_${p.name}() {`);
+
+				if (p.context.temps.length > 0) out.push(`\t\tvar ${p.context.temps.join(', ')}; // Temps`);
+				if (p.context.inputs.length > 0) out.push(`\t\tvar ${p.context.inputs.join(', ')}; // Inputs`);
+				if (p.context.outputs.length > 0) out.push(`\t\tvar ${p.context.outputs.join(', ')}; // Outputs`);
+
+				for (let pp of p.context.inputs)
+					out.push(`\t\t${pp} = this.${p.name}.pins.${pp}.GetValue();`);
+
+				out.push(p.logic.split(';').map(t => `\t\t${t}`).join(';\n'));
+
+				for (let pp of p.context.outputs)
+					out.push(`\t\tthis.${p.name}.pins.${pp}.SetValue(${pp});`);
+
+				out.push(`\t}`);
+			}
+		}
 
     out.push('}');
 
