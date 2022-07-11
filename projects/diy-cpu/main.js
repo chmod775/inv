@@ -812,8 +812,8 @@ class CPU extends Board {
 	}
 
 	Step() {
-		this.Execute(true, false);
-		this.Execute(false, false);
+		//this.Execute(true, false);
+		//this.Execute(false, false);
 		this.Execute(true, true);
 		this.Execute(false, true);
 	}
@@ -847,6 +847,28 @@ class CPU extends Board {
 
 let m = new CPU();
 
+const circs = m.GetCircuits_extended(true);
+const circs_reversed = Object.keys(circs).reverse().map(t => circs[t]);
+
+let times = {};
+function monitor() {
+	for (let ck in circs) {
+		let c = circs[ck];
+		var hrstart = process.hrtime()
+		for (var i = 0; i < 100000; i++)
+			c.item.$execute(c.owner);
+		var hrend = process.hrtime(hrstart);
+		let tms = (hrend[1] / 1000000) + (hrend[0] * 1000);
+		times[ck] = tms;
+	}
+}
+
+function exe() {
+	for (let c of circs_reversed) {
+		c.item.$execute(c.owner);
+	}
+}
+
 m.ram.Write(0, [
 	CPU.ASM.SET(7),
 	CPU.ASM.A2R(0),
@@ -868,6 +890,7 @@ m.ram.Write(0, [
 	CPU.LABEL("loop", CPU.ASM.LDM(1))
 	*/
 ]);
+
 
 
 console.log('acc', m.alu._readAccValue());
@@ -908,9 +931,12 @@ console.log('regs', m.regs._readRegisters());
 m.ram.PrintArea(0);
 
 
+/*
 var hrstart = process.hrtime()
-for (var i = 0; i < 100000; i++)
-	m.$execute();
+for (var i = 0; i < 100000; i++) {
+	//m.$execute();
+	exe();
+}
 var hrend = process.hrtime(hrstart);
 console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000)
 
@@ -919,3 +945,20 @@ console.log(Object.keys(m.alu.GetComponents()));
 
 const generator = require('../../gui');
 //generator.Export(m.alu);
+*/
+monitor();
+
+let perc = {};
+
+let max = 0;
+let total = 0;
+for (let tk in times) {
+	max = Math.max(max, times[tk]);
+	total += times[tk];
+}
+
+for (let tk in times) {
+	perc[tk] = +((times[tk] / total) * 100).toFixed(2);
+}
+
+console.log(total, times);

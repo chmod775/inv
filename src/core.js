@@ -243,6 +243,23 @@ class Circuit extends Footprint {
 		return ret;
 	}
 
+	GetCircuits_extended(deep, prefix, owner, ret) {
+		ret = ret ?? {};
+		prefix = prefix ?? '';
+		for (let k in this) {
+			let item = this[k];
+			if (item instanceof Circuit) {
+				if (!(item instanceof Component))
+					if (!(item instanceof Board))
+						if (!(item instanceof Bus))
+							ret[prefix + k] = { item: item, owner: owner };
+				if (deep)	
+					item.GetCircuits_extended(true, prefix + k + '.', item, ret);
+			}
+		}
+		return ret;
+	}
+
 	GetCircuits() {
 		let ret = {};
 		for (let k in this) {
@@ -367,10 +384,6 @@ class Bus extends Circuit {
 	}
 }
 
-function Execute(circ) {
-
-}
-
 function Connect(srcPin, destPin) {
 	const destIsAbsent = (destPin === undefined);
 
@@ -454,15 +467,19 @@ class inva extends Circuit {
 		this.n = n;
 
 		this.n = n;
+		this._ = {
+			in: [],
+			out: []
+		};
 		for (var i = 0; i < n; i++) {
-			this.pins[`IN${i}_0`] = new Pin();
-			this.pins[`OUT${i}`] = new Pin();
+			this._.in.push(this.pins[`IN${i}_0`] = new Pin());
+			this._.out.push(this.pins[`OUT${i}`] = new Pin());
 		}
 	}
 
 	$execute() {
 		for (var i = 0; i < this.n; i++)
-			this.pins[`OUT${i}`].SetValue(!this.pins[`IN${i}_0`].GetValue());
+			this._.out[i].SetValue(!this._.in[i].GetValue());
 	}
 }
 
@@ -472,8 +489,11 @@ class and extends Circuit {
 		super();
 
 		this.n = n;
+		this._ = {
+			in: []
+		};
 		for (var i = 0; i < n; i++) {
-			this.pins[`IN${i}`] = new Pin();
+			this._.in.push(this.pins[`IN${i}`] = new Pin());
 		}
 		this.pins.OUT = new Pin();
 	}
@@ -481,7 +501,7 @@ class and extends Circuit {
 	$execute() {
 		let out = true;
 		for (var i = 0; i < this.n; i++) {
-			out = out && this.pins[`IN${i}`].GetValue();
+			out = out && this._.in[i].GetValue();
 		}
 		this.pins.OUT.SetValue(out);
 	}
@@ -492,8 +512,11 @@ class nand extends Circuit {
 		super();
 
 		this.n = n;
+		this._ = {
+			in: []
+		};
 		for (var i = 0; i < n; i++) {
-			this.pins[`IN${i}`] = new Pin();
+			this._.in.push(this.pins[`IN${i}`] = new Pin());
 		}
 		this.pins.OUT = new Pin();
 	}
@@ -501,7 +524,7 @@ class nand extends Circuit {
 	$execute() {
 		let out = true;
 		for (var i = 0; i < this.n; i++) {
-			out = out && this.pins[`IN${i}`].GetValue();
+			out = out && this._.in[i].GetValue();
 		}
 		this.pins.OUT.SetValue(!out);
 	}
@@ -512,8 +535,11 @@ class or extends Circuit {
 		super();
 
 		this.n = n;
+		this._ = {
+			in: []
+		};
 		for (var i = 0; i < n; i++) {
-			this.pins[`IN${i}`] = new Pin();
+			this._.in.push(this.pins[`IN${i}`] = new Pin());
 		}
 		this.pins.OUT = new Pin();
 	}
@@ -521,7 +547,7 @@ class or extends Circuit {
 	$execute() {
 		let out = false;
 		for (var i = 0; i < this.n; i++) {
-			out = out || this.pins[`IN${i}`].GetValue();
+			out = out || this._.in[i].GetValue();
 		}
 		this.pins.OUT.SetValue(out);
 	}
@@ -537,6 +563,8 @@ class bufa extends Circuit {
 			this.pins[`OUT${i}`] = new Pin();
 		}
 	}
+
+	$execute() { throw 'Not implemented!' }
 }
 
 class nora extends Circuit {
@@ -550,6 +578,8 @@ class nora extends Circuit {
 			this.pins[`OUT${g}`] = new Pin();
 		}
 	}
+
+	$execute() { throw 'Not implemented!' }
 }
 
 
@@ -566,10 +596,15 @@ class dff extends Circuit {
 		this.oldClock = false;
 
 		this.n = n;
+		this._ = {
+			d: [],
+			q: [],
+			qbar: []
+		};
 		for (var i = 0; i < n; i++) {
-			this.pins[`D${i}`] = new Pin();
-			this.pins[`Q${i}`] = new Pin();
-			this.pins[`QBAR${i}`] = new Pin();
+			this._.d.push(this.pins[`D${i}`] = new Pin());
+			this._.q.push(this.pins[`Q${i}`] = new Pin());
+			this._.qbar.push(this.pins[`QBAR${i}`] = new Pin());
 		}
 	}
 
@@ -580,15 +615,15 @@ class dff extends Circuit {
 
 		for (var i = 0; i < this.n; i++) {
 			if (clock && !this.oldClock)
-				this.pins[`Q${i}`].SetValue(this.pins[`D${i}`].GetValue());
+				this._.q[i].SetValue(this._.d[i].GetValue());
 
 			if (presetActive)
-				this.pins[`Q${i}`].SetValue(true);
+				this._.q[i].SetValue(true);
 
 			if (clearActive)
-				this.pins[`Q${i}`].SetValue(false);
+				this._.q[i].SetValue(false);
 			
-			this.pins[`QBAR${i}`].SetValue(!this.pins[`Q${i}`].GetValue());
+			this._.qbar[i].SetValue(!this._.q[i].GetValue());
 		}
 
 		this.oldClock = clock;
@@ -607,11 +642,17 @@ class srff extends Circuit {
 		}
 
 		this.n = n;
+		this._ = {
+			s: [],
+			r: [],
+			q: [],
+			qbar: []
+		};
 		for (var i = 0; i < n; i++) {
-			this.pins[`S${i}`] = new Pin();
-			this.pins[`R${i}`] = new Pin();
-			this.pins[`Q${i}`] = new Pin();
-			this.pins[`QBAR${i}`] = new Pin();
+			this._.s.push(this.pins[`S${i}`] = new Pin());
+			this._.r.push(this.pins[`R${i}`] = new Pin());
+			this._.q.push(this.pins[`Q${i}`] = new Pin());
+			this._.qbar.push(this.pins[`QBAR${i}`] = new Pin());
 		}
 	}
 
@@ -622,17 +663,17 @@ class srff extends Circuit {
 
 		for (var i = 0; i < this.n; i++) {
 			if (gate) {
-				if (this.pins[`S${i}`].GetValue()) this.pins[`Q${i}`].SetValue(true);
-				if (this.pins[`R${i}`].GetValue()) this.pins[`Q${i}`].SetValue(false);
+				if (this._.s[i].GetValue()) this._.q[i].SetValue(true);
+				if (this._.r[i].GetValue()) this._.q[i].SetValue(false);
 			}
 
 			if (presetActive)
-				this.pins[`Q${i}`].SetValue(true);
+				this._.q[i].SetValue(true);
 
 			if (clearActive)
-					this.pins[`Q${i}`].SetValue(false);
+					this._.q[i].SetValue(false);
 			
-			this.pins[`QBAR${i}`].SetValue(!this.pins[`Q${i}`].GetValue());
+			this._.qbar[i].SetValue(!this._.q[i].GetValue());
 		}
 	}
 }
@@ -648,10 +689,15 @@ class dltch extends Circuit {
 		}
 
 		this.n = n;
+		this._ = {
+			d: [],
+			q: [],
+			qbar: []
+		};
 		for (var i = 0; i < n; i++) {
-			this.pins[`D${i}`] = new Pin();
-			this.pins[`Q${i}`] = new Pin();
-			this.pins[`QBAR${i}`] = new Pin();
+			this._.d.push(this.pins[`D${i}`] = new Pin());
+			this._.q.push(this.pins[`Q${i}`] = new Pin());
+			this._.qbar.push(this.pins[`QBAR${i}`] = new Pin());
 		}
 	}
 
@@ -662,20 +708,18 @@ class dltch extends Circuit {
 
 		for (var i = 0; i < this.n; i++) {
 			if (gate)
-				this.pins[`Q${i}`].SetValue(this.pins[`D${i}`].GetValue());
+				this._.q[i].SetValue(this._.d[i].GetValue());
 	
 			if (presetActive)
-				this.pins[`Q${i}`].SetValue(true);
+				this._.q[i].SetValue(true);
 	
 			if (clearActive)
-				this.pins[`Q${i}`].SetValue(false);
+				this._.q[i].SetValue(false);
 			
-			this.pins[`QBAR${i}`].SetValue(!this.pins[`Q${i}`].GetValue());
+			this._.qbar[i].SetValue(!this._.q[i].GetValue());
 		}
 	}
 }
-
-
 
 class buf3a extends Circuit {
 	constructor(n) {
@@ -686,16 +730,22 @@ class buf3a extends Circuit {
 		}
 
 		this.n = n;
+
+		this._ = {
+			in: [],
+			out: []
+		};
+
 		for (var i = 0; i < n; i++) {
-			this.pins[`IN${i}_0`] = new Pin();
-			this.pins[`OUT${i}`] = new Pin();
+			this._.in.push(this.pins[`IN${i}_0`] = new Pin());
+			this._.out.push(this.pins[`OUT${i}`] = new Pin());
 		}
 	}
 
 	$execute() {
 		if (this.pins.EN.GetValue())
 			for (var i = 0; i < this.n; i++)
-				this.pins[`OUT${i}`].SetValue(this.pins[`IN${i}_0`].GetValue());
+				this._.out[i].SetValue(this._.in[i].GetValue());
 	}
 }
 
