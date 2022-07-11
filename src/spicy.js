@@ -410,6 +410,7 @@ class Circuit {
     let out = [];
 
 		let temporary = [];
+		let exeOrder = [];
 
     out.push(`class ${this.name} extends Component {`);
 
@@ -443,6 +444,8 @@ class Circuit {
 					out.push(`\t\tthis.${p.name} = new ${p.func}(${p.args.join(',')});`);
 				}
 	
+				exeOrder.push(p.name);
+
 				for (let ppk in p.pins) {
 					let pp = sanitizeName(p.pins[ppk]);
 					
@@ -488,6 +491,12 @@ class Circuit {
 				out.push(`\t}`);
 			}
 		}
+
+		out.push(`\t$execute(owner) {`);
+		for (let p of exeOrder.reverse()) {
+			out.push(`\t\tthis.${p}.$execute(this);`);
+		}
+		out.push(`\t}`);
 
     out.push('}');
 

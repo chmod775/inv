@@ -261,11 +261,12 @@ class Circuit extends Footprint {
 		if (!this.exeOrder) {
 			let circuits = this.GetCircuits();
 			let reverseCircuits = Object.keys(circuits).reverse().reduce((o, key) => ({ ...o, [key]: circuits[key]}), {})
-			this.exeOrder = reverseCircuits;
+			this.exeMap = reverseCircuits;
+			this.exeOrder = Object.keys(this.exeMap).map(t => this.exeMap[t]);
 		}
 
-		for (let k in this.exeOrder)
-			this.exeOrder[k].$execute(this);
+		for (let k of this.exeOrder)
+			k.$execute(this);
 		
 		if (global.debug)
 			if (this.$debug)

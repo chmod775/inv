@@ -15,6 +15,9 @@ class SN74HC00 extends Component {
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+	}
 }
 /**
  * Quadruple 2-input Positive-Nand Gates with Open-Collector Outputs
@@ -31,6 +34,9 @@ class SN74HC01 extends Component {
 		Connect(this.U1.pins.IN0, this.pins.A);
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -49,6 +55,9 @@ class SN74HC02 extends Component {
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+	}
 }
 /**
  * Quadruple 2-input Positive-Nand Gates with Open-Collector Outputs
@@ -66,6 +75,9 @@ class SN74HC03 extends Component {
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+	}
 }
 /**
  * Hex Inverters
@@ -81,6 +93,9 @@ class SN74HC04 extends Component {
 		Connect(this.U1.pins.IN0, this.pins.A);
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+	}
 }
 /**
  * Hex Inverters with Open-Collector Outputs
@@ -95,6 +110,9 @@ class SN74HC05 extends Component {
 		this.U1 = new inv();
 		Connect(this.U1.pins.IN0, this.pins.A);
 		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -113,6 +131,9 @@ class SN74HC08 extends Component {
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+	}
 }
 /**
  * Quadruple 2-input Positive-And Gates with Open-Collector Outputs
@@ -129,6 +150,9 @@ class SN74HC09 extends Component {
 		Connect(this.U1.pins.IN0, this.pins.A);
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -149,6 +173,9 @@ class SN74HC10 extends Component {
 		Connect(this.U1.pins.IN2, this.pins.C);
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+	}
 }
 /**
  * Triple 3-input Positive-And Gates
@@ -168,6 +195,9 @@ class SN74HC11 extends Component {
 		Connect(this.U1.pins.IN2, this.pins.C);
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+	}
 }
 /**
  * Hex Schmitt-Trigger Inverters
@@ -182,6 +212,9 @@ class SN74HC14 extends Component {
 		this.U1 = new inv();
 		Connect(this.U1.pins.IN0, this.pins.A);
 		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -204,6 +237,9 @@ class SN74HC20 extends Component {
 		Connect(this.U1.pins.IN3, this.pins.D);
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+	}
 }
 /**
  * Dual 4-input Positive-And Gates
@@ -225,6 +261,9 @@ class SN74HC21 extends Component {
 		Connect(this.U1.pins.IN3, this.pins.D);
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+	}
 }
 /**
  * Triple 3-input Positive-Nor Gates
@@ -243,6 +282,9 @@ class SN74HC27 extends Component {
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.IN2, this.pins.C);
 		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -273,6 +315,9 @@ class SN74HC30 extends Component {
 		Connect(this.U1.pins.IN7, this.pins.H);
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+	}
 }
 /**
  * Quadruple 2-input Positive-Or Gates
@@ -290,6 +335,9 @@ class SN74HC32 extends Component {
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+	}
 }
 /**
  * Hex Noninverters with Open-Collector Outputs
@@ -304,6 +352,9 @@ class SN74HC35 extends Component {
 		this.U1 = new buf();
 		Connect(this.U1.pins.IN0, this.pins.A);
 		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -321,6 +372,9 @@ class SN74HC36 extends Component {
 		Connect(this.U1.pins.IN0, this.pins.A);
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -431,6 +485,9 @@ class SN74HC42 extends Component {
 		this.UHC42LOG.pins.Y8.SetValue(Y8);
 		this.UHC42LOG.pins.Y9.SetValue(Y9);
 	}
+	$execute(owner) {
+		this.UHC42LOG.$execute(this);
+	}
 }
 class SN74HC51 extends Component {
 	constructor() {
@@ -464,6 +521,10 @@ class SN74HC51 extends Component {
 		Connect(this.U2.pins.IN1_1, this.pins.D2);
 		Connect(this.U2.pins.OUT, this.pins.Y2);
 	}
+	$execute(owner) {
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * Dual J-K Flip-Flops with Clear
@@ -488,6 +549,9 @@ class SN74HC73 extends Component {
 		Connect(this.U1.pins.Q0, this.pins.Q);
 		Connect(this.U1.pins.QBAR0, this.pins.QBAR);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+	}
 }
 /**
  * Dual D-Type Positive-Edge-Triggered Flip-Flops w_ Preset & Clear
@@ -510,6 +574,9 @@ class SN74HC74 extends Component {
 		Connect(this.UFF1.pins.D0, this.pins._1D);
 		Connect(this.UFF1.pins.Q0, this.pins._1Q);
 		Connect(this.UFF1.pins.QBAR0, this.pins._1QBAR);
+	}
+	$execute(owner) {
+		this.UFF1.$execute(this);
 	}
 }
 /**
@@ -548,6 +615,10 @@ class SN74HC75 extends Component {
 		Connect(this.U12.pins.QBAR0, this.pins._1QBAR);
 		Connect(this.U12.pins.QBAR1, this.pins._2QBAR);
 	}
+	$execute(owner) {
+		this.U12.$execute(this);
+		this.UIBUF.$execute(this);
+	}
 }
 /**
  * Dual J-K Flip-Flops with Preset and Clear
@@ -572,6 +643,9 @@ class SN74HC76 extends Component {
 		Connect(this.U1.pins.K0, this.pins.K);
 		Connect(this.U1.pins.Q0, this.pins.Q);
 		Connect(this.U1.pins.QBAR0, this.pins.QBAR);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -623,6 +697,11 @@ class SN74HC78 extends Component {
 		Connect(this.U2.pins.K0, this.pins._2K);
 		Connect(this.U2.pins.Q0, this.pins._2Q);
 		Connect(this.U2.pins.QBAR0, this.pins._2QBAR);
+	}
+	$execute(owner) {
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+		this.UIBUF.$execute(this);
 	}
 }
 /**
@@ -755,6 +834,9 @@ class SN74HC85A extends Component {
 		this.UHC85ALOG.pins.YPEQ.SetValue(YPEQ);
 		this.UHC85ALOG.pins.YPLQ.SetValue(YPLQ);
 	}
+	$execute(owner) {
+		this.UHC85ALOG.$execute(this);
+	}
 }
 /**
  * Quadruple 2-input Exclusive-Or Gates
@@ -771,6 +853,9 @@ class SN74HC86 extends Component {
 		Connect(this.U1.pins.IN0, this.pins.A);
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -847,6 +932,14 @@ class SN74HC93 extends Component {
 		Connect(QB, this.pins.QB_O);
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
+	}
+	$execute(owner) {
+		this.U6.$execute(this);
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -976,6 +1069,10 @@ class SN74HC95 extends Component {
 		this.UHC95LOG.pins.DC.SetValue(DC);
 		this.UHC95LOG.pins.DD.SetValue(DD);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+		this.UHC95LOG.$execute(this);
+	}
 }
 /**
  * Dual J-K Flip-Flops with Clear
@@ -999,6 +1096,9 @@ class SN74HC107 extends Component {
 		Connect(this.U1.pins.K0, this.pins.K);
 		Connect(this.U1.pins.Q0, this.pins.Q);
 		Connect(this.U1.pins.QBAR0, this.pins.QBAR);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -1032,6 +1132,10 @@ class SN74HC109 extends Component {
 		Connect(this.U2.pins.OUT0, K);
 		Connect(this.U2.pins.OUT1, CLKBAR);
 	}
+	$execute(owner) {
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * Dual J-K Negative-Edge-Triggered Flip-Flops with Preset & Clear
@@ -1057,6 +1161,9 @@ class SN74HC112 extends Component {
 		Connect(this.U1.pins.Q0, this.pins.Q);
 		Connect(this.U1.pins.QBAR0, this.pins.QBAR);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+	}
 }
 /**
  * Dual J-K Negative-Edge-Triggered Flip-Flops with Preset
@@ -1080,6 +1187,9 @@ class SN74HC113 extends Component {
 		Connect(this.U1.pins.K0, this.pins.K);
 		Connect(this.U1.pins.Q0, this.pins.Q);
 		Connect(this.U1.pins.QBAR0, this.pins.QBAR);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -1132,6 +1242,11 @@ class SN74HC114 extends Component {
 		Connect(this.U2.pins.Q0, this.pins._2Q);
 		Connect(this.U2.pins.QBAR0, this.pins._2QBAR);
 	}
+	$execute(owner) {
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+		this.UIBUF.$execute(this);
+	}
 }
 /**
  * Quadruple Bus Buffer with 3-state Outputs
@@ -1153,6 +1268,10 @@ class SN74HC125 extends Component {
 		Connect(this.U2.pins.IN0, this.pins.GBAR);
 		Connect(this.U2.pins.OUT, G);
 	}
+	$execute(owner) {
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * Quadruple Bus Buffer with 3-state Outputs
@@ -1170,6 +1289,9 @@ class SN74HC126 extends Component {
 		Connect(this.U1.pins.EN, this.pins.G);
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+	}
 }
 /**
  * Quadruple 2-input Positive-Nand Schmitt Triggers
@@ -1186,6 +1308,9 @@ class SN74HC132 extends Component {
 		Connect(this.U1.pins.IN0, this.pins.A);
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -1225,6 +1350,9 @@ class SN74HC133 extends Component {
 		Connect(this.U1.pins.IN11, this.pins.L);
 		Connect(this.U1.pins.IN12, this.pins.M);
 		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -1366,6 +1494,10 @@ class SN74HC137 extends Component {
 		this.UHC137LOG.pins.Y6.SetValue(Y6);
 		this.UHC137LOG.pins.Y7.SetValue(Y7);
 	}
+	$execute(owner) {
+		this.UHC137LOG.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * DECODER_DEMULTIPLEXER 3-8 LINE
@@ -1462,6 +1594,9 @@ class SN74HC138 extends Component {
 		this.UHC138LOG.pins.Y6.SetValue(Y6);
 		this.UHC138LOG.pins.Y7.SetValue(Y7);
 	}
+	$execute(owner) {
+		this.UHC138LOG.$execute(this);
+	}
 }
 /**
  * DECODER_DEMULTIPLEXER 2-4 LINE
@@ -1526,6 +1661,9 @@ class SN74HC139 extends Component {
 		this.UHC139LOG.pins.Y1.SetValue(Y1);
 		this.UHC139LOG.pins.Y2.SetValue(Y2);
 		this.UHC139LOG.pins.Y3.SetValue(Y3);
+	}
+	$execute(owner) {
+		this.UHC139LOG.$execute(this);
 	}
 }
 /**
@@ -1639,6 +1777,9 @@ class SN74HC147 extends Component {
 		this.UHC147LOG.pins.B.SetValue(B);
 		this.UHC147LOG.pins.C.SetValue(C);
 		this.UHC147LOG.pins.D.SetValue(D);
+	}
+	$execute(owner) {
+		this.UHC147LOG.$execute(this);
 	}
 }
 /**
@@ -1758,6 +1899,9 @@ class SN74HC148 extends Component {
 		this.UHC148LOG.pins.A2.SetValue(A2);
 		this.UHC148LOG.pins.GS.SetValue(GS);
 		this.UHC148LOG.pins.EO.SetValue(EO);
+	}
+	$execute(owner) {
+		this.UHC148LOG.$execute(this);
 	}
 }
 /**
@@ -1884,6 +2028,9 @@ class SN74HC151 extends Component {
 		this.UHC151LOG.pins.W.SetValue(W);
 		this.UHC151LOG.pins.Y.SetValue(Y);
 	}
+	$execute(owner) {
+		this.UHC151LOG.$execute(this);
+	}
 }
 /**
  * MULTIPLEXER_DATA SELECTOR 8-1 LINE
@@ -1994,6 +2141,9 @@ class SN74HC152 extends Component {
 		this.UHC152LOG.pins.D6.SetValue(D6);
 		this.UHC152LOG.pins.D7.SetValue(D7);
 		this.UHC152LOG.pins.W.SetValue(W);
+	}
+	$execute(owner) {
+		this.UHC152LOG.$execute(this);
 	}
 }
 /**
@@ -2119,6 +2269,9 @@ class SN74HC153 extends Component {
 		this.UHC153LOG.pins._2C3.SetValue(_2C3);
 		this.UHC153LOG.pins.Y1.SetValue(Y1);
 		this.UHC153LOG.pins.Y2.SetValue(Y2);
+	}
+	$execute(owner) {
+		this.UHC153LOG.$execute(this);
 	}
 }
 /**
@@ -2277,6 +2430,9 @@ class SN74HC154 extends Component {
 		this.UHC154LOG.pins.Y14.SetValue(Y14);
 		this.UHC154LOG.pins.Y15.SetValue(Y15);
 	}
+	$execute(owner) {
+		this.UHC154LOG.$execute(this);
+	}
 }
 /**
  * DECODER_DEMULTIPLEXER 2-4 LINE
@@ -2387,6 +2543,9 @@ class SN74HC155 extends Component {
 		this.UHC155LOG.pins._2Y1.SetValue(_2Y1);
 		this.UHC155LOG.pins._2Y2.SetValue(_2Y2);
 		this.UHC155LOG.pins._2Y3.SetValue(_2Y3);
+	}
+	$execute(owner) {
+		this.UHC155LOG.$execute(this);
 	}
 }
 /**
@@ -2501,6 +2660,9 @@ class SN74HC157 extends Component {
 		this.UHC157LOG.pins.Y3.SetValue(Y3);
 		this.UHC157LOG.pins.Y4.SetValue(Y4);
 	}
+	$execute(owner) {
+		this.UHC157LOG.$execute(this);
+	}
 }
 /**
  * DUAL 4-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS
@@ -2613,6 +2775,9 @@ class SN74HC158 extends Component {
 		this.UHC158LOG.pins.Y2.SetValue(Y2);
 		this.UHC158LOG.pins.Y3.SetValue(Y3);
 		this.UHC158LOG.pins.Y4.SetValue(Y4);
+	}
+	$execute(owner) {
+		this.UHC158LOG.$execute(this);
 	}
 }
 /**
@@ -2768,6 +2933,10 @@ class SN74HC160 extends Component {
 		this.UHC160LOG.pins.DC.SetValue(DC);
 		this.UHC160LOG.pins.DD.SetValue(DD);
 		this.UHC160LOG.pins.EN.SetValue(EN);
+	}
+	$execute(owner) {
+		this.UDFF.$execute(this);
+		this.UHC160LOG.$execute(this);
 	}
 }
 /**
@@ -2933,6 +3102,10 @@ class SN74HC161 extends Component {
 		this.UHC161LOG.pins.DD.SetValue(DD);
 		this.UHC161LOG.pins.IEN.SetValue(IEN);
 	}
+	$execute(owner) {
+		this.UHC161LOG.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * Synchronous 4-bit Decade Counters with asynchronous clear
@@ -3088,6 +3261,10 @@ class SN74HC162 extends Component {
 		this.UHC162LOG.pins.DC.SetValue(DC);
 		this.UHC162LOG.pins.DD.SetValue(DD);
 		this.UHC162LOG.pins.EN.SetValue(EN);
+	}
+	$execute(owner) {
+		this.UDFF.$execute(this);
+		this.UHC162LOG.$execute(this);
 	}
 }
 /**
@@ -3254,6 +3431,10 @@ class SN74HC163 extends Component {
 		this.UHC163LOG.pins.DD.SetValue(DD);
 		this.UHC163LOG.pins.IEN.SetValue(IEN);
 	}
+	$execute(owner) {
+		this.UHC163LOG.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 class SN74HC164 extends Component {
 	constructor() {
@@ -3334,6 +3515,11 @@ class SN74HC164 extends Component {
 		Connect(QF, this.pins.QF_O);
 		Connect(QG, this.pins.QG_O);
 		Connect(QH, this.pins.QH_O);
+	}
+	$execute(owner) {
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -3574,6 +3760,17 @@ class SN74HC165 extends Component {
 		this.UHC165LOG.pins.RH.SetValue(RH);
 		this.UHC165LOG.pins.CK.SetValue(CK);
 	}
+	$execute(owner) {
+		this.U8.$execute(this);
+		this.U7.$execute(this);
+		this.U6.$execute(this);
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+		this.UHC165LOG.$execute(this);
+	}
 }
 /**
  * PARALLEL LOAD 8-BIT SHIFT REGISTERS
@@ -3811,6 +4008,10 @@ class SN74HC166 extends Component {
 		this.UHC166LOG.pins.KH.SetValue(KH);
 		this.UHC166LOG.pins.CK.SetValue(CK);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+		this.UHC166LOG.$execute(this);
+	}
 }
 /**
  * REGISTERS D-TYPE 4-BIT WITH 3-STATE OUTPUTS
@@ -3951,6 +4152,10 @@ class SN74HC173 extends Component {
 		this.UHC173LOG.pins.DFF3.SetValue(DFF3);
 		this.UHC173LOG.pins.DFF4.SetValue(DFF4);
 	}
+	$execute(owner) {
+		this.UHC173LOG.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * HEX D-TYPE FLIP-FLOPS WITH CLEAR
@@ -3997,6 +4202,9 @@ class SN74HC174 extends Component {
 		Connect(this.UD.pins.QBAR4, _D_NC);
 		Connect(this.UD.pins.QBAR5, _D_NC);
 	}
+	$execute(owner) {
+		this.UD.$execute(this);
+	}
 }
 /**
  * QUADRUPLE D-TYPE FLIP-FLOPS WITH CLEAR
@@ -4036,6 +4244,9 @@ class SN74HC175 extends Component {
 		Connect(this.UD.pins.QBAR1, this.pins.Q2BAR);
 		Connect(this.UD.pins.QBAR2, this.pins.Q3BAR);
 		Connect(this.UD.pins.QBAR3, this.pins.Q4BAR);
+	}
+	$execute(owner) {
+		this.UD.$execute(this);
 	}
 }
 /**
@@ -4112,6 +4323,9 @@ class SN74HC180 extends Component {
 		this.UHC180LOG.pins.OIN.SetValue(OIN);
 		this.UHC180LOG.pins.EOUT.SetValue(EOUT);
 		this.UHC180LOG.pins.OOUT.SetValue(OOUT);
+	}
+	$execute(owner) {
+		this.UHC180LOG.$execute(this);
 	}
 }
 /**
@@ -4285,6 +4499,9 @@ class SN74HC181 extends Component {
 		this.UHC181LOG.pins.GBAR.SetValue(GBAR);
 		this.UHC181LOG.pins.CN_4.SetValue(CN_4);
 	}
+	$execute(owner) {
+		this.UHC181LOG.$execute(this);
+	}
 }
 /**
  * LOOK-AHEAD CARRY GENERATOR
@@ -4395,6 +4612,9 @@ class SN74HC182 extends Component {
 		this.UHC182LOG.pins.CN_X.SetValue(CN_X);
 		this.UHC182LOG.pins.CN_Y.SetValue(CN_Y);
 		this.UHC182LOG.pins.CN_Z.SetValue(CN_Z);
+	}
+	$execute(owner) {
+		this.UHC182LOG.$execute(this);
 	}
 }
 /**
@@ -4608,6 +4828,13 @@ class SN74HC190 extends Component {
 		this.UHC190.pins.RD.SetValue(RD);
 		this.UHC190.pins.DD.SetValue(DD);
 	}
+	$execute(owner) {
+		this.UDD.$execute(this);
+		this.UDC.$execute(this);
+		this.UDB.$execute(this);
+		this.UDA.$execute(this);
+		this.UHC190.$execute(this);
+	}
 }
 class SN74HC191 extends Component {
 	constructor() {
@@ -4804,6 +5031,13 @@ class SN74HC191 extends Component {
 		this.UHC191LOG.pins.SD.SetValue(SD);
 		this.UHC191LOG.pins.RD.SetValue(RD);
 		this.UHC191LOG.pins.DD.SetValue(DD);
+	}
+	$execute(owner) {
+		this.UHC191LOG.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
 	}
 }
 class SN74HC192 extends Component {
@@ -5014,6 +5248,14 @@ class SN74HC192 extends Component {
 		this.UHC192LOG.pins.DC.SetValue(DC);
 		this.UHC192LOG.pins.DD.SetValue(DD);
 	}
+	$execute(owner) {
+		this.UHC192LOG.$execute(this);
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 class SN74HC193 extends Component {
 	constructor() {
@@ -5222,6 +5464,14 @@ class SN74HC193 extends Component {
 		this.UHC193LOG.pins.DC.SetValue(DC);
 		this.UHC193LOG.pins.DD.SetValue(DD);
 	}
+	$execute(owner) {
+		this.UHC193LOG.$execute(this);
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * WAS REMODELED USING THE LOGIC DIAGRAM OF 74AS194
@@ -5389,6 +5639,10 @@ class SN74HC194 extends Component {
 		this.UHC194LOG.pins.JD.SetValue(JD);
 		this.UHC194LOG.pins.CLOCK.SetValue(CLOCK);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+		this.UHC194LOG.$execute(this);
+	}
 }
 /**
  * WAS REMODELED USING THE LOGIC DIAGRAM OF 74LS915A
@@ -5550,6 +5804,10 @@ class SN74HC195 extends Component {
 		this.UHC195LOG.pins.JD.SetValue(JD);
 		this.UHC195LOG.pins.CLKBAR.SetValue(CLKBAR);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+		this.UHC195LOG.$execute(this);
+	}
 }
 /**
  * DECODER_DEMULTIPLEXER 3-8 LINE WITH ADDRESS LATCHES
@@ -5690,6 +5948,10 @@ class SN74HC237 extends Component {
 		this.UHC237LOG.pins.Y6.SetValue(Y6);
 		this.UHC237LOG.pins.Y7.SetValue(Y7);
 	}
+	$execute(owner) {
+		this.UHC237LOG.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * DECODER_DEMULTIPLEXER 3-8 LINE
@@ -5795,6 +6057,9 @@ class SN74HC238 extends Component {
 		this.UHC238LOG.pins.Y6.SetValue(Y6);
 		this.UHC238LOG.pins.Y7.SetValue(Y7);
 	}
+	$execute(owner) {
+		this.UHC238LOG.$execute(this);
+	}
 }
 /**
  * DECODER_DEMULTIPLEXER 2-4 LINE
@@ -5860,6 +6125,9 @@ class SN74HC239 extends Component {
 		this.UHC239LOG.pins.Y2.SetValue(Y2);
 		this.UHC239LOG.pins.Y3.SetValue(Y3);
 	}
+	$execute(owner) {
+		this.UHC239LOG.$execute(this);
+	}
 }
 /**
  * OCTAL BUFFERS AND LINE DRIVERS WITH 3-STATE OUTPUTS
@@ -5915,6 +6183,11 @@ class SN74HC240 extends Component {
 		Connect(this.U2.pins.OUT2, this.pins._2Y3);
 		Connect(this.U2.pins.OUT3, this.pins._2Y4);
 	}
+	$execute(owner) {
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+		this.UAB.$execute(this);
+	}
 }
 /**
  * OCTAL BUFFERS AND LINE DRIVERS WITH 3-STATE OUTPUTS
@@ -5966,6 +6239,11 @@ class SN74HC241 extends Component {
 		Connect(this.U2.pins.OUT1, this.pins._2Y2);
 		Connect(this.U2.pins.OUT2, this.pins._2Y3);
 		Connect(this.U2.pins.OUT3, this.pins._2Y4);
+	}
+	$execute(owner) {
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+		this.UA.$execute(this);
 	}
 }
 /**
@@ -6033,6 +6311,14 @@ class SN74HC242 extends Component {
 		Connect(this.U2.pins.OUT2, this.pins.A3);
 		Connect(this.U2.pins.OUT3, this.pins.A4);
 	}
+	$execute(owner) {
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+		this.UEF.$execute(this);
+		this.UD.$execute(this);
+		this.UC.$execute(this);
+		this.UAB.$execute(this);
+	}
 }
 /**
  * OCTAL BUS TRANSCEIVERS WITH 3-STATE OUTPUTS
@@ -6099,6 +6385,14 @@ class SN74HC243 extends Component {
 		Connect(this.U2.pins.OUT2, this.pins.A3);
 		Connect(this.U2.pins.OUT3, this.pins.A4);
 	}
+	$execute(owner) {
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+		this.UEF.$execute(this);
+		this.UD.$execute(this);
+		this.UC.$execute(this);
+		this.UAB.$execute(this);
+	}
 }
 /**
  * OCTAL BUFFERS AND LINE DRIVERS WITH 3-STATE OUTPUTS
@@ -6153,6 +6447,11 @@ class SN74HC244 extends Component {
 		Connect(this.U2.pins.OUT1, this.pins._2Y2);
 		Connect(this.U2.pins.OUT2, this.pins._2Y3);
 		Connect(this.U2.pins.OUT3, this.pins._2Y4);
+	}
+	$execute(owner) {
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+		this.UAB.$execute(this);
 	}
 }
 /**
@@ -6237,6 +6536,13 @@ class SN74HC245 extends Component {
 		Connect(this.U5.pins.OUT5, this.pins.A6_B);
 		Connect(this.U5.pins.OUT6, this.pins.A7_B);
 		Connect(this.U5.pins.OUT7, this.pins.A8_B);
+	}
+	$execute(owner) {
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -6361,6 +6667,9 @@ class SN74HC251 extends Component {
 		this.UHC251LOG.pins.D7.SetValue(D7);
 		this.UHC251LOG.pins.W.SetValue(W);
 		this.UHC251LOG.pins.Y.SetValue(Y);
+	}
+	$execute(owner) {
+		this.UHC251LOG.$execute(this);
 	}
 }
 /**
@@ -6487,6 +6796,9 @@ class SN74HC253 extends Component {
 		this.UHC253LOG.pins.Y1.SetValue(Y1);
 		this.UHC253LOG.pins.Y2.SetValue(Y2);
 	}
+	$execute(owner) {
+		this.UHC253LOG.$execute(this);
+	}
 }
 /**
  * QUADRUPLE 2-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS
@@ -6599,6 +6911,9 @@ class SN74HC257 extends Component {
 		this.UHC257LOG.pins.Y3.SetValue(Y3);
 		this.UHC257LOG.pins.Y4.SetValue(Y4);
 	}
+	$execute(owner) {
+		this.UHC257LOG.$execute(this);
+	}
 }
 /**
  * QUADRUPLE 2-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS
@@ -6710,6 +7025,9 @@ class SN74HC258 extends Component {
 		this.UHC258LOG.pins.Y2.SetValue(Y2);
 		this.UHC258LOG.pins.Y3.SetValue(Y3);
 		this.UHC258LOG.pins.Y4.SetValue(Y4);
+	}
+	$execute(owner) {
+		this.UHC258LOG.$execute(this);
 	}
 }
 /**
@@ -6928,6 +7246,22 @@ class SN74HC259 extends Component {
 		Connect(this.U14.pins.Q0, this.pins.Q7);
 		Connect(this.U14.pins.QBAR0, _D_NC);
 	}
+	$execute(owner) {
+		this.U14.$execute(this);
+		this.U13.$execute(this);
+		this.U12.$execute(this);
+		this.U11.$execute(this);
+		this.U10.$execute(this);
+		this.U9.$execute(this);
+		this.U8.$execute(this);
+		this.U7.$execute(this);
+		this.U6.$execute(this);
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * QUADRUPLE 2-INPUT EXCLUSIVE-NOR GATES WITH OPEN-COLLECTOR OUTPUTS.
@@ -6944,6 +7278,9 @@ class SN74HC266 extends Component {
 		Connect(this.U1.pins.IN0, this.pins.A);
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -7000,6 +7337,9 @@ class SN74HC273 extends Component {
 		Connect(this.UD.pins.QBAR5, _D_NC);
 		Connect(this.UD.pins.QBAR6, _D_NC);
 		Connect(this.UD.pins.QBAR7, _D_NC);
+	}
+	$execute(owner) {
+		this.UD.$execute(this);
 	}
 }
 /**
@@ -7086,6 +7426,18 @@ class SN74HC279 extends Component {
 		Connect(this.U10.pins.EN, T2);
 		Connect(this.U10.pins.OUT, this.pins._2Q);
 	}
+	$execute(owner) {
+		this.U10.$execute(this);
+		this.U9.$execute(this);
+		this.U8.$execute(this);
+		this.U7.$execute(this);
+		this.U6.$execute(this);
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * PARITY GENERATOR_CHECKER ODD_EVEN 9-BIT
@@ -7153,6 +7505,9 @@ class SN74HC280 extends Component {
 		
 		this.UHC280LOG.pins.EOUT.SetValue(EOUT);
 		this.UHC280LOG.pins.OOUT.SetValue(OOUT);
+	}
+	$execute(owner) {
+		this.UHC280LOG.$execute(this);
 	}
 }
 /**
@@ -7272,6 +7627,9 @@ class SN74HC283 extends Component {
 		this.UHC283LOG.pins.SUM2.SetValue(SUM2);
 		this.UHC283LOG.pins.SUM3.SetValue(SUM3);
 		this.UHC283LOG.pins.SUM4.SetValue(SUM4);
+	}
+	$execute(owner) {
+		this.UHC283LOG.$execute(this);
 	}
 }
 /**
@@ -7424,6 +7782,10 @@ class SN74HC298 extends Component {
 		this.UHC298LOG.pins.KB.SetValue(KB);
 		this.UHC298LOG.pins.KC.SetValue(KC);
 		this.UHC298LOG.pins.KD.SetValue(KD);
+	}
+	$execute(owner) {
+		this.UHC298LOG.$execute(this);
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -7666,6 +8028,10 @@ class SN74HC299 extends Component {
 		this.UHC299LOG.pins.D1H.SetValue(D1H);
 		this.UHC299LOG.pins.OE.SetValue(OE);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+		this.UHC299LOG.$execute(this);
+	}
 }
 /**
  * DUAL 4-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS
@@ -7791,6 +8157,9 @@ class SN74HC352 extends Component {
 		this.UHC352LOG.pins.Y1.SetValue(Y1);
 		this.UHC352LOG.pins.Y2.SetValue(Y2);
 	}
+	$execute(owner) {
+		this.UHC352LOG.$execute(this);
+	}
 }
 /**
  * DUAL 1-OF-4 DATA SELECTORS_MULTIPLEXERS WITH 3-STATE OUTPUTS
@@ -7915,6 +8284,9 @@ class SN74HC353 extends Component {
 		this.UHC353LOG.pins._2C3.SetValue(_2C3);
 		this.UHC353LOG.pins.Y1.SetValue(Y1);
 		this.UHC353LOG.pins.Y2.SetValue(Y2);
+	}
+	$execute(owner) {
+		this.UHC353LOG.$execute(this);
 	}
 }
 /**
@@ -8151,6 +8523,11 @@ class SN74HC354 extends Component {
 		this.UHC354LOG.pins.DC.SetValue(DC);
 		this.UHC354LOG.pins.SC.SetValue(SC);
 	}
+	$execute(owner) {
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+		this.UHC354LOG.$execute(this);
+	}
 }
 /**
  * 4-LINE TO 1-LINE DATA SELECTORS_MULTIPLEXERS_REGISTERS
@@ -8382,6 +8759,11 @@ class SN74HC356 extends Component {
 		this.UHC356LOG.pins.ENABLE13.SetValue(ENABLE13);
 		this.UHC356LOG.pins.SC.SetValue(SC);
 	}
+	$execute(owner) {
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+		this.UHC356LOG.$execute(this);
+	}
 }
 /**
  * Hex Bus Drivers with 3-STATE Outputs
@@ -8425,6 +8807,10 @@ class SN74HC365 extends Component {
 		Connect(this.U1.pins.OUT4, this.pins.Y5);
 		Connect(this.U1.pins.OUT5, this.pins.Y6);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+		this.UA.$execute(this);
+	}
 }
 /**
  * Hex Bus Drivers with 3-STATE Outputs
@@ -8467,6 +8853,10 @@ class SN74HC366 extends Component {
 		Connect(this.U1.pins.OUT3, this.pins.Y4);
 		Connect(this.U1.pins.OUT4, this.pins.Y5);
 		Connect(this.U1.pins.OUT5, this.pins.Y6);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
+		this.UA.$execute(this);
 	}
 }
 /**
@@ -8514,6 +8904,11 @@ class SN74HC367 extends Component {
 		Connect(this.U2.pins.EN, G2);
 		Connect(this.U2.pins.OUT0, this.pins._2Y1);
 		Connect(this.U2.pins.OUT1, this.pins._2Y2);
+	}
+	$execute(owner) {
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+		this.UINV.$execute(this);
 	}
 }
 /**
@@ -8567,6 +8962,13 @@ class SN74HC368 extends Component {
 		Connect(this.U2.pins.EN, G2);
 		Connect(this.U2.pins.OUT0, this.pins._2Y1);
 		Connect(this.U2.pins.OUT1, this.pins._2Y2);
+	}
+	$execute(owner) {
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+		this.UB.$execute(this);
+		this.UA.$execute(this);
+		this.UINV.$execute(this);
 	}
 }
 /**
@@ -8654,6 +9056,11 @@ class SN74HC373 extends Component {
 		Connect(this.U2.pins.OUT6, this.pins._7Q);
 		Connect(this.U2.pins.OUT7, this.pins._8Q);
 	}
+	$execute(owner) {
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+		this.UA.$execute(this);
+	}
 }
 /**
  * Octal D-Type Edge-Triggered Flip-Flops with 3-STATE Outputs
@@ -8740,6 +9147,11 @@ class SN74HC374 extends Component {
 		Connect(this.UQS.pins.OUT6, this.pins.Q7);
 		Connect(this.UQS.pins.OUT7, this.pins.Q8);
 	}
+	$execute(owner) {
+		this.UQS.$execute(this);
+		this.UD.$execute(this);
+		this.UOC.$execute(this);
+	}
 }
 /**
  * 4-bit Bistable Latches
@@ -8756,6 +9168,8 @@ class SN74HC375 extends Component {
 			_2Q: new Pin(),
 			_2QBAR: new Pin(),
 		}
+	}
+	$execute(owner) {
 	}
 }
 /**
@@ -8791,6 +9205,9 @@ class SN74HC377 extends Component {
 		Connect(this.UBUF.pins.OUT0, GBBUF);
 		let CLKBUF = new Pin();
 		Connect(this.UBUF.pins.OUT1, CLKBUF);
+	}
+	$execute(owner) {
+		this.UBUF.$execute(this);
 	}
 }
 class SNHC377DAT extends Component {
@@ -8847,6 +9264,15 @@ class SNHC377DAT extends Component {
 		Connect(this.UQOUT.pins.IN0, QBUF);
 		Connect(this.UQOUT.pins.OUT, this.pins.Q);
 	}
+	$execute(owner) {
+		this.UQOUT.$execute(this);
+		this.UDFF.$execute(this);
+		this.UAO.$execute(this);
+		this.UINV.$execute(this);
+		this.UIN.$execute(this);
+		this.UNXOR.$execute(this);
+		this.USET.$execute(this);
+	}
 }
 /**
  * Octal D-TYPE Flip-Flops with Clock Enable
@@ -8877,6 +9303,9 @@ class SN74HC378 extends Component {
 		Connect(this.UBUF.pins.OUT0, GBBUF);
 		let CLKBUF = new Pin();
 		Connect(this.UBUF.pins.OUT1, CLKBUF);
+	}
+	$execute(owner) {
+		this.UBUF.$execute(this);
 	}
 }
 class SNHC378DAT extends Component {
@@ -8933,6 +9362,15 @@ class SNHC378DAT extends Component {
 		Connect(this.UQOUT.pins.IN0, QBUF);
 		Connect(this.UQOUT.pins.OUT, this.pins.Q);
 	}
+	$execute(owner) {
+		this.UQOUT.$execute(this);
+		this.UDFF.$execute(this);
+		this.UAO.$execute(this);
+		this.UINV.$execute(this);
+		this.UIN.$execute(this);
+		this.UNXOR.$execute(this);
+		this.USET.$execute(this);
+	}
 }
 /**
  * Octal D-TYPE Flip-Flops with Clock Enable
@@ -8963,6 +9401,9 @@ class SN74HC379 extends Component {
 		Connect(this.UBUF.pins.OUT0, GBBUF);
 		let CLKBUF = new Pin();
 		Connect(this.UBUF.pins.OUT1, CLKBUF);
+	}
+	$execute(owner) {
+		this.UBUF.$execute(this);
 	}
 }
 class SNHC379DAT extends Component {
@@ -9023,6 +9464,15 @@ class SNHC379DAT extends Component {
 		Connect(this.UQOUT.pins.OUT0, this.pins.Q);
 		Connect(this.UQOUT.pins.OUT1, this.pins.QB);
 	}
+	$execute(owner) {
+		this.UQOUT.$execute(this);
+		this.UDFF.$execute(this);
+		this.UAO.$execute(this);
+		this.UINV.$execute(this);
+		this.UIN.$execute(this);
+		this.UNXOR.$execute(this);
+		this.USET.$execute(this);
+	}
 }
 /**
  * Quadruple 2-Input Exclusive-OR-Gates
@@ -9039,6 +9489,9 @@ class SN74HC386 extends Component {
 		Connect(this.UY.pins.IN0, this.pins.A);
 		Connect(this.UY.pins.IN1, this.pins.B);
 		Connect(this.UY.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.UY.$execute(this);
 	}
 }
 /**
@@ -9142,6 +9595,13 @@ class SN74HC390 extends Component {
 		this.UHC390LOG.pins.CLOCK2.SetValue(CLOCK2);
 		this.UHC390LOG.pins.CLOCK4.SetValue(CLOCK4);
 	}
+	$execute(owner) {
+		this.UHC390LOG.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * COUNTER BINARY 4-BIT, ASYNCHRONOUS
@@ -9208,6 +9668,14 @@ class SN74HC393 extends Component {
 		Connect(QB, this.pins.QB_O);
 		Connect(QC, this.pins.QC_O);
 		Connect(QD, this.pins.QD_O);
+	}
+	$execute(owner) {
+		this.U6.$execute(this);
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -9321,6 +9789,13 @@ class SN74HC490 extends Component {
 		this.UHC490LOG.pins.CLRBAR.SetValue(CLRBAR);
 		this.UHC490LOG.pins.SET9BAR.SetValue(SET9BAR);
 	}
+	$execute(owner) {
+		this.UHC490LOG.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * Octal D-TYPE Transparent Latches with 3-STATE Outputs
@@ -9406,6 +9881,11 @@ class SN74HC533 extends Component {
 		Connect(this.UQBAR.pins.OUT5, this.pins._6QBAR);
 		Connect(this.UQBAR.pins.OUT6, this.pins._7QBAR);
 		Connect(this.UQBAR.pins.OUT7, this.pins._8QBAR);
+	}
+	$execute(owner) {
+		this.UQBAR.$execute(this);
+		this.UQI.$execute(this);
+		this.UOC.$execute(this);
 	}
 }
 /**
@@ -9493,6 +9973,11 @@ class SN74HC534 extends Component {
 		Connect(this.UOCQ.pins.OUT6, this.pins._7QBAR);
 		Connect(this.UOCQ.pins.OUT7, this.pins._8QBAR);
 	}
+	$execute(owner) {
+		this.UOCQ.$execute(this);
+		this.UDFF.$execute(this);
+		this.UOC.$execute(this);
+	}
 }
 /**
  * Octal Buffers and Line Drivers with 3-STATE Outputs
@@ -9544,6 +10029,10 @@ class SN74HC540 extends Component {
 		Connect(this.U1.pins.OUT6, this.pins.Y7);
 		Connect(this.U1.pins.OUT7, this.pins.Y8);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+		this.UA.$execute(this);
+	}
 }
 /**
  * Octal Buffers and Line Driver with 3-STATE Outputs
@@ -9594,6 +10083,10 @@ class SN74HC541 extends Component {
 		Connect(this.U1.pins.OUT5, this.pins.Y6);
 		Connect(this.U1.pins.OUT6, this.pins.Y7);
 		Connect(this.U1.pins.OUT7, this.pins.Y8);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
+		this.UA.$execute(this);
 	}
 }
 /**
@@ -9681,6 +10174,11 @@ class SN74HC563 extends Component {
 		Connect(this.UQOUT.pins.OUT6, this.pins._7QBAR);
 		Connect(this.UQOUT.pins.OUT7, this.pins._8QBAR);
 	}
+	$execute(owner) {
+		this.UQOUT.$execute(this);
+		this.UQBUF.$execute(this);
+		this.UINV.$execute(this);
+	}
 }
 /**
  * Octal D-TYPE Edge-Triggered Flip-Flops with 3-STATE Outputs
@@ -9766,6 +10264,11 @@ class SN74HC564 extends Component {
 		Connect(this.UOCQ.pins.OUT5, this.pins._6QBAR);
 		Connect(this.UOCQ.pins.OUT6, this.pins._7QBAR);
 		Connect(this.UOCQ.pins.OUT7, this.pins._8QBAR);
+	}
+	$execute(owner) {
+		this.UOCQ.$execute(this);
+		this.UDFF.$execute(this);
+		this.UOC.$execute(this);
 	}
 }
 /**
@@ -9853,6 +10356,11 @@ class SN74HC573 extends Component {
 		Connect(this.U2.pins.OUT6, this.pins._7Q);
 		Connect(this.U2.pins.OUT7, this.pins._8Q);
 	}
+	$execute(owner) {
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+		this.U0.$execute(this);
+	}
 }
 /**
  * Octal D-TYPE Edge-Triggered Flip-Flops with 3-STATE Outputs
@@ -9938,6 +10446,11 @@ class SN74HC574 extends Component {
 		Connect(this.UQS.pins.OUT5, this.pins._6Q);
 		Connect(this.UQS.pins.OUT6, this.pins._7Q);
 		Connect(this.UQS.pins.OUT7, this.pins._8Q);
+	}
+	$execute(owner) {
+		this.UQS.$execute(this);
+		this.UD.$execute(this);
+		this.UOC.$execute(this);
 	}
 }
 class SN74HC590A extends Component {
@@ -10186,6 +10699,18 @@ class SN74HC590A extends Component {
 		this.UHC590ALOG.pins.MCLK.SetValue(MCLK);
 		this.UHC590ALOG.pins.RCOBAR.SetValue(RCOBAR);
 	}
+	$execute(owner) {
+		this.UHC590ALOG.$execute(this);
+		this.U9.$execute(this);
+		this.U8.$execute(this);
+		this.U7.$execute(this);
+		this.U6.$execute(this);
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * 8-BIT SHIFT REGISTERS WITH INPUT LATCHES
@@ -10306,6 +10831,11 @@ class SN74HC594 extends Component {
 		Connect(QG, this.pins.QG_O);
 		Connect(QH, this.pins.QH_O);
 		Connect(QHP, this.pins.QHP_O);
+	}
+	$execute(owner) {
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -10428,6 +10958,11 @@ class SN74HC595 extends Component {
 		Connect(QH, this.pins.QH_O);
 		Connect(QHP, this.pins.QHP_O);
 	}
+	$execute(owner) {
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * Octal 2-Input Multiplexed Latches with 3-STATE Outputs
@@ -10475,6 +11010,10 @@ class SN74HC604 extends Component {
 		let AB_B = new Pin();
 		Connect(this.UAB_B.pins.OUT, AB_B);
 	}
+	$execute(owner) {
+		this.UAB_B.$execute(this);
+		this.UBUF.$execute(this);
+	}
 }
 class SNHC604DAT extends Component {
 	constructor() {
@@ -10512,6 +11051,11 @@ class SNHC604DAT extends Component {
 		Connect(this.UY.pins.IN0, YI);
 		Connect(this.UY.pins.EN, this.pins.CK);
 		Connect(this.UY.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.UY.$execute(this);
+		this.UYI.$execute(this);
+		this.UAB.$execute(this);
 	}
 }
 /**
@@ -10585,6 +11129,12 @@ class SN74HC620 extends Component {
 		Connect(this.U4.pins.OUT6, this.pins.A7_B);
 		Connect(this.U4.pins.OUT7, this.pins.A8_B);
 	}
+	$execute(owner) {
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * OCTAL BUS TRANSCEIVERS WITH 3-STATE OUTPUTS
@@ -10656,6 +11206,12 @@ class SN74HC623 extends Component {
 		Connect(this.U4.pins.OUT5, this.pins.A6_B);
 		Connect(this.U4.pins.OUT6, this.pins.A7_B);
 		Connect(this.U4.pins.OUT7, this.pins.A8_B);
+	}
+	$execute(owner) {
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -10741,6 +11297,13 @@ class SN74HC640 extends Component {
 		Connect(this.U5.pins.OUT6, this.pins.A7_B);
 		Connect(this.U5.pins.OUT7, this.pins.A8_B);
 	}
+	$execute(owner) {
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * OCTAL BUS TRANSCEIVERS WITH 3-STATE OUTPUTS
@@ -10824,6 +11387,13 @@ class SN74HC643 extends Component {
 		Connect(this.UB.pins.OUT5, this.pins.B6);
 		Connect(this.UB.pins.OUT6, this.pins.B7);
 		Connect(this.UB.pins.OUT7, this.pins.B8);
+	}
+	$execute(owner) {
+		this.UB.$execute(this);
+		this.UA.$execute(this);
+		this.UEN.$execute(this);
+		this.UINV.$execute(this);
+		this.UBUF.$execute(this);
 	}
 }
 /**
@@ -10909,6 +11479,14 @@ class SN74HC645 extends Component {
 		Connect(this.U2.pins.OUT5, this.pins.A6);
 		Connect(this.U2.pins.OUT6, this.pins.A7);
 		Connect(this.U2.pins.OUT7, this.pins.A8);
+	}
+	$execute(owner) {
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+		this.UC.$execute(this);
+		this.UB.$execute(this);
+		this.UA.$execute(this);
+		this.UBUFF.$execute(this);
 	}
 }
 /**
@@ -11275,6 +11853,11 @@ class SN74HC646 extends Component {
 		this.UHC646LOG1.pins.ENA.SetValue(ENA);
 		this.UHC646LOG1.pins.ENB.SetValue(ENB);
 	}
+	$execute(owner) {
+		this.UBREG.$execute(this);
+		this.UAREG.$execute(this);
+		this.UHC646LOG1.$execute(this);
+	}
 }
 /**
  * OCTAL BUS TRANSCEIVER_REGISTER WITH 3-STATE OUTPUTS
@@ -11639,6 +12222,11 @@ class SN74HC648 extends Component {
 		this.UHC648LOG1.pins.B8_OUT.SetValue(B8_OUT);
 		this.UHC648LOG1.pins.ENA.SetValue(ENA);
 		this.UHC648LOG1.pins.ENB.SetValue(ENB);
+	}
+	$execute(owner) {
+		this.UBREG.$execute(this);
+		this.UAREG.$execute(this);
+		this.UHC648LOG1.$execute(this);
 	}
 }
 /**
@@ -12093,6 +12681,15 @@ class SN74HC651 extends Component {
 		this.UHC651LOG.pins.IGAB.SetValue(IGAB);
 		this.UHC651LOG.pins.IGBABAR.SetValue(IGBABAR);
 	}
+	$execute(owner) {
+		this.UHC651LOG.$execute(this);
+		this.U6.$execute(this);
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * BUS TRANSCEIVERS AND REGISTERS OCTAL WITH 3-STATE OUTPUTS
@@ -12546,6 +13143,15 @@ class SN74HC652 extends Component {
 		this.UHC652LOG.pins.IGAB.SetValue(IGAB);
 		this.UHC652LOG.pins.IGBABAR.SetValue(IGBABAR);
 	}
+	$execute(owner) {
+		this.UHC652LOG.$execute(this);
+		this.U6.$execute(this);
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * REGISTER FILES 4X4 WITH 3-STATE OUTPUTS
@@ -12787,6 +13393,13 @@ class SN74HC670 extends Component {
 		this.UHC670LOG.pins.Q2.SetValue(Q2);
 		this.UHC670LOG.pins.Q3.SetValue(Q3);
 	}
+	$execute(owner) {
+		this.UHC670LOG.$execute(this);
+		this.UD.$execute(this);
+		this.UC.$execute(this);
+		this.UB.$execute(this);
+		this.UA.$execute(this);
+	}
 }
 /**
  * 12-BIT ADDRESS COMPARATORS
@@ -12989,6 +13602,9 @@ class SN74HC677 extends Component {
 		this.UHC677LOG.pins.P3.SetValue(P3);
 		this.UHC677LOG.pins.GBAR.SetValue(GBAR);
 		this.UHC677LOG.pins.Y.SetValue(Y);
+	}
+	$execute(owner) {
+		this.UHC677LOG.$execute(this);
 	}
 }
 /**
@@ -13201,6 +13817,10 @@ class SN74HC678 extends Component {
 		this.UHC678LOG.pins.C.SetValue(C);
 		this.UHC678LOG.pins.DY.SetValue(DY);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+		this.UHC678LOG.$execute(this);
+	}
 }
 /**
  * 12-BIT ADDRESS COMPARATORS
@@ -13375,6 +13995,9 @@ class SN74HC679 extends Component {
 		this.UHC679LOG.pins.P3.SetValue(P3);
 		this.UHC679LOG.pins.GBAR.SetValue(GBAR);
 		this.UHC679LOG.pins.Y.SetValue(Y);
+	}
+	$execute(owner) {
+		this.UHC679LOG.$execute(this);
 	}
 }
 /**
@@ -13559,6 +14182,10 @@ class SN74HC680 extends Component {
 		this.UHC680LOG.pins.C.SetValue(C);
 		this.UHC680LOG.pins.DY.SetValue(DY);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+		this.UHC680LOG.$execute(this);
+	}
 }
 /**
  * 8-BIT MAGNITUDE COMPARATORS
@@ -13714,6 +14341,9 @@ class SN74HC684 extends Component {
 		this.UHC684LOG.pins.PEQBAR.SetValue(PEQBAR);
 		this.UHC684LOG.pins.PGQBAR.SetValue(PGQBAR);
 	}
+	$execute(owner) {
+		this.UHC684LOG.$execute(this);
+	}
 }
 /**
  * 8-BIT IDENTITY COMPARATORS
@@ -13867,6 +14497,9 @@ class SN74HC688 extends Component {
 		this.UHC688LOG.pins.GBAR.SetValue(GBAR);
 		this.UHC688LOG.pins.PEQBAR.SetValue(PEQBAR);
 	}
+	$execute(owner) {
+		this.UHC688LOG.$execute(this);
+	}
 }
 /**
  * Hex 2-Input NAND Drivers
@@ -13883,6 +14516,9 @@ class SN74HC804 extends Component {
 		Connect(this.U1.pins.IN0, this.pins.A);
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -13901,6 +14537,9 @@ class SN74HC805 extends Component {
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+	}
 }
 /**
  * Hex 2-Input AND Drivers
@@ -13918,6 +14557,9 @@ class SN74HC808 extends Component {
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.OUT, this.pins.Y);
 	}
+	$execute(owner) {
+		this.U1.$execute(this);
+	}
 }
 /**
  * Hex 2-Input OR Drivers
@@ -13934,6 +14576,9 @@ class SN74HC832 extends Component {
 		Connect(this.U1.pins.IN0, this.pins.A);
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -13955,6 +14600,9 @@ class SN74HC4002 extends Component {
 		Connect(this.U1.pins.IN2, this.pins.C);
 		Connect(this.U1.pins.IN3, this.pins.D);
 		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -14129,6 +14777,24 @@ class SN74HC4020 extends Component {
 		Connect(QM, this.pins.QM_O);
 		Connect(QN, this.pins.QN_O);
 	}
+	$execute(owner) {
+		this.U16.$execute(this);
+		this.U15.$execute(this);
+		this.U14.$execute(this);
+		this.U13.$execute(this);
+		this.U12.$execute(this);
+		this.U11.$execute(this);
+		this.U10.$execute(this);
+		this.U9.$execute(this);
+		this.U8.$execute(this);
+		this.U7.$execute(this);
+		this.U6.$execute(this);
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 class SN74HC4024 extends Component {
 	constructor() {
@@ -14240,6 +14906,16 @@ class SN74HC4024 extends Component {
 		this.UHC4024LOG.pins.CLK.SetValue(CLK);
 		this.UHC4024LOG.pins.MR.SetValue(MR);
 		this.UHC4024LOG.pins.TA.SetValue(TA);
+	}
+	$execute(owner) {
+		this.UHC4024LOG.$execute(this);
+		this.U7.$execute(this);
+		this.U6.$execute(this);
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -14396,6 +15072,22 @@ class SN74HC4040 extends Component {
 		Connect(QK, this.pins.QK_O);
 		Connect(QL, this.pins.QL_O);
 	}
+	$execute(owner) {
+		this.U14.$execute(this);
+		this.U13.$execute(this);
+		this.U12.$execute(this);
+		this.U11.$execute(this);
+		this.U10.$execute(this);
+		this.U9.$execute(this);
+		this.U8.$execute(this);
+		this.U7.$execute(this);
+		this.U6.$execute(this);
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * Triple 3-input Or Gate
@@ -14414,6 +15106,9 @@ class SN74HC4075 extends Component {
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.IN2, this.pins.C);
 		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -14451,6 +15146,11 @@ class SN74HC4078A extends Component {
 		this.U3 = new inv();
 		Connect(this.U3.pins.IN0, Y1);
 		Connect(this.U3.pins.OUT, this.pins.W);
+	}
+	$execute(owner) {
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -14648,6 +15348,10 @@ class SN74HC4514 extends Component {
 		this.UHC4514LOG.pins.Y14.SetValue(Y14);
 		this.UHC4514LOG.pins.Y15.SetValue(Y15);
 	}
+	$execute(owner) {
+		this.UHC4514LOG.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * DECODER_DEMULTIPLEXER 4-16 LINE WITH ADDRESS LATCHES
@@ -14843,6 +15547,10 @@ class SN74HC4515 extends Component {
 		this.UHC4515LOG.pins.Y13.SetValue(Y13);
 		this.UHC4515LOG.pins.Y14.SetValue(Y14);
 		this.UHC4515LOG.pins.Y15.SetValue(Y15);
+	}
+	$execute(owner) {
+		this.UHC4515LOG.$execute(this);
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -15210,6 +15918,32 @@ class SN74HC4724 extends Component {
 		Connect(this.UL15.pins.OUT7, CLR6);
 		Connect(this.UL15.pins.OUT8, CLR7);
 	}
+	$execute(owner) {
+		this.UL15.$execute(this);
+		this.UL14.$execute(this);
+		this.UL13.$execute(this);
+		this.UL12.$execute(this);
+		this.UL11.$execute(this);
+		this.UL10.$execute(this);
+		this.UL9.$execute(this);
+		this.UL8.$execute(this);
+		this.UL7.$execute(this);
+		this.UL6.$execute(this);
+		this.UL5.$execute(this);
+		this.UL4.$execute(this);
+		this.UL3.$execute(this);
+		this.UL2.$execute(this);
+		this.UL1.$execute(this);
+		this.UL0.$execute(this);
+		this.UD4.$execute(this);
+		this.UD3.$execute(this);
+		this.UD2.$execute(this);
+		this.UD1.$execute(this);
+		this.U13.$execute(this);
+		this.U12.$execute(this);
+		this.U11.$execute(this);
+		this.U10.$execute(this);
+	}
 }
 /**
  * 6-Section Multifunction (Nand, Invert, Nor, Flip-Flop) Circuits
@@ -15282,6 +16016,14 @@ class SN74HC7074 extends Component {
 		Connect(this.U5.pins.Q0, this.pins._5Q);
 		Connect(this.U5.pins.QBAR0, this.pins._5QBAR);
 	}
+	$execute(owner) {
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+		this.U0.$execute(this);
+	}
 }
 /**
  * 6-Section Multifunction (Nand, Invert, Flip-Flop) Circuits
@@ -15352,6 +16094,13 @@ class SN74HC7075 extends Component {
 		Connect(this.U5.pins.D0, this.pins._5D);
 		Connect(this.U5.pins.Q0, this.pins._5Q);
 		Connect(this.U5.pins.QBAR0, this.pins._5QBAR);
+	}
+	$execute(owner) {
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
 	}
 }
 /**
@@ -15424,6 +16173,13 @@ class SN74HC7076 extends Component {
 		Connect(this.U5.pins.Q0, this.pins._5Q);
 		Connect(this.U5.pins.QBAR0, this.pins._5QBAR);
 	}
+	$execute(owner) {
+		this.U5.$execute(this);
+		this.U4.$execute(this);
+		this.U3.$execute(this);
+		this.U2.$execute(this);
+		this.U1.$execute(this);
+	}
 }
 /**
  * Quadruple 2-Input Exclusive-Nor Gates w_ Totem-Pole Outputs
@@ -15440,6 +16196,9 @@ class SN74HC7266 extends Component {
 		Connect(this.U1.pins.IN0, this.pins.A);
 		Connect(this.U1.pins.IN1, this.pins.B);
 		Connect(this.U1.pins.OUT, this.pins.Y);
+	}
+	$execute(owner) {
+		this.U1.$execute(this);
 	}
 }
 module.exports.SN74HC00 = SN74HC00;

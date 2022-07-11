@@ -802,12 +802,6 @@ class CPU extends Board {
 
 	}
 
-	$execute() {
-		super.$execute();
-
-		//console.log(this.pc.pins.decoded);
-	}
-
 	Execute(clk1, clk2) {
 		let realWires = wires.filter(t => !t._mergedWith);
 		//for (let w of realWires)
@@ -915,7 +909,7 @@ m.ram.PrintArea(0);
 
 
 var hrstart = process.hrtime()
-for (var i = 0; i < 30000; i++)
+for (var i = 0; i < 100000; i++)
 	m.$execute();
 var hrend = process.hrtime(hrstart);
 console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000)
