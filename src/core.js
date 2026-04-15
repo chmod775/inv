@@ -630,6 +630,62 @@ class dff extends Circuit {
 	}
 }
 
+class jkff extends Circuit {
+	constructor(n) {
+		super();
+
+		this.pins = {
+			PRESET: new Pin(),
+			CLEAR: new Pin(),
+			CLOCK: new Pin()
+		}
+
+		this.oldClock = true;
+
+		this.n = n;
+		this._ = {
+			j: [],
+			k: [],
+			q: [],
+			qbar: []
+		};
+		for (var i = 0; i < n; i++) {
+			this._.j.push(this.pins[`J${i}`] = new Pin());
+			this._.k.push(this.pins[`K${i}`] = new Pin());
+			this._.q.push(this.pins[`Q${i}`] = new Pin());
+			this._.qbar.push(this.pins[`QBAR${i}`] = new Pin());
+		}
+	}
+
+	$execute() {
+		let presetActive = !this.pins.PRESET.GetValue();
+		let clearActive = !this.pins.CLEAR.GetValue();
+		let clock = !this.pins.CLOCK.GetValue();
+
+		for (var i = 0; i < this.n; i++) {
+			if (clock && !this.oldClock) {
+				let j_val = this._.j[i].GetValue();
+				let k_val = this._.k[i].GetValue();
+				if (j_val && k_val) {
+					this._.q[i].SetValue(this._.qbar[i].GetValue());
+				} else {
+					if (j_val) this._.q[i].SetValue(true);
+					if (k_val) this._.q[i].SetValue(false);
+				}
+			}
+
+			if (presetActive)
+				this._.q[i].SetValue(true);
+
+			if (clearActive)
+				this._.q[i].SetValue(false);
+			
+			this._.qbar[i].SetValue(!this._.q[i].GetValue());
+		}
+
+		this.oldClock = clock;
+	}
+}
 
 class srff extends Circuit {
 	constructor(n) {
@@ -799,6 +855,7 @@ module.exports.or = or;
 module.exports.bufa = bufa;
 module.exports.nora = nora;
 module.exports.dff = dff;
+module.exports.jkff = jkff;
 module.exports.srff = srff;
 module.exports.dltch = dltch;
 module.exports.buf3a = buf3a;
